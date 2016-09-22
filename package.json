@@ -1,0 +1,20 @@
+{
+  "name": "AigisPlayer",
+  "version": "1.1.0",
+  "description": "Player For Aigis",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "keywords": [
+    "Aigis"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron-prebuilt": "^0.36.0"
+  },
+  "dependencies": {
+    "request": "^2.75.0"
+  }
+}
