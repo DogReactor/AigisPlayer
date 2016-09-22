@@ -155,9 +155,11 @@
 		}
 		#menu.open ul{
 			visibility: visible;
+            animation: hide2show 0.5s;
 		}
 		#menu.close ul{
 			visibility: hidden;
+            animation: show2hide 0.5s;
 		}
         button{
             outline: none;
@@ -259,6 +261,10 @@
             border: 1px solid #DADADA;
             
         }
+        .gamelist li:hover{
+            background:#D2E9FF;
+            animation: userlist 0.5s
+        }
         @keyframes hide2show{
             from {opacity:0}
             to {opacity:1}
@@ -282,7 +288,7 @@
 		  <div id='head' class='head'> 
 			  <div class="headitem close" id="menu">
 				  <p href="#">AigisPlayer</p>
-				  <ul>
+				  <ul class='gamelist'>
 					  <li>
 						  <p href="#"></p>
 					  </li>
@@ -297,25 +303,6 @@
                   <button id="userbtn" style="background-image:url('./img/small-user.png')"></button>
                   <div id="userwin" class="hiddenf"> 
                       <ul id="userlist">
-                          <li class="selected">
-                              <div>
-                                  <p class="nickname">Yuki</p>
-                                  <p class="mailaddress">Pro</p>
-                                  <button>编</button>
-                              </div>
-                          </li>
-                          <li class="unselected">
-                              <div>
-                                  <p class="nickname">Yuki</p>
-                                  <p class="mailaddress">Pro</p>
-                                  <button>编</button>
-                              </div>
-                          </li>
-                          <li class="unselected">
-                              <div>
-                                  <p>+ 创建新用户</p>
-                              </div>
-                          </li>
                       </ul>
                   </div>
                   </div>
