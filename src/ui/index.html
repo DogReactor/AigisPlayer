@@ -1,0 +1,18 @@
+<html>
+    <head>
+    </head>
+    <body style="margin : 0">
+        <!--整体布局-->
+        <div id="playermain">
+            <navbar title="This is Title"></navbar>
+        </div>
+        <!--引入主app-->
+        <script src="app.js"></script>
+        <!--要挪走的，负责逻辑-->
+        <script>
+            //Using Vue
+            const app = require('electron').remote.app;
+            const currentwindow = require('electron').remote.getCurrentWindow();
+        </script>
+    </body>
+</html>
