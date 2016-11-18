@@ -1,15 +1,22 @@
 <template>
     <div>
         <p>{{title}}</p>
-        <navbarButton :img='imgs[1]' v-bind:isRight='true' v-on:click="close"> </navbarButton>
-        <navbarButton :img='imgs[0]' v-bind:isRight='true' v-on:click="min"> </navbarButton>
+        <navbarButton :img='imgs[1]' :is-right='true' @click.native="close"> </navbarButton>
+        <navbarButton :img='imgs[0]' :is-right='true' @click.native="min"> </navbarButton>
+        <navbarButton v-for="(item,index) in customButtons" :img="item.img" :is-right="item.isRight" :enabled="item.enabled" @click.native="item.clickFunction(index)"> </navbarbutton>
     </div>
 </template>
 
 <script>
     import navbarbutton from './navbar-button.vue'
     export default {
-        props:['title','customButtons'],
+        props:{
+            title:String,
+            customButtons:{
+                type:Array,
+                required: true
+            }
+        },
         data: function(){
             return {
                 imgs:["./static/img/small-min.png","./static/img/close.png"],

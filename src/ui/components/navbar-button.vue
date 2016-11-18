@@ -1,23 +1,28 @@
 <template>
-    <button v-bind:style="styleObject" v-on:click="clickFunction"></button>
+    <button v-bind:style="styleObject"></button>
 </template>
 
 <script>
     export default {
-        props:['img','isRight'],
+        props:{
+            'img':String,
+            'isRight':Boolean,
+            'enabled':Boolean,
+        },
         data: function(){
             return {
                 styleObject:{
                     backgroundImage : 'url(' + this.img + ')',
-                    float : this.isRight ? 'left':'right'
-                }
+                    float : this.isRight ? 'right':'left',
+                    opacity: '1'
+                },
             }
         },
-        methods:{
-            clickFunction:function(){
-                this.$emit('click');
+        watch:{
+            enabled: function(newValue){
+                this.styleObject.opacity = newValue ? '1':'0.5';
             }
-        }
+        },
     }
 </script>
 
