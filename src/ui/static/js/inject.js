@@ -1,8 +1,14 @@
 const ipcrender = require('electron').ipcRenderer;
 ipcrender.on('catch',(event,message)=>{
-	var game_frame = document.getElementById('game_frame');
-    if(game_frame == null) ipcrender.sendToHost('url','error');
-	else ipcrender.sendToHost('url',game_frame.src);
+	var gameFrame = document.getElementById('game_frame');
+    if(gameFrame == null) ipcrender.sendToHost('url','error');
+    else{
+        gameFrame.style.position = 'fixed';
+        gameFrame.style.top = '0';
+        gameFrame.style.left = '0';
+        gameFrame.style.zIndex = '25';
+        gameFrame.style.marginLeft = '-5px';
+    }
 });
 ipcrender.on('change',(event,message)=>{
 	document.getElementById('content').style.position = 'fixed';

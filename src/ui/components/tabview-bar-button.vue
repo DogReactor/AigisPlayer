@@ -1,5 +1,5 @@
 <template>
-    <div @click="clickFunction" :style='styleObject' @dblclick="dbclickFunction">
+    <div @click="clickFunction" :style='styleObject' @dblclick="dbclickFunction" v-if='isrender'>
         <p>{{title}}</p>
     </div>
 </template>
@@ -8,7 +8,8 @@
         props:{
             title:String,
             numid:Number,
-            selected:Number
+            selected:Number,
+            isrender:Boolean
         },
         data:function(){
             return{

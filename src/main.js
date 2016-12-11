@@ -29,7 +29,7 @@ catch(e){
 //electron-app
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 960, height: 482,frame:false,maximizable:false,resizable:false,title:"AigisPlayer",icon:"main.ico"});
+  mainWindow = new BrowserWindow({width: 970, height: 512,frame:false,maximizable:false,resizable:false,title:"AigisPlayer",icon:"main.ico"});
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');

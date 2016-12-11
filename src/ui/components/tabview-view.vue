@@ -1,13 +1,19 @@
 <template>
     <div>
-        <tabview-view-child v-for='item in views' :src='item.src' v-show="item.show" :numid='item.numid'> </tabview-view-child>
+        <tabview-view-child v-for='item in views' :src='item.src' v-show="item.show" :numid='item.numid' :isrender='item.isrender' @select-game='selectFunction' :muted="!item.show" :active="item.show" :globalmuted="globalmuted"> </tabview-view-child>
     </div>
 </template>
 <script>
     import tabviewViewChild from './tabview-view-child.vue'
     export default {
         props:{
-            views:Array
+            views:Array,
+            globalmuted:Boolean
+        },
+        methods:{
+            selectFunction:function(game,id){
+                this.$emit('select-game',game,id);
+            }
         },
         components:{
             "tabview-view-child": tabviewViewChild
@@ -17,6 +23,6 @@
 
 <style scoped>
     div {
-        height:900px;
+        height:100%
     }
 </style>

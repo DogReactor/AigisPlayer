@@ -11,16 +11,23 @@
             }
         </style>
         <!--整体布局-->
-        <div id="playermain">
+        <div id="playermain" style="height : 100%">
             <navbar title="AigisPlayer" :custom-buttons="Buttons"></navbar>
-            <tabview :views-data="views" :tabs-data="tabs"> </tabview>
+            <div style="position:relative">
+                <tabview :tabview-data='tabviewData' @tab-change="tabChangeFunction" @select-game="selectGameFunction"> </tabview>
+                <slide-menu></slide-menu>
+            </div>
         </div>
         <!--引入主app-->
-        <script src="app.js"></script>
         <!--要挪走的，负责逻辑-->
         <script>
+            const fs = require('fs');
             const app = require('electron').remote.app;
             const currentwindow = require('electron').remote.getCurrentWindow();
+            const contents = currentwindow.webContents;
+            const session = require('electron').remote.require("electron").session;
+            const ses = session.defaultSession;
         </script>
+        <script src="app.js"></script>
     </body>
 </html>

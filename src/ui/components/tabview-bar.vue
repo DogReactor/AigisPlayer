@@ -1,6 +1,6 @@
 <template>
     <div>
-        <tabview-bar-button v-for="(item,index) in tabs" :title='item.title' @select='selectFunction(index)' :numid='item.numid' :selected='selected' @close='closeFunction(index)'> </tabview-bar-button>
+        <tabview-bar-button v-for="(item,index) in tabs" :title='item.title' @select='selectFunction(index)' :numid='item.numid' :isrender='item.isrender' :selected='selected' @close='closeFunction(index)'> </tabview-bar-button>
         <tabview-bar-addbutton @add="addFunction"></tabview-bar-addbutton>
     </div>
 </template>
