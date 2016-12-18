@@ -45,8 +45,9 @@
         border-top:0px;
     }
     p {
+        font-size:13px;
         margin:0px;
-        margin-top:4px;
+        margin-top:7px;
         text-align: center;
     }
 </style>

@@ -1,5 +1,6 @@
 <template>
-    <div id='config'>
+    <div class ='box'>
+        <titlebar title="全局设置"></titlebar>
         <collpase title="代理设置"> 
             <config-proxy></config-proxy>
         </collpase>
@@ -9,8 +10,12 @@
                 <range style="float:left" @change="zoomChangeFunction"></range>
             </div>
         </collpase>
-        <switcher text="静音" :isActive="this.$root.globalSetting.muted" @click="muteFunction"> </switcher>
-        <switcher text="保持在最前端" :isActive="this.$root.globalSetting.locked" @click="lockFunction" > </switcher>
+        <switcher text="静音" :is-active="this.$root.globalSetting.muted" @click="muteFunction"> </switcher>
+        <switcher text="保持在最前端" :is-active="this.$root.globalSetting.locked" @click="lockFunction" > </switcher>
+        <selectbar title="清理缓存" @click="cacheClearFunction"> </selectbar>
+        <collpase title="账号管理">
+            <account-modify> </account-modify>
+        </collpase>
     </div>
 </template>
 
@@ -19,13 +24,19 @@
     import switcher from './slide-menu-switch.vue'
     import range from './slide-menu-range.vue'
     import configProxy from './config-proxy.vue'
+    import accountModify from './account-modify.vue'
     import gameInfo from '../js/gameinfo.js'
+    import titlebar from './slide-menu-title.vue'
+    import selectbar from './slide-menu-selectbar.vue'
     export default {
         components:{
             collpase,
             switcher,
             range,
-            configProxy
+            configProxy,
+            titlebar,
+            accountModify,
+            selectbar
         },
         data:function(){
             return {
@@ -41,8 +52,8 @@
                 let id = this.$root.activeGameInfo.id;
                 let game = this.$root.tabviewData[id].selectedGame;
                 if(game == "none") return;
-                let height = gameInfo[game].height * zoom + 60;
-                let width = gameInfo[game].width * zoom + 10;
+                let height = parseInt(gameInfo[game].height * zoom + 60);
+                let width = parseInt(gameInfo[game].width * zoom);
                 currentwindow.setSize(width,height);
             },
             muteFunction: function(){
@@ -51,10 +62,13 @@
             lockFunction: function(){
                 this.$root.globalSetting.locked = !this.$root.globalSetting.locked;
                 currentwindow.setAlwaysOnTop(this.$root.globalSetting.locked);
+            },
+            cacheClearFunction: function(){
+                this.$root.eventHub.$emit('cache-clear');
             }
         }
     }
 </script>
 
-<style>
+<style scoped>
 </style>

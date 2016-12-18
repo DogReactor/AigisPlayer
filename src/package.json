@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "electron-windows-inno-installer": "^0.3.25"
+    "express": "^4.14.0",
+    "request": "^2.79.0"
   }
 }

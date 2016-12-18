@@ -29,6 +29,14 @@
                 this.isActive = !this.isActive;
                 this.$emit("fuck","fuck");
             }
+        },
+        mounted:function(){
+            this.$parent.$on('close',()=>{
+                this.isActive = false;
+            });
+            this.$parent.$on('open',()=>{
+                this.isActive = true;
+            });
         }
     }
 </script>
@@ -68,6 +76,9 @@
     .collpaseactive{
         background-color:darkslategray;
     }
+    .collpaseactive .collpaseactive{
+        background-color:darkslategray;
+    }
     .contentbox{
         max-height:0px;
         color:white;
@@ -75,6 +86,6 @@
         margin-left:10px;
     }
     .active{
-        max-height:400px;
+        max-height:1000px;
     }
 </style>

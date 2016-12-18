@@ -1,24 +1,32 @@
 <template>
-    <div class="top">
-        <div :is="currentView" @zoom-change="zoomChangeFunction">
-        </div>
+    <div class="top" :class="{active:isActive}">
+        <page-info></page-info>
+        <div :is="currentView" @zoom-change="zoomChangeFunction"></div>
     </div>
 </template>
 <script>
     import slideMenuConfig from './slide-menu-config.vue'
+    import pageInfo from './slide-menu-pageinfo.vue'
     export default {
         data:function(){
             return {
-                currentView : 'config'
+                currentView : 'config',
+                isActive : false
             }
         },
         components:{
-            config : slideMenuConfig
+            config : slideMenuConfig,
+            pageInfo : pageInfo
         },
         methods:{
             zoomChangeFunction: function(zoom){
                 this.$emit("zoom-change",zoom);
             }
+        },
+        mounted:function(){
+            this.$root.eventHub.$on('slideMenuActive',()=>{
+                this.isActive = !this.isActive;
+            });
         }
     }
 </script>
@@ -28,12 +36,19 @@
         width:300px;
         top:0;
         position:absolute;
-        left:-290px;
+        visibility: hidden;
+        left:-300px;
         transition:all 1s;
         z-index:50;
         background:lightslategray;
+        overflow:auto;
+        box-shadow:0px 0px 20px 1px black;
     }
-    .top:hover{
+    .active{
         left:0px;
+        visibility: unset;
+    }
+    ::-webkit-scrollbar{
+        width:0px;
     }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div style="position:relative;left:10px;">
+    <div style="position:relative;">
         <tabview-bar :tabs = 'tabviewData' @select='selectFunction' @add='addFunction' @close='closeFunction' :focus="selected"> </tabview-bar>
         <tabview-view :views = 'tabviewData' @select-game='selectGameFunction' :globalmuted='this.$root.globalSetting.muted'> </tabview-view>
     </div>
@@ -46,7 +46,9 @@
                     src: 'about:blank',
                     show: false,
                     selectedGame:'none',
-                    usingUser:-1
+                    usingUser:-1,
+                    titleLock:false,
+                    account:null
                 }
                 this.tabviewData.push(newTabview);
                 //ID自增

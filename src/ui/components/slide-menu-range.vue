@@ -17,7 +17,7 @@
         }
     }
 </script>
-<style>
+<style scoped>
     .box {
         height:30px;
         position:relative;

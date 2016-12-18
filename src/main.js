@@ -5,16 +5,24 @@ const http = require('http');
 const path = require('path');
 const ipcMain = electron.ipcMain;
 const fs = require('fs');
+const proxyServer = require('./backend/proxyServer.js');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
+const {session} = require('electron');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
-app.commandLine.appendSwitch('disable-accelerated-2d-canvas');
+
+//chrome指令
+app.commandLine.appendArgument('disable-accelerated-2d-canvas');
+app.commandLine.appendArgument('disable-web-security');
+//app.commandLine.appendSwitch('user-data-dir','/userdata');
+
+
 /*var proxyjson = fs.readFileSync('proxy.conf');
 try{
 	var proxy = JSON.parse(proxyjson);
@@ -25,6 +33,14 @@ catch(e){
 	
 }*/
 
+//代理服务器
+try{
+  fs.mkdirSync('cache');
+}
+catch(e){
+
+}
+proxyServer.createServer();
 
 //electron-app
 function createWindow () {
@@ -48,7 +64,32 @@ function createWindow () {
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
-app.on('ready', createWindow);
+app.on('ready', function(){
+  createWindow();
+  //设置代理
+  const filter = {
+    urls: ['http://assets.millennium-war.net/*']
+  };
+  session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
+    let url = details.url;
+    let path = url.replace("http://assets.millennium-war.net/","")
+    url = "http://127.0.0.1:19980/" + path;
+    let exist = false;
+    try{
+      exist = fs.statSync("cache/"+path).isFile();
+    }
+    catch(e){
+      exist = false;
+    }
+    if(exist){
+      //console.log('CacheExist Redirect to cacheServer ',path);
+      callback({cancel:false,redirectURL:url});
+    }
+    else{
+      callback({cancel:false});
+    }
+  });
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {

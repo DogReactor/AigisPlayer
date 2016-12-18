@@ -3,3 +3,6 @@ images
 image/
 app
 release
+proxy.conf
+user.conf
+cache

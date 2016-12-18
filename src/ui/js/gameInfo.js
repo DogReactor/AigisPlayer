@@ -23,6 +23,8 @@ export default {
     "none":{
         height:452,
         width:960,
-        title:'new Tab'
+        loginURL:'about:blank',
+        logoutURL:'about:blank',
+        title:'无'
     }
 }
