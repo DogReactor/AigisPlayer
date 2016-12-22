@@ -7,4 +7,7 @@ Use Electron+Vue+Webpack
     cd AigisPlayer
     npm install
     webpack
+    cd app
+    npm install
+    cd ..
     electron app
