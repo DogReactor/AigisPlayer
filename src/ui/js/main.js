@@ -255,8 +255,8 @@ const vm = new Vue({
     });
 
     eventHub.$on('XHR-xml-data',function(path,body){
-      //console.log(path);
-      //console.log(xml2json(body));
+      console.log(path);
+      console.log(xml2json(body));
     });
 
   },
