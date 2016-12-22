@@ -32,6 +32,16 @@ const vm = new Vue({
           //通知当前标签页刷新
           vm.$emit("refresh");
         }
+      },
+      //muted
+      {
+        img:"./static/img/small-music.png",
+        isRight:true,
+        enabled:true,
+        clickFunction:function(){
+          //Slience！
+          this.globalSetting.muted = !this.globalSetting.muted;
+        }
       }
     ],
     tabviewData:[
@@ -245,8 +255,8 @@ const vm = new Vue({
     });
 
     eventHub.$on('XHR-xml-data',function(path,body){
-      console.log(path);
-      console.log(body);
+      //console.log(path);
+      //console.log(xml2json(body));
     });
 
   },

@@ -18,7 +18,7 @@ let mainWindow;
 
 
 //chrome指令
-app.commandLine.appendArgument('disable-accelerated-2d-canvas');
+app.commandLine.appendSwitch('disable-accelerated-2d-canvas');
 app.commandLine.appendArgument('disable-web-security');
 //app.commandLine.appendSwitch('user-data-dir','/userdata');
 
