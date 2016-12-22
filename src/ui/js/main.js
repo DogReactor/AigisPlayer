@@ -4,6 +4,7 @@ import navbar from '../components/navbar.vue'
 import tabview from '../components/tabview.vue'
 import gameInfo from './gameinfo.js'
 import slideMenu from '../components/slide-menu.vue'
+import xml2json from './xml2json'
 
 Vue.use(VueRouter);
 const eventHub = new Vue();
@@ -242,6 +243,12 @@ const vm = new Vue({
         alert("清理缓存成功");
       });
     });
+
+    eventHub.$on('XHR-xml-data',function(path,body){
+      console.log(path);
+      console.log(body);
+    });
+
   },
   mounted: function(){
     eventHub.$emit('tabChanged',0);

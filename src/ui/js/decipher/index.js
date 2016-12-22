@@ -8,7 +8,7 @@ const {decompress} = require('./decompress');
 let reqMaps = null;
 
 module.exports = {
-    attach: (webContents) => {
+    attach: (webContents,eventHub) => {
         try {
             webContents.debugger.attach('1.1');
         } catch (err) {
@@ -22,7 +22,7 @@ module.exports = {
         webContents.debugger.on('message', (event, method, params) => {
             switch (method) {
                 case 'Network.requestWillBeSent':
-                    if (params.request.url.startsWith('https://all.millennium-war.net/') && params.request.method === 'POST') {
+                    if (params.request.url.startsWith('https://millennium-war.net/') && params.request.method === 'POST') {
                         reqMaps.set(params.requestId, params.request.url);
                     }
                     break;
@@ -31,8 +31,6 @@ module.exports = {
                         webContents.debugger.sendCommand('Network.getResponseBody', {
                             "requestId": params.requestId
                         }, (err, response) => {
-                            console.log(reqMaps.get(params.requestId));
-
                             let decoded = decodeXml(response.body);
                             if (decoded) {
                                 let decompressed = decompress(decoded);
@@ -40,11 +38,10 @@ module.exports = {
                                 for (let i = 0; i < decompressed.byteLength; i++) {
                                     body_str.push(String.fromCharCode(decompressed[i]));
                                 }
-                                console.log(body_str.join(''));
+                                eventHub.$emit('XHR-xml-data',reqMaps.get(params.requestId),body_str.join(''));
                             } else {
-                                console.log(response.body);
+                                eventHub.$emit('XHR-xml-data',reqMaps.get(params.requestId),response.body);
                             }                            
-                            
                             reqMaps.delete(params.requestId);
                         });
                     }
