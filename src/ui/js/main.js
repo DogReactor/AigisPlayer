@@ -6,6 +6,10 @@ import gameInfo from './gameinfo.js'
 import slideMenu from '../components/slide-menu.vue'
 import xml2json from './xml2json'
 
+const pluginEvent = {
+  'EeLcL7hN':'mission-success'
+}
+
 Vue.use(VueRouter);
 const eventHub = new Vue();
 const vm = new Vue({
@@ -255,10 +259,10 @@ const vm = new Vue({
     });
 
     eventHub.$on('XHR-xml-data',function(path,body){
+      path = path.slice(path.lastIndexOf('/')+1);
       console.log(path);
       console.log(xml2json(body));
     });
-
   },
   mounted: function(){
     eventHub.$emit('tabChanged',0);
