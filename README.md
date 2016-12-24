@@ -42,19 +42,20 @@ Use Electron+Vue+Webpack
 ###index.html:
 在script段插入
     const {ipcRenderer} = require('electron');
+
 通过ipnRenderer监听事件
 事件带有两个参数：obj(数据主体) tabId(数据来源的标签编号)
-    ipcRenderer.on('quest-start',(event,obj,tabId)=>{
 
+    ipcRenderer.on('quest-start',(event,obj,tabId)=>{   
     }
 ###现在支持的事件：
-  'quest-success' : 任务成功后结算时触发
-  'quest-start' ：任务开始时触发
-  'login-status' ： 游戏进入时触发
-  'login-status2' ： 游戏进入时触发
-  'inin-result' ： 委任出击结算时触发
-  'base-gacha-result' ： 基础抽卡时触发
-  'unit-move' ： 单位在兵营之间移动时触发
-  'allunits-info' ： 游戏进入时触发，内容为玩家拥有的所有单位的信息
-  'unit-sell' ： 单位隐退时触发
-  'buy-charisma' ： 购买魅力时触发
+    'quest-success' : 任务成功后结算时触发
+    'quest-start' ：任务开始时触发
+    'login-status' ： 游戏进入时触发
+    'login-status2' ： 游戏进入时触发
+    'inin-result' ： 委任出击结算时触发
+    'base-gacha-result' ： 基础抽卡时触发
+    'unit-move' ： 单位在兵营之间移动时触发
+    'allunits-info' ： 游戏进入时触发，内容为玩家拥有的所有单位的信息
+    'unit-sell' ： 单位隐退时触发
+    'buy-charisma' ： 购买魅力时触发
