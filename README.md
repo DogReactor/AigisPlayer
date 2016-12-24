@@ -16,7 +16,7 @@ Use Electron+Vue+Webpack
 ##关于插件
 插件系统现在为Alpha版，支持的功能和事件都非常少，且只能通过manifest设置来启动。今后会逐步更新。
 
-插件放置于程序目录下的plugins文件夹内，现阶段插件将以独立窗口的方式呈现，通过ipcRender事件监听接收数据
+插件放置于程序目录下的plugins文件夹内，现阶段插件将以独立窗口的方式呈现，通过ipcRender事件监听接收数据。
 ###目录结构为
     -Plugins
     |
