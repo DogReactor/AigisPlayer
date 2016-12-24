@@ -14,7 +14,7 @@ Use Electron+Vue+Webpack
     electron app
 
 ##关于插件
-插件系统现在为Alpha版，支持的功能和事件都非常少，会逐步更新
+插件系统现在为Alpha版，支持的功能和事件都非常少，且只能通过manifest设置来启动。今后会逐步更新。
 
 插件放置于程序目录下的plugins文件夹内，现阶段插件将以独立窗口的方式呈现，通过ipcRender事件监听接收数据
 ###目录结构为
@@ -25,12 +25,13 @@ Use Electron+Vue+Webpack
       -manifest.json
       -...(其他的文件)
 
-###mainfest.json:
+###manifest.json:
     {
         "pluginName":"statusMonitor",
         "author":"huazhu111",
         "version":"1.0.0",
         "description":"状态监控",
+        "enable":true,              //enable设置为true的插件将会在程序启动时立刻打开 --开发用--
         "entry":"index.html",       //插件入口点，必须为.html文件
         "windowOption":{            //插件窗口配置，详见 http://electron.atom.io/docs/api/browser-window
             "width":800,

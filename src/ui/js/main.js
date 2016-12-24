@@ -311,5 +311,7 @@ const vm = new Vue({
 const plugin = new pluginManager(eventHub);
 console.log(plugin);
 plugin.readPluginsInfo(fs,()=>{
-  
+  plugin.pluginsInfo.forEach((item,index)=>{
+    if(item.enable == true) plugin.activePlugin(index);
+  })
 });

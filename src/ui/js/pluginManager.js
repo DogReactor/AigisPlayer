@@ -26,6 +26,7 @@ pluginManager.prototype.readPluginsInfo = function(fs,callback){
 }
 
 pluginManager.prototype.activePlugin = function(index){
+    if(this.pluginsInfo[index] == undefined) return;
     if(this.pluginsInfo[index].actived == true) return;
     let opt = this.pluginsInfo[index].windowOption == undefined ? 
     {
