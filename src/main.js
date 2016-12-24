@@ -49,7 +49,7 @@ function createWindow () {
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
-  
+  console.log('file://' + __dirname + '/index.html');
   // Open the DevTools.
   //mainWindow.webContents.openDevTools();
   //mainWindow.setMenu(null);
@@ -72,6 +72,7 @@ app.on('ready', function(){
   };
   session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
     let url = details.url;
+    //console.log(url);
     let path = url.replace("http://assets.millennium-war.net/","")
     url = "http://127.0.0.1:19980/" + path;
     let exist = false;

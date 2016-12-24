@@ -57,14 +57,12 @@
                 //webview.openDevTools();
                 if(webview.getURL().indexOf('app_id')!=-1)
                 {
-                    console.log("Done",webview.getURL());
                     webview.send("catch");  //通知页面进行调整
-                    decipher.attach(webview.getWebContents(),this.$root.eventHub);
+                    decipher.attach(webview.getWebContents(),this.$root.eventHub,this.numid);
                 }
                 //自动输入用户名密码
                 if(webview.getURL().indexOf('login')!=-1 && webview.getURL().indexOf('logout')==-1){
                     if(this.account == null) return;
-                    console.log('autoLogin');
                     webview.send('login',{username:this.account.username,password:this.account.password});
                 }
             });
@@ -74,7 +72,7 @@
             });
             webview.addEventListener('did-fail-load',(event)=>{
                 console.log(event);
-                if(event.errorDescription == "" || event.errorDescription == "ok") return;
+                if(event.errorDescription == "" || event.errorDescription == "ok" || isMainFrame == false) return;
                 alert("页面加载失败 " + "\n错误描述：" + event.errorDescription +"\n" + "请检查网络连接和代理是否配置正确。");
             });
             this.$root.$on('refresh',()=>{

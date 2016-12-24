@@ -8,7 +8,7 @@ const {decompress} = require('./decompress');
 let reqMaps = null;
 
 module.exports = {
-    attach: (webContents,eventHub) => {
+    attach: (webContents,eventHub,id) => {
         try {
             webContents.debugger.attach('1.1');
             webContents.debugger.on('detach', (event, reason) => {
@@ -34,9 +34,9 @@ module.exports = {
                                     for (let i = 0; i < decompressed.byteLength; i++) {
                                         body_str.push(String.fromCharCode(decompressed[i]));
                                     }
-                                    eventHub.$emit('XHR-xml-data',reqMaps.get(params.requestId),body_str.join(''));
+                                    eventHub.$emit('XHR-xml-data',reqMaps.get(params.requestId),body_str.join(''),id);
                                 } else {
-                                    eventHub.$emit('XHR-xml-data',reqMaps.get(params.requestId),response.body);
+                                    eventHub.$emit('XHR-xml-data',reqMaps.get(params.requestId),response.body,id);
                                 }                            
                                 reqMaps.delete(params.requestId);
                             });

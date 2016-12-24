@@ -55,6 +55,7 @@ function getObj(data,tags){
             arr[cindex][childName] = applyType(value,childType);
         });
     });
+    if(arr.length == 1) return arr[0];
     return arr;
 }
 
@@ -65,6 +66,7 @@ function getArray(data,type){
         let value = data.slice(item.start,item.end);
         arr.push(applyType(value,type));
     });
+    if(arr.length == 1) return arr[0];
     return arr;
 }
 

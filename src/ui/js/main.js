@@ -5,13 +5,37 @@ import tabview from '../components/tabview.vue'
 import gameInfo from './gameinfo.js'
 import slideMenu from '../components/slide-menu.vue'
 import xml2json from './xml2json'
+import pluginManager from './pluginManager.js'
 
 const pluginEvent = {
-  'EeLcL7hN':'mission-success'
+  'EeLcL7hN':'quest-success',  //statusUpdate
+  'uD69xeaG':'quest-start',    //statusUpdate
+  'shxnpXtj':'login-status',   //statusUpdate
+  'qX5kSDt2':'login-status2',  //statusUpdate
+  '0kR1cNJJ':'inin-result',    //statusUpdate
+  'udh6JQRa':'base-gacha-result',
+  'bnz8xWXB':'unit-move',
+  'oS5aZ5ll':'allunits-info',
+  'pP8JgbjO':'unit-sell',
+  'igmn1XCf':'buy-charisma',
+  'QxZpjdfV':'none',
+  'uE23SxBr':'none',
+  'd4YRCAQa':'none',
+  'GRs733a4':'none',
+  'foi6moes':'none',
+  'TPCta1SK':'none',
+  'R5FHPbQb':'none',
+  'i4u2L2LJ':'none',
+  'Y0d4Yhj1':'none',
+  'E935RTof':'none',
+  'PeMDvjps':'none',
+  'jWbtv5NR':'none', //心跳
+  'AekvKZk6':'none',
 }
 
-Vue.use(VueRouter);
 const eventHub = new Vue();
+Vue.use(VueRouter);
+
 const vm = new Vue({
   el: '#playermain',
   components : {navbar,tabview,slideMenu},
@@ -42,7 +66,7 @@ const vm = new Vue({
         img:"./static/img/small-music.png",
         isRight:true,
         enabled:true,
-        clickFunction:function(){
+        clickFunction:()=>{
           //Slience！
           this.globalSetting.muted = !this.globalSetting.muted;
         }
@@ -125,7 +149,8 @@ const vm = new Vue({
       this.globalSetting.proxy.port = port;
       fs.writeFileSync('proxy.conf',JSON.stringify(this.globalSetting.proxy));
       if(this.globalSetting.proxy.enabled == false) return;
-      let proxyaddress = this.globalSetting.proxy.address + ":" + this.globalSetting.proxy.port;
+      //let proxyaddress = this.globalSetting.proxy.address + ":" + this.globalSetting.proxy.port;
+      let proxyaddress = 'socks5://' + this.globalSetting.proxy.address + ":" + this.globalSetting.proxy.port;
 			ses.setProxy(
         {
             proxyRules:proxyaddress,
@@ -175,7 +200,6 @@ const vm = new Vue({
       this.globalSetting.proxy.address = proxy.address != undefined ? proxy.address : "";
       this.globalSetting.proxy.port = proxy.port != undefined ? proxy.port : "";
       this.globalSetting.proxy.enabled = typeof proxy.enabled == "boolean" ? proxy.enabled : false;
-      this.setProxyEnabled();
     }
     catch(e){
       console.log(e);
@@ -258,13 +282,34 @@ const vm = new Vue({
       });
     });
 
-    eventHub.$on('XHR-xml-data',function(path,body){
+    eventHub.$on('XHR-xml-data',function(path,body,id){
       path = path.slice(path.lastIndexOf('/')+1);
-      console.log(path);
-      console.log(xml2json(body));
+      let type = pluginEvent[path];
+      if(type == undefined) {
+        console.log(path,xml2json(body));
+        return;
+      }
+      //Test
+      if(type == 'watch') {
+        console.log(path,xml2json(body));
+        return;
+      }
+      let obj = xml2json(body);
+      if(obj.DA != undefined) obj = obj.DA;
+      eventHub.$emit('new-game-data',{
+        type:type,
+        obj:obj,
+        tabId:id
+      });
     });
   },
   mounted: function(){
     eventHub.$emit('tabChanged',0);
   }
+});
+
+const plugin = new pluginManager(eventHub);
+console.log(plugin);
+plugin.readPluginsInfo(fs,()=>{
+  
 });
