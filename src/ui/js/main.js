@@ -21,7 +21,7 @@ const pluginEvent = {
   'QxZpjdfV':'none',
   'uE23SxBr':'none',
   'd4YRCAQa':'none',
-  'GRs733a4':'none',
+  'GRs733a4':'allcards-info',           //全单位信息
   'foi6moes':'none',
   'TPCta1SK':'none',
   'R5FHPbQb':'none',
@@ -150,7 +150,7 @@ const vm = new Vue({
       fs.writeFileSync('proxy.conf',JSON.stringify(this.globalSetting.proxy));
       if(this.globalSetting.proxy.enabled == false) return;
       //let proxyaddress = this.globalSetting.proxy.address + ":" + this.globalSetting.proxy.port;
-      proxyaddress = 'socks5://' + this.globalSetting.proxy.address + ":" + this.globalSetting.proxy.port;
+      let proxyaddress = 'socks5://' + this.globalSetting.proxy.address + ":" + this.globalSetting.proxy.port;
 			ses.setProxy(
         {
             proxyRules:proxyaddress,
