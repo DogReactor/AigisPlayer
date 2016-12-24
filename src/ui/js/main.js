@@ -68,7 +68,7 @@ const vm = new Vue({
         enabled:true,
         clickFunction:()=>{
           //Slience！
-          this.globalSetting.muted = !this.globalSetting.muted;
+          vm.globalSetting.muted = !vm.globalSetting.muted;
         }
       }
     ],
@@ -150,7 +150,7 @@ const vm = new Vue({
       fs.writeFileSync('proxy.conf',JSON.stringify(this.globalSetting.proxy));
       if(this.globalSetting.proxy.enabled == false) return;
       //let proxyaddress = this.globalSetting.proxy.address + ":" + this.globalSetting.proxy.port;
-      let proxyaddress = 'socks5://' + this.globalSetting.proxy.address + ":" + this.globalSetting.proxy.port;
+      proxyaddress = 'socks5://' + this.globalSetting.proxy.address + ":" + this.globalSetting.proxy.port;
 			ses.setProxy(
         {
             proxyRules:proxyaddress,

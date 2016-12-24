@@ -72,7 +72,7 @@
             });
             webview.addEventListener('did-fail-load',(event)=>{
                 console.log(event);
-                if(event.errorDescription == "" || event.errorDescription == "ok" || isMainFrame == false) return;
+                if(event.errorDescription == "" || event.errorDescription == "ok" || event.isMainFrame == false) return;
                 alert("页面加载失败 " + "\n错误描述：" + event.errorDescription +"\n" + "请检查网络连接和代理是否配置正确。");
             });
             this.$root.$on('refresh',()=>{
