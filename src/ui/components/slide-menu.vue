@@ -2,11 +2,13 @@
     <div class="top" :class="{active:isActive}">
         <page-info></page-info>
         <div :is="currentView" @zoom-change="zoomChangeFunction"></div>
+        <plugin-info :pluginsinfo="this.$root.pluginsInfo"></plugin-info>
     </div>
 </template>
 <script>
     import slideMenuConfig from './slide-menu-config.vue'
     import pageInfo from './slide-menu-pageinfo.vue'
+    import pluginInfo from './slide-menu-plugins.vue'
     export default {
         data:function(){
             return {
@@ -16,7 +18,8 @@
         },
         components:{
             config : slideMenuConfig,
-            pageInfo : pageInfo
+            pageInfo : pageInfo,
+            pluginInfo : pluginInfo
         },
         methods:{
             zoomChangeFunction: function(zoom){

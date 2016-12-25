@@ -15,6 +15,7 @@ pluginManager.prototype.readPluginsInfo = function(fs,callback){
             try{
                 let obj = JSON.parse(data);
                 obj.path = value;
+                obj.actived = false;
                 this.pluginsInfo.push(obj);
             }
             catch(e){
@@ -37,6 +38,7 @@ pluginManager.prototype.activePlugin = function(index){
     opt.webPreferences = {webSecurity:false};
     //打开插件窗口
     let win = new BrowserWindow(opt);
+    this.pluginsInfo[index].actived = true;
     this.pluginsInfo[index].win = win;
     let dirname = app.getAppPath();
     dirname = dirname.slice(0,dirname.lastIndexOf('\\'));
@@ -45,6 +47,8 @@ pluginManager.prototype.activePlugin = function(index){
         slashes: true,
         pathname: require('path').join(dirname, 'plugins',  this.pluginsInfo[index].path , this.pluginsInfo[index].entry)
     });
+    win.webContents.openDevTools();
+    win.setMenu(null);
     win.loadURL(url);
     let webcontent = win.webContents;
     //注册事件

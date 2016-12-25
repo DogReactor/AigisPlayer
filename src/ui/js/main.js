@@ -31,6 +31,9 @@ const pluginEvent = {
   'PeMDvjps':'none',
   'jWbtv5NR':'none', //心跳
   'AekvKZk6':'none',
+  'zzdfsknw':'present-info',
+  'eZ5wrQTH':'crystal-change',
+  'kgiqvp4a':'crystal-init'
 }
 
 const eventHub = new Vue();
@@ -99,7 +102,8 @@ const vm = new Vue({
       id:0
     },
     eventHub,
-    accounts:[]
+    accounts:[],
+    pluginsInfo:undefined
   },
   methods:{
     //切换标签时调整窗口大小
@@ -302,6 +306,10 @@ const vm = new Vue({
         tabId:id
       });
     });
+
+    eventHub.$on('active-plugin',function(index){
+      plugin.activePlugin(index);
+    })
   },
   mounted: function(){
     eventHub.$emit('tabChanged',0);
@@ -311,7 +319,5 @@ const vm = new Vue({
 const plugin = new pluginManager(eventHub);
 console.log(plugin);
 plugin.readPluginsInfo(fs,()=>{
-  plugin.pluginsInfo.forEach((item,index)=>{
-    if(item.enable == true) plugin.activePlugin(index);
-  })
+    vm.pluginsInfo = plugin.pluginsInfo;
 });
