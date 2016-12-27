@@ -61,7 +61,11 @@
                 //关闭标签页
                 let right = this.findNextRightRenderTab(index);
                 let navi = right == -1 ? this.findNextLeftRenderTab(index) : right; //是否是最后一个标签，是的话删除后切换到前一个标签
-                if(navi == -1) return;
+                if(navi == -1) {
+                    //最后一个标签的话，新建新标签并指向新标签
+                    navi = this.nextid;
+                    this.addFunction();
+                }
                 //切换到存在标签
                 this.selectFunction(navi);
                 //设置删除数据为不渲染

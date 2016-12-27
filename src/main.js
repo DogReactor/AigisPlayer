@@ -19,19 +19,6 @@ let mainWindow;
 
 //chrome指令
 app.commandLine.appendSwitch('disable-accelerated-2d-canvas');
-app.commandLine.appendArgument('disable-web-security');
-//app.commandLine.appendSwitch('user-data-dir','/userdata');
-
-
-/*var proxyjson = fs.readFileSync('proxy.conf');
-try{
-	var proxy = JSON.parse(proxyjson);
-	if(proxy.address != "" && proxy.port != "")
-		app.commandLine.appendSwitch('proxy-server',proxy.address + ":" + proxy.port);
-}
-catch(e){
-	
-}*/
 
 //代理服务器
 try{
@@ -59,6 +46,7 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null;
+    app.exit();
   });
 }
 

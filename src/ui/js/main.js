@@ -23,9 +23,9 @@ const pluginEvent = {
   'd4YRCAQa':'none',
   'GRs733a4':'allcards-info',           //全单位信息
   'foi6moes':'none',
-  'TPCta1SK':'none',
-  'R5FHPbQb':'none',
-  'i4u2L2LJ':'none',
+  'TPCta1SK':'time-init',
+  'R5FHPbQb':'watch',
+  'i4u2L2LJ':'orb-init',
   'Y0d4Yhj1':'none',
   'E935RTof':'none',
   'PeMDvjps':'none',
@@ -288,6 +288,7 @@ const vm = new Vue({
 
     eventHub.$on('XHR-xml-data',function(path,body,id){
       path = path.slice(path.lastIndexOf('/')+1);
+      //console.log(path,xml2json(body));
       let type = pluginEvent[path];
       if(type == undefined) {
         console.log(path,xml2json(body));

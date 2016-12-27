@@ -40,14 +40,16 @@ pluginManager.prototype.activePlugin = function(index){
     let win = new BrowserWindow(opt);
     this.pluginsInfo[index].actived = true;
     this.pluginsInfo[index].win = win;
-    let dirname = app.getAppPath();
-    dirname = dirname.slice(0,dirname.lastIndexOf('\\'));
+    let dirname = fs.realpathSync('.');
+    //let dirname = app.getAppPath();
+    //let dirname = app.getPath('exe');
+    //dirname = dirname.slice(0,dirname.lastIndexOf('\\'));
     let url = require('url').format({
         protocol: 'file',
         slashes: true,
         pathname: require('path').join(dirname, 'plugins',  this.pluginsInfo[index].path , this.pluginsInfo[index].entry)
     });
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
     win.setMenu(null);
     win.loadURL(url);
     let webcontent = win.webContents;
