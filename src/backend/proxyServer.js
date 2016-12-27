@@ -24,13 +24,12 @@ module.exports = {
                 console.log(body);
             }).pipe(res);
         });
-        try{
-            http.createServer(app).listen('19980',function(){
-                console.log('CreateProxyServer on 19980');
-            });
-        }
-        catch(e){
-            
-        }
+        var server = http.createServer(app);
+        server.on('error',(e)=>{
+            console.log(e);
+        });
+        server.listen('19980',function(){
+            console.log('listen at 19980');
+        });
     }
 }

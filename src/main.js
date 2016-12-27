@@ -27,8 +27,8 @@ try{
 catch(e){
 
 }
-proxyServer.createServer();
-
+  proxyServer.createServer();
+  
 //electron-app
 function createWindow () {
   // Create the browser window.
