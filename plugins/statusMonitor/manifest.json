@@ -1,8 +1,8 @@
 {
-    "pluginName":"王子监控(for LowB)",
+    "pluginName":"王子监控(LOWB专用版)",
     "author":"Yukimir",
     "version":"0.0.2",
-    "description":"监控体魅并警报(for LowB)",
+    "description":"监控体魅并警报(LowB专用)",
     "entry":"index.html",
     "enable":false,
     "windowOption":{

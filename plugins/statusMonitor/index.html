@@ -122,8 +122,8 @@
                 charismaTime = charisma == maxCharisma ? 0 : 180;
                 if(charisma == maxCharisma) {
                     notifier.notify({
-                        title:'LowB友情提示',
-                        message:'LowB你魅力溢出了',
+                        title:'给LowB的友情提示',
+                        message:'LowB你魅力炸了',
                         icon:path.join(__dirname,'lowb.gif'),
                         sound:'true'
                     });
@@ -134,8 +134,8 @@
                 staminaTime = stamina == maxStamina ? 0 : 3600;
                 if(charisma == maxCharisma) {
                     notifier.notify({
-                        title:'LowB友情提示',
-                        message:'LowB你体力溢出了',
+                        title:'给LowB的友情提示',
+                        message:'LowB你体力炸了',
                         icon:path.join(__dirname,'lowb.gif'),
                         sound:'true'
                     });
@@ -143,5 +143,7 @@
             }
             document.body.innerHTML = getHTML();
         },1000)
+        const currentwindow = require('electron').remote.getCurrentWindow();
+        currentwindow.openDevTools();
     </script>
 </html>

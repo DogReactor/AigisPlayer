@@ -1,6 +1,6 @@
 <template>
     <div v-if='isrender'>
-        <webview preload='./static/js/inject.js' :src.sync='src' v-show='show'> </webview>
+        <webview preload='./static/js/inject.js' src="about:blank" v-show='show'> </webview>
         <game-select @select="selectFunction" v-show='!show'> </game-select>
     </div>
 </template>
@@ -33,7 +33,9 @@
         methods:{
             selectFunction:function(game){
                 this.show = !this.show;
-                this.$emit('select-game',game,this.numid);
+                setTimeout(()=>{
+                    this.$emit('select-game',game,this.numid);
+                },500);
             }
         },
         watch:{
@@ -48,6 +50,11 @@
                     let webview = this.$el.children[0];
                     webview.setAudioMuted(!muted);
                 }
+            },
+            src:function(v){
+                let webview = this.$el.children[0];
+                console.log(v);
+                if(webview.loadURL != undefined) webview.loadURL(v);
             }
         },
         mounted: function(){

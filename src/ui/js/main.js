@@ -184,6 +184,11 @@ const vm = new Vue({
 			);
     },
     saveAccountList:function(){
+      this.saveConfigFile();
+    },
+    saveConfigFile:function(){
+      let obj = this.globalSetting;
+
       let arr = [];
       if(this.accounts.length == 0) return;
       for(let index in this.accounts){
@@ -197,11 +202,8 @@ const vm = new Vue({
         };
         arr.push(obj);
       }
-      this.saveConfigFile();
-    },
-    saveConfigFile:function(){
-      let obj = this.globalSetting;
-      obj.accounts = this.accounts;
+
+      obj.accounts = arr;
       fs.writeFileSync('config.conf',JSON.stringify(obj));
     }
   },
