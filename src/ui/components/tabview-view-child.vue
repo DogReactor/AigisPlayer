@@ -82,6 +82,7 @@
                 if(this.active) webview.loadURL(gameInfo[this.game].logoutURL);
             })
             eventHub.$on('zoom-change',(zoom)=>{
+                if(webview.setZoomFactor == undefined) return;
                 webview.setZoomFactor(zoom);
             });
 

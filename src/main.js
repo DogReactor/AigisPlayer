@@ -18,7 +18,17 @@ let mainWindow;
 
 
 //chrome指令
-app.commandLine.appendSwitch('disable-accelerated-2d-canvas');
+try{
+  let settingjson = fs.readFileSync('config.conf');
+  let setting = JSON.parse(settingjson);
+  if(setting.disableAccelerated == true) {
+    app.commandLine.appendSwitch('disable-accelerated-2d-canvas');
+    console.log('disable-Accelerated')
+  }
+}
+catch(e){
+
+}
 
 //代理服务器
 try{
@@ -28,7 +38,7 @@ catch(e){
 
 }
   proxyServer.createServer();
-  
+
 //electron-app
 function createWindow () {
   // Create the browser window.

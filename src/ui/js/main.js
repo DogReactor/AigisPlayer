@@ -92,10 +92,12 @@ const vm = new Vue({
       muted:false,
       locked:false,
       zoom:1,
+      disableAccelerated:false,
       proxy:{
         address:"",
         port:"",
-        enabled:false
+        enabled:false,
+        socks5:false
       }
     },
     activeGameInfo:{
@@ -149,12 +151,14 @@ const vm = new Vue({
       eventHub.$emit('gameSelected',id);
     },
     setProxy:function(address,port){
+      if(this.saveConfigFile == undefined) return;
       this.globalSetting.proxy.address = address;
       this.globalSetting.proxy.port = port;
-      fs.writeFileSync('proxy.conf',JSON.stringify(this.globalSetting.proxy));
+      this.saveConfigFile();
       if(this.globalSetting.proxy.enabled == false) return;
       //let proxyaddress = this.globalSetting.proxy.address + ":" + this.globalSetting.proxy.port;
-      let proxyaddress = 'socks5://' + this.globalSetting.proxy.address + ":" + this.globalSetting.proxy.port;
+      let proxyaddress = this.globalSetting.proxy.address + ":" + this.globalSetting.proxy.port;
+      if(this.globalSetting.proxy.socks5) proxyaddress = "socks5://" + proxyaddress;
 			ses.setProxy(
         {
             proxyRules:proxyaddress,
@@ -167,7 +171,8 @@ const vm = new Vue({
     },
     setProxyEnabled:function(){
       let proxyaddress = this.globalSetting.proxy.enabled ? this.globalSetting.proxy.address + ":" + this.globalSetting.proxy.port : "direct://";
-      fs.writeFileSync('proxy.conf',JSON.stringify(this.globalSetting.proxy));
+      if(this.globalSetting.proxy.socks5 && proxyaddress != "direct://") proxyaddress = "socks5://" + proxyaddress;
+      if(this.saveConfigFile != undefined) this.saveConfigFile();
 			ses.setProxy(
         {
             proxyRules:proxyaddress,
@@ -192,31 +197,34 @@ const vm = new Vue({
         };
         arr.push(obj);
       }
-      fs.writeFileSync('user.conf',JSON.stringify(arr));
+      this.saveConfigFile();
+    },
+    saveConfigFile:function(){
+      let obj = this.globalSetting;
+      obj.accounts = this.accounts;
+      fs.writeFileSync('config.conf',JSON.stringify(obj));
     }
   },
   created: function(){
     //这么早？？？
-    //加载代理配置文件
+    //加载配置文件
     try{
-      let proxyjson = fs.readFileSync('proxy.conf',{encoding:'utf8'});
-      let proxy = JSON.parse(proxyjson);
+      let settingjson = fs.readFileSync('config.conf',{encoding:'utf8'});
+      let setting = JSON.parse(settingjson);
+      let proxy = setting.proxy;
       this.globalSetting.proxy.address = proxy.address != undefined ? proxy.address : "";
       this.globalSetting.proxy.port = proxy.port != undefined ? proxy.port : "";
       this.globalSetting.proxy.enabled = typeof proxy.enabled == "boolean" ? proxy.enabled : false;
+      this.globalSetting.proxy.socks5 = typeof proxy.socks5 == "boolean" ? proxy.socks5 : false;
+      this.setProxyEnabled();
+
+      this.globalSetting.disableAccelerated = typeof setting.disableAccelerated == "boolean" ? setting.disableAccelerated : false;
+      this.globalSetting.zoom = setting.zoom != undefined ? setting.zoom : 1;
+      this.accounts = setting.accounts instanceof Array ? setting.accounts : [];
     }
     catch(e){
       console.log(e);
-      console.log("代理信息读取失败");
-    }
-    //加载用户信息
-    try{
-      let userjson = fs.readFileSync('user.conf',{encoding:'utf8'});
-      this.accounts = JSON.parse(userjson);
-    }
-    catch(e){
-      console.log(e);
-      console.log("用户信息读取失败");
+      console.log("设置读取失败");
     }
     //绑定监听事件
     eventHub.$on('pageinfo-tagname-change',(e)=>{

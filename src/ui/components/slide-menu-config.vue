@@ -7,11 +7,12 @@
         <collpase title="缩放">
             <div>
                 <div style="float:left">（{{parseInt(zoom)+parseInt('100')}}％）</div>
-                <range style="float:left" @change="zoomChangeFunction"></range>
+                <range style="float:left" :value = "zoom" @change="zoomChangeFunction"></range>
             </div>
         </collpase>
         <switcher text="静音" :is-active="this.$root.globalSetting.muted" @click="muteFunction"> </switcher>
         <switcher text="保持在最前端" :is-active="this.$root.globalSetting.locked" @click="lockFunction" > </switcher>
+        <switcher text="禁用硬件加速（需重启）" :is-active="this.$root.globalSetting.disableAccelerated" @click="acceleratFunction"> </switcher>
         <selectbar title="清理缓存" @click="cacheClearFunction"> </selectbar>
         <collpase title="账号管理">
             <account-modify> </account-modify>
@@ -45,12 +46,13 @@
         },
         methods:{
             zoomChangeFunction: function(value){
-                this.zoom = value;
-                this.$root.globalSetting.zoom = (parseInt(value) + 100) / 100;
-                let zoom = this.$root.globalSetting.zoom;
+                this.zoom = parseInt(value);
+                this.$root.globalSetting.zoom = (this.zoom + 100) / 100;
+                let zoom = (this.zoom + 100) / 100;
                 this.$root.eventHub.$emit("zoom-change",this.$root.globalSetting.zoom);
                 let id = this.$root.activeGameInfo.id;
                 let game = this.$root.tabviewData[id].selectedGame;
+                this.$root.saveConfigFile();
                 if(game == "none") return;
                 let height = parseInt(gameInfo[game].height * zoom + 60);
                 let width = parseInt(gameInfo[game].width * zoom);
@@ -65,7 +67,14 @@
             },
             cacheClearFunction: function(){
                 this.$root.eventHub.$emit('cache-clear');
+            },
+            acceleratFunction: function(){
+                this.$root.globalSetting.disableAccelerated = !this.$root.globalSetting.disableAccelerated;
+                this.$root.saveConfigFile();
             }
+        },
+        mounted:function(){
+            this.zoom = this.$root.globalSetting.zoom * 100 - 100;
         }
     }
 </script>
