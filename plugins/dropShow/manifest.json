@@ -1,0 +1,16 @@
+{
+    "pluginName":"dropShow",
+    "author":"Yukimir",
+    "version":"1.0.0",
+    "description":"战斗掉落记录",
+    "entry":"index.html",
+    "enable":true,
+    "windowOption":{
+        "width":550,
+        "height":160,
+        "title":"掉落记录",
+        "minimizable":true,
+        "maximizable":false,
+        "resizable":false
+    }
+}

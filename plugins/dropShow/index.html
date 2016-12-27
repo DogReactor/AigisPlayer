@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div>
+            黑给监控中……
+        </div>
+        <div id="main">
+
+        </div>
+        <button id="btn">清空</button>
+    </body>
+    <script>
+        const {ipcRenderer} = require('electron');
+        let main = document.getElementById('main');
+        let btn = document.getElementById('btn');
+        let htmltext = "";
+        btn.addEventListener('click',()=>{
+            main.innerHTML = "";
+        });
+        ipcRenderer.on('quest-start',(event,obj,tabId)=>{
+            let lottery = obj.LOTTERY.Result;
+            let s = "";
+            let date = new Date();
+            lottery.forEach((value,index)=>{
+                s += ((value == 1 ? "掉落" : "空气") + "&nbsp;&nbsp;");
+            });
+            htmltext = date.toLocaleString() + "&nbsp;&nbsp;&nbsp;掉落总数为:" + lottery.length + "&nbsp;&nbsp;&nbsp;" + "结果为：" ;
+            htmltext += s;
+            htmltext += "<br>";
+            main.innerHTML += htmltext;
+        });
+    </script>
+</html>
