@@ -3,12 +3,16 @@
         <page-info></page-info>
         <div :is="currentView" @zoom-change="zoomChangeFunction"></div>
         <plugin-info :pluginsinfo="this.$root.pluginsInfo"></plugin-info>
+        <title-bar title="版本信息"></title-bar>
+        <text-bar title="普通版" text="1.3.9.4"></text-bar>
     </div>
 </template>
 <script>
     import slideMenuConfig from './slide-menu-config.vue'
     import pageInfo from './slide-menu-pageinfo.vue'
     import pluginInfo from './slide-menu-plugins.vue'
+    import textBar from './slide-menu-text.vue'
+    import titleBar from './slide-menu-title.vue'
     export default {
         data:function(){
             return {
@@ -19,7 +23,9 @@
         components:{
             config : slideMenuConfig,
             pageInfo : pageInfo,
-            pluginInfo : pluginInfo
+            pluginInfo : pluginInfo,
+            textBar,
+            titleBar
         },
         methods:{
             zoomChangeFunction: function(zoom){

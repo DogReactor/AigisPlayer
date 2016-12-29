@@ -6,6 +6,8 @@ const path = require('path');
 const ipcMain = electron.ipcMain;
 const fs = require('fs');
 const proxyServer = require('./backend/proxyServer.js');
+const request = require('request');
+const {dialog} = require('electron');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -87,6 +89,20 @@ app.on('ready', function(){
     }
     else{
       callback({cancel:false});
+    }
+  });
+  // 版本更新检测
+  let appPath = app.getAppPath();
+  let version = JSON.parse(fs.readFileSync(appPath + '/package.json','utf-8')).version;
+  request('http://aigis.hloli.moe:9980/version',(err,res,body)=>{
+    let v = JSON.parse(body);
+    if (v.normal != version) {
+      dialog.showMessageBox({
+        type:'info',
+        buttons:[],
+        title:'检测到新版本',
+        message:'有新版本啦！\n\n新版本：普通版 ' + v.normal +'\n\n更新内容为:' + v.normalDetail
+      });
     }
   });
 });
