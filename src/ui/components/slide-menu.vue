@@ -4,7 +4,7 @@
         <div :is="currentView" @zoom-change="zoomChangeFunction"></div>
         <plugin-info :pluginsinfo="this.$root.pluginsInfo"></plugin-info>
         <title-bar title="版本信息"></title-bar>
-        <text-bar title="普通版" text="1.3.9.4"></text-bar>
+        <text-bar title="普通版" text="1.3.12"></text-bar>
     </div>
 </template>
 <script>
