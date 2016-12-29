@@ -8,3 +8,5 @@ user.conf
 cache
 dist
 setting.conf
+release-normal
+release-green
