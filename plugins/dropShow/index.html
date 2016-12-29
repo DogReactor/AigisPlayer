@@ -38,6 +38,7 @@
             console.log(obj);
         });
         ipcRenderer.on('allcards-info',(event,obj,tabId)=>{
+            console.log(obj);
             let arr = [];
             obj.Rare.forEach((value,index)=>{
                 arr[index] = {

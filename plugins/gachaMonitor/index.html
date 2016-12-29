@@ -4,18 +4,23 @@
     </head>
     <body>
         <div>
-            母猪监控中……
+            监控中……<br>
+            （昵称为空则不会向服务器发送记录，在统计页面通过此昵称进行查询)<br>
+            （决斗ID请询问决斗主办者）<br>
         </div>
         <div>
-            <input type="text" id="user"/>
-            <input type="text" id="event"/>
+            <input type="text" id="user" placeholder="昵称"/>
+            <input type="text" id="event" placeholder="决斗ID"/>
         </div>
         <div id="main">
 
         </div>
         <button id="btn">清空</button>
         <script>
-        const {ipcRenderer} = require('electron');
+        //'use strict';
+        var currentwindow = require('electron').remote.getCurrentWindow();
+        currentwindow.openDevTools();
+        const ipcRenderer = require('electron').ipcRenderer;
         const fs = require('fs');
         const cardsInfo = require('./cardsInfo.js');
         const $ = require('jquery');
@@ -23,6 +28,7 @@
         let btn = document.getElementById('btn');
         let htmltext = "";
         btn.addEventListener('click',()=>{
+            alert('NO');
             main.innerHTML = "";
         });
         ipcRenderer.on('base-gacha-result',(event,obj,tabId)=>{
@@ -37,8 +43,6 @@
         ipcRenderer.on('premium2-gacha-result',(event,obj,tabId)=>{
             addRecord('プレミアム２召喚',parseInt(obj.PPU.A1));
         });
-        const currentwindow = require('electron').remote.getCurrentWindow();
-        currentwindow.openDevTools();
 
         function addRecord(type,id){
             let t = new Date();
@@ -49,7 +53,6 @@
             main.innerHTML += s;
             let user = $('#user').val();
             let event = $('#event').val();
-            console.log(user);
             if(user == "") return;
             let ajaxObj = {
                 id:id,
@@ -57,9 +60,8 @@
                 gachatype:type,
                 user:user
             };
-            let url = "http://localhost:9980/record";
+            let url = "http://221.131.68.230:9980/record";
             if(event != "") url += "/event/" + event;
-            console.log(url);
             $.ajax({
                 url:url,
                 type:'POST',
