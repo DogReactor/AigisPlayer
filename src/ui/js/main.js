@@ -193,7 +193,6 @@ const vm = new Vue({
       let obj = this.globalSetting;
 
       let arr = [];
-      if(this.accounts.length == 0) return;
       for(let index in this.accounts){
         //跳过空的
         if(this.accounts[index].username == "" && this.accounts[index].password == "") continue;
