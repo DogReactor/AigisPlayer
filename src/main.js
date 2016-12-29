@@ -6,7 +6,6 @@ const path = require('path');
 const ipcMain = electron.ipcMain;
 const fs = require('fs');
 const proxyServer = require('./backend/proxyServer.js');
-const assetList = require('./backend/assetList.js');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.

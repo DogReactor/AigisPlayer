@@ -7,10 +7,7 @@ Use Electron+Vue+Webpack
     cd AigisPlayer
     npm install
     webpack
-<<<<<<< HEAD
-=======
     cd dist
->>>>>>> newWorld
     cd app
     npm install
     cd ..
