@@ -25,6 +25,7 @@
         let exp = 0;
         let money = 0;
         ipcRenderer.on('time-init',(event,obj,tabId)=>{
+            console.log(obj);
             today = obj.A5;
             update();
         });

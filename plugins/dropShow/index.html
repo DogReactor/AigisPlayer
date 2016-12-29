@@ -13,6 +13,8 @@
     </body>
     <script>
         const {ipcRenderer} = require('electron');
+        const fs = require('fs');
+        let name = require('./name.js');
         let main = document.getElementById('main');
         let btn = document.getElementById('btn');
         let htmltext = "";
@@ -20,6 +22,7 @@
             main.innerHTML = "";
         });
         ipcRenderer.on('quest-start',(event,obj,tabId)=>{
+            console.log(obj);
             let lottery = obj.LOTTERY.Result;
             let s = "";
             let date = new Date();
@@ -31,5 +34,20 @@
             htmltext += "<br>";
             main.innerHTML += htmltext;
         });
+        ipcRenderer.on('quest-success',(event,obj,tabId)=>{
+            console.log(obj);
+        });
+        ipcRenderer.on('allcards-info',(event,obj,tabId)=>{
+            let arr = [];
+            obj.Rare.forEach((value,index)=>{
+                arr[index] = {
+                    rare:value,
+                    name:name[index]
+                }
+            });
+            fs.writeFile('cardsInfo.js','module.exports='+JSON.stringify(arr),(err)=>{});
+        })
+        const currentwindow = require('electron').remote.getCurrentWindow();
+        currentwindow.openDevTools();
     </script>
 </html>

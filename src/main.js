@@ -6,6 +6,7 @@ const path = require('path');
 const ipcMain = electron.ipcMain;
 const fs = require('fs');
 const proxyServer = require('./backend/proxyServer.js');
+const assetList = require('./backend/assetList.js');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -70,8 +71,9 @@ app.on('ready', function(){
   };
   session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
     let url = details.url;
-    //console.log(url);
     let path = url.replace("http://assets.millennium-war.net/","")
+    console.log(path);
+    //console.log(assetList[path]);
     url = "http://127.0.0.1:19980/" + path;
     let exist = false;
     try{

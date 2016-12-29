@@ -14,11 +14,14 @@ const pluginEvent = {
   'qX5kSDt2':'login-status2',  //statusUpdate
   '0kR1cNJJ':'inin-result',    //statusUpdate
   'udh6JQRa':'base-gacha-result',
+  'btcntJ9k':'sp-gacha-result',
+  'yObCmn3i':'premium1-gacha-result',
+  'plXgfdjN':'premium2-gacha-result',
   'bnz8xWXB':'unit-move',
   'oS5aZ5ll':'allunits-info',
   'pP8JgbjO':'unit-sell',
   'igmn1XCf':'buy-charisma',
-  'QxZpjdfV':'none',
+  'QxZpjdfV':'all-daily-quest-info',
   'uE23SxBr':'none',
   'd4YRCAQa':'none',
   'GRs733a4':'allcards-info',           //全单位信息

@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div>
+            母猪监控中……
+        </div>
+        <div>
+            <input type="text" id="user"/>
+            <input type="text" id="event"/>
+        </div>
+        <div id="main">
+
+        </div>
+        <button id="btn">清空</button>
+        <script>
+        const {ipcRenderer} = require('electron');
+        const fs = require('fs');
+        const cardsInfo = require('./cardsInfo.js');
+        const $ = require('jquery');
+        let main = document.getElementById('main');
+        let btn = document.getElementById('btn');
+        let htmltext = "";
+        btn.addEventListener('click',()=>{
+            main.innerHTML = "";
+        });
+        ipcRenderer.on('base-gacha-result',(event,obj,tabId)=>{
+            addRecord('ベース召喚',parseInt(obj.PPU.A1));
+        });
+        ipcRenderer.on('sp-gacha-result',(event,obj,tabId)=>{
+            addRecord('ＳＰ召喚',parseInt(obj.PPU.A1));
+        });
+        ipcRenderer.on('premium1-gacha-result',(event,obj,tabId)=>{
+            addRecord('プレミアム１召喚',parseInt(obj.PPU.A1));
+        });
+        ipcRenderer.on('premium2-gacha-result',(event,obj,tabId)=>{
+            addRecord('プレミアム２召喚',parseInt(obj.PPU.A1));
+        });
+        const currentwindow = require('electron').remote.getCurrentWindow();
+        currentwindow.openDevTools();
+
+        function addRecord(type,id){
+            let t = new Date();
+            let s = "";
+            let name = cardsInfo[id-1].name;
+            let rare = cardsInfo[id-1].rare + 1;
+            s = s.concat(t.toLocaleString(),"   召唤类型：",type,"   召唤结果：",name,"   稀有度：",rare,"<br>");
+            main.innerHTML += s;
+            let user = $('#user').val();
+            let event = $('#event').val();
+            console.log(user);
+            if(user == "") return;
+            let ajaxObj = {
+                id:id,
+                time:t.getTime(),
+                gachatype:type,
+                user:user
+            };
+            let url = "http://localhost:9980/record";
+            if(event != "") url += "/event/" + event;
+            console.log(url);
+            $.ajax({
+                url:url,
+                type:'POST',
+                data:ajaxObj
+            });
+        }
+    </script>
+    </body>
+</html>
