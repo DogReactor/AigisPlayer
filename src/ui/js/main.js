@@ -4,40 +4,6 @@ import navbar from '../components/navbar.vue'
 import tabview from '../components/tabview.vue'
 import gameInfo from './gameinfo.js'
 import slideMenu from '../components/slide-menu.vue'
-import xml2json from './xml2json'
-import pluginManager from './pluginManager.js'
-
-const pluginEvent = {
-  'EeLcL7hN':'quest-success',  //statusUpdate
-  'uD69xeaG':'quest-start',    //statusUpdate
-  'shxnpXtj':'login-status',   //statusUpdate
-  'qX5kSDt2':'login-status2',  //statusUpdate
-  '0kR1cNJJ':'inin-result',    //statusUpdate
-  'udh6JQRa':'base-gacha-result',
-  'btcntJ9k':'sp-gacha-result',
-  'yObCmn3i':'premium1-gacha-result',
-  'plXgfdjN':'premium2-gacha-result',
-  'bnz8xWXB':'unit-move',
-  'oS5aZ5ll':'allunits-info',
-  'pP8JgbjO':'unit-sell',
-  'igmn1XCf':'buy-charisma',
-  'QxZpjdfV':'all-daily-quest-info',
-  'uE23SxBr':'none',
-  'd4YRCAQa':'none',
-  'GRs733a4':'allcards-info',           //全单位信息
-  'foi6moes':'none',
-  'TPCta1SK':'time-init',
-  'R5FHPbQb':'watch',
-  'i4u2L2LJ':'orb-init',
-  'Y0d4Yhj1':'none',
-  'E935RTof':'none',
-  'PeMDvjps':'none',
-  'jWbtv5NR':'none', //心跳
-  'AekvKZk6':'none',
-  'zzdfsknw':'present-info',
-  'eZ5wrQTH':'crystal-change',
-  'kgiqvp4a':'crystal-init'
-}
 
 const eventHub = new Vue();
 Vue.use(VueRouter);
@@ -107,8 +73,7 @@ const vm = new Vue({
       id:0
     },
     eventHub,
-    accounts:[],
-    pluginsInfo:undefined
+    accounts:[]
   },
   methods:{
     //切换标签时调整窗口大小
@@ -191,9 +156,7 @@ const vm = new Vue({
     },
     saveConfigFile:function(){
       let obj = this.globalSetting;
-
       let arr = [];
-      if(this.accounts.length == 0) return;
       for(let index in this.accounts){
         //跳过空的
         if(this.accounts[index].username == "" && this.accounts[index].password == "") continue;
@@ -205,7 +168,6 @@ const vm = new Vue({
         };
         arr.push(obj);
       }
-
       obj.accounts = arr;
       fs.writeFileSync('config.conf',JSON.stringify(obj));
     }
@@ -298,31 +260,8 @@ const vm = new Vue({
         alert("清理缓存成功");
       });
     });
-
-    eventHub.$on('XHR-xml-data',function(path,body,id){
-      path = path.slice(path.lastIndexOf('/')+1);
-      let type = pluginEvent[path];
-      if(type == undefined || type == 'none') return;
-      let obj = xml2json(body);
-      if(obj.DA != undefined) obj = obj.DA;
-      eventHub.$emit('new-game-data',{
-        type:type,
-        obj:obj,
-        tabId:id
-      });
-    });
-
-    eventHub.$on('active-plugin',function(index){
-      plugin.activePlugin(index);
-    })
   },
   mounted: function(){
     eventHub.$emit('tabChanged',0);
   }
-});
-
-const plugin = new pluginManager(eventHub);
-console.log(plugin);
-plugin.readPluginsInfo(fs,()=>{
-    vm.pluginsInfo = plugin.pluginsInfo;
 });

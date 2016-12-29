@@ -8,7 +8,6 @@
 <script>
     import gameSelect from './game-select.vue'
     import gameInfo from '../js/gameinfo.js'
-    import decipher from '../js/decipher'
     export default {
         props:{
             src:String,
@@ -65,7 +64,6 @@
                 if(webview.getURL().indexOf('app_id')!=-1)
                 {
                     webview.send("catch");  //通知页面进行调整
-                    decipher.attach(webview.getWebContents(),this.$root.eventHub,this.numid);
                 }
                 //自动输入用户名密码
                 if(webview.getURL().indexOf('login')!=-1 && webview.getURL().indexOf('logout')==-1){

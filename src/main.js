@@ -5,7 +5,6 @@ const http = require('http');
 const path = require('path');
 const ipcMain = electron.ipcMain;
 const fs = require('fs');
-const proxyServer = require('./backend/proxyServer.js');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -29,15 +28,6 @@ try{
 catch(e){
 
 }
-
-//代理服务器
-try{
-  fs.mkdirSync('cache');
-}
-catch(e){
-
-}
-  proxyServer.createServer();
 
 //electron-app
 function createWindow () {
@@ -68,27 +58,7 @@ app.on('ready', function(){
   const filter = {
     urls: ['http://assets.millennium-war.net/*']
   };
-  session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
-    let url = details.url;
-    let path = url.replace("http://assets.millennium-war.net/","")
-    console.log(path);
-    //console.log(assetList[path]);
-    url = "http://127.0.0.1:19980/" + path;
-    let exist = false;
-    try{
-      exist = fs.statSync("cache/"+path).isFile();
-    }
-    catch(e){
-      exist = false;
-    }
-    if(exist){
-      //console.log('CacheExist Redirect to cacheServer ',path);
-      callback({cancel:false,redirectURL:url});
-    }
-    else{
-      callback({cancel:false});
-    }
-  });
+
 });
 
 // Quit when all windows are closed.
