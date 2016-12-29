@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div>
+            监控中……<br>
+            （昵称为空则不会向服务器发送记录，在统计页面通过此昵称进行查询)<br>
+            （决斗ID请询问决斗主办者）<br>
+        </div>
+        <div>
+            <input type="text" id="user" placeholder="昵称"/>
+            <input type="text" id="event" placeholder="决斗ID"/>
+        </div>
+        <div id="main">
+
+        </div>
+        <button id="btn">清空</button>
+        <script>
+        //'use strict';
+        var currentwindow = require('electron').remote.getCurrentWindow();
+        currentwindow.openDevTools();
+        const ipcRenderer = require('electron').ipcRenderer;
+        const fs = require('fs');
+        const cardsInfo = require('./cardsInfo.js');
+        const $ = require('jquery');
+        let main = document.getElementById('main');
+        let btn = document.getElementById('btn');
+        let htmltext = "";
+        btn.addEventListener('click',()=>{
+            alert('NO');
+            main.innerHTML = "";
+        });
+        ipcRenderer.on('base-gacha-result',(event,obj,tabId)=>{
+            addRecord('ベース召喚',parseInt(obj.PPU.A1));
+        });
+        ipcRenderer.on('sp-gacha-result',(event,obj,tabId)=>{
+            addRecord('ＳＰ召喚',parseInt(obj.PPU.A1));
+        });
+        ipcRenderer.on('premium1-gacha-result',(event,obj,tabId)=>{
+            addRecord('プレミアム１召喚',parseInt(obj.PPU.A1));
+        });
+        ipcRenderer.on('premium2-gacha-result',(event,obj,tabId)=>{
+            addRecord('プレミアム２召喚',parseInt(obj.PPU.A1));
+        });
+
+        function addRecord(type,id){
+            let t = new Date();
+            let s = "";
+            let name = cardsInfo[id-1].name;
+            let rare = cardsInfo[id-1].rare + 1;
+            s = s.concat(t.toLocaleString(),"   召唤类型：",type,"   召唤结果：",name,"   稀有度：",rare,"<br>");
+            main.innerHTML += s;
+            let user = $('#user').val();
+            let event = $('#event').val();
+            if(user == "") return;
+            let ajaxObj = {
+                id:id,
+                time:t.getTime(),
+                gachatype:type,
+                user:user
+            };
+            let url = "http://221.131.68.230:9980/record";
+            if(event != "") url += "/event/" + event;
+            $.ajax({
+                url:url,
+                type:'POST',
+                data:ajaxObj
+            });
+        }
+    </script>
+    </body>
+</html>

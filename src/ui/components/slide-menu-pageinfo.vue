@@ -33,7 +33,6 @@
         methods:{
             dataRefresh:function(id){
                 this.gameTitle = gameInfo[this.$root.tabviewData[id].selectedGame].title;
-                console.log(this.$root.tabviewData[id].title);
                 this.tabTitle = this.$root.tabviewData[id].title;
                 let account = this.$root.tabviewData[id].account;
                 if(account == null) this.usingAccount = "无";

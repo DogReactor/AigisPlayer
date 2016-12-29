@@ -1,6 +1,6 @@
 <template>
     <div v-if='isrender'>
-        <webview preload='./static/js/inject.js' :src.sync='src' v-show='show'> </webview>
+        <webview preload='./static/js/inject.js' src="about:blank" v-show='show'> </webview>
         <game-select @select="selectFunction" v-show='!show'> </game-select>
     </div>
 </template>
@@ -33,7 +33,9 @@
         methods:{
             selectFunction:function(game){
                 this.show = !this.show;
-                this.$emit('select-game',game,this.numid);
+                setTimeout(()=>{
+                    this.$emit('select-game',game,this.numid);
+                },500);
             }
         },
         watch:{
@@ -48,6 +50,11 @@
                     let webview = this.$el.children[0];
                     webview.setAudioMuted(!muted);
                 }
+            },
+            src:function(v){
+                let webview = this.$el.children[0];
+                console.log(v);
+                if(webview.loadURL != undefined) webview.loadURL(v);
             }
         },
         mounted: function(){
@@ -57,14 +64,12 @@
                 //webview.openDevTools();
                 if(webview.getURL().indexOf('app_id')!=-1)
                 {
-                    console.log("Done",webview.getURL());
                     webview.send("catch");  //通知页面进行调整
-                    decipher.attach(webview.getWebContents(),this.$root.eventHub);
+                    decipher.attach(webview.getWebContents(),this.$root.eventHub,this.numid);
                 }
                 //自动输入用户名密码
                 if(webview.getURL().indexOf('login')!=-1 && webview.getURL().indexOf('logout')==-1){
                     if(this.account == null) return;
-                    console.log('autoLogin');
                     webview.send('login',{username:this.account.username,password:this.account.password});
                 }
             });
@@ -74,7 +79,7 @@
             });
             webview.addEventListener('did-fail-load',(event)=>{
                 console.log(event);
-                if(event.errorDescription == "" || event.errorDescription == "ok") return;
+                if(event.errorDescription == "" || event.errorDescription == "ok" || event.isMainFrame == false) return;
                 alert("页面加载失败 " + "\n错误描述：" + event.errorDescription +"\n" + "请检查网络连接和代理是否配置正确。");
             });
             this.$root.$on('refresh',()=>{
@@ -84,6 +89,7 @@
                 if(this.active) webview.loadURL(gameInfo[this.game].logoutURL);
             })
             eventHub.$on('zoom-change',(zoom)=>{
+                if(webview.setZoomFactor == undefined) return;
                 webview.setZoomFactor(zoom);
             });
 

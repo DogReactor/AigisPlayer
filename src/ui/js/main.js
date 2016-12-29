@@ -5,9 +5,43 @@ import tabview from '../components/tabview.vue'
 import gameInfo from './gameinfo.js'
 import slideMenu from '../components/slide-menu.vue'
 import xml2json from './xml2json'
+import pluginManager from './pluginManager.js'
 
-Vue.use(VueRouter);
+const pluginEvent = {
+  'EeLcL7hN':'quest-success',  //statusUpdate
+  'uD69xeaG':'quest-start',    //statusUpdate
+  'shxnpXtj':'login-status',   //statusUpdate
+  'qX5kSDt2':'login-status2',  //statusUpdate
+  '0kR1cNJJ':'inin-result',    //statusUpdate
+  'udh6JQRa':'base-gacha-result',
+  'btcntJ9k':'sp-gacha-result',
+  'yObCmn3i':'premium1-gacha-result',
+  'plXgfdjN':'premium2-gacha-result',
+  'bnz8xWXB':'unit-move',
+  'oS5aZ5ll':'allunits-info',
+  'pP8JgbjO':'unit-sell',
+  'igmn1XCf':'buy-charisma',
+  'QxZpjdfV':'all-daily-quest-info',
+  'uE23SxBr':'none',
+  'd4YRCAQa':'none',
+  'GRs733a4':'allcards-info',           //全单位信息
+  'foi6moes':'none',
+  'TPCta1SK':'time-init',
+  'R5FHPbQb':'watch',
+  'i4u2L2LJ':'orb-init',
+  'Y0d4Yhj1':'none',
+  'E935RTof':'none',
+  'PeMDvjps':'none',
+  'jWbtv5NR':'none', //心跳
+  'AekvKZk6':'none',
+  'zzdfsknw':'present-info',
+  'eZ5wrQTH':'crystal-change',
+  'kgiqvp4a':'crystal-init'
+}
+
 const eventHub = new Vue();
+Vue.use(VueRouter);
+
 const vm = new Vue({
   el: '#playermain',
   components : {navbar,tabview,slideMenu},
@@ -38,9 +72,9 @@ const vm = new Vue({
         img:"./static/img/small-music.png",
         isRight:true,
         enabled:true,
-        clickFunction:function(){
+        clickFunction:()=>{
           //Slience！
-          this.globalSetting.muted = !this.globalSetting.muted;
+          vm.globalSetting.muted = !vm.globalSetting.muted;
         }
       }
     ],
@@ -61,17 +95,20 @@ const vm = new Vue({
       muted:false,
       locked:false,
       zoom:1,
+      disableAccelerated:false,
       proxy:{
         address:"",
         port:"",
-        enabled:false
+        enabled:false,
+        socks5:false
       }
     },
     activeGameInfo:{
       id:0
     },
     eventHub,
-    accounts:[]
+    accounts:[],
+    pluginsInfo:undefined
   },
   methods:{
     //切换标签时调整窗口大小
@@ -117,11 +154,14 @@ const vm = new Vue({
       eventHub.$emit('gameSelected',id);
     },
     setProxy:function(address,port){
+      if(this.saveConfigFile == undefined) return;
       this.globalSetting.proxy.address = address;
       this.globalSetting.proxy.port = port;
-      fs.writeFileSync('proxy.conf',JSON.stringify(this.globalSetting.proxy));
+      this.saveConfigFile();
       if(this.globalSetting.proxy.enabled == false) return;
+      //let proxyaddress = this.globalSetting.proxy.address + ":" + this.globalSetting.proxy.port;
       let proxyaddress = this.globalSetting.proxy.address + ":" + this.globalSetting.proxy.port;
+      if(this.globalSetting.proxy.socks5) proxyaddress = "socks5://" + proxyaddress;
 			ses.setProxy(
         {
             proxyRules:proxyaddress,
@@ -134,7 +174,8 @@ const vm = new Vue({
     },
     setProxyEnabled:function(){
       let proxyaddress = this.globalSetting.proxy.enabled ? this.globalSetting.proxy.address + ":" + this.globalSetting.proxy.port : "direct://";
-      fs.writeFileSync('proxy.conf',JSON.stringify(this.globalSetting.proxy));
+      if(this.globalSetting.proxy.socks5 && proxyaddress != "direct://") proxyaddress = "socks5://" + proxyaddress;
+      if(this.saveConfigFile != undefined) this.saveConfigFile();
 			ses.setProxy(
         {
             proxyRules:proxyaddress,
@@ -146,6 +187,11 @@ const vm = new Vue({
 			);
     },
     saveAccountList:function(){
+      this.saveConfigFile();
+    },
+    saveConfigFile:function(){
+      let obj = this.globalSetting;
+
       let arr = [];
       if(this.accounts.length == 0) return;
       for(let index in this.accounts){
@@ -159,32 +205,31 @@ const vm = new Vue({
         };
         arr.push(obj);
       }
-      fs.writeFileSync('user.conf',JSON.stringify(arr));
+
+      obj.accounts = arr;
+      fs.writeFileSync('config.conf',JSON.stringify(obj));
     }
   },
   created: function(){
     //这么早？？？
-    //加载代理配置文件
+    //加载配置文件
     try{
-      let proxyjson = fs.readFileSync('proxy.conf',{encoding:'utf8'});
-      let proxy = JSON.parse(proxyjson);
+      let settingjson = fs.readFileSync('config.conf',{encoding:'utf8'});
+      let setting = JSON.parse(settingjson);
+      let proxy = setting.proxy;
       this.globalSetting.proxy.address = proxy.address != undefined ? proxy.address : "";
       this.globalSetting.proxy.port = proxy.port != undefined ? proxy.port : "";
       this.globalSetting.proxy.enabled = typeof proxy.enabled == "boolean" ? proxy.enabled : false;
+      this.globalSetting.proxy.socks5 = typeof proxy.socks5 == "boolean" ? proxy.socks5 : false;
       this.setProxyEnabled();
+
+      this.globalSetting.disableAccelerated = typeof setting.disableAccelerated == "boolean" ? setting.disableAccelerated : false;
+      this.globalSetting.zoom = setting.zoom != undefined ? setting.zoom : 1;
+      this.accounts = setting.accounts instanceof Array ? setting.accounts : [];
     }
     catch(e){
       console.log(e);
-      console.log("代理信息读取失败");
-    }
-    //加载用户信息
-    try{
-      let userjson = fs.readFileSync('user.conf',{encoding:'utf8'});
-      this.accounts = JSON.parse(userjson);
-    }
-    catch(e){
-      console.log(e);
-      console.log("用户信息读取失败");
+      console.log("设置读取失败");
     }
     //绑定监听事件
     eventHub.$on('pageinfo-tagname-change',(e)=>{
@@ -254,13 +299,30 @@ const vm = new Vue({
       });
     });
 
-    eventHub.$on('XHR-xml-data',function(path,body){
-      //console.log(path);
-      //console.log(xml2json(body));
+    eventHub.$on('XHR-xml-data',function(path,body,id){
+      path = path.slice(path.lastIndexOf('/')+1);
+      let type = pluginEvent[path];
+      if(type == undefined || type == 'none') return;
+      let obj = xml2json(body);
+      if(obj.DA != undefined) obj = obj.DA;
+      eventHub.$emit('new-game-data',{
+        type:type,
+        obj:obj,
+        tabId:id
+      });
     });
 
+    eventHub.$on('active-plugin',function(index){
+      plugin.activePlugin(index);
+    })
   },
   mounted: function(){
     eventHub.$emit('tabChanged',0);
   }
+});
+
+const plugin = new pluginManager(eventHub);
+console.log(plugin);
+plugin.readPluginsInfo(fs,()=>{
+    vm.pluginsInfo = plugin.pluginsInfo;
 });

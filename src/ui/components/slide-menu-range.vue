@@ -1,19 +1,25 @@
 <template>
     <div class="box">
-        <input type="range" v-model="value" min="-20" max="50" step="10"/>
+        <input type="range" v-model="values" min="-20" max="50" step="10"/>
     </div>
 </template>
 <script>
     export default {
         data:function(){
             return {
-                value:0
+                values:0
             }
         },
+        props:{
+            value:Number    
+        },
         watch:{
-            value:function(newValue){
+            values:function(newValue){
                 this.$emit("change",newValue);
             }
+        },
+        mounted:function(){
+            this.values = this.value;
         }
     }
 </script>

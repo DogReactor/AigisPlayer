@@ -6,11 +6,12 @@ const path = require('path');
 const ipcMain = electron.ipcMain;
 const fs = require('fs');
 const proxyServer = require('./backend/proxyServer.js');
+const assetList = require('./backend/assetList.js');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
-const {session} = require('electron');
+const session = require('electron').session;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -18,20 +19,17 @@ let mainWindow;
 
 
 //chrome指令
-app.commandLine.appendSwitch('disable-accelerated-2d-canvas');
-app.commandLine.appendArgument('disable-web-security');
-//app.commandLine.appendSwitch('user-data-dir','/userdata');
-
-
-/*var proxyjson = fs.readFileSync('proxy.conf');
 try{
-	var proxy = JSON.parse(proxyjson);
-	if(proxy.address != "" && proxy.port != "")
-		app.commandLine.appendSwitch('proxy-server',proxy.address + ":" + proxy.port);
+  let settingjson = fs.readFileSync('config.conf');
+  let setting = JSON.parse(settingjson);
+  if(setting.disableAccelerated == true) {
+    app.commandLine.appendSwitch('disable-accelerated-2d-canvas');
+    console.log('disable-Accelerated')
+  }
 }
 catch(e){
-	
-}*/
+
+}
 
 //代理服务器
 try{
@@ -40,16 +38,16 @@ try{
 catch(e){
 
 }
-proxyServer.createServer();
+  proxyServer.createServer();
 
 //electron-app
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 970, height: 512,frame:false,maximizable:false,resizable:false,title:"AigisPlayer",icon:"main.ico"});
+  mainWindow = new BrowserWindow({width: 970, height: 512,frame:false,maximizable:false,resizable:false,title:"AigisPlayer"});
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
-  
+  console.log('file://' + __dirname + '/index.html');
   // Open the DevTools.
   //mainWindow.webContents.openDevTools();
   //mainWindow.setMenu(null);
@@ -59,6 +57,7 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null;
+    app.exit();
   });
 }
 
@@ -73,6 +72,8 @@ app.on('ready', function(){
   session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
     let url = details.url;
     let path = url.replace("http://assets.millennium-war.net/","")
+    console.log(path);
+    //console.log(assetList[path]);
     url = "http://127.0.0.1:19980/" + path;
     let exist = false;
     try{

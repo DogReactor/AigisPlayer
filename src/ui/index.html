@@ -23,10 +23,12 @@
         <script>
             const fs = require('fs');
             const app = require('electron').remote.app;
+            const BrowserWindow = require('electron').remote.BrowserWindow;
             const currentwindow = require('electron').remote.getCurrentWindow();
             const contents = currentwindow.webContents;
             const session = require('electron').remote.require("electron").session;
             const ses = session.defaultSession;
+            const ipcRenderer = require('electron').ipcRenderer;
         </script>
         <script src="app.js"></script>
     </body>

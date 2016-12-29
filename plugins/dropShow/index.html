@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div>
+            黑给监控中……
+        </div>
+        <div id="main">
+
+        </div>
+        <button id="btn">清空</button>
+    </body>
+    <script>
+        const {ipcRenderer} = require('electron');
+        const fs = require('fs');
+        let name = require('./name.js');
+        let main = document.getElementById('main');
+        let btn = document.getElementById('btn');
+        let htmltext = "";
+        btn.addEventListener('click',()=>{
+            main.innerHTML = "";
+        });
+        ipcRenderer.on('quest-start',(event,obj,tabId)=>{
+            console.log(obj);
+            let lottery = obj.LOTTERY.Result;
+            let s = "";
+            let date = new Date();
+            lottery.forEach((value,index)=>{
+                s += ((value == 1 ? "掉落" : "空气") + "&nbsp;&nbsp;");
+            });
+            htmltext = date.toLocaleString() + "&nbsp;&nbsp;&nbsp;掉落总数为:" + lottery.length + "&nbsp;&nbsp;&nbsp;" + "结果为：" ;
+            htmltext += s;
+            htmltext += "<br>";
+            main.innerHTML += htmltext;
+        });
+        ipcRenderer.on('quest-success',(event,obj,tabId)=>{
+            console.log(obj);
+        });
+        ipcRenderer.on('allcards-info',(event,obj,tabId)=>{
+            console.log(obj);
+            let arr = [];
+            obj.Rare.forEach((value,index)=>{
+                arr[index] = {
+                    rare:value,
+                    name:name[index]
+                }
+            });
+            fs.writeFile('cardsInfo.js','module.exports='+JSON.stringify(arr),(err)=>{});
+        })
+        const currentwindow = require('electron').remote.getCurrentWindow();
+        currentwindow.openDevTools();
+    </script>
+</html>

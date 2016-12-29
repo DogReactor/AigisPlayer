@@ -11,6 +11,7 @@
             </div>
         </div>
         <div>
+            <switcher text="这是一个Socks5代理" @click="socks5Function" :isActive="this.$root.globalSetting.proxy.socks5"></switcher>
             <switcher text="启用" @click="clickFunction" :isActive="this.$root.globalSetting.proxy.enabled"></switcher>
         </div>
     </div>
@@ -31,6 +32,10 @@
         methods:{
             clickFunction: function(){
                 this.$root.globalSetting.proxy.enabled = !this.$root.globalSetting.proxy.enabled;
+                this.$root.setProxyEnabled();
+            },
+            socks5Function: function(){
+                this.$root.globalSetting.proxy.socks5 = !this.$root.globalSetting.proxy.socks5;
                 this.$root.setProxyEnabled();
             }
         },
