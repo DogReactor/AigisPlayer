@@ -2,11 +2,15 @@
     <div class="top" :class="{active:isActive}">
         <page-info></page-info>
         <div :is="currentView" @zoom-change="zoomChangeFunction"></div>
+        <title-bar title="版本信息"></title-bar>
+        <text-bar title="绿色版" text="1.0.0"></text-bar>
     </div>
 </template>
 <script>
     import slideMenuConfig from './slide-menu-config.vue'
     import pageInfo from './slide-menu-pageinfo.vue'
+    import titleBar from './slide-menu-title.vue'
+    import textBar from './slide-menu-text.vue'
     export default {
         data:function(){
             return {
@@ -16,7 +20,9 @@
         },
         components:{
             config : slideMenuConfig,
-            pageInfo : pageInfo
+            pageInfo : pageInfo,
+            textBar,
+            titleBar
         },
         methods:{
             zoomChangeFunction: function(zoom){

@@ -10,6 +10,8 @@ const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 const session = require('electron').session;
+const request = require('request');
+const dialog = require('electron').dialog;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -54,10 +56,26 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 app.on('ready', function(){
   createWindow();
-  //设置代理
-  const filter = {
-    urls: ['http://assets.millennium-war.net/*']
-  };
+  try{
+    let apppath = app.getAppPath();
+    let version = JSON.parse(fs.readFileSync(apppath + '/package.json','utf8')).version;
+    // 获取版本信息
+    request('http://aigis.hloli.moe:9980/version',function(err,res,body){
+      console.log(version);
+      let v = JSON.parse(body);
+      if(v.green != version){
+        dialog.showMessageBox({
+          buttons:[],
+          type:'info',
+          title:'新版本提示',
+          message:'有新版本发布了！\n\n新版本：AigisPlayer绿色版' + v.green + '\n\n更新说明：' + v.greenDetail
+        });
+      }
+    });
+  }
+  catch(e){
+    console.log(e);
+  }
 
 });
 
