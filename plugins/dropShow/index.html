@@ -14,6 +14,8 @@
     <script>
         const {ipcRenderer} = require('electron');
         const fs = require('fs');
+        const questsInfo = require('./questInfo.js');
+        const cardsInfo = require('./cardsInfo.js');
         let name = require('./name.js');
         let main = document.getElementById('main');
         let btn = document.getElementById('btn');
@@ -22,12 +24,25 @@
             main.innerHTML = "";
         });
         ipcRenderer.on('quest-start',(event,obj,tabId)=>{
-            console.log(obj);
             let lottery = obj.LOTTERY.Result;
+            let questId = obj.QR.QuestID;
+            console.log(questId);
+            let questInfo = questsInfo[questId];
+            let resultName = null;
+            if(questInfo !== undefined) {
+                resultName = [];
+                resultName.push(cardsInfo[questInfo.Treasure1-1] === undefined ? questInfo.Treasure1 : cardsInfo[questInfo.Treasure1-1].name);
+                resultName.push(cardsInfo[questInfo.Treasure2-1] === undefined ? questInfo.Treasure2 : cardsInfo[questInfo.Treasure2-1].name);
+                resultName.push(cardsInfo[questInfo.Treasure3-1] === undefined ? questInfo.Treasure3 : cardsInfo[questInfo.Treasure3-1].name);
+                resultName.push(cardsInfo[questInfo.Treasure4-1] === undefined ? questInfo.Treasure4 : cardsInfo[questInfo.Treasure4-1].name);
+                resultName.push(cardsInfo[questInfo.Treasure5-1] === undefined ? questInfo.Treasure5 : cardsInfo[questInfo.Treasure5-1].name);
+            }
+            console.log(resultName);
             let s = "";
             let date = new Date();
             lottery.forEach((value,index)=>{
-                s += ((value == 1 ? "掉落" : "空气") + "&nbsp;&nbsp;");
+                if(resultName !== null) s += (resultName[index] + '(' + (value == 1 ? "掉落" : "空气") + ")&nbsp;&nbsp;");
+                else s += ((value == 1 ? "掉落" : "空气") + "&nbsp;&nbsp;");
             });
             htmltext = date.toLocaleString() + "&nbsp;&nbsp;&nbsp;掉落总数为:" + lottery.length + "&nbsp;&nbsp;&nbsp;" + "结果为：" ;
             htmltext += s;
@@ -37,7 +52,18 @@
         ipcRenderer.on('quest-success',(event,obj,tabId)=>{
             console.log(obj);
         });
-        ipcRenderer.on('allcards-info',(event,obj,tabId)=>{
+        /*ipcRenderer.on('all-quest-info',(event,obj,tabId)=>{
+            let arr = {};
+            for(let key in obj){
+                let item = obj[key];
+                item.forEach((value,index)=>{
+                    if(arr[obj.QuestID[index]] === undefined) arr[obj.QuestID[index]] = {};
+                    arr[obj.QuestID[index]][key] = value;
+                });
+            }
+            fs.writeFile('questInfo.js','module.exports='+JSON.stringify(arr),(err)=>{});
+        })*/
+        /*ipcRenderer.on('allcards-info',(event,obj,tabId)=>{
             console.log(obj);
             let arr = [];
             obj.Rare.forEach((value,index)=>{
@@ -47,7 +73,7 @@
                 }
             });
             fs.writeFile('cardsInfo.js','module.exports='+JSON.stringify(arr),(err)=>{});
-        })
+        })*/
         const currentwindow = require('electron').remote.getCurrentWindow();
         currentwindow.openDevTools();
     </script>

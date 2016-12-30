@@ -21,7 +21,7 @@ const pluginEvent = {
   'oS5aZ5ll':'allunits-info',
   'pP8JgbjO':'unit-sell',
   'igmn1XCf':'buy-charisma',
-  'QxZpjdfV':'all-daily-quest-info',
+  'QxZpjdfV':'all-quest-info',
   'uE23SxBr':'none',
   'd4YRCAQa':'none',
   'GRs733a4':'allcards-info',           //全单位信息
