@@ -14,7 +14,7 @@ module.exports = {
   // 编译的文件路径
   output: {
       //`dist`文件夹
-    path: './dist/app',
+    path: './dist-green/app',
     // 文件 `build.js` 即 dist/build.js
     filename: 'app.js'
   },

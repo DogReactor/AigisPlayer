@@ -1,12 +1,12 @@
 {
-  "name": "AigisPlayer",
-  "version": "1.3.4",
+  "name": "GreenAigisPlayer",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron app",
-    "package": "electron-packager ./dist/app AigisPlayer --platform=win32 --arch=all --out=release-green --version 0.36.11 --overwrite --icon=./main.ico"
+    "package": "electron-packager ./dist-green/app AigisPlayer --platform=win32 --arch=all --out=release-green --version 0.36.11 --overwrite --icon=./main.ico"
   },
   "author": "Yukimr",
   "license": "ISC",
