@@ -24,6 +24,7 @@ module.exports = {
             let test = true;
             let b = buffer[i];
             for (let j = 1; j < head.length; j++) {
+                // aaaaa aaaaa bbbbb bbbbb
                 let testVal = b ^ buffer[i + j];
                 let canon = startByte ^ head.charCodeAt(j);
                 if (testVal !== canon) {

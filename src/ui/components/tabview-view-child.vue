@@ -1,6 +1,6 @@
 <template>
-    <div v-if='isrender'>
-        <webview preload='./static/js/inject.js' src="about:blank" v-show='show'> </webview>
+    <div class="container" v-if='isrender'>
+        <webview preload='./static/js/inject.js' src="about:blank" v-show='show' disablewebsecurity> </webview>
         <game-select @select="selectFunction" v-show='!show'> </game-select>
     </div>
 </template>
@@ -60,7 +60,10 @@
         mounted: function(){
             let webview = this.$el.children[0];
             let eventHub = this.$root.eventHub;
+            let frames = [];
+            let webcontents = null;
             webview.addEventListener('dom-ready', () => {
+                webcontents = webview.getWebContents();
                 //webview.openDevTools();
                 if(webview.getURL().indexOf('app_id')!=-1)
                 {
@@ -82,12 +85,58 @@
                 if(event.errorDescription == "" || event.errorDescription == "ok" || event.isMainFrame == false) return;
                 alert("页面加载失败 " + "\n错误描述：" + event.errorDescription +"\n" + "请检查网络连接和代理是否配置正确。");
             });
+            webview.addEventListener('ipc-message',(event)=>{
+                console.log(event.channel);
+                if(event.channel === "start-add-frames"){
+                    frames = []
+                }
+                if(event.channel === "add-new-frame"){
+                    frames.push(event.args[0]);
+                }
+                if(event.channel === "finish-add-frames"){
+                    console.log('Finished');
+                    console.log(frames);
+                }
+            });
             this.$root.$on('refresh',()=>{
                 if(this.active) webview.reload();
             });
             this.$root.eventHub.$on('deepFresh',()=>{
                 if(this.active) webview.loadURL(gameInfo[this.game].logoutURL);
             })
+            this.$root.eventHub.$on('start-record',()=>{
+                webcontents.endFrameSubscription();
+                let lasttime = 0;
+                frames = [];
+                webcontents.beginFrameSubscription((frameBuffer,dirtyRect)=>{
+                    //先采集后处理，靴靴
+                    frames.push({
+                        frameBuffer:frameBuffer,
+                        width:dirtyRect.width,
+                        height:dirtyRect.height
+                    });
+                });
+            });
+            this.$root.eventHub.$on('stop-record',()=>{
+                if(frames.length === 0) return;
+                let length = frames.length
+                webcontents.endFrameSubscription();
+                //frameBuffer BGRA <-Fuck
+                //Use WebWorker --Use workers to convert not one ;It would make electron crash
+                workerHandle(frames,0,this,[]);
+
+                /*let w = new Worker('./static/js/BGRA-RGBA.worker.js');
+                let self = this;
+                w.onmessage = (event)=>{
+                    if(event.data.type === "progress") console.log(event.data.data,length);
+                    if(event.data.type === "result") {
+                        self.$root.imgDatas = event.data.data;
+                        self.$root.openGifEditor();
+                    }
+                }
+                w.postMessage(frames);
+                frames = [];*/
+            });
             eventHub.$on('zoom-change',(zoom)=>{
                 if(webview.setZoomFactor == undefined) return;
                 webview.setZoomFactor(zoom);
@@ -95,9 +144,29 @@
 
         }
     }
+
+    function workerHandle(frames,index,vm,imgDatas){
+        let w = new Worker('./static/js/BGRA-RGBA.worker.js');
+        w.onmessage = (event)=>{
+            console.log(index + 1,frames.length);
+            imgDatas.push(event.data);
+            index++;
+            if(index === frames.length){
+                vm.$root.imgDatas = imgDatas;
+                vm.$root.openGifEditor();
+            }
+            else{
+                workerHandle(frames,index,vm,imgDatas);
+            }
+        }
+        w.postMessage(frames[index]);
+    }
 </script>
 
 <style scoped>
+    .container{
+        height:100%;
+    }
     webview{
         height:inherit;
     }

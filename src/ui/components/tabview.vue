@@ -1,5 +1,5 @@
 <template>
-    <div style="position:relative;">
+    <div>
         <tabview-bar :tabs = 'tabviewData' @select='selectFunction' @add='addFunction' @close='closeFunction' :focus="selected"> </tabview-bar>
         <tabview-view :views = 'tabviewData' @select-game='selectGameFunction' :globalmuted='this.$root.globalSetting.muted'> </tabview-view>
     </div>

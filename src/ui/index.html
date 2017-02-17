@@ -14,6 +14,7 @@
         <div id="playermain" style="height : 100%">
             <navbar title="AigisPlayer" :custom-buttons="Buttons"></navbar>
             <div style="position:absolute;top:30px;bottom:0;width:100%">
+                <gif-editor :imgdatas="imgDatas" :show="isEditorShow"> </gif-editor>
                 <tabview :tabview-data='tabviewData' @tab-change="tabChangeFunction" @select-game="selectGameFunction"> </tabview>
                 <slide-menu></slide-menu>
             </div>
@@ -29,6 +30,7 @@
             const session = require('electron').remote.require("electron").session;
             const ses = session.defaultSession;
             const ipcRenderer = require('electron').ipcRenderer;
+            const GIF = require('./static/js/gif/gif.js');
         </script>
         <script src="app.js"></script>
     </body>

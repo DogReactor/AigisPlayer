@@ -6,6 +6,7 @@ const path = require('path');
 const ipcMain = electron.ipcMain;
 const fs = require('fs');
 const proxyServer = require('./backend/proxyServer.js');
+const fileList = require('./backend/fileList.js');
 const request = require('request');
 const {dialog} = require('electron');
 // Module to control application life.
@@ -18,6 +19,9 @@ const session = require('electron').session;
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
+
+app.commandLine.appendSwitch('disable-web-security');
+app.commandLine.appendSwitch('user-data-dir');
 
 //chrome指令
 try{
@@ -44,13 +48,25 @@ catch(e){
 //electron-app
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 970, height: 512,frame:false,maximizable:false,resizable:false,title:"AigisPlayer"});
+  mainWindow = new BrowserWindow(
+    {
+      width: 960,
+      height: 512,
+      frame:false,
+      "node-integration": "iframe",
+      "web-preferences": {
+        "web-security": false
+      },
+      maximizable:false,
+      resizable:false,
+      title:"AigisPlayer"
+    });
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
   console.log('file://' + __dirname + '/index.html');
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
   //mainWindow.setMenu(null);
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
@@ -73,7 +89,9 @@ app.on('ready', function(){
   session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
     let url = details.url;
     let path = url.replace("http://assets.millennium-war.net/","")
-    console.log(path);
+    for(let i in fileList){
+      if(path == fileList[i].path && (fileList[i].fileName == "pcev03.aar" || fileList[i].fileName == "prev03.aar")) console.log(fileList[i]);
+    }
     //console.log(assetList[path]);
     url = "http://127.0.0.1:19980/" + path;
     let exist = false;
