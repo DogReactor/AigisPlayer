@@ -214,7 +214,6 @@ const vm = new Vue({
     },
     saveConfigFile:function(){
       let obj = this.globalSetting;
-
       let arr = [];
       for(let index in this.accounts){
         //跳过空的
@@ -230,6 +229,7 @@ const vm = new Vue({
 
       obj.accounts = arr;
       fs.writeFileSync('config.conf',JSON.stringify(obj));
+      console.log('保存成功');
     },
     openGifEditor:function(){
       this.isEditorShow = true;
