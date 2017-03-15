@@ -2,7 +2,9 @@
 千年战争Aigis On Desktop
 
 Use Electron+Vue+Webpack
-##Installation
+
+Installation
+
     git clone https://github.com/huazhu111/AigisPlayer.git
     cd AigisPlayer
     npm install
@@ -13,11 +15,15 @@ Use Electron+Vue+Webpack
     cd ..
     electron app
 
-##关于插件
-插件系统现在为Alpha版，支持的功能和事件都非常少，且只能通过manifest设置来启动。今后会逐步更新。
 
-插件放置于程序目录下的plugins文件夹内，现阶段插件将以独立窗口的方式呈现，通过ipcRender事件监听接收数据。
-###目录结构为
+关于插件
+
+    插件系统现在为Alpha版，支持的功能和事件都非常少，且只能通过manifest设置来启动。今后会逐步更新。
+
+    插件放置于程序目录下的plugins文件夹内，现阶段插件将以独立窗口的方式呈现，通过ipcRender事件监听接收数据。
+
+目录结构为
+
     -Plugins
     |
      -PluginName
@@ -25,7 +31,8 @@ Use Electron+Vue+Webpack
       -manifest.json
       -...(其他的文件)
 
-###manifest.json:
+manifest.json:
+
     {
         "pluginName":"statusMonitor",
         "author":"huazhu111",
@@ -40,16 +47,19 @@ Use Electron+Vue+Webpack
         }
     }
 
-###index.html:
-在script段插入
-    const {ipcRenderer} = require('electron');
+index.html:
 
-通过ipnRenderer监听事件
-事件带有两个参数：obj(数据主体) tabId(数据来源的标签编号)
+    在script段插入
+        const {ipcRenderer} = require('electron');
 
-    ipcRenderer.on('quest-start',(event,obj,tabId)=>{   
-    }
-###现在支持的事件：
+    通过ipnRenderer监听事件
+    事件带有两个参数：obj(数据主体) tabId(数据来源的标签编号)
+
+        ipcRenderer.on('quest-start',(event,obj,tabId)=>{   
+        }
+        
+现在支持的事件：
+
     'quest-success' : 任务成功后结算时触发
     'quest-start' ：任务开始时触发
     'login-status' ： 游戏进入时触发
