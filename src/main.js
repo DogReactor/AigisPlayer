@@ -116,6 +116,7 @@ app.on('ready', function(){
   let appPath = app.getAppPath();
   let version = JSON.parse(fs.readFileSync(appPath + '/package.json','utf-8')).version;
   request('http://aigis.hloli.moe:9980/version',(err,res,body)=>{
+    if(body === undefined) return;
     let v = JSON.parse(body);
     if (v.normal != version) {
       dialog.showMessageBox({

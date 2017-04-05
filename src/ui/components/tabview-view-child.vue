@@ -65,7 +65,8 @@
             webview.addEventListener('dom-ready', () => {
                 webcontents = webview.getWebContents();
                 //webview.openDevTools();
-                if(webview.getURL().indexOf('app_id') != -1)
+                //17/4/5 因为DMM修改链接，所以此处匹配规则也要相应修改
+                if((webview.getURL().indexOf('app_id') != -1) || webview.getURL().indexOf('/play/') != -1)
                 {
                     webview.send("catch");  //通知页面进行调整
                     decipher.attach(webview.getWebContents(),this.$root.eventHub,this.numid); //通知处理
