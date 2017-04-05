@@ -66,7 +66,9 @@ function createWindow () {
   mainWindow.loadURL('file://' + __dirname + '/index.html');
   console.log('file://' + __dirname + '/index.html');
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  
+  //mainWindow.webContents.openDevTools();
+  
   //mainWindow.setMenu(null);
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
@@ -89,6 +91,7 @@ app.on('ready', function(){
   session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
     let url = details.url;
     let path = url.replace("http://assets.millennium-war.net/","")
+    if(path.indexOf('1fp32igvpoxnb521p9dqypak5cal0xv0') !== -1) console.log(path);
     for(let i in fileList){
       if(path == fileList[i].path && (fileList[i].fileName == "pcev03.aar" || fileList[i].fileName == "prev03.aar")) console.log(fileList[i]);
     }

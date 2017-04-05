@@ -1,6 +1,20 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <style>
+            th{
+                padding:10px;
+            }
+            td{
+                padding:5 10 5 10
+            }
+            #count p{
+                float:left;
+            }
+            #count {
+                overflow:auto;
+            }
+        </style>
     </head>
     <body>
         <div>
@@ -10,71 +24,231 @@
 
         </div>
         <button id="btn">清空</button>
+        <div>
+            <div id="count">
+                <p>龙玉的碎片：</p>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>关卡名</th>
+                        <th>通关回数</th>
+                        <th>总获得碎片数</th>
+                        <th>魅力效率(个/魅力)</th>
+                        <th>体力效率(个/体力)</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+            <div id="analysis">
+
+            </div>
+        </div>
     </body>
     <script>
         const {ipcRenderer} = require('electron');
         const fs = require('fs');
-        const questsInfo = require('./questInfo.js');
-        const cardsInfo = require('./cardsInfo.js');
-        let name = require('./name.js');
         let main = document.getElementById('main');
         let btn = document.getElementById('btn');
         let htmltext = "";
+        let allPieces = -1;
+        let lottery;
+        let questid;
+
+        class collectionQuest{
+            constructor(name,karisuma,stamina,drop){
+                this.name = name;
+                this.karisuma = karisuma;
+                this.stamina = stamina;
+                this.drop = drop;
+                this.tClearCount = document.createElement('td');
+                this.tAllGotPieces = document.createElement('td');
+                this.tPiecesPerKarisuma = document.createElement('td');
+                this.tPiecesPerStamina = document.createElement('td');
+                this._clearCount = 0;
+                this._allGotPieces = 0;
+            }
+            get clearCount(){
+                return this._clearCount;
+            }
+            set clearCount(value){
+                this._clearCount = value;
+                this.tClearCount.innerHTML = this._clearCount.toString();
+            }
+            get allGotPieces(){
+                return this._allGotPieces;
+            }
+            set allGotPieces(value){
+                this._allGotPieces = value;
+                this.tAllGotPieces.innerHTML = this._allGotPieces.toString();
+                this.tPiecesPerKarisuma.innerHTML = (value / this.karisuma / this.clearCount).toString();
+                this.tPiecesPerStamina.innerHTML = (value / this.stamina / this.clearCount).toString();
+            }
+        }
+
+        let gameData = {
+            _allPieces:-1,
+            level:-1,
+            spanAllPieces:document.createElement('p'),
+            get allPieces(){
+                return this._allPieces;
+            },
+            set allPieces(value){
+                this._allPieces = value;
+                this.spanAllPieces.innerHTML = value;
+            }
+        }
+
+        let collectionQuestData = {
+            '6053':new collectionQuest(
+                '悠久を生かし龍',
+                20,
+                1,
+                [0,1,1]
+            ),
+            '6054':new collectionQuest(
+                '古代龍の眠る島',
+                30,
+                2,
+                [1,0,1,1,0]
+            ),
+            '6055':new collectionQuest(
+                '封印のほこら',
+                40,
+                2,
+                [0,1,1,0,1,3]
+            ),
+            '6056':new collectionQuest(
+                '雨下の激戦',
+                50,
+                7,
+                [0,3,3,0,5,5]
+            ),
+            '6057':new collectionQuest(
+                '樹霊の暴走',
+                80,
+                7,
+                [5,5,0,0,5,0]
+            ),
+            '6058':new collectionQuest(
+                '河童の雨乞い',
+                40,
+                5,
+                [0,0,3,0,3,3]
+            ),
+            '6059':new collectionQuest(
+                '大海原を泳ぐ巨龍',
+                70,
+                8,
+                [0,3,0,5,3]
+            ),
+            '6060':new collectionQuest(
+                '古代龍の目覚め',
+                90,
+                12,
+                [0,5,5,3,3,5,5]
+            )
+        }
+        loadCollectionLog();
+        initTable();
+
+
         btn.addEventListener('click',()=>{
             main.innerHTML = "";
         });
         ipcRenderer.on('quest-start',(event,obj,tabId)=>{
-            let lottery = obj.LOTTERY.Result;
-            let questId = obj.QR.QuestID;
-            console.log(questId);
-            let questInfo = questsInfo[questId];
-            let resultName = null;
-            if(questInfo !== undefined) {
-                resultName = [];
-                resultName.push(cardsInfo[questInfo.Treasure1-1] === undefined ? questInfo.Treasure1 : cardsInfo[questInfo.Treasure1-1].name);
-                resultName.push(cardsInfo[questInfo.Treasure2-1] === undefined ? questInfo.Treasure2 : cardsInfo[questInfo.Treasure2-1].name);
-                resultName.push(cardsInfo[questInfo.Treasure3-1] === undefined ? questInfo.Treasure3 : cardsInfo[questInfo.Treasure3-1].name);
-                resultName.push(cardsInfo[questInfo.Treasure4-1] === undefined ? questInfo.Treasure4 : cardsInfo[questInfo.Treasure4-1].name);
-                resultName.push(cardsInfo[questInfo.Treasure5-1] === undefined ? questInfo.Treasure5 : cardsInfo[questInfo.Treasure5-1].name);
+            lottery = obj.LOTTERY.Result;
+            questId = obj.QR.QuestID;
+            if(collectionQuestData[questId] !== undefined) {
+                let count = 0;
+                lottery.forEach((value,index)=>{
+                    if(value === 1) count += collectionQuestData[questId].drop[index];
+                });
+                htmltext = "本次掉落碎片总数为：" + count;
+                htmltext += "<br>";
+                main.innerHTML += htmltext;
             }
-            console.log(resultName);
-            let s = "";
-            let date = new Date();
-            lottery.forEach((value,index)=>{
-                if(resultName !== null) s += (resultName[index] + '(' + (value == 1 ? "掉落" : "空气") + ")&nbsp;&nbsp;");
-                else s += ((value == 1 ? "掉落" : "空气") + "&nbsp;&nbsp;");
-            });
-            htmltext = date.toLocaleString() + "&nbsp;&nbsp;&nbsp;掉落总数为:" + lottery.length + "&nbsp;&nbsp;&nbsp;" + "结果为：" ;
-            htmltext += s;
-            htmltext += "<br>";
-            main.innerHTML += htmltext;
+            else{
+                let s = "";
+                let date = new Date();
+                lottery.forEach((value,index)=>{
+                    s += ((value == 1 ? "掉落" : "空气") + "&nbsp;&nbsp;");
+                });
+                htmltext = date.toLocaleString() + "&nbsp;&nbsp;&nbsp;掉落总数为:" + lottery.length + "&nbsp;&nbsp;&nbsp;" + "结果为：" ;
+                htmltext += s;
+                htmltext += "<br>";
+                main.innerHTML += htmltext;
+            }
         });
         ipcRenderer.on('quest-success',(event,obj,tabId)=>{
             console.log(obj);
+            if(collectionQuestData[questId] !== undefined) collectionQuestFunction(questId,lottery);
         });
-        /*ipcRenderer.on('all-quest-info',(event,obj,tabId)=>{
-            let arr = {};
-            for(let key in obj){
-                let item = obj[key];
-                item.forEach((value,index)=>{
-                    if(arr[obj.QuestID[index]] === undefined) arr[obj.QuestID[index]] = {};
-                    arr[obj.QuestID[index]][key] = value;
-                });
+        
+        //Read Status
+        ipcRenderer.on('login-status',(event,obj,tabId)=>{
+            gameData.allPieces = obj.AF;
+        });
+        function initTable(){
+            let tbody = document.getElementById('tbody');
+            tbody.innerHTML = "";
+            for(let key in collectionQuestData){
+                let data = collectionQuestData[key];
+                let tr = document.createElement('tr');
+                let tname = document.createElement('td');
+                tname.innerHTML = collectionQuestData[key].name;
+                let tkarisuma = document.createElement('td');
+                tkarisuma.innerHTML = collectionQuestData[key].karisuma;
+                let tstamina = document.createElement('td');
+                tstamina.innerHTML = collectionQuestData[key].stamina;
+
+                tr.appendChild(tname);
+                //tr.appendChild(tkarisuma);
+                //tr.appendChild(tstamina);
+                tr.appendChild(data.tClearCount);
+                tr.appendChild(data.tAllGotPieces);
+                tr.appendChild(data.tPiecesPerKarisuma);
+                tr.appendChild(data.tPiecesPerStamina);
+
+                tbody.appendChild(tr);
             }
-            fs.writeFile('questInfo.js','module.exports='+JSON.stringify(arr),(err)=>{});
-        })*/
-        /*ipcRenderer.on('allcards-info',(event,obj,tabId)=>{
-            console.log(obj);
-            let arr = [];
-            obj.Rare.forEach((value,index)=>{
-                arr[index] = {
-                    rare:value,
-                    name:name[index]
-                }
+
+            let divCount = document.getElementById('count');
+            gameData.spanAllPieces.innerHTML = "（请刷新游戏页面以获取碎片数）";
+            divCount.appendChild(gameData.spanAllPieces);
+        }
+
+        function collectionQuestFunction(questId,lottery){
+            let count = 0;
+            lottery.forEach((value,index)=>{
+                if(value === 1) count += collectionQuestData[questId].drop[index];
             });
-            fs.writeFile('cardsInfo.js','module.exports='+JSON.stringify(arr),(err)=>{});
-        })*/
+            collectionQuestData[questId].clearCount++;
+            collectionQuestData[questId].allGotPieces += count;
+            if(gameData.allPieces !== -1) gameData.allPieces += count;
+            //保存数据
+            saveCollectionLog();
+        }
+
+        function saveCollectionLog(){
+            fs.writeFileSync('./plugins/dropShow/log.txt',JSON.stringify(collectionQuestData));
+        }
+        function loadCollectionLog(){
+            try{
+                let s =fs.readFileSync('./plugins/dropShow/log.txt',{encoding:'utf8'});
+                let obj = JSON.parse(s);
+                for(key in collectionQuestData){
+                    collectionQuestData[key].clearCount = obj[key]._clearCount;
+                    collectionQuestData[key].allGotPieces = obj[key]._allGotPieces;
+                }
+            }
+            catch(e){
+
+            }
+        }
+
         const currentwindow = require('electron').remote.getCurrentWindow();
-        currentwindow.openDevTools();
+        //currentwindow.openDevTools();
     </script>
 </html>

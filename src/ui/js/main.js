@@ -313,8 +313,9 @@ const vm = new Vue({
         password:this.accounts[index].password
       };
       this.accounts[index].usedOn = this.activeGameInfo.id;
+
       //呼叫页面刷新
-      eventHub.$emit('deepFresh');
+      if(thistab.selectedGame !== 'none') ventHub.$emit('deepFresh');
       //通知侧边栏
       eventHub.$emit('main-account-selected',this.activeGameInfo.id);
     });
@@ -330,6 +331,7 @@ const vm = new Vue({
       if(type == undefined || type == 'none') return;
       let obj = xml2json(body);
       if(obj.DA != undefined) obj = obj.DA;
+      console.log(path,obj);
       eventHub.$emit('new-game-data',{
         type:type,
         obj:obj,

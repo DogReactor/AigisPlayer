@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron app",
-    "package": "electron-packager ./dist/app AigisPlayer --platform=darwin,win32 --arch=all --out=release-normal --version 1.4.12 --overwrite --icon=./main.ico"
+    "package": "electron-packager ./dist/app AigisPlayer --platform=darwin,win32 --arch=all --out=release-normal --version 1.6.2 --overwrite --icon=./main.ico"
   },
   "author": "Yukimr",
   "license": "ISC",

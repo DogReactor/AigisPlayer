@@ -65,10 +65,10 @@
             webview.addEventListener('dom-ready', () => {
                 webcontents = webview.getWebContents();
                 //webview.openDevTools();
-                if(webview.getURL().indexOf('app_id')!=-1)
+                if(webview.getURL().indexOf('app_id') != -1)
                 {
                     webview.send("catch");  //通知页面进行调整
-                    decipher.attach(webview.getWebContents(),this.$root.eventHub,this.numid);
+                    decipher.attach(webview.getWebContents(),this.$root.eventHub,this.numid); //通知处理
                 }
                 //自动输入用户名密码
                 if(webview.getURL().indexOf('login')!=-1 && webview.getURL().indexOf('logout')==-1){

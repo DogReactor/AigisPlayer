@@ -18,7 +18,7 @@ module.exports = {
             webContents.debugger.on('message', (event, method, params) => {
                 switch (method) {
                     case 'Network.requestWillBeSent':
-                        if (params.request.url.startsWith('https://millennium-war.net/') && params.request.method === 'POST') {
+                        if ((params.request.url.startsWith('https://millennium-war.net/') || params.request.url.startsWith('https://all.millennium-war.net/')) && params.request.method === 'POST') {
                             reqMaps.set(params.requestId, params.request.url);
                         }
                         break;

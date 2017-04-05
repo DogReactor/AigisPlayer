@@ -1,0 +1,101 @@
+body{
+    overflow:hidden;
+    font-family: "Pingfang SC", "Microsoft Yahei", Arial, Sans-serif;
+    user-select:none;
+    cursor: default;
+}
+table{
+    position:absolute;
+    top:0;
+    left:0;
+    color: white;
+}
+table td{
+    height: 59px;
+    width :188px;
+    vertical-align: middle;
+    position: relative;
+    text-align: center;
+}
+tr {
+    background-color: rgba(28, 31, 48, 0.8);
+}
+
+td.active {
+    background: #5b0304;
+}
+
+table td > div{
+    position: relative;
+    vertical-align: middle;
+    margin: 0 5px 0 5px;
+}
+
+.center, .icon, .number{
+    display: inline-block;
+}
+
+.right{
+    float:right;
+}
+
+.icon {
+    position: relative;
+    height: 50px;
+    line-height: 50px;
+    width: 50px;
+    text-align: center;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 70% auto;
+    display: inline-table;
+    vertical-align: middle;
+}
+
+.icon:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(#2ed6eb 0%, #0172b7 100%);
+    box-shadow: 0 0 5px white;
+    border-radius: 50%;
+    opacity: 0.6;
+    border: 1px solid white;
+}
+
+
+.number {
+    font-size: 120%;
+    font-weight: 600;
+    line-height: 50px;
+}
+
+.extend {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(1, 114, 183, 0.8);
+    top: 0;
+    left: 0;
+    margin: 0;
+    vertical-align: middle;
+    text-align: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s, visibility 0.5s;
+}
+
+td:hover .extend {
+    visibility: visible;
+    opacity: 1;
+}
+
+.extend-content {
+    height: 59px;
+    line-height: 59px;
+    margin: 0 auto 0 auto;
+    padding: 0 auto 0 auto;
+}
