@@ -61,7 +61,7 @@
             let eventHub = this.$root.eventHub;
             webview.addEventListener('dom-ready', () => {
                 //webview.openDevTools();
-                if(webview.getURL().indexOf('app_id')!=-1)
+                if((webview.getURL().indexOf('app_id') != -1) || webview.getURL().indexOf('/play/') != -1)
                 {
                     webview.send("catch");  //通知页面进行调整
                 }

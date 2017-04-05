@@ -60,6 +60,7 @@ app.on('ready', function(){
     let version = JSON.parse(fs.readFileSync(apppath + '/package.json','utf8')).version;
     // 获取版本信息
     request('http://aigis.hloli.moe:9980/version',function(err,res,body){
+      if(body===undefined) return;
       console.log(version);
       let v = JSON.parse(body);
       if(v.green != version){
