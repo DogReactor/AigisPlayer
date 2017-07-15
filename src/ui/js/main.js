@@ -37,7 +37,8 @@ const pluginEvent = {
   'AekvKZk6':'none',
   'zzdfsknw':'present-info',
   'eZ5wrQTH':'crystal-change',
-  'kgiqvp4a':'crystal-init'
+  'kgiqvp4a':'crystal-init',
+  'aB2hnQXL':'new-gacha-result'
 }
 
 const eventHub = new Vue();
@@ -315,7 +316,7 @@ const vm = new Vue({
       this.accounts[index].usedOn = this.activeGameInfo.id;
 
       //呼叫页面刷新
-      if(thistab.selectedGame !== 'none') ventHub.$emit('deepFresh');
+      if(thistab.selectedGame !== 'none') eventHub.$emit('deepFresh');
       //通知侧边栏
       eventHub.$emit('main-account-selected',this.activeGameInfo.id);
     });
@@ -331,12 +332,22 @@ const vm = new Vue({
       if(type == undefined || type == 'none') return;
       let obj = xml2json(body);
       if(obj.DA != undefined) obj = obj.DA;
-      console.log(path,obj);
       eventHub.$emit('new-game-data',{
         type:type,
         obj:obj,
         tabId:id
       });
+      //吸精小彩蛋
+      /*if(type === 'new-gacha-result'){
+        console.log(__dirname);
+        console.log(Path.join(__dirname,'static','img','wildpig.gif'));
+        notifier.notify({
+          title: '吸精屏蔽器工作中（缅怀决斗王版）',
+          message: '野猪退散野猪退撒',
+          icon: Path.join(dirname,'static','img','wildpig.gif'),
+          sound: 'true'
+        });
+      }*/
     });
 
     eventHub.$on('active-plugin',function(index){

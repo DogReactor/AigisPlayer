@@ -89,28 +89,28 @@ app.on('ready', function(){
     urls: ['http://assets.millennium-war.net/*']
   };
   session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
-    let url = details.url;
-    let path = url.replace("http://assets.millennium-war.net/","")
-    if(path.indexOf('1fp32igvpoxnb521p9dqypak5cal0xv0') !== -1) console.log(path);
-    for(let i in fileList){
-      if(path == fileList[i].path && (fileList[i].fileName == "pcev03.aar" || fileList[i].fileName == "prev03.aar")) console.log(fileList[i]);
-    }
-    //console.log(assetList[path]);
-    url = "http://127.0.0.1:19980/" + path;
-    let exist = false;
-    try{
-      exist = fs.statSync("cache/"+path).isFile();
-    }
-    catch(e){
-      exist = false;
-    }
-    if(exist){
-      //console.log('CacheExist Redirect to cacheServer ',path);
-      callback({cancel:false,redirectURL:url});
-    }
-    else{
-      callback({cancel:false});
-    }
+      let url = details.url;
+      let path = url.replace("http://assets.millennium-war.net/","")
+      if(path.indexOf('1fp32igvpoxnb521p9dqypak5cal0xv0') !== -1) console.log(path);
+      for(let i in fileList){
+        if(path == fileList[i].path && (fileList[i].fileName == "pcev03.aar" || fileList[i].fileName == "prev03.aar")) console.log(fileList[i]);
+      }
+      //console.log(assetList[path]);
+      url = "http://127.0.0.1:19980/" + path;
+      let exist = false;
+      try{
+        exist = fs.statSync("cache/"+path).isFile();
+      }
+      catch(e){
+        exist = false;
+      }
+      if(exist){
+        //console.log('CacheExist Redirect to cacheServer ',path);
+        callback({cancel:false,redirectURL:url});
+      }
+      else{
+        callback({cancel:false});
+      }
   });
   // 版本更新检测
   let appPath = app.getAppPath();

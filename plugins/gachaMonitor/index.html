@@ -32,6 +32,7 @@
             main.innerHTML = "";
         });
         ipcRenderer.on('base-gacha-result',(event,obj,tabId)=>{
+            console.log(obj);
             addRecord('ベース召喚',parseInt(obj.PPU.A1));
         });
         ipcRenderer.on('sp-gacha-result',(event,obj,tabId)=>{

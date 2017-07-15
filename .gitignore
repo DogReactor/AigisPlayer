@@ -10,3 +10,6 @@ dist
 setting.conf
 release-normal
 release-green
+.vs/
+config.conf
+dist-green
