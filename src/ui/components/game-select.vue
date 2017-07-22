@@ -10,6 +10,7 @@
         methods:{
             selectFunction:function(game){
                 this.$emit('select',game);
+                
             }
         }
     }

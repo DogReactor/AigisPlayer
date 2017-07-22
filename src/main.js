@@ -6,7 +6,6 @@ const path = require('path');
 const ipcMain = electron.ipcMain;
 const fs = require('fs');
 const proxyServer = require('./backend/proxyServer.js');
-const fileList = require('./backend/fileList.js');
 const request = require('request');
 const {dialog} = require('electron');
 // Module to control application life.
@@ -14,6 +13,7 @@ const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 const session = require('electron').session;
+let fileList;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -91,21 +91,30 @@ app.on('ready', function(){
   session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
       let url = details.url;
       let path = url.replace("http://assets.millennium-war.net/","")
-      if(path.indexOf('1fp32igvpoxnb521p9dqypak5cal0xv0') !== -1) console.log(path);
-      for(let i in fileList){
-        if(path == fileList[i].path && (fileList[i].fileName == "pcev03.aar" || fileList[i].fileName == "prev03.aar")) console.log(fileList[i]);
+      if(path.indexOf('1fp32igvpoxnb521p9dqypak5cal0xv0') !== -1){
+        //先处理文件列表
+        request(url,{encoding:null,gzip:true},(err,res,body)=>{
+          fileList = decodeFileList(body);
+        });
       }
-      //console.log(assetList[path]);
-      url = "http://127.0.0.1:19980/" + path;
+      let fileName = getFileName(fileList,path);
+      //console.log(fileName);
+      url = "http://127.0.0.1:19980/" + fileName;
+      if(fileName === null){
+        callback({cancel:false});
+        return;
+      }
+
       let exist = false;
+
       try{
-        exist = fs.statSync("cache/"+path).isFile();
+        exist = fs.statSync("cache/"+fileName).isFile();
       }
       catch(e){
         exist = false;
       }
       if(exist){
-        //console.log('CacheExist Redirect to cacheServer ',path);
+        console.log('CacheExist Redirect to cacheServer ',url);
         callback({cancel:false,redirectURL:url});
       }
       else{
@@ -145,3 +154,42 @@ app.on('activate', function () {
     createWindow();
   }
 });
+
+
+
+function decodeFileList(buffer){
+  let b = [];
+  let d = decode(buffer, 0xea ^ 0x30);
+  for(let i = 0; i<d.byteLength; i++){
+      b.push(String.fromCharCode(d[i]));
+  }
+  let csvData = b.join('');
+  let csvDatas = csvData.split('\n');
+  let datas = [];
+  for(let i = 0; i < csvDatas.length; i++){
+      let d = csvDatas[i].split(',');
+      let obj = {
+          path : d[0] + '/' + d[1],
+          type : d[2],
+          length : d[3],
+          fileName : d[4]
+      }
+      datas.push(obj);
+  }
+
+  return datas;
+}
+function decode(buffer, key) {
+    let decoded = new Uint8Array(buffer.byteLength);
+    for (let i = 0; i < buffer.byteLength; i++) {
+        decoded[i] = buffer[i] ^ key;
+    }
+    return decoded;
+};
+
+function getFileName(fileList,path){
+  for(let i in fileList){
+    if(fileList[i].path === path) return fileList[i].fileName;
+  }
+  return null;
+}
