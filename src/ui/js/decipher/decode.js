@@ -10,7 +10,30 @@ let decode = (buffer, key) => {
 
 module.exports = {
     decodeList: (buffer) => {
-        return decode(buffer, 0xea ^ 0x30);
+        if (/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/.test(buffer)) {
+            buffer = base64.decode(buffer);
+        }
+
+        let b = [];
+        let d = decode(buffer, 0xea ^ 0x30);
+        for(let i = 0; i<d.byteLength; i++){
+            b.push(String.fromCharCode(d[i]));
+        }
+        let csvData = b.join('');
+        let csvDatas = csvData.split('\n');
+        let datas = [];
+        for(let i = 0; i < csvDatas.length; i++){
+            let d = csvDatas[i].split(',');
+            let obj = {
+                path : d[0] + '/' + d[1],
+                type : d[2],
+                length : d[3],
+                fileName : d[4]
+            }
+            datas.push(obj);
+        }
+
+        return datas;
     },
 
     decodeXml: (buffer) => {

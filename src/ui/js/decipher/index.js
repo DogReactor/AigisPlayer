@@ -2,10 +2,11 @@
  * Translated from http://millenniumwaraigis.wikia.com/wiki/User_blog:Lzlis/Interpreting_POST_responses
  */
 
-const {decodeXml} = require('./decode');
+const {decodeXml,decodeList} = require('./decode');
 const {decompress} = require('./decompress');
 
 let reqMaps = null;
+let fileListReq = null;
 
 module.exports = {
     attach: (webContents,eventHub,id) => {
@@ -21,6 +22,7 @@ module.exports = {
                         if ((params.request.url.startsWith('https://millennium-war.net/') || params.request.url.startsWith('https://all.millennium-war.net/')) && params.request.method === 'POST') {
                             reqMaps.set(params.requestId, params.request.url);
                         }
+                        if (params.request.url.indexOf('1fp32igvpoxnb521p9dqypak5cal0xv0') !== -1 || params.request.url.indexOf('2iofz514jeks1y44k7al2ostm43xj085') !== -1) fileListReq = params.requestId;
                         break;
                     case 'Network.loadingFinished':
                         if (reqMaps.has(params.requestId)) {
@@ -41,6 +43,14 @@ module.exports = {
                                 reqMaps.delete(params.requestId);
                             });
                         }
+                        if (params.requestId === fileListReq) {
+                            webContents.debugger.sendCommand('Network.getResponseBody', {
+                                "requestId": params.requestId
+                            }, (err, response) => {
+                                let fileList = decodeList(response.body);
+                                eventHub.$emit('new-FileList',fileList);
+                            });
+                        }
                         break;
                 }
             });
@@ -54,5 +64,6 @@ module.exports = {
     detach: (webContents) => {
         webContents.debugger.detach();
         reqMaps = null;
+        fileListReq = null;
     }
 }

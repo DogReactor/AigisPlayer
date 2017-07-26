@@ -350,6 +350,11 @@ const vm = new Vue({
       }*/
     });
 
+
+    //文件列表
+    eventHub.$on('new-FileList',function(fileList){
+      ipcRenderer.send('fileList',fileList);
+    })
     eventHub.$on('active-plugin',function(index){
       plugin.activePlugin(index);
     })

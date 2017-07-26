@@ -91,12 +91,6 @@ app.on('ready', function(){
   session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
       let url = details.url;
       let path = url.replace("http://assets.millennium-war.net/","")
-      if(path.indexOf('1fp32igvpoxnb521p9dqypak5cal0xv0') !== -1){
-        //先处理文件列表
-        request(url,{encoding:null,gzip:true},(err,res,body)=>{
-          fileList = decodeFileList(body);
-        });
-      }
       let fileName = getFileName(fileList,path);
       //console.log(fileName);
       url = "http://127.0.0.1:19980/" + fileName;
@@ -135,6 +129,10 @@ app.on('ready', function(){
         message:'有新版本啦！\n\n新版本：普通版 ' + v.normal +'\n\n更新内容为:' + v.normalDetail
       });
     }
+  });
+
+  ipcMain.on('fileList',(event,arg)=>{
+    fileList = arg;
   });
 });
 
