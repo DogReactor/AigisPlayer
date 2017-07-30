@@ -44,6 +44,10 @@ const pluginEvent = {
 const eventHub = new Vue();
 Vue.use(VueRouter);
 
+
+//
+
+
 const vm = new Vue({
   el: '#playermain',
   components : {navbar,tabview,slideMenu,gifEditor},
@@ -257,6 +261,20 @@ const vm = new Vue({
       console.log(e);
       console.log("设置读取失败");
     }
+
+    //一键开技能
+    document.addEventListener('keydown',(e)=>{
+      if(e.key === 's') {
+        eventHub.$emit('active-skill');
+      }
+      if(e.key === ' ') {
+        eventHub.$emit('active-speed');
+      }
+    });
+    /*currentwindow.on('before-input-event',(event,input)=>{
+      console.log(input);
+    })*/
+
     //绑定监听事件
     eventHub.$on('pageinfo-tagname-change',(e)=>{
       this.tabviewData[this.activeGameInfo.id].title = e;
@@ -325,6 +343,8 @@ const vm = new Vue({
         alert("清理缓存成功");
       });
     });
+
+    //
 
     eventHub.$on('XHR-xml-data',function(path,body,id){
       path = path.slice(path.lastIndexOf('/')+1);

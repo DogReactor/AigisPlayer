@@ -142,7 +142,66 @@
                 if(webview.setZoomFactor == undefined) return;
                 webview.setZoomFactor(zoom);
             });
-
+            eventHub.$on('active-skill',()=>{
+                if(!this.active) return;
+                let x = Math.floor(874 + (Math.random() > 0.5 ? -1 : 1) * Math.random() * 20) 
+                let y = Math.floor(589 + (Math.random() > 0.5 ? -1 : 1) * Math.random() * 20)
+                
+                webcontents.sendInputEvent({
+                    type: 'mouseMove',
+                    x: x,
+                    y: y,
+                    button:'left',
+                });
+                setTimeout(()=>{
+                    webcontents.sendInputEvent({
+                        type: 'mouseDown',
+                        x: x,
+                        y: y,
+                        button:'left',
+                        clickCount:1
+                    });
+                    setTimeout(()=>{
+                        webcontents.sendInputEvent({
+                            type: 'mouseUp',
+                            x: x,
+                            y: y,
+                            button:'left',
+                            clickCount:1
+                        });
+                    },20);
+                },20);
+            })
+            eventHub.$on('active-speed',()=>{
+                if(!this.active) return;
+                let x = Math.floor(876 + (Math.random() > 0.5 ? -1 : 1) * Math.random() * 50) 
+                let y = Math.floor(39 + (Math.random() > 0.5 ? -1 : 1) * Math.random() * 20)
+                
+                webcontents.sendInputEvent({
+                    type: 'mouseMove',
+                    x: x,
+                    y: y,
+                    button:'left',
+                });
+                setTimeout(()=>{
+                    webcontents.sendInputEvent({
+                        type: 'mouseDown',
+                        x: x,
+                        y: y,
+                        button:'left',
+                        clickCount:1
+                    });
+                    setTimeout(()=>{
+                        webcontents.sendInputEvent({
+                            type: 'mouseUp',
+                            x: x,
+                            y: y,
+                            button:'left',
+                            clickCount:1
+                        });
+                    },20);
+                },20);
+            })
         }
     }
 
