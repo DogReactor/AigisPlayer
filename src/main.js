@@ -91,18 +91,27 @@ app.on('ready', function(){
   session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
       let url = details.url;
       let path = url.replace("http://assets.millennium-war.net/","")
-      let fileName = getFileName(fileList,path);
-      //console.log(fileName);
-      url = "http://127.0.0.1:19980/" + fileName;
-      if(fileName === null){
+      let fileObj = getFileName(fileList,path);
+      if(path.indexOf("18cbbe1a57873ab0047629f77cbbcf86") !== -1) {
+        fileObj = {};
+        fileObj.fileName = "MainFont.aft";
+      }
+      if(path.indexOf("3ab18ddd284cae750414c8df43045fba")!== -1){
+        fileObj = {};
+        fileObj.fileName = "aigis.js";
+      }
+	    if (fileObj === null){
         callback({cancel:false});
         return;
       }
+	    let fileName = fileObj.fileName;
+      //console.log(fileName + "	" +url);
+      url = "http://127.0.0.1:19980/" + fileName;
 
       let exist = false;
 
       try{
-        exist = fs.statSync("cache/"+fileName).isFile();
+        exist = fs.statSync("cache/" + fileName).isFile();
       }
       catch(e){
         exist = false;
@@ -187,7 +196,7 @@ function decode(buffer, key) {
 
 function getFileName(fileList,path){
   for(let i in fileList){
-    if(fileList[i].path === path) return fileList[i].fileName;
+    if(fileList[i].path === path) return fileList[i];
   }
   return null;
 }

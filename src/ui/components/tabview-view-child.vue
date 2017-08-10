@@ -145,7 +145,7 @@
             eventHub.$on('active-skill',()=>{
                 if(!this.active) return;
                 let x = Math.floor(874 + (Math.random() > 0.5 ? -1 : 1) * Math.random() * 20) 
-                let y = Math.floor(589 + (Math.random() > 0.5 ? -1 : 1) * Math.random() * 20)
+                let y = Math.floor(589 + (Math.random() > 0.5 ? -1 : 1) * Math.random() * 10)
                 
                 webcontents.sendInputEvent({
                     type: 'mouseMove',
