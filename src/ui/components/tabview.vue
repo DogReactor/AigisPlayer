@@ -41,7 +41,7 @@
                 //添加tab
                 let newTabview = {
                     numid: this.nextid,
-                    title: 'NewTab',
+                    title: '新标签页',
                     isrender: true,
                     src: 'about:blank',
                     show: false,
