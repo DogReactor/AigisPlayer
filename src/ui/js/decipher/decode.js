@@ -21,16 +21,17 @@ module.exports = {
         }
         let csvData = b.join('');
         let csvDatas = csvData.split('\n');
-        let datas = [];
+        let datas = {};
         for(let i = 0; i < csvDatas.length; i++){
             let d = csvDatas[i].split(',');
-            let obj = {
+            /*let obj = {
                 path : d[0] + '/' + d[1],
                 type : d[2],
                 length : d[3],
                 fileName : d[4]
             }
-            datas.push(obj);
+            datas.push(obj);*/
+            datas['/'+ d[0] + '/' + d[1]] = d[4];
         }
 
         return datas;
