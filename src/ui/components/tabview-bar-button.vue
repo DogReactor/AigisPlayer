@@ -1,6 +1,6 @@
 <template>
-    <div @click="clickFunction" :style='styleObject' @dblclick="dbclickFunction" v-if='isrender'>
-        <p>{{title}}</p>
+    <div @click="clickFunction" @mousedown="mouseDownFunction($event)" :style='styleObject' @dblclick="dbclickFunction" v-if='isrender'>
+        <p>{{title}}<button class="close-botton" @click.stop="closeTabFunction">×</button></p>
     </div>
 </template>
 <script>
@@ -23,7 +23,16 @@
             clickFunction:function(){
                 this.$emit('select');
             },
+            mouseDownFunction: function(event) {
+                // 低版本vue无法接受@click.middle所以只能这么干
+                if(event.button === 1) {
+                    this.closeTabFunction();
+                }
+            },
             dbclickFunction:function(){
+                this.closeTabFunction();
+            },
+            closeTabFunction: function(){
                 this.$emit('close');
             }
         },
@@ -49,5 +58,18 @@
         margin:0px;
         margin-top:7px;
         text-align: center;
+    }
+    button.close-botton {
+        background: none;
+        border: none;
+        font-size: 1em;
+        height: 1em;
+        width: 1em;
+        padding: 0;
+        line-height: 1em;
+        border-radius: 50%;
+    }
+    button.close-botton:hover {
+        background: rgba(0, 0, 0, 0.1);
     }
 </style>
