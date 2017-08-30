@@ -380,6 +380,11 @@ const vm = new Vue({
         //文件列表
         eventHub.$on('new-FileList', function (fileList) {
             ipcRenderer.send('fileList', fileList);
+            eventHub.$emit('new-game-data', {
+                type: "filelist",
+                obj: fileList,
+                tabId: -1
+            });
         })
         eventHub.$on('active-plugin', function (index) {
             plugin.activePlugin(index);

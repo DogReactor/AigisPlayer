@@ -44,6 +44,9 @@
         ipcRenderer.on('premium2-gacha-result',(event,obj,tabId)=>{
             addRecord('プレミアム２召喚',parseInt(obj.PPU.A1));
         });
+        ipcRenderer.on('filelist',(event,obj,tabId)=>{
+            console.log(obj);
+        });
 
         function addRecord(type,id){
             let t = new Date();
