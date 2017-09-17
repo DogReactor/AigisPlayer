@@ -21,10 +21,11 @@ let TranslateFileList = {
     'PlayerTitle.atb': "PlayerTitle.txt",
     'SkillList.atb': "SkillList.txt",
     'SkillText.atb': "SkillText.txt",
-    'SystemText.atb': "SystemText.txt"
+    'SystemText.atb': "SystemText.txt",
+    "PlayerUnitTable.aar": "PlayerUnitTable",
+    "BattleTalkEvent800001.aar": "BattleTalkEvent800001"
 };
 
-// @ts-check
 /**
  * 
  * @param {Buffer} buffer 
@@ -47,9 +48,11 @@ function Align(offset, length) {
 }
 
 class AL {
-    constructor() {
-        this.Head = "NONE";
-        this.Vers = 0;
+    constructor(buffer) {
+        this.buffer = buffer;
+    }
+    Package() {
+        return this.buffer;
     }
 }
 
@@ -416,6 +419,94 @@ class ALTB {
 
 }
 
+class ALAR {
+    /**
+     * 
+     * @param {Buffer} buffer 
+     * @param {Number} offset 
+     */
+    constructor(buffer, offset) {
+        class Entry {
+            constructor() {
+                this.Index = 0;
+                this.Unknown1 = 0;
+                this.Address = 0;
+                this.Offset = 0;
+                this.Size = 0;
+                this.Unknown2 = new Buffer(0);
+                this.Name = "";
+                this.Unknown3 = 0;
+                this.Content = new Buffer(0);
+                this.ParsedContent = new Object();
+            }
+        }
+        this.Entry = Entry;
+        this.Head = buffer.toString('utf-8', offset, offset + 4); offset += 4;
+        this.Files = [];
+        this.TocOffsetList = [];
+        this.Vers = buffer.readUInt8(offset); offset++;
+        this.Unknown = buffer.readUInt8(offset); offset++;
+        if (this.Vers !== 2 && this.Vers !== 3) throw "ALAR版本错误";
+        //this.Count = 0;
+        //this.UnknownBytes = null;
+        if (this.Vers === 2) {
+            this.Count = buffer.readUInt16LE(offset); offset += 2;
+            this.UnknownBytes = buffer.slice(offset, offset + 8); offset += 8;
+        }
+        if (this.Vers === 3) {
+            this.Count = buffer.readUInt16LE(offset); offset += 2;
+            this.Unknown1 = buffer.readUInt16LE(offset); offset += 2;
+            this.Unknown2 = buffer.readUInt16LE(offset); offset += 2;
+            this.UnknownBytes = buffer.slice(offset, offset + 4); offset += 4;
+            this.DataOffset = buffer.readUInt16LE(offset); offset += 2;
+            for (var i = 0; i < this.Count; i++) {
+                this.TocOffsetList.push(buffer.readUInt16LE(offset)); offset += 2;
+            }
+            offset = Align(offset, 4);
+        }
+        let parseTocEntry = () => {
+            let entry = new Entry();
+            if (this.Vers === 2) {
+                entry.Index = buffer.readUInt16LE(offset); offset += 2;
+                entry.Unknown1 = buffer.readUInt16LE(offset); offset += 2;
+                entry.Address = buffer.readUInt32LE(offset); offset += 4;
+                entry.Size = buffer.readUInt32LE(offset); offset += 4;
+                entry.Unknown2 = buffer.slice(offset, offset + 4); offset += 4;
+                entry.Name = ReadString(buffer, entry.Address - 0x22).s;
+                entry.Unknown3 = buffer.readUInt16LE(entry.Address - 0x02);
+            }
+            else {
+                entry.Index = buffer.readUInt16LE(offset); offset += 2;
+                entry.Unknown1 = buffer.readUInt16LE(offset); offset += 2;
+                entry.Address = buffer.readUInt32LE(offset); offset += 4;
+                entry.Size = buffer.readUInt32LE(offset); offset += 4;
+                entry.Unknown2 = buffer.slice(offset, offset + 6); offset += 6;
+                let result = ReadString(buffer, offset);
+                offset = result.offset;
+                entry.Name = result.s;
+                offset = Align(offset, 4);
+            }
+            return entry;
+        }
+
+        for (var i = 0; i < this.Count; i++) {
+            let entry = parseTocEntry();
+            entry.Content = buffer.slice(entry.Address, entry.Size);
+            this.Files.push(entry);
+        }
+        if (this.Vers === 2) this.DataOffsetByData = this.Files[0].Address - 0x22;
+        if (this.Vers === 3) this.DataOffsetByData = this.Files[0].Address;
+
+        console.log(this.Files);
+    }
+    /**
+     * 
+     * @param {String} path 
+     */
+    Package(path) {
+        path = path + '/';
+    }
+}
 /**
  * 
  * @param {String} text 
@@ -431,7 +522,7 @@ function readReplacementFile(text) {
             obj[col[0]] = col[1];
         }
     }
-    console.log("Read Row ",count);
+    console.log("Read Row ", count);
     return obj;
 }
 
@@ -447,6 +538,8 @@ function parseObject(buffer, offset) {
             return parseObject((new ALLZ(buffer, offset)).Dst, 0);
         case "ALTB":
             return new ALTB(buffer, offset);
+        case "ALAR":
+            return new ALAR(buffer, offset);
         default:
             console.log("不支持的文件头 ： " + head);
             return null;
@@ -519,14 +612,15 @@ module.exports = {
                 }
                 let result;
                 //检查是否有该文件
+
                 if (!fs.existsSync("cache" + req.path)) {
                     mkdir(fullPathList, fullPathList.length - 1);
                     options.gzip = true;
                     request(options, (err, response, body) => {
                         result = parse(body);
-                        res.send(result.Package(translateFilePath));
-                        fs.writeFileSync("cache/"+requestFileName,body);
-                        //res.send(body);
+                        //res.send(result.Package(translateFilePath));
+                        fs.writeFileSync("cache/" + requestFileName, body);
+                        res.send(body);
                     })
                     //.pipe(fs.createWriteStream("cache" + req.path));
                 }
