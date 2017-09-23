@@ -3,7 +3,7 @@
         <p>{{title}}</p>
         <navbarButton :img='imgs[1]' :is-right='true' @click.native="close"> </navbarButton>
         <navbarButton :img='imgs[0]' :is-right='true' @click.native="min"> </navbarButton>
-        <navbarButton v-for="(item,index) in customButtons" :img="item.img" :is-right="item.isRight" :enabled="item.enabled" @click.native="item.clickFunction(index)"> </navbarbutton>
+        <navbarButton v-for="(item,index) in customButtons" :id=\"item.id\" :img="item.img" :is-right="item.isRight" :enabled="item.enabled" @click.native="item.clickFunction(index)"> </navbarbutton>
     </div>
 </template>
 

@@ -7,7 +7,16 @@ import slideMenu from '../components/slide-menu.vue'
 import gifEditor from '../components/gif-editor.vue'
 import xml2json from './xml2json'
 import pluginManager from './pluginManager.js'
-
+const VIWLUIRR = {
+    cycleArray: function(arr,str){
+        if(!(arr instanceof Array)){return null;}
+        var index = arr.indexOf(str);
+        if(index >=0){
+            return arr[(index+1)%arr.length];
+        }
+        return null;
+    }
+};
 const pluginEvent = {
     'EeLcL7hN': 'quest-success',  //statusUpdate
     'uD69xeaG': 'quest-start',    //statusUpdate
@@ -56,6 +65,7 @@ const vm = new Vue({
         Buttons: [
             //Options
             {
+                id: "BtConfig",
                 img: "./static/img/config.png",
                 isRight: false,
                 enabled: true,
@@ -65,6 +75,7 @@ const vm = new Vue({
             },
             //ReFresh
             {
+                id: "BtRefresh",
                 img: "./static/img/small-refresh.png",
                 isRight: false,
                 enabled: true,
@@ -74,6 +85,7 @@ const vm = new Vue({
                 }
             },
             {
+                id: "BtRecord",
                 img: "./static/img/record.png",
                 isRight: false,
                 enabled: true,
@@ -83,6 +95,7 @@ const vm = new Vue({
                 }
             },
             {
+                id: "BtStop",
                 img: "./static/img/stop.png",
                 isRight: false,
                 enabled: true,
@@ -94,11 +107,14 @@ const vm = new Vue({
             },
             //muted
             {
-                img: "./static/img/small-music.png",
+                id: "BtBGM",
+                img: ["./static/img/small-music-on.png","./static/img/small-music.png"],
                 isRight: true,
                 enabled: true,
                 clickFunction: () => {
                     //Slience！
+                    let imgUrl = document.getElementById(this.id).style.backgroundImage;
+                    document.getElementById(this.id).style.backgroundImage = 'url("'+VIWLUIRR.cycleArray(this.img,imgUrl.substring(5,imgUrl.length-2))+'")';
                     vm.globalSetting.muted = !vm.globalSetting.muted;
                 }
             }
