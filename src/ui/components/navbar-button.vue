@@ -10,9 +10,13 @@
             'enabled':Boolean,
         },
         data: function(){
+            let thisimg = this.img;
+            if(this.img instanceof Array){
+                thisimg = this.img[0];
+            }
             return {
                 styleObject:{
-                    backgroundImage : 'url(' + this.img + ')',
+                    backgroundImage : 'url(' + thisimg + ')',
                     float : this.isRight ? 'right':'left',
                     opacity: '1'
                 },
