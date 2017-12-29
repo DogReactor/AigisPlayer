@@ -21,6 +21,7 @@ module.exports = {
                 switch (method) {
                     case 'Network.requestWillBeSent':
                         if ((params.request.url.startsWith('https://millennium-war.net/') || params.request.url.startsWith('https://all.millennium-war.net/')) && params.request.method === 'POST') {
+                            console.log('截获发往aigis的包')
                             reqMaps.set(params.requestId, params.request.url);
                             //Decode Request Body
                             let raw = params.request.postData;
