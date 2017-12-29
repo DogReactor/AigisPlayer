@@ -42,9 +42,10 @@ module.exports = {
             buffer = base64.decode(buffer);
         }
 
-        let head = "<?xml version=\"";
+        let head = "<DA>";
         let startByte = head.charCodeAt(0);
         for (let i = 0; i < Math.min(100, buffer.byteLength); i++) {
+
             let test = true;
             let b = buffer[i];
             for (let j = 1; j < head.length; j++) {

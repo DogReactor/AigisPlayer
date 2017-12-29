@@ -354,10 +354,12 @@ const vm = new Vue({
 
         eventHub.$on('XHR-xml-data', function (path, body, id) {
             path = path.slice(path.lastIndexOf('/') + 1);
+            console.log(path);
             let type = pluginEvent[path];
             if (type == undefined || type == 'none') return;
             let obj = xml2json(body);
             if (obj.DA != undefined) obj = obj.DA;
+            //console.log(obj);
             eventHub.$emit('new-game-data', {
                 type: type,
                 obj: obj,
