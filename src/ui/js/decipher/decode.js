@@ -38,6 +38,7 @@ module.exports = {
     },
 
     decodeXml: (buffer) => {
+        if(buffer[0] === '<'.charCodeAt(0)) return undefined;
         if (/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/.test(buffer)) {
             buffer = base64.decode(buffer);
         }

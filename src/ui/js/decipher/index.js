@@ -21,7 +21,6 @@ module.exports = {
                 switch (method) {
                     case 'Network.requestWillBeSent':
                         if ((params.request.url.startsWith('https://millennium-war.net/') || params.request.url.startsWith('https://all.millennium-war.net/')) && params.request.method === 'POST') {
-                            console.log('截获发往aigis的包')
                             reqMaps.set(params.requestId, params.request.url);
                             //Decode Request Body
                             let raw = params.request.postData;
@@ -32,13 +31,13 @@ module.exports = {
                             buffer = Buffer.from(buffer);
                             let decoded = decodeXml(buffer);
                             if (decoded) {
-                                let decompressed = decompress(decoded);
-                                let body_str = [];
-                                for (let i = 0; i < decompressed.byteLength; i++) {
-                                    body_str.push(String.fromCharCode(decompressed[i]));
-                                }
-                                console.log(body_str.join('')); // Send This to Plugins
+                                buffer = decompress(decoded);
                             }
+                            let body_str = [];
+                            for (let i = 0; i < buffer.byteLength; i++) {
+                                body_str.push(String.fromCharCode(buffer[i]));
+                            }
+                            console.log(body_str.join('')); // Send This to Plugins
                         }
                         if (params.request.url.indexOf('1fp32igvpoxnb521p9dqypak5cal0xv0') !== -1 || params.request.url.indexOf('2iofz514jeks1y44k7al2ostm43xj085') !== -1) {
                             console.log(params.request.url);
