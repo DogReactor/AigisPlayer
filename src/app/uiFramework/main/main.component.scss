@@ -1,0 +1,21 @@
+.box{
+    display:flex;
+    flex-direction:row;
+    height:100%;
+}
+.game-main{
+    height:640px;
+    width:960px;
+    display:block;
+}
+.left-box{
+    flex-direction:column;
+}
+.right-plugin{
+    flex:1;
+    background:black;
+}
+.bottom-plugin{
+    background:grey;
+    height:100%;
+}

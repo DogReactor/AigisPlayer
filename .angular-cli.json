@@ -20,7 +20,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.scss"
+        "./node_modules/element-angular/theme/index.css"
       ],
       "scripts": [
       ],

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ElectronService } from './providers/electron.service';
+import { ElectronService } from './core/electron.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
