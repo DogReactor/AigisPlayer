@@ -1,19 +1,12 @@
 {
-  "name": "angular-electron",
-  "version": "2.6.0",
-  "description": "Angular 5 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "aigisplayer",
+  "version": "2.0.0",
+  "description": "Toolkit for Aigis",
+  "homepage": "https://github.com/huazhu111/AigisPlayer",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Yukimir",
+    "email": "luodadi.huazhu@gmail.com"
   },
-  "keywords": [
-    "angular",
-    "angular 5",
-    "electron",
-    "typescript",
-    "sass"
-  ],
   "main": "main.js",
   "private": true,
   "scripts": {
