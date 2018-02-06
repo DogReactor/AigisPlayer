@@ -1,0 +1,33 @@
+.container{
+    height:30px;
+    background:#475669;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+}
+.btn{
+    font-size:24px;
+    padding: 3px 10px 3px 10px;
+    color:white;
+}
+.btn:hover{
+    color:black;
+    background:#D3DCE6;
+}
+
+
+
+
+.tbtn{
+    font-size:16px;
+    padding: 7px 9px 9px 9px;
+    color:white;
+}
+.tbtn:hover{
+    color:black;
+    background:#D3DCE6;
+}
+.toolbar{
+    padding:0 10px 0 10px;
+    background: #1F2D3D;
+}

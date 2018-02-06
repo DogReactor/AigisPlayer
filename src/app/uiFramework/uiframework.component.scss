@@ -1,3 +1,11 @@
 .container{
+    display:flex;
+    flex-direction:column;
+    flex-shrink:0;
     height:100%;
+}
+app-uiframe-main{
+    flex:1 1 auto;
+    flex-wrap:nowrap;
+    display:flex;
 }

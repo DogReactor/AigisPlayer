@@ -9,6 +9,7 @@
     display:block;
 }
 .left-box{
+    display:flex;
     flex-direction:column;
 }
 .right-plugin{
@@ -17,5 +18,5 @@
 }
 .bottom-plugin{
     background:grey;
-    height:100%;
+    flex:1;
 }

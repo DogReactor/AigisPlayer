@@ -7,7 +7,7 @@ import { GameService } from './game.service'
 
 @NgModule({
     imports: [CommonModule],
-    providers: [ElectronService]
+    providers: [ElectronService, GameService]
 })
 export class CoreModule {
 

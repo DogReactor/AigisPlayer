@@ -1,0 +1,32 @@
+.container{
+    height:24px;
+    background:white;
+    display:flex;
+    flex-flow:row;
+    justify-content: space-between;
+    align-content:center;
+    -webkit-app-region:drag;
+}
+.title{
+    margin:0;
+}
+.controller{
+    display:flex;
+    flex-flow:row;
+    align-items:center;
+}
+.btn{
+    padding-left:7px;
+    padding-right:7px;
+    padding-top:3px;
+    padding-bottom:3px;
+    -webkit-app-region : no-drag
+}
+.btn:hover{
+    background:#D3DCE6;
+    color:white;
+}
+.close:hover{
+    background:#FF4949;
+    color:white;
+}

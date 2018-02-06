@@ -11,6 +11,8 @@ export class GameService {
     }
 
     reload() {
-        this.webView.reload();
+        if (this.webView) {
+            this.webView.reload();
+        }
     }
 }
