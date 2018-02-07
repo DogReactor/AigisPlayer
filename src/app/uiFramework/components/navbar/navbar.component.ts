@@ -11,7 +11,7 @@ export class UIFrameNavbarComponent {
 
     }
     minimize() {
-        this.electronService.browserWindow.minimize();
+        this.electronService.currentWindow.minimize();
     }
     close() {
         this.electronService.APP.exit(0);

@@ -1,10 +1,10 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { GlobalSettingService } from './globalSetting.service';
-import { GlobalStatus } from './globalStatus.service'
+import { GlobalStatusService } from './globalStatus.service'
 
 @NgModule({
-    providers: [GlobalSettingService, GlobalStatus]
+    providers: [GlobalSettingService, GlobalStatusService]
 })
-export class CoreModule {
+export class GlobalModule {
 
 }

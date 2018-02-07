@@ -1,0 +1,21 @@
+:host{
+    width:200px;
+    display:flex;
+    height:200px;
+    flex-direction: column;
+    color:black;
+    background:#F9FAFC;
+}
+.selection{
+    padding:10px 10px 10px 20px;
+    height:30px;
+    line-height: 30px;
+}
+.selection:hover{
+    background: #D3DCE6;
+    color:black;
+}
+.selected{
+    background:#E5E9F2;
+    color:black;
+}

@@ -1,10 +1,12 @@
 import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
+import { Test } from './src/backend/test'
 
 let win, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
 import * as url from 'url';
+Test.output();
 
 if (serve) {
   require('electron-reload')(__dirname, {
@@ -20,16 +22,17 @@ function createWindow() {
   win = new BrowserWindow({
     x: 0,
     y: 0,
-    width: size.width,
-    height: size.height,
-    frame: false
+    width: 960,
+    height: 694,
+    frame: false,
+    resizable: false
   });
 
   // and load the index.html of the app.
   win.loadURL(url.format({
     protocol: 'file:',
     pathname: path.join(__dirname, '/index.html'),
-    slashes:  true
+    slashes: true
   }));
 
   // Open the DevTools.

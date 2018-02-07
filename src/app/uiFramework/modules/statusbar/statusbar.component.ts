@@ -12,6 +12,6 @@ export class UIFrameStatusBarComponent {
 
     }
     reload() {
-        this.gameService.reload();
+        this.gameService.Reload();
     }
 }

@@ -13,8 +13,21 @@ export class GameComponent implements AfterViewInit {
     ngAfterViewInit() {
         this.gameView = document.getElementById('gameView');
         this.gameService.WebView = this.gameView;
-
-        // gameView调整大小
+        let webContent = null;
+        let webview = this.gameView;
+        webview.addEventListener('dom-ready', () => {
+            webContent = webview.getWebContents();
+            // webview.openDevTools();
+            if ((webview.getURL().indexOf('app_id') !== -1) || webview.getURL().indexOf('/play/') !== -1) {
+                webview.send('catch');  // 通知页面进行调整
+                // decipher.attach(webview.getWebContents(), this.$root.eventHub, this.numid); // 注入debuger
+            }
+            /*// 自动输入用户名密码
+            if (webview.getURL().indexOf('login') !== -1 && webview.getURL().indexOf('logout') === -1) {
+                if (this.account == null) return;
+                webview.send('login', { username: this.account.username, password: this.account.password });
+            }*/
+        });
         // gameView注入debugger，所有数据全部发到gameServices里去
     }
 }

@@ -20,3 +20,11 @@
     background:grey;
     flex:1;
 }
+:host{
+    flex:1 1 auto;
+    flex-wrap:nowrap;
+    display:flex;
+}
+.obs{
+    background:black;
+}

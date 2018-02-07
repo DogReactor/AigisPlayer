@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ElectronService } from './core/electron.service';
 import { TranslateService } from '@ngx-translate/core';
+import { GlobalStatusService } from './global/globalStatus.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent {
   constructor(public electronService: ElectronService,
-    private translate: TranslateService) {
+    private translate: TranslateService, private globalStatusService: GlobalStatusService) {
 
     translate.setDefaultLang('en');
 
