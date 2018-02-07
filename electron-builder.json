@@ -1,5 +1,5 @@
 {
-  "productName": "angular-electron",
+  "productName": "AigisPlayer",
   "directories": {
     "app": "dist",
     "output": "app-builds"

@@ -9,6 +9,10 @@
 }
 .title{
     margin:0;
+    font-size:12px;
+    line-height:24px;
+    padding-left:7px;
+    // font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .controller{
     display:flex;
@@ -20,7 +24,8 @@
     padding-right:7px;
     padding-top:3px;
     padding-bottom:3px;
-    -webkit-app-region : no-drag
+    -webkit-app-region : no-drag;
+    transition: all 0.2s;
 }
 .btn:hover{
     background:#D3DCE6;

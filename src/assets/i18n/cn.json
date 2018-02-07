@@ -1,8 +1,16 @@
 {
-    "PAGES": {
-        "HOME": {
-            "TITLE": "App启动了！"
+    "SETTING": {
+        "PROXY": {
+            "PROXY": "代理",
+            "HOST": "主机",
+            "PORT": "端口",
+            "SOCKS5": "是否为Socks5协议",
+            "ENABLE": "启用"
+        },
+        "UTIL":{
+            "UTIL": "通用",
+            "LOCK": "保持在最前端",
+            "MUTE": "静音"
         }
     }
-  }
-  
+}

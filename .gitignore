@@ -12,3 +12,4 @@ release-green
 .vs/
 config.conf
 dist-green
+app-builds

@@ -9,6 +9,7 @@ import { GlobalSettingService } from '../../../../../global/globalSetting.servic
     styleUrls: ['./setting.component.scss']
 })
 export class UIFrameStatusBarToolBarSettingComponent {
+    private index: String = 'util';
     constructor(private gameService: GameService, private globalSettingService: GlobalSettingService) {
 
     }

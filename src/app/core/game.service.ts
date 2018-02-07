@@ -42,6 +42,11 @@ export class GameService {
             this.webView.reload();
         }
     }
+    setAudioMuted(enable) {
+        if (this.webView) {
+            this.webView.setAudioMuted(enable)
+        }
+    }
     LoadGame(index) {
         if (this.webView && index < gameInfo.length) {
             const game = gameInfo[index];
@@ -50,6 +55,7 @@ export class GameService {
             this.webView.loadURL(game.URL);
             // 修改Electron的窗口大小
             this.electronService.ReSize(game.Size);
+            document.title = <string>game.Name;
         }
     }
 }

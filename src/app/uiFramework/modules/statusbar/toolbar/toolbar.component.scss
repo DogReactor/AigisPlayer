@@ -2,6 +2,7 @@
     font-size:16px;
     padding: 7px 9px 7px 9px;
     color:white;
+    transition: all 0.5s;
 }
 .tbtn:hover{
     color:black;
@@ -26,4 +27,8 @@
 .selected{
     background:#F9FAFC;
     color:black;
+}
+.menu{
+    position:fixed;
+    bottom:30px;
 }

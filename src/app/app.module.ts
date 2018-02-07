@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 import { UiFrameModule } from './uiFramework/uiframework.module'
 import { UIFrameComponent } from './uiFramework/uiframework.component'
 import { GlobalModule } from './global/global.module'
+import { AppRoutingModule } from './app-routing.module'
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
@@ -33,9 +34,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot([
-      { path: '', component: UIFrameComponent }
-    ]),
+    AppRoutingModule,
     ElModule.forRoot(),
     FormsModule,
     CoreModule,

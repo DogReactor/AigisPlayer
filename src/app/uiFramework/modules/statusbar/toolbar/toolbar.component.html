@@ -5,8 +5,8 @@
     <i [ngClass]="{'fa fa-gear tbtn':true,'selected':selectedMenu==='setting'}" (click)="selectMenu('setting')"></i>
 </div>
 <div class="menu-container" [ngSwitch]="selectedMenu">
-    <app-uiframe-statusbar-toolbar-gameselect *ngSwitchCase="'gameselection'" (onSelected)="closeMenu()"></app-uiframe-statusbar-toolbar-gameselect>
-    <app-uiframe-statusbar-toolbar-setting *ngSwitchCase="'setting'"></app-uiframe-statusbar-toolbar-setting>
+    <app-uiframe-statusbar-toolbar-gameselect class="menu" [@fadeInOut]="selectedMenu" *ngSwitchCase="'gameselection'" (onSelected)="closeMenu()"></app-uiframe-statusbar-toolbar-gameselect>
+    <app-uiframe-statusbar-toolbar-setting class="menu" [@fadeInOut]="selectedMenu" *ngSwitchCase="'setting'"></app-uiframe-statusbar-toolbar-setting>
 
     <div *ngSwitchCase="'none'"></div>
 </div>
