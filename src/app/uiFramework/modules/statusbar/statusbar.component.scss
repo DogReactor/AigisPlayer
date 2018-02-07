@@ -1,0 +1,17 @@
+.btn{
+    font-size:24px;
+    padding: 3px 10px 3px 10px;
+    color:white;
+}
+.btn:hover{
+    color:black;
+    background:#D3DCE6;
+}
+:host{
+    height:30px;
+    background:#475669;
+    display:flex;
+    align-items:flex-end;
+    justify-content: space-between;
+    z-index: 100;
+}

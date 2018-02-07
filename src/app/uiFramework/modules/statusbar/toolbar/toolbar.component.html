@@ -1,0 +1,12 @@
+<div class="toolbar">
+    <i [ngClass]="{'fa fa-user tbtn':true,'selected':selectedMenu==='user'}" (click)="selectMenu('user')"></i>
+    <i [ngClass]="{'fa fa-bell tbtn':true,'selected':selectedMenu==='notice'}" (click)="selectMenu('notice')"></i>
+    <i [ngClass]="{'fa fa-gamepad tbtn':true,'selected':selectedMenu==='gameselection'}" (click)="selectMenu('gameselection')"></i>
+    <i [ngClass]="{'fa fa-gear tbtn':true,'selected':selectedMenu==='setting'}" (click)="selectMenu('setting')"></i>
+</div>
+<div class="menu-container" [ngSwitch]="selectedMenu">
+    <app-uiframe-statusbar-toolbar-gameselect class="menu" [@fadeInOut]="selectedMenu" *ngSwitchCase="'gameselection'" (onSelected)="closeMenu()"></app-uiframe-statusbar-toolbar-gameselect>
+    <app-uiframe-statusbar-toolbar-setting class="menu" [@fadeInOut]="selectedMenu" *ngSwitchCase="'setting'"></app-uiframe-statusbar-toolbar-setting>
+
+    <div *ngSwitchCase="'none'"></div>
+</div>
