@@ -15,12 +15,11 @@ export class GlobalSettingService {
     }
 
     constructor(private electronService: ElectronService) {
-        // 在这里读取Config，FS相关操作也交给electronService好了
-        if (electronService.fs.existsSync('./globalConfig.conf')) {
+        // 在这里读取Config
+        if (window.localStorage.getItem('globalSetting')) {
             try {
-                const jsonText = electronService.fs.readFileSync('./globalConfig.conf', 'utf-8');
-                const jsonObject = JSON.parse(jsonText);
-                this.GlobalSetting = jsonObject;
+                this.GlobalSetting = JSON.parse(window.localStorage.getItem('globalSetting'));
+                console.log(this.GlobalSetting);
             } catch { }
         }
         // 给globalSetting的所有成员加上getter和setter，方便调取saveConfigure
@@ -44,7 +43,7 @@ export class GlobalSettingService {
     }
 
     private saveConfigure() {
-        this.electronService.fs.writeFileSync('./globalConfig.conf', JSON.stringify(this.GlobalSetting));
+        window.localStorage.setItem('globalSetting', JSON.stringify(this.GlobalSetting));
     }
     setProxy(proxy: Proxy) {
         this.GlobalSetting.Proxy = proxy;
