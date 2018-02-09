@@ -1,0 +1,41 @@
+:host{
+    display:flex;
+    height:100%;
+}
+.add{
+    width:100%;
+    padding:20px 0 0 0;
+    text-align: center;
+}
+.checkbox{
+    float:right;
+}
+.btn{
+    text-align: center;
+}
+.selectmenu{
+    display:flex;
+    justify-content: space-between;
+}
+.editor{
+    margin-top:20px;
+}
+.password-container{
+    text-align: center;
+    display:flex;
+    height:100%;
+    justify-content: center;
+    flex-direction: column;
+    width:100%;
+}
+.password-error{
+    color:#FF4949
+}
+.password-clear{
+    margin:10px;
+}
+hr{
+    height:1px;
+    border:none;
+    border-top:1px dashed #D3DCE6;
+}

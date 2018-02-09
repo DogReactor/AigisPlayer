@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { GameService } from '../../../../../../../core/game.service'
-import { GlobalSettingService } from '../../../../../../../global/globalSetting.service'
-import { Proxy } from '../../../../../../../global/globalSetting.service'
+import { GameService } from '../../../../../../../../core/game.service'
+import { GlobalSettingService } from '../../../../../../../../global/globalSetting.service'
+import { Proxy } from '../../../../../../../../global/globalSetting.service'
 
 @Component({
     selector: 'app-setting-proxy',
@@ -16,7 +16,7 @@ export class SettingProxyComponent {
         private globalSettingService: GlobalSettingService,
         private fb: FormBuilder
     ) {
-        this.createForm(globalSettingService.GlobalSetting.proxy);
+        this.createForm(globalSettingService.GlobalSetting.Proxy);
         this.observeChange();
     }
 

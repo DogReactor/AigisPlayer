@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../../../../shared.module';
 import { UIFrameStatusBarToolBarComponent } from './toolbar.component'
-import { UIFrameStatusBarToolBarGameSelectComponent } from './component/gameselect/gameselect.component'
-import { UIFrameStatusBarToolBarSettingModule } from './setting/setting.module'
+import { UIFrameStatusBarToolBarGameSelectComponent } from './components/gameselect/gameselect.component'
+import { UIFrameStatusBarToolBarSettingModule } from './modules/setting/setting.module'
+import { UIFrameStatusBarToolBarAccountSelectComponent } from './components/accountselect/accountselect.component'
 
 @NgModule({
-    declarations: [UIFrameStatusBarToolBarComponent, UIFrameStatusBarToolBarGameSelectComponent],
+    declarations: [UIFrameStatusBarToolBarComponent,
+        UIFrameStatusBarToolBarGameSelectComponent,
+        UIFrameStatusBarToolBarAccountSelectComponent],
     imports: [SharedModule, UIFrameStatusBarToolBarSettingModule],
     exports: [UIFrameStatusBarToolBarComponent]
 })

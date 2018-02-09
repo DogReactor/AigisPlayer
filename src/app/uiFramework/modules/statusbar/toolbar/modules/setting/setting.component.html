@@ -1,0 +1,16 @@
+<div el-row class="container">
+    <div el-col span="8" class="menu">
+        <el-menu [(model)]="index">
+            <el-menu-item index="util">{{'SETTING.UTIL.UTIL' | translate}}</el-menu-item>
+            <el-menu-item index="proxy">{{'SETTING.PROXY.PROXY' | translate}}</el-menu-item>
+            <el-menu-item index="account">{{'SETTING.ACCOUNT.ACCOUNT' | translate}}</el-menu-item>
+            <el-menu-item index="map">{{'SETTING.MAP.MAP' | translate}}</el-menu-item>
+        </el-menu>
+    </div>
+    <div el-col span="16" class="content" [ngSwitch]="index">
+        <app-setting-proxy class="content-item" [@fadeInOut]="selectedMenu" *ngSwitchCase="'proxy'"></app-setting-proxy>
+        <app-setting-util class="content-item" [@fadeInOut]="selectedMenu" *ngSwitchCase="'util'"></app-setting-util>
+        <app-setting-account class="content-item" [@fadeInOut]="selectedMenu" *ngSwitchCase="'account'"></app-setting-account>
+        <app-setting-map class="content-item" [@fadeInOut]="selectedMenu" *ngSwitchCase="'map'"></app-setting-map>
+    </div>
+</div>

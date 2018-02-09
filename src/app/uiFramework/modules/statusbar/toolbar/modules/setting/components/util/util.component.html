@@ -1,14 +1,14 @@
 <el-container>
         <el-main>
-            <el-form [formGroup]="utilForm" label-width="150px" size="small" label-position="left">
+            <el-form label-width="150px" size="small" label-position="left">
                 <el-form-item [label]="'SETTING.UTIL.MUTE' | translate">
                     <div class="checkbox">
-                        <el-switch formControlName="Mute"></el-switch>
+                        <el-switch [model]="Mute" (modelChange)="selectSwitch('Mute')"></el-switch>
                     </div>
                 </el-form-item>
                 <el-form-item [label]="'SETTING.UTIL.LOCK' | translate">
                     <div class="checkbox">
-                        <el-switch formControlName="Lock"></el-switch>
+                        <el-switch [model]="Lock" (modelChange)="selectSwitch('Lock')"></el-switch>
                     </div>
                 </el-form-item>
             </el-form>
