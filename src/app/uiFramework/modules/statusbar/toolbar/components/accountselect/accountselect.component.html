@@ -2,7 +2,7 @@
     <div el-container>
         <div el-main>
             <div class="password-container">
-                <el-input [(model)]="accountListPassword" [placeholder]="'UTIL.INPUTPASSWORD' | translate" (keyup.enter)="enterAccountListPassword()"></el-input>
+                <el-input [(model)]="accountListPassword" #input (icon-mouseenter)="input.nativeType='text'" (icon-mouseleave)="input.nativeType='password'" icon="view" [native-type]="'password'" [placeholder]="'UTIL.INPUTPASSWORD' | translate" (keyup.enter)="enterAccountListPassword()"></el-input>
                 <p class="password-error" *ngIf="accountListPasswordError">{{'UTIL.PASSWORDERROR' | translate}}</p>
                 <div class="password-clear">
                     <el-button (click)="forceClearPassword()" [plain]="true" type="danger">{{'UTIL.FORCECLEARPASSWORD' | translate}}</el-button>

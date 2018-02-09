@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { GameService } from '../../../../../../../../core/game.service'
 import { GlobalSettingService, AccountList, Account } from '../../../../../../../../global/globalSetting.service'
 import { GlobalStatusService } from '../../../../../../../../global/globalStatus.service'
+import { TranslateService } from '@ngx-translate/core';
+import { ElMessageService } from 'element-angular'
 import * as Rx from 'rxjs/Rx'
 
 @Component({
@@ -19,7 +21,9 @@ export class SettingAccountComponent implements OnDestroy {
     constructor(
         private gameService: GameService,
         private globalSettingService: GlobalSettingService,
-        private globalStatusService: GlobalStatusService
+        private globalStatusService: GlobalStatusService,
+        private translateService: TranslateService,
+        private message: ElMessageService
     ) {
         this.accountList = globalSettingService.AccountList;
         this.accountListPassword = this.globalStatusService.GlobalStatusStore.Get('AccountListPassword').Value;
@@ -40,6 +44,9 @@ export class SettingAccountComponent implements OnDestroy {
     }
     saveAccount() {
         this.globalSettingService.SaveAccountList();
+        this.translateService.get('MESSAGE.SAVE-SUCCESS').subscribe(res => {
+            this.message['success'](res)
+        });
     }
     setDefault() {
         for (let i = 0; i < this.accountList.List.length; i++) {

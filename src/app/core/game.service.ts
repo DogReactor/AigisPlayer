@@ -3,6 +3,9 @@ import { Size } from './util';
 import { GameModel } from './game.model';
 import { ElectronService } from './electron.service';
 import { KeyMapperList } from './keyMapper'
+import { Rectangle, NativeImage } from 'electron';
+import { ElMessageService } from 'element-angular';
+import { TranslateService } from '@ngx-translate/core';
 
 const gameInfo = [
     new GameModel(
@@ -31,7 +34,11 @@ export class GameService {
     private webView = null;
     public GameInfo = gameInfo;
     public CurrentGame: GameModel;
-    constructor(private electronService: ElectronService) {
+    constructor(
+        private electronService: ElectronService,
+        private translateService: TranslateService,
+        private message: ElMessageService
+    ) {
         this.CurrentGame = new GameModel('None', new Size(640, 960), 'about:blank');
     }
     set WebView(webView) {
@@ -64,7 +71,6 @@ export class GameService {
     }
     KeyMapperTrigger(keyName) {
         const keyMapper = KeyMapperList.find(v => v.Name === keyName);
-        console.log(keyMapper);
         if (!keyMapper) { return; }
         const x = Math.floor(keyMapper.X + (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Width);
         const y = Math.floor(keyMapper.Y + (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Height);
@@ -96,6 +102,17 @@ export class GameService {
                     }, 20);
                 }, 20);
             }
+        }
+    }
+    ScreenShot(callback?: Function) {
+        if (this.webView) {
+            const webContents = this.webView.getWebContents();
+            webContents.capturePage((image: NativeImage) => {
+                this.electronService.clipboard.writeImage(image);
+            })
+            this.translateService.get('MESSAGE.SCREENSHOT-SUCCESS').subscribe(res => {
+                this.message['success'](res)
+            });
         }
     }
 }

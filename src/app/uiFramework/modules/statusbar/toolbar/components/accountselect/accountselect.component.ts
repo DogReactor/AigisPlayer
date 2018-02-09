@@ -47,6 +47,9 @@ export class UIFrameStatusBarToolBarAccountSelectComponent implements OnDestroy 
             this.subscriptionList[i].unsubscribe();
         }
     }
+    iconClick(e) {
+        console.log(e);
+    }
     forceClearPassword() {
         this.globalSettingService.ForceClearPassword();
     }
