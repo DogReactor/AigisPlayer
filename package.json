@@ -30,7 +30,7 @@
     "e2e": "protractor ./protractor.conf.js"
   },
   "dependencies": {
-    "element-angular": "^0.5.6"
+    "element-angular": "^0.6.0"
   },
   "devDependencies": {
     "@angular/animations": "^5.2.3",

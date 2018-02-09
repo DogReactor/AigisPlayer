@@ -1,14 +1,12 @@
-<el-container>
-    <div *ngIf="accountList.Encrypted===true" class="password-container">
-        <el-main>
-            <el-input [(model)]="accountListPassword" [placeholder]="'UTIL.INPUTPASSWORD' | translate" (keyup.enter)="setPassword()"></el-input>
-            <p class="password-error" *ngIf="accountListPasswordError">{{'UTIL.PASSWORDERROR' | translate}}</p>
-            <div class="password-clear">
-                <el-button (click)="forceClearPassword()" [plain]="true" type="danger">{{'UTIL.FORCECLEARPASSWORD' | translate}}</el-button>
-            </div>
-        </el-main>
+<div el-container>
+    <div el-main *ngIf="accountList.Encrypted===true" class="password-container">
+        <el-input [(model)]="accountListPassword" [placeholder]="'UTIL.INPUTPASSWORD' | translate" (keyup.enter)="setPassword()"></el-input>
+        <p class="password-error" *ngIf="accountListPasswordError">{{'UTIL.PASSWORDERROR' | translate}}</p>
+        <div class="password-clear">
+            <el-button (click)="forceClearPassword()" [plain]="true" type="danger">{{'UTIL.FORCECLEARPASSWORD' | translate}}</el-button>
+        </div>
     </div>
-    <el-main *ngIf="accountList.Encrypted===false">
+    <div el-main *ngIf="accountList.Encrypted===false">
         <div>
             <el-form label-position="left" label-width="130px" [inline]="true" size="small">
                 <el-form-item [label]="'SETTING.ACCOUNT.ACCOUNTLISTPASSWORD' | translate">
@@ -49,5 +47,5 @@
                 </div>
             </el-form>
         </div>
-    </el-main>
-</el-container>
+    </div>
+</div>
