@@ -5,6 +5,7 @@ import { Size } from './util'
 // the resulting javascript file will look as if you never imported the module at all.
 import * as fs from 'fs';
 import { ipcRenderer, BrowserWindow, app, Session } from 'electron';
+import * as Electron from 'electron';
 import * as childProcess from 'child_process';
 
 @Injectable()
@@ -16,16 +17,21 @@ export class ElectronService {
   APP: typeof app;
   Session: Session;
   fs: typeof fs;
+  serve: boolean;
+  electron: typeof Electron;
 
   constructor() {
     // Conditional imports
     if (this.isElectron()) {
-      this.ipcRenderer = window.require('electron').ipcRenderer;
+      this.electron = window.require('electron');
+      this.ipcRenderer = this.electron.ipcRenderer;
       this.childProcess = window.require('child_process');
-      this.currentWindow = window.require('electron').remote.getCurrentWindow();
-      this.APP = window.require('electron').remote.app;
-      this.Session = window.require('electron').remote.require('electron').session.defaultSession;
+      this.currentWindow = this.electron.remote.getCurrentWindow();
+      this.APP = this.electron.remote.app;
+      this.Session = this.electron.remote.require('electron').session.defaultSession;
       this.fs = window.require('fs');
+      this.serve = this.electron.remote.process.argv.slice(1).some(val => val === '--serve');
+      console.log('serve', this.serve);
     }
   }
 

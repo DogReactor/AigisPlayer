@@ -1,7 +1,7 @@
 :host{
-    width:500px;
+    width:800px;
     display:flex;
-    height:300px;
+    height:500px;
     flex-direction: column;
     color:black;
     background:#F9FAFC;
@@ -18,4 +18,7 @@
     overflow-x:hidden;
     overflow-y:overlay;
     height:100%;
+}
+.content-item{
+    opacity: 100;
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Size } from './util';
 import { GameModel } from './game.model';
 import { ElectronService } from './electron.service';
+import { KeyMapperList } from './keyMapper'
 
 const gameInfo = [
     new GameModel(
@@ -42,6 +43,9 @@ export class GameService {
             this.webView.reload();
         }
     }
+    ReloadGame() {
+        this.webView.loadURL(this.CurrentGame.URL);
+    }
     setAudioMuted(enable) {
         if (this.webView) {
             this.webView.setAudioMuted(enable)
@@ -56,6 +60,42 @@ export class GameService {
             // 修改Electron的窗口大小
             this.electronService.ReSize(game.Size);
             document.title = <string>game.Name;
+        }
+    }
+    KeyMapperTrigger(keyName) {
+        const keyMapper = KeyMapperList.find(v => v.Name === keyName);
+        console.log(keyMapper);
+        if (!keyMapper) { return; }
+        const x = Math.floor(keyMapper.X + (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Width);
+        const y = Math.floor(keyMapper.Y + (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Height);
+        if (this.webView) {
+            const webContents = this.webView.getWebContents();
+            if (webContents) {
+                webContents.sendInputEvent({
+                    type: 'mouseMove',
+                    x: x,
+                    y: y,
+                    button: 'left',
+                });
+                setTimeout(() => {
+                    webContents.sendInputEvent({
+                        type: 'mouseDown',
+                        x: x,
+                        y: y,
+                        button: 'left',
+                        clickCount: 1
+                    });
+                    setTimeout(() => {
+                        webContents.sendInputEvent({
+                            type: 'mouseUp',
+                            x: x,
+                            y: y,
+                            button: 'left',
+                            clickCount: 1
+                        });
+                    }, 20);
+                }, 20);
+            }
         }
     }
 }

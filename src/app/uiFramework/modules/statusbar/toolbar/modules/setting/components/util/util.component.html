@@ -1,0 +1,16 @@
+<div el-container>
+    <div el-main>
+        <el-form label-width="150px" size="small" label-position="left">
+            <el-form-item [label]="'SETTING.UTIL.MUTE' | translate">
+                <div class="checkbox">
+                    <el-switch [model]="Mute" (modelChange)="selectSwitch('Mute')"></el-switch>
+                </div>
+            </el-form-item>
+            <el-form-item [label]="'SETTING.UTIL.LOCK' | translate">
+                <div class="checkbox">
+                    <el-switch [model]="Lock" (modelChange)="selectSwitch('Lock')"></el-switch>
+                </div>
+            </el-form-item>
+        </el-form>
+    </div>
+</div>
