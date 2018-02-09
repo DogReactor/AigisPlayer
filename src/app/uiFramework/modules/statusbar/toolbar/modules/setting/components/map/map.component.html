@@ -1,6 +1,12 @@
 <div el-container>
     <div el-main>
         <el-form label-width="150px" size="small" label-position="left">
+            <el-form-item [label]="'SETTING.MAP.SCREENSHOT' | translate">
+                <el-input [model]="globalSettingService.GlobalSetting.ScreenShotKey" (keyup)="keyup('ScreenShotKey',$event)"></el-input>
+            </el-form-item>
+
+            <hr/>
+            
             <el-form-item [label]="'SETTING.MAP.SPEEDUP' | translate">
                 <el-input [model]="globalSettingService.GlobalSetting.SpeedUpKey" (keyup)="keyup('SpeedUpKey',$event)"></el-input>
             </el-form-item>

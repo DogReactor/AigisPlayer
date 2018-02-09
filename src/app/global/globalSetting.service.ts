@@ -3,6 +3,8 @@ import { ElectronService } from '../core/electron.service'
 import { AddSetterToObject } from '../core/util'
 import * as crypto from 'crypto'
 import { GlobalStatusService } from './globalStatus.service'
+import { ElMessageService } from 'element-angular';
+import { TranslateService } from '@ngx-translate/core';
 
 export class Proxy {
     Host: String = '';
@@ -26,13 +28,19 @@ export class GlobalSetting {
     public Proxy = new Proxy();
     public SpeedUpKey = '';
     public UseSkillKey = '';
+    public ScreenShotKey = '';
+    public Language = '';
 }
 
 @Injectable()
 export class GlobalSettingService {
     public GlobalSetting = new GlobalSetting();
     public AccountList = new AccountList();
-    constructor(private electronService: ElectronService, private globalStatusService: GlobalStatusService) {
+    constructor(
+        private electronService: ElectronService,
+        private globalStatusService: GlobalStatusService,
+        private translateService: TranslateService,
+        private message: ElMessageService) {
         if (window.localStorage.getItem('globalSetting')) {
             try {
                 // 读取全局设置信息
@@ -58,6 +66,9 @@ export class GlobalSettingService {
             if (this.AccountList.Encrypted) {
                 this.DecryptAccountList();
             } else {
+                this.translateService.get('MESSAGE.SET-SUCCESS').subscribe(res => {
+                    this.message['success'](res)
+                });
                 this.SaveAccountList();
             }
         })
@@ -131,11 +142,15 @@ export class GlobalSettingService {
                         this.AccountList.Encrypted = false;
                         // 密码正确
                         this.globalStatusService.GlobalStatusStore.Get('AccountListPasswordError').Dispatch(false);
-                    } catch {
-                        this.globalStatusService.GlobalStatusStore.Get('AccountListPasswordError').Dispatch(true);
-                    }
+                        this.translateService.get('MESSAGE.DECRYPT-SUCCESS').subscribe(res => {
+                            this.message['success'](res)
+                        });
+                    } catch { }
                 });
                 decipher.on('error', () => {
+                    this.translateService.get('UTIL.PASSWORDERROR').subscribe(res => {
+                        this.message['error'](res)
+                    });
                     this.globalStatusService.GlobalStatusStore.Get('AccountListPasswordError').Dispatch(true);
                 })
                 decipher.write(this.AccountList.EncryptedList, 'hex');

@@ -4,7 +4,7 @@ import { Size } from './util'
 // If you import a module but never use any of the imported values other than as TypeScript types,
 // the resulting javascript file will look as if you never imported the module at all.
 import * as fs from 'fs';
-import { ipcRenderer, BrowserWindow, app, Session } from 'electron';
+import { ipcRenderer, BrowserWindow, app, Session, Clipboard, clipboard, Tray } from 'electron';
 import * as Electron from 'electron';
 import * as childProcess from 'child_process';
 
@@ -19,7 +19,8 @@ export class ElectronService {
   fs: typeof fs;
   serve: boolean;
   electron: typeof Electron;
-
+  clipboard: Clipboard;
+  Tray: typeof Tray;
   constructor() {
     // Conditional imports
     if (this.isElectron()) {
@@ -31,6 +32,8 @@ export class ElectronService {
       this.Session = this.electron.remote.require('electron').session.defaultSession;
       this.fs = window.require('fs');
       this.serve = this.electron.remote.process.argv.slice(1).some(val => val === '--serve');
+      this.clipboard = this.electron.remote.clipboard;
+      this.Tray = this.electron.remote.Tray;
       console.log('serve', this.serve);
     }
   }

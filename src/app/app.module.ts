@@ -37,8 +37,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     ElModule.forRoot(),
     FormsModule,
-    CoreModule,
-    GlobalModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -47,6 +45,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
+    CoreModule,
+    GlobalModule,
     UiFrameModule
   ],
   bootstrap: [AppComponent]
