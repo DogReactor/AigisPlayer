@@ -13,19 +13,23 @@ export class GlobalStatusService {
         SelectedAccount: '',
         AccountListPassword: '',
         AccountListPasswordError: false,
+        Zoom: 100
     })
     constructor(
         private electronService: ElectronService,
         private gameService: GameService
     ) {
+        this.GlobalStatusStore.Get('SelectedAccount').Subscribe((v) => {
+            this.gameService.ReloadGame()
+        })
         this.GlobalStatusStore.Get('Mute').Subscribe((v) => {
             gameService.setAudioMuted(v);
         })
         this.GlobalStatusStore.Get('Lock').Subscribe((v) => {
             electronService.currentWindow.setAlwaysOnTop(v);
         })
-        this.GlobalStatusStore.Get('SelectedAccount').Subscribe((v) => {
-            this.gameService.ReloadGame()
+        this.GlobalStatusStore.Get('Zoom').Subscribe((v) => {
+            gameService.SetZoom(v);
         })
     }
 }

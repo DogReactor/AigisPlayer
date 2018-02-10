@@ -51,7 +51,9 @@ export class GameService {
         }
     }
     ReloadGame() {
-        this.webView.loadURL(this.CurrentGame.URL);
+        if (this.webView) {
+            this.webView.loadURL(this.CurrentGame.URL);
+        }
     }
     setAudioMuted(enable) {
         if (this.webView) {
@@ -114,5 +116,12 @@ export class GameService {
                 this.message['success'](res)
             });
         }
+    }
+    SetZoom(zoom) {
+        // 通知electronService修改窗口大小
+        this.electronService.ReSize(new Size(
+            Math.floor(this.CurrentGame.Size.Height * (zoom / 100)),
+            Math.floor(this.CurrentGame.Size.Width * (zoom / 100))
+        ));
     }
 }
