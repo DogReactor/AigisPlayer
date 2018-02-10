@@ -21,4 +21,7 @@ export class SettingMapComponent {
         event.stopPropagation();
         this.globalSettingService.GlobalSetting[target] = event.code;
     }
+    clear(target) {
+        this.globalSettingService.GlobalSetting[target] = '';
+    }
 }

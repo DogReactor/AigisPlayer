@@ -67,7 +67,7 @@ export class GameComponent implements AfterViewInit, OnDestroy {
         webview.addEventListener('new-window', (e) => {
             const option = e.options;
             option['height'] = 640;
-            option['width'] = 960;
+            option['width'] = 1100;
             option['autoHideMenuBar'] = true;
             option['webPreferences']['session'] = webContent.session;
             this.electronService.CreateBrowserWindow(e.url, option);
