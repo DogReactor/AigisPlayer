@@ -62,6 +62,7 @@ export class GameService {
     private webView = null;
     public GameInfo = gameInfo;
     public CurrentGame: GameModel;
+    private zoom = 100;
     constructor(
         private electronService: ElectronService,
         private translateService: TranslateService,
@@ -95,7 +96,10 @@ export class GameService {
             // 通知webView跳转页面
             this.webView.loadURL(game.URL);
             // 修改Electron的窗口大小
-            this.electronService.ReSize(game.Size);
+            this.electronService.ReSize(new Size(
+                Math.floor(this.CurrentGame.Size.Height * (this.zoom / 100)),
+                Math.floor(this.CurrentGame.Size.Width * (this.zoom / 100))
+            ));
             document.title = <string>game.Name;
         }
     }
@@ -147,6 +151,7 @@ export class GameService {
     }
     SetZoom(zoom) {
         // 通知electronService修改窗口大小
+        this.zoom = zoom;
         this.electronService.ReSize(new Size(
             Math.floor(this.CurrentGame.Size.Height * (zoom / 100)),
             Math.floor(this.CurrentGame.Size.Width * (zoom / 100))

@@ -11,7 +11,8 @@
             "UTIL": "一般",
             "LOCK": "常に手前に",
             "MUTE": "ミュート",
-            "ZOOM": "サイズ"
+            "ZOOM": "サイズ",
+            "LANGUAGE": "言語/Language"
         },
         "ACCOUNT": {
             "ACCOUNT": "アカウント管理",

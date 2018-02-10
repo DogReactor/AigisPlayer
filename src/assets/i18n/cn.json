@@ -11,7 +11,8 @@
             "UTIL": "通用",
             "LOCK": "保持在最前端",
             "MUTE": "静音",
-            "ZOOM": "缩放"
+            "ZOOM": "缩放",
+            "LANGUAGE": "语言/Language"
         },
         "ACCOUNT": {
             "ACCOUNT": "账户管理",
