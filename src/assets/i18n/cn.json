@@ -45,7 +45,7 @@
         "SCREENSHOT-SUCCESS":"截图到剪贴板成功！请使用CTRL+V粘贴。",
         "SET-SUCCESS":"设置成功",
         "SAVE-SUCCESS":"保存成功",
-        "LOADING-FINISH":"程序加载完毕",
+        "LOAD-FINISH":"程序加载完毕",
         "DECRYPT-SUCCESS":"解密成功"
     }
 }
