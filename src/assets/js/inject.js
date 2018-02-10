@@ -7,11 +7,17 @@ ipcrender.on('catch',(event,message)=>{
     if(gameFrame == null) ipcrender.sendToHost('url','error');
     else{
         gameFrame.style.position = 'fixed';
-        gameFrame.style.top = '0';
-        gameFrame.style.left = '0';
-        gameFrame.style.zIndex = '25';
-        gameFrame.style.marginLeft = '-5px';
         document.body.style.overflow = "hidden";
+        if(message === "kamihime"){
+            gameFrame.style.top = '-28px';
+            gameFrame.style.left = '-150px';
+            gameFrame.style.zIndex = '25';
+        }else{
+            gameFrame.style.top = '0';
+            gameFrame.style.left = '0';
+            gameFrame.style.zIndex = '25';
+            gameFrame.style.marginLeft = '-5px';
+        }
     }
 });
 

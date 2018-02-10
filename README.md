@@ -1,8 +1,8 @@
 # AigisPlayer
-千年战争Aigis On Desktop
+千年戦争Aigis On Desktop
 
 ## Install
-    git clone https://github.com/huazhu111/AigisPlayer
+    git clone https://github.com/Yukimir/AigisPlayer
     cd AigisPlayer
     npm install
     npm start

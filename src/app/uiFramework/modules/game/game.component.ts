@@ -41,7 +41,8 @@ export class GameComponent implements AfterViewInit, OnDestroy {
             webContent = webview.getWebContents();
             // webview.openDevTools();
             if ((webview.getURL().indexOf('app_id') !== -1) || webview.getURL().indexOf('/play/') !== -1) {
-                webview.send('catch');  // 通知页面进行调整
+                // 判断是否为神姬
+                webview.send('catch', this.gameService.CurrentGame.Spec);  // 通知页面进行调整
                 // gameView注入debugger，所有数据全部发到gameServices里去
                 // decipher.attach(webview.getWebContents(), this.$root.eventHub, this.numid); // 注入debuger
             }
