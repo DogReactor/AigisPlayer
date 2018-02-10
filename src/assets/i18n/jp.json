@@ -4,7 +4,7 @@
             "PROXY": "プロキシ",
             "HOST": "ホスト",
             "PORT": "ポート",
-            "SOCKS5": "Socks5プロトコルですか",
+            "SOCKS5": "Socks5プロトコル",
             "ENABLE": "有効する"
         },
         "UTIL": {
@@ -18,7 +18,7 @@
             "NAME": "ニックネーム",
             "USERNAME": "ユーザー名",
             "PASSWORD": "パスワード",
-            "DEFAULT": "デフォルトアカウント（非暗号化）",
+            "DEFAULT": "デフォルト（非暗号化のみ）",
             "ACCOUNTLISTPASSWORD": "暗号用パスワード"
         },
         "MAP": {
