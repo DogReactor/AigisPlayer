@@ -9,6 +9,10 @@ import { GlobalStatusService } from '../../../global/globalStatus.service'
     styleUrls: ['./main.component.scss']
 })
 export class UIFrameMainComponent {
+    private zoom = 100;
     constructor(private gameService: GameService, private globalStatusService: GlobalStatusService) {
+        const state = this.globalStatusService.GlobalStatusStore.Get('Zoom');
+        this.zoom = state.Value;
+        state.Subscribe(v => { this.zoom = v });
     }
 }

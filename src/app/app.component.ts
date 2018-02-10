@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { GlobalStatusService } from './global/globalStatus.service';
 import { GlobalSettingService } from './global/globalSetting.service';
 import { GameService } from './core/game.service'
+import { Langs } from './core/languageList'
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,11 @@ export class AppComponent {
     private globalSettingService: GlobalSettingService,
     private gameService: GameService) {
 
+    // translation
+    translate.addLangs(Langs);
     translate.setDefaultLang('cn');
+    translate.use('cn');
+
     globalSettingService.Init();
     if (electronService.isElectron()) {
       console.log('Mode electron');
@@ -32,8 +37,8 @@ export class AppComponent {
   keyup(event: KeyboardEvent) {
     // 只要找到按下的键，对应是谁就行了
     const code = event.code;
-    if (this.globalSettingService.GlobalSetting.SpeedUpKey === code) { this.gameService.KeyMapperTrigger('SpeedUpKey')}
-    if (this.globalSettingService.GlobalSetting.UseSkillKey === code) { this.gameService.KeyMapperTrigger('UseSkillKey')}
-    if (this.globalSettingService.GlobalSetting.ScreenShotKey === code) { this.gameService.ScreenShot()}
+    if (this.globalSettingService.GlobalSetting.SpeedUpKey === code) { this.gameService.KeyMapperTrigger('SpeedUpKey') }
+    if (this.globalSettingService.GlobalSetting.UseSkillKey === code) { this.gameService.KeyMapperTrigger('UseSkillKey') }
+    if (this.globalSettingService.GlobalSetting.ScreenShotKey === code) { this.gameService.ScreenShot() }
   }
 }

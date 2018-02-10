@@ -29,7 +29,8 @@ export class GlobalSetting {
     public SpeedUpKey = '';
     public UseSkillKey = '';
     public ScreenShotKey = '';
-    public Language = '';
+    public Language = 'cn';
+    public Zoom = 100;
 }
 
 @Injectable()
@@ -72,6 +73,10 @@ export class GlobalSettingService {
                 this.SaveAccountList();
             }
         })
+
+        // 订阅缩放
+        this.globalStatusService.GlobalStatusStore.Get('Zoom').Subscribe(v => { this.GlobalSetting.Zoom = v; })
+
         // 给globalSetting的所有成员加上getter和setter，方便调取saveConfigure
         AddSetterToObject(this.GlobalSetting, (v) => {
             this.saveConfigure();
@@ -115,6 +120,9 @@ export class GlobalSettingService {
     Init() {
         // 进行初始化全局设定操作
         this.setProxy(this.GlobalSetting.Proxy);
+        this.globalStatusService.GlobalStatusStore.Get('Zoom').Dispatch(this.GlobalSetting.Zoom);
+        this.translateService.use(this.GlobalSetting.Language);
+
     }
     setProxy(proxy: Proxy) {
         this.GlobalSetting.Proxy = proxy;

@@ -1,24 +1,37 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { GameService } from '../../../core/game.service';
 import { GlobalSettingService, Account } from '../../../global/globalSetting.service'
 import { GlobalStatusService } from '../../../global/globalStatus.service'
 import { ElMessageService } from 'element-angular'
+import * as Rx from 'rxjs/Rx'
 
 @Component({
     selector: 'app-game',
     templateUrl: './game.component.html',
     styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements AfterViewInit {
+export class GameComponent implements AfterViewInit, OnDestroy {
     private gameView = null;
+    private zoom = 100;
+    private subscriptionList: Rx.Subscription[] = [];
     constructor(
         private gameService: GameService,
         private globalSettingService: GlobalSettingService,
         private globalStatusService: GlobalStatusService,
         private message: ElMessageService,
         private translateService: TranslateService
-    ) { }
+    ) {
+        this.subscriptionList.push(
+            this.globalStatusService.GlobalStatusStore.Get('Zoom').Subscribe(v => {
+                this.zoom = v;
+                if (this.gameView) {
+                    if (this.gameView.setZoomFactor === undefined) { return; }
+                    this.gameView.setZoomFactor(this.zoom / 100);
+                }
+            })
+        );
+    }
     ngAfterViewInit() {
         this.gameView = document.getElementById('gameView');
         this.gameService.WebView = this.gameView;
@@ -47,5 +60,10 @@ export class GameComponent implements AfterViewInit {
             if (event.errorDescription === '' || event.errorDescription === '' || event.isMainFrame === false) { return; }
             this.translateService.get('MESSAGE.PAGE-DIDNOT-LOAD').subscribe(res => this.message['warning'](res));
         })
+    }
+    ngOnDestroy() {
+        for (let i = 0; i < this.subscriptionList.length; i++) {
+            this.subscriptionList[i].unsubscribe();
+        }
     }
 }

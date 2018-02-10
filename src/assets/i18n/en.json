@@ -1,7 +1,51 @@
 {
-  "PAGES": {
-      "HOME": {
-          "TITLE": "App works !"
-      }
-  }
+    "SETTING": {
+        "PROXY": {
+            "PROXY": "代理",
+            "HOST": "主机",
+            "PORT": "端口",
+            "SOCKS5": "是否为Socks5协议",
+            "ENABLE": "启用"
+        },
+        "UTIL": {
+            "UTIL": "Util",
+            "LOCK": "Lock",
+            "MUTE": "Mute",
+            "ZOOM": "Zoom"
+        },
+        "ACCOUNT": {
+            "ACCOUNT": "账户管理",
+            "NAME": "昵称",
+            "USERNAME": "用户名",
+            "PASSWORD": "密码",
+            "DEFAULT": "是否为默认账户（仅未加密）",
+            "ACCOUNTLISTPASSWORD": "设置加密密码"
+        },
+        "MAP": {
+            "MAP":"键盘映射/热键",
+            "SPEEDUP":"二倍速",
+            "USESKILL":"使用技能",
+            "SCREENSHOT":"截图"
+        }
+
+    },
+    "UTIL": {
+        "ACCEPT": "确认",
+        "CANCEL": "取消",
+        "SAVE": "保存",
+        "PASSWORDERROR": "密码错误",
+        "INPUTPASSWORD": "请输入密码",
+        "FORCECLEARPASSWORD": "强制清除密码",
+        "PLEASESELECT": "请选择",
+        "ADD": "添加",
+        "DELETE": "删除"
+    },
+    "MESSAGE":{
+        "PAGE-DIDNOT-LOAD":"页面加载失败，请确认代理是否正确配置。",
+        "SCREENSHOT-SUCCESS":"截图到剪贴板成功！请使用CTRL+V粘贴。",
+        "SET-SUCCESS":"设置成功",
+        "SAVE-SUCCESS":"保存成功",
+        "LOADING-FINISH":"程序加载完毕",
+        "DECRYPT-SUCCESS":"解密成功"
+    }
 }
