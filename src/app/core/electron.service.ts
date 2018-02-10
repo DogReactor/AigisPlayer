@@ -55,4 +55,9 @@ export class ElectronService {
       // console.log('success');
     })
   }
+
+  CreateBrowserWindow = (url, option) => {
+    const win = new this.electron.remote.BrowserWindow(option);
+    win.loadURL(url);
+  }
 }

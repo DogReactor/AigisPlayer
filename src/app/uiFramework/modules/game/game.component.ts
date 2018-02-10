@@ -5,6 +5,8 @@ import { GlobalSettingService, Account } from '../../../global/globalSetting.ser
 import { GlobalStatusService } from '../../../global/globalStatus.service'
 import { ElMessageService } from 'element-angular'
 import * as Rx from 'rxjs/Rx'
+import { WebviewTag, WebContents } from 'electron';
+import { ElectronService } from '../../../core/electron.service'
 
 @Component({
     selector: 'app-game',
@@ -12,7 +14,7 @@ import * as Rx from 'rxjs/Rx'
     styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements AfterViewInit, OnDestroy {
-    private gameView = null;
+    private gameView: WebviewTag = null;
     private zoom = 100;
     private subscriptionList: Rx.Subscription[] = [];
     constructor(
@@ -20,7 +22,8 @@ export class GameComponent implements AfterViewInit, OnDestroy {
         private globalSettingService: GlobalSettingService,
         private globalStatusService: GlobalStatusService,
         private message: ElMessageService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private electronService: ElectronService
     ) {
         this.subscriptionList.push(
             this.globalStatusService.GlobalStatusStore.Get('Zoom').Subscribe(v => {
@@ -33,9 +36,9 @@ export class GameComponent implements AfterViewInit, OnDestroy {
         );
     }
     ngAfterViewInit() {
-        this.gameView = document.getElementById('gameView');
+        this.gameView = <WebviewTag>document.getElementById('gameView');
         this.gameService.WebView = this.gameView;
-        let webContent = null;
+        let webContent: WebContents = null;
         const webview = this.gameView;
         webview.addEventListener('dom-ready', () => {
             webContent = webview.getWebContents();
@@ -60,6 +63,14 @@ export class GameComponent implements AfterViewInit, OnDestroy {
         webview.addEventListener('did-fail-load', (event) => {
             if (event.errorDescription === '' || event.errorDescription === '' || event.isMainFrame === false) { return; }
             this.translateService.get('MESSAGE.PAGE-DIDNOT-LOAD').subscribe(res => this.message['warning'](res));
+        })
+        webview.addEventListener('new-window', (e) => {
+            const option = e.options;
+            option['height'] = 640;
+            option['width'] = 960;
+            option['autoHideMenuBar'] = true;
+            option['webPreferences']['session'] = webContent.session;
+            this.electronService.CreateBrowserWindow(e.url, option);
         })
     }
     ngOnDestroy() {
