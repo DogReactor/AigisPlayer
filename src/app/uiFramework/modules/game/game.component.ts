@@ -7,11 +7,14 @@ import { ElMessageService } from 'element-angular'
 import * as Rx from 'rxjs/Rx'
 import { WebviewTag, WebContents } from 'electron';
 import { ElectronService } from '../../../core/electron.service'
+import { DecipherService } from '../../../decipher/decipher.service'
+import { PluginService } from '../../../core/plugin.service'
 
 @Component({
     selector: 'app-game',
     templateUrl: './game.component.html',
-    styleUrls: ['./game.component.scss']
+    styleUrls: ['./game.component.scss'],
+    providers: [DecipherService]
 })
 export class GameComponent implements AfterViewInit, OnDestroy {
     private gameView: WebviewTag = null;
@@ -23,7 +26,9 @@ export class GameComponent implements AfterViewInit, OnDestroy {
         private globalStatusService: GlobalStatusService,
         private message: ElMessageService,
         private translateService: TranslateService,
-        private electronService: ElectronService
+        private electronService: ElectronService,
+        private decipherService: DecipherService,
+        private pluginService: PluginService
     ) {
         this.subscriptionList.push(
             this.globalStatusService.GlobalStatusStore.Get('Zoom').Subscribe(v => {
@@ -42,12 +47,14 @@ export class GameComponent implements AfterViewInit, OnDestroy {
         const webview = this.gameView;
         webview.addEventListener('dom-ready', () => {
             webContent = webview.getWebContents();
+            this.gameView.setZoomFactor(this.zoom / 100);
             // webview.openDevTools();
             if ((webview.getURL().indexOf('app_id') !== -1) || webview.getURL().indexOf('/play/') !== -1) {
                 // 判断是否为神姬
                 webview.send('catch', this.gameService.CurrentGame.Spec);  // 通知页面进行调整
-                // gameView注入debugger，所有数据全部发到gameServices里去
-                // decipher.attach(webview.getWebContents(), this.$root.eventHub, this.numid); // 注入debuger
+
+                this.pluginService.ClearResponseList();
+                this.decipherService.Attach(webview.getWebContents()); // 注入debuger
             }
 
             // 自动输入用户名密码
