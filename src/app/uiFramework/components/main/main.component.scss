@@ -14,7 +14,6 @@
 }
 .right-plugin{
     flex:1;
-    background:black;
 }
 .bottom-plugin{
     background:grey;
@@ -24,6 +23,7 @@
     flex:1 1 auto;
     flex-wrap:nowrap;
     display:flex;
+    background:white;
 }
 .obs{
     background:black;

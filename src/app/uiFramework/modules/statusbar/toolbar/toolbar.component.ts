@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { GameService } from '../../../../core/game.service';
 import { GlobalStatusService } from '../../../../global/globalStatus.service'
@@ -28,11 +28,14 @@ import {
 })
 export class UIFrameStatusBarToolBarComponent {
     selectedMenu: String;
-    constructor(private globalStatusService: GlobalStatusService) {
+    constructor(
+        private globalStatusService: GlobalStatusService,
+        private renderer: Renderer2
+    ) {
     }
     selectMenu(menu) {
         if (menu === this.selectedMenu) {
-            this.selectedMenu = 'none';
+            this.closeMenu();
         } else {
             this.selectedMenu = menu;
         }

@@ -43,7 +43,7 @@ export class ElectronService {
   }
 
   ReSize = (size: Size) => {
-    this.currentWindow.setSize(size.Width, size.Height + 54);
+    this.currentWindow.setSize(size.Width + 300, size.Height + 54);
   }
 
   SetProxy = (address: string) => {

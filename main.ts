@@ -23,7 +23,8 @@ function createWindow() {
     width: 960,
     height: 694,
     frame: false,
-    resizable: false
+    // resizable: false,
+    transparent: true
   });
 
   // and load the index.html of the app.

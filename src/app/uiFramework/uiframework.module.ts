@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared.module';
 
 import { GameModule } from './modules/game/game.module';
+import { PluginModule } from './modules/plugin/plugin.module'
 import { UIFrameStatusBarModule } from './modules/statusbar/statusbar.module'
 
 import { UIFrameComponent } from './uiframework.component';
@@ -11,7 +12,7 @@ import { UIFrameNavbarComponent } from './components/navbar/navbar.component'
 
 @NgModule({
     declarations: [UIFrameComponent, UIFrameMainComponent, UIFrameNavbarComponent],
-    imports: [GameModule, SharedModule, UIFrameStatusBarModule],
+    imports: [GameModule, SharedModule, UIFrameStatusBarModule, PluginModule],
     exports: [UIFrameComponent]
 })
 export class UiFrameModule { }
