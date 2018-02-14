@@ -33,7 +33,7 @@ function createWindow() {
     pathname: path.join(__dirname, '/index.html'),
     slashes: true
   }));
-
+  win.webContents.openDevTools();
   // Open the DevTools.
   if (serve) {
     win.webContents.openDevTools();
