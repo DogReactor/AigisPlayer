@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~element-angular/theme/index.css";
+@import "./app/fa/css/font-awesome.min.css";
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow:hidden;
+  height: 100%;
+}
+::-webkit-scrollbar{
+  width:0px;
+}
+*{
+  outline:none;
+  user-select:none;
+  cursor: default;
+  font-family:'Helvetica Neue',Helvetica,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',SimSun,sans-serif;
+}

@@ -1,0 +1,15 @@
+.checkbox{
+    float:right;
+}
+:host{
+    display:flex;
+}
+hr{
+    height:1px;
+    border:none;
+    border-top:1px dashed #D3DCE6;
+}
+.item{
+    display:flex;
+    justify-content: space-between;
+}

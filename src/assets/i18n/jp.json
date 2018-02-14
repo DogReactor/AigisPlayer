@@ -1,0 +1,53 @@
+{
+    "SETTING": {
+        "PROXY": {
+            "PROXY": "プロキシ",
+            "HOST": "ホスト",
+            "PORT": "ポート",
+            "SOCKS5": "Socks5プロトコル",
+            "ENABLE": "有効する"
+        },
+        "UTIL": {
+            "UTIL": "一般",
+            "LOCK": "常に手前に",
+            "MUTE": "ミュート",
+            "ZOOM": "サイズ",
+            "LANGUAGE": "言語/Language"
+        },
+        "ACCOUNT": {
+            "ACCOUNT": "アカウント管理",
+            "NAME": "ニックネーム",
+            "USERNAME": "ユーザー名",
+            "PASSWORD": "パスワード",
+            "DEFAULT": "デフォルト（非暗号化のみ）",
+            "ACCOUNTLISTPASSWORD": "暗号用パスワード"
+        },
+        "MAP": {
+            "MAP":"ホットキー",
+            "SPEEDUP":"二倍速",
+            "USESKILL":"スキル発動",
+            "SCREENSHOT":"スクリーンショット"
+        }
+
+    },
+    "UTIL": {
+        "ACCEPT": "確認",
+        "CANCEL": "キャンセル",
+        "SAVE": "セーブ",
+        "PASSWORDERROR": "パスワードが間違います",
+        "INPUTPASSWORD": "パスワードを入力してください",
+        "FORCECLEARPASSWORD": "パスワードを強制削除",
+        "PLEASESELECT": "選んでください",
+        "ADD": "添加",
+        "DELETE": "削除",
+        "CLEAR":"クリアする"
+    },
+    "MESSAGE":{
+        "PAGE-DIDNOT-LOAD":"このページにアクセスできません，接続やプロキシを確認してください",
+        "SCREENSHOT-SUCCESS":"クリップボードに画面をキャプチャできました！CTRL+Vで貼り付けてください",
+        "SET-SUCCESS":"セット完了",
+        "SAVE-SUCCESS":"セーブ完了",
+        "LOAD-FINISH":"",
+        "DECRYPT-SUCCESS":"復号完了"
+    }
+}

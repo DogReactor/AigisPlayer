@@ -1,0 +1,30 @@
+.box{
+    display:flex;
+    flex-direction:row;
+    height:100%;
+}
+.game-main{
+    height:640px;
+    width:960px;
+    display:block;
+}
+.left-box{
+    display:flex;
+    flex-direction:column;
+}
+.right-plugin{
+    flex:1;
+}
+.bottom-plugin{
+    background:grey;
+    flex:1;
+}
+:host{
+    flex:1 1 auto;
+    flex-wrap:nowrap;
+    display:flex;
+    background:white;
+}
+.obs{
+    background:black;
+}

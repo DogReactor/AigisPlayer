@@ -1,0 +1,22 @@
+<div el-container>
+    <div el-main>
+        <el-form [formGroup]="proxyForm" label-width="150px" size="small" label-position="left">
+            <el-form-item [label]="'SETTING.PROXY.HOST' | translate">
+                <el-input formControlName="Host"></el-input>
+            </el-form-item>
+            <el-form-item [label]="'SETTING.PROXY.PORT' | translate">
+                <el-input formControlName="Port"></el-input>
+            </el-form-item>
+            <el-form-item [label]="'SETTING.PROXY.SOCKS5' | translate">
+                <div class="checkbox">
+                    <el-switch formControlName="Socks5"></el-switch>
+                </div>
+            </el-form-item>
+            <el-form-item [label]="'SETTING.PROXY.ENABLE' | translate">
+                <div class="checkbox">
+                    <el-switch formControlName="Enabled"></el-switch>
+                </div>
+            </el-form-item>
+        </el-form>
+    </div>
+</div>

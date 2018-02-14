@@ -1,0 +1,19 @@
+<div *ngIf="accountList.Encrypted===true">
+    <div el-container>
+        <div el-main>
+            <div class="password-container">
+                <el-input [(model)]="accountListPassword" #input (icon-mouseenter)="input.nativeType='text'" (icon-mouseleave)="input.nativeType='password'" icon="view" [native-type]="'password'" [placeholder]="'UTIL.INPUTPASSWORD' | translate" (keyup.enter)="enterAccountListPassword()"></el-input>
+                <p class="password-error" *ngIf="accountListPasswordError">{{'UTIL.PASSWORDERROR' | translate}}</p>
+                <div class="password-clear">
+                    <el-button (click)="forceClearPassword()" [plain]="true" type="danger">{{'UTIL.FORCECLEARPASSWORD' | translate}}</el-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="accountList.Encrypted===false">
+    <div class="selection" *ngFor="let account of accountList.List" [ngClass]="{'selected':account.Username===selectedAccount}"
+        (click)="selectAccount(account.Username)">
+        {{account.Name}}
+    </div>
+</div>

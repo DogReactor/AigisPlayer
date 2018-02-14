@@ -1,0 +1,14 @@
+<div class="toolbar">
+    <i [ngClass]="{'fa fa-user tbtn':true,'selected':selectedMenu==='account'}" (click)="selectMenu('account')"></i>
+    <i [ngClass]="{'fa fa-bell tbtn':true,'selected':selectedMenu==='notice'}" (click)="selectMenu('notice')"></i>
+    <i [ngClass]="{'fa fa-gamepad tbtn':true,'selected':selectedMenu==='gameselection'}" (click)="selectMenu('gameselection')"></i>
+    <i [ngClass]="{'fa fa-gear tbtn':true,'selected':selectedMenu==='setting'}" (click)="selectMenu('setting')"></i>
+    <i [ngClass]="{'fa fa-puzzle-piece tbtn':true,'selected':selectedMenu==='plugin'}" (click)="selectMenu('plugin')"></i>
+</div>
+<div class="menu-container" [ngSwitch]="selectedMenu">
+    <app-uiframe-statusbar-toolbar-accountselect class="menu" [@fadeInOut]="selectedMenu" *ngSwitchCase="'account'" (onSelected)="closeMenu()"></app-uiframe-statusbar-toolbar-accountselect>
+    <app-uiframe-statusbar-toolbar-gameselect class="menu" [@fadeInOut]="selectedMenu" *ngSwitchCase="'gameselection'" (onSelected)="closeMenu()"></app-uiframe-statusbar-toolbar-gameselect>
+    <app-uiframe-statusbar-toolbar-setting class="menu" [@fadeInOut]="selectedMenu" *ngSwitchCase="'setting'"></app-uiframe-statusbar-toolbar-setting>
+    <app-uiframe-statusbar-toolbar-plugin class="menu" [@fadeInOut]="selectedMenu" *ngSwitchCase="'plugin'" (onSelected)="closeMenu()"></app-uiframe-statusbar-toolbar-plugin>
+    <div *ngSwitchCase="'none'"></div>
+</div>

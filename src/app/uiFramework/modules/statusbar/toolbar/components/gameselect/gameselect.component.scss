@@ -1,0 +1,22 @@
+:host{
+    width:300px;
+    display:flex;
+    height:400px;
+    flex-direction: column;
+    color:black;
+    background:#FFFFFF;
+}
+.selection{
+    padding:10px 10px 10px 20px;
+    height:30px;
+    line-height: 30px;
+    transition: all 0.5s;
+}
+.selection:hover{
+    background: #58B7FF;
+    color:white;
+}
+.selected{
+    background:#20A0FF;
+    color:white;
+}

@@ -1,0 +1,24 @@
+:host{
+    width:800px;
+    display:flex;
+    height:500px;
+    flex-direction: column;
+    color:black;
+    background:#F9FAFC;
+}
+.container{
+    height:100%;
+}
+.content{
+    height:100%;
+    background:#fff;
+    overflow-x:hidden;
+}
+.menu{
+    overflow-x:hidden;
+    overflow-y:overlay;
+    height:100%;
+}
+.content-item{
+    opacity: 100;
+}

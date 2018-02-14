@@ -1,0 +1,51 @@
+<div el-container>
+    <div el-main *ngIf="accountList.Encrypted===true" class="password-container">
+        <el-input [(model)]="accountListPassword" #input (icon-mouseenter)="input.nativeType='text'" (icon-mouseleave)="input.nativeType='password'" icon="view" [native-type]="'password'" [placeholder]="'UTIL.INPUTPASSWORD' | translate" (keyup.enter)="setPassword()"></el-input>
+        <p class="password-error" *ngIf="accountListPasswordError">{{'UTIL.PASSWORDERROR' | translate}}</p>
+        <div class="password-clear">
+            <el-button (click)="forceClearPassword()" [plain]="true" type="danger">{{'UTIL.FORCECLEARPASSWORD' | translate}}</el-button>
+        </div>
+    </div>
+    <div el-main *ngIf="accountList.Encrypted===false">
+        <div>
+            <el-form label-position="left" label-width="130px" [inline]="true" size="small" [show-icon]="true">
+                <el-form-item [label]="'SETTING.ACCOUNT.ACCOUNTLISTPASSWORD' | translate">
+                    <el-input [(model)]="accountListPassword" icon="view" [native-type]="'password'"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button (click)="setPassword()" type="success">{{'UTIL.ACCEPT' | translate}}</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+        <hr/>
+        <div class="selectmenu">
+            <el-select [(model)]="selectedAccount" [placeholder]="'UTIL.PLEASESELECT' | translate">
+                <el-option *ngFor="let account of accountList.List" [label]="account.Name" [value]="account">
+                </el-option>
+            </el-select>
+            <div>
+                <el-button (click)="newAccount()" class="btn" type="primary" [plain]="true">{{'UTIL.ADD' | translate}}</el-button>
+                <el-button (click)="deleteAccount()" [elDisabled]="!selectedAccount" class="btn" [plain]="true" type="danger">{{'UTIL.DELETE' | translate}}</el-button>
+            </div>
+        </div>
+        <div class="editor" *ngIf="selectedAccount">
+            <el-form label-position="left" label-width="200px" [show-icon]="true">
+                <el-form-item [label]="'SETTING.ACCOUNT.NAME' | translate">
+                    <el-input [(model)]="selectedAccount.Name"></el-input>
+                </el-form-item>
+                <el-form-item [label]="'SETTING.ACCOUNT.USERNAME' | translate">
+                    <el-input [(model)]="selectedAccount.Username"></el-input>
+                </el-form-item>
+                <el-form-item [label]="'SETTING.ACCOUNT.PASSWORD' | translate">
+                    <el-input [(model)]="selectedAccount.Password" icon="view" [native-type]="'password'"></el-input>
+                </el-form-item>
+                <el-form-item [label]="'SETTING.ACCOUNT.DEFAULT' | translate">
+                    <el-switch class="checkbox" [(model)]="selectedAccount.IsDefault" (modelChange)="setDefault()"></el-switch>
+                </el-form-item>
+                <div class="btn">
+                    <el-button type="success" (click)="saveAccount()">{{'UTIL.SAVE' | translate}}</el-button>
+                </div>
+            </el-form>
+        </div>
+    </div>
+</div>

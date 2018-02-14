@@ -1,7 +1,6 @@
 node_modules
 images
 image/
-app
 release
 proxy.conf
 user.conf
@@ -13,3 +12,5 @@ release-green
 .vs/
 config.conf
 dist-green
+app-builds
+./plugin

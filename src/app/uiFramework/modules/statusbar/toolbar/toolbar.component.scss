@@ -1,0 +1,35 @@
+.tbtn{
+    font-size:16px;
+    height:30px;
+    width:40px;
+    line-height:30px;
+    text-align: center;
+    color:white;
+    transition: all 0.5s;
+}
+.tbtn:hover{
+    color:black;
+    background:#D3DCE6;
+}
+:host{
+    display:flex;
+    flex-direction:column-reverse;
+    padding:0 0px 0 9px;
+}
+.toolbar{
+    display:flex;
+    background: #1F2D3D;
+}
+.menu-container{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+}
+.selected{
+    background:#FFF;
+    color:black;
+}
+.menu{
+    position:fixed;
+    bottom:30px;
+}
