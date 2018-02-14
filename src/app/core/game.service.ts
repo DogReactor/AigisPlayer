@@ -3,7 +3,7 @@ import { Size } from './util';
 import { GameModel } from './game.model';
 import { ElectronService } from './electron.service';
 import { KeyMapperList } from './keyMapper'
-import { Rectangle, NativeImage } from 'electron';
+import { Rectangle, NativeImage, WebviewTag } from 'electron';
 import { ElMessageService } from 'element-angular';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -140,12 +140,29 @@ export class GameService {
     }
     ScreenShot(callback?: Function) {
         if (this.webView) {
-            const webContents = this.webView.getWebContents();
-            webContents.capturePage((image: NativeImage) => {
-                this.electronService.clipboard.writeImage(image);
-            })
-            this.translateService.get('MESSAGE.SCREENSHOT-SUCCESS').subscribe(res => {
-                this.message['success'](res)
+            const code = `var r = {}; \
+                r.pageHeight = window.innerHeight; \
+                r.pageWidth = window.innerWidth; \
+                r;`;
+            this.webView.executeJavaScript(code, false, (r) => {
+                const webviewMeta = {
+                    captureHeight: 0,
+                    captureWidth: 0
+                };
+                webviewMeta.captureHeight = r.pageHeight;
+                webviewMeta.captureWidth = r.pageWidth;
+                const captureRect = {
+                    x: 0,
+                    y: 0,
+                    width: +webviewMeta.captureWidth * this.electronService.electron.screen.getPrimaryDisplay().scaleFactor,
+                    height: +webviewMeta.captureHeight * this.electronService.electron.screen.getPrimaryDisplay().scaleFactor
+                };
+                this.webView.capturePage(captureRect, (image: NativeImage) => {
+                    this.electronService.clipboard.writeImage(image);
+                });
+                this.translateService.get('MESSAGE.SCREENSHOT-SUCCESS').subscribe(res => {
+                    this.message['success'](res)
+                });
             });
         }
     }
