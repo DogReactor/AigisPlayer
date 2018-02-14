@@ -60,6 +60,7 @@
     "cross-env": "5.0.5",
     "css-loader": "0.28.7",
     "cssnano": "3.10.0",
+    "cz-conventional-changelog": "^2.1.0",
     "electron": "1.8.2",
     "electron-builder": "19.45.4",
     "electron-reload": "1.2.1",
@@ -106,5 +107,10 @@
     "webpack-dev-server": "2.9.3",
     "zone.js": "0.8.17"
   },
-  "license": "SEE LICENSE IN LICENSE.md"
+  "license": "SEE LICENSE IN LICENSE.md",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
