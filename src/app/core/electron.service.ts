@@ -21,6 +21,7 @@ export class ElectronService {
   electron: typeof Electron;
   clipboard: Clipboard;
   Tray: typeof Tray;
+  ipcMain: typeof Electron.ipcMain
   constructor() {
     // Conditional imports
     if (this.isElectron()) {
@@ -34,6 +35,7 @@ export class ElectronService {
       this.serve = this.electron.remote.process.argv.slice(1).some(val => val === '--serve');
       this.clipboard = this.electron.remote.clipboard;
       this.Tray = this.electron.remote.Tray;
+      this.ipcMain = this.electron.remote.ipcMain;
       console.log('serve', this.serve);
     }
   }
@@ -43,7 +45,7 @@ export class ElectronService {
   }
 
   ReSize = (size: Size) => {
-    this.currentWindow.setSize(size.Width + 300, size.Height + 54);
+    this.currentWindow.setSize(size.Width, size.Height + 54);
   }
 
   SetProxy = (address: string) => {
@@ -59,5 +61,6 @@ export class ElectronService {
   CreateBrowserWindow = (url, option) => {
     const win = new this.electron.remote.BrowserWindow(option);
     win.loadURL(url);
+    return win;
   }
 }
