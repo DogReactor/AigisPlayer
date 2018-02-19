@@ -154,8 +154,12 @@ export class GameService {
                 const captureRect = {
                     x: 0,
                     y: 0,
-                    width: +webviewMeta.captureWidth * this.electronService.electron.screen.getPrimaryDisplay().scaleFactor,
-                    height: +webviewMeta.captureHeight * this.electronService.electron.screen.getPrimaryDisplay().scaleFactor
+                    width: webviewMeta.captureWidth *
+                        this.electronService.electron.screen.getPrimaryDisplay().scaleFactor *
+                        (this.zoom / 100),
+                    height: webviewMeta.captureHeight *
+                        this.electronService.electron.screen.getPrimaryDisplay().scaleFactor *
+                        (this.zoom / 100)
                 };
                 this.webView.capturePage(captureRect, (image: NativeImage) => {
                     this.electronService.clipboard.writeImage(image);
