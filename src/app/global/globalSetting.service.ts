@@ -128,6 +128,7 @@ export class GlobalSettingService {
         this.GlobalSetting.Proxy = proxy;
         const proxyAddress = proxy.Enabled ? ((proxy.Socks5 ? 'socks5://' : '') + `${proxy.Host}:${proxy.Port}`) : 'direct://'
         this.electronService.SetProxy(proxyAddress);
+        this.electronService.ipcRenderer.send('proxyStatusUpdate', proxy)
     }
     FindAccount(username) {
         return this.AccountList.List.find(v => v.Username === username)

@@ -41,18 +41,22 @@ export class PluginService {
     public ListUpdate = new Rx.Subject();
     public NewEmbedPlugin = new Rx.Subject();
     public SwitchEmbedPlugin = new Rx.Subject<string>();
+    private protoablePath: string;
+    private pluginsPath: string;
     constructor(
         private electronService: ElectronService
     ) {
         // const fs = electronService.fs;
-        fs.readdir('plugins', (err, files) => {
+        this.protoablePath = window.require('electron').remote.process.env.PORTABLE_EXECUTABLE_DIR;
+        this.pluginsPath = this.protoablePath ? this.protoablePath + '/plugins' : './plugins';
+        fs.readdir(this.pluginsPath, (err, files) => {
             if (err) {
-                fs.mkdirSync('plugins');
+                fs.mkdirSync(this.pluginsPath);
                 return;
             }
             files.forEach((value, index) => {
                 let data;
-                try { data = fs.readFileSync('./plugins/' + value + '/manifest.json', 'utf8'); } catch (e) { return; }
+                try { data = fs.readFileSync(`${this.pluginsPath}/${value}/manifest.json`, 'utf8'); } catch (e) { return; }
                 try {
                     const obj = JSON.parse(data);
                     obj.path = value;
@@ -109,7 +113,7 @@ export class PluginService {
         activedPlugin = new ActivePlugin();
         activedPlugin.Embed = false;
         activedPlugin.Plugin = plugin;
-        const dirname = fs.realpathSync('.');
+        const dirname = this.protoablePath ? this.protoablePath : fs.realpathSync('.');
         const url = require('url').format({
             protocol: 'file',
             slashes: true,
@@ -136,3 +140,24 @@ export class PluginService {
         this.electronService.ipcMain.on('response-packages-sync', listenerSync);
     }
 }
+/*
+ap 本地版
+ap IPC版
+
+
+plugin - activePluginObject -webContent,info xxxx
+
+send、on封装
+
+channel `webContentid-channelName'
+
+右侧Plugin条
+
+浮动plugin不销毁
+
+内嵌plugin在切换时销毁
+独立plugin在关闭时销毁
+
+在激活时传入('页面启动时做的事')
+页面通过(on-load)事件来获取
+*/

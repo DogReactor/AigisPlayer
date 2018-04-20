@@ -8,6 +8,8 @@ import { Decompress } from './decompress'
 import { Base64 } from './base64'
 import { WebContents } from 'electron';
 import { PluginService } from '../core/plugin.service'
+import { parseAL } from './AL'
+import { ElectronService } from '../core/electron.service';
 
 const aigisURL = 'https://millennium-war.net/';
 const aigisRURL = 'https://all.millennium-war.net/';
@@ -20,8 +22,10 @@ export class DecipherService {
     private reqMaps: Map<string, string> = null;
     private assetMaps: Map<string, string> = null;
     private fileListReq = null;
+    private fileList = {};
     constructor(
-        private pluginService: PluginService
+        private pluginService: PluginService,
+        private electronService: ElectronService
     ) {
     }
     Attach = (webContents: WebContents) => {
@@ -40,14 +44,15 @@ export class DecipherService {
                             this.reqMaps.set(params.requestId, params.request.url);
                         }
                         if (params.request.url.indexOf(aigisFileListPath) !== -1 || params.request.url.indexOf(aigisRFileListPath) !== -1) {
-                            console.log(params.request.url);
+                            console.log('FileList: ' + params.request.url);
                             this.fileListReq = params.requestId;
                         }
-                        /*if ((params.request.url.startsWith('http://assets.millennium-war.net/') && params.request.method === 'GET')) {
-                            assetMaps.set(params.requestId, params.request.url);
-                        }*/
+                        if ((params.request.url.startsWith('http://assets.millennium-war.net/') && params.request.method === 'GET')) {
+                            this.assetMaps.set(params.requestId, params.request.url);
+                        }
                         break;
                     case 'Network.loadingFinished':
+                        // 处理response
                         if (this.reqMaps.has(params.requestId)) {
                             webContents.debugger.sendCommand('Network.getResponseBody', {
                                 'requestId': params.requestId
@@ -65,29 +70,27 @@ export class DecipherService {
                                 this.pluginService.AddResponse(data, this.reqMaps.get(params.requestId));
                             });
                         }
+                        // 处理assets
                         if (this.assetMaps.has(params.requestId)) {
-                            webContents.debugger.sendCommand('Network.getResponseBody', {
+                            /* webContents.debugger.sendCommand('Network.getResponseBody', {
                                 'requestId': params.requestId
                             }, (err, response) => {
                                 let buffer = response.body;
                                 if (/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/.test(buffer)) {
                                     buffer = Base64.Decode(buffer);
                                 }
-                                console.log(
-                                    String.fromCharCode(buffer[0]),
-                                    String.fromCharCode(buffer[1]),
-                                    String.fromCharCode(buffer[2]),
-                                    String.fromCharCode(buffer[3]),
-                                    this.assetMaps.get(params.requestId)
-                                );
-                            });
+                                if (buffer[0] === 'A' && buffer[1] === 'L') {
+                                    // console.log(parseAL(buffer));
+                                }
+                            });*/
                         }
                         if (params.requestId === this.fileListReq) {
                             webContents.debugger.sendCommand('Network.getResponseBody', {
                                 'requestId': params.requestId
                             }, (err, response) => {
-                                const fileList = Decoder.DecodeList(response.body);
-                                // eventHub.$emit('new-FileList', fileList);
+                                this.fileList = Decoder.DecodeList(response.body);
+                                this.electronService.ipcRenderer.send('fileList', this.fileList);
+                                console.log(this.fileList);
                             });
                         }
                         break;

@@ -5,6 +5,7 @@ import { GlobalStatusService } from './global/globalStatus.service';
 import { GlobalSettingService } from './global/globalSetting.service';
 import { GameService } from './core/game.service'
 import { Langs } from './core/languageList'
+import { HotkeyService } from './core/hotkey.service'
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ export class AppComponent {
     private translate: TranslateService,
     private globalStatusService: GlobalStatusService,
     private globalSettingService: GlobalSettingService,
-    private gameService: GameService) {
+    private gameService: GameService,
+    private hotkeyService: HotkeyService) {
 
     // translation
     translate.addLangs(Langs);
@@ -35,10 +37,6 @@ export class AppComponent {
     }
   }
   keyup(event: KeyboardEvent) {
-    // 只要找到按下的键，对应是谁就行了
-    const code = event.code;
-    if (this.globalSettingService.GlobalSetting.SpeedUpKey === code) { this.gameService.KeyMapperTrigger('SpeedUpKey') }
-    if (this.globalSettingService.GlobalSetting.UseSkillKey === code) { this.gameService.KeyMapperTrigger('UseSkillKey') }
-    if (this.globalSettingService.GlobalSetting.ScreenShotKey === code) { this.gameService.ScreenShot() }
+    this.hotkeyService.triggerHotKey(event);
   }
 }

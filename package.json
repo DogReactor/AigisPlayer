@@ -15,7 +15,7 @@
     "start": "npm-run-all --parallel webpack:watch electron:serve",
     "webpack:watch": "webpack --watch",
     "start:web": "webpack-dev-server --content-base . --port 4200 --inline",
-    "build:electron:main": "tsc main.ts --outDir dist && copyfiles package.json dist && cd dist && npm install --prod && cd ..",
+    "build:electron:main": "tsc main.ts --outDir dist --target es5 && copyfiles package.json dist && cd dist && npm install --prod && cd ..",
     "build": "webpack --display-error-details && npm run build:electron:main",
     "build:prod": "cross-env NODE_ENV=production npm run build",
     "electron:serve": "npm run build:electron:main && electron ./dist --serve",
@@ -30,7 +30,9 @@
     "e2e": "protractor ./protractor.conf.js"
   },
   "dependencies": {
-    "element-angular": "^0.6.0"
+    "element-angular": "^0.6.0",
+    "npm": "^5.8.0",
+    "socks5-http-client": "^1.0.3"
   },
   "devDependencies": {
     "@angular/animations": "^5.2.3",
@@ -48,9 +50,11 @@
     "@ngx-translate/core": "9.0.1",
     "@ngx-translate/http-loader": "2.0.0",
     "@types/core-js": "0.9.36",
+    "@types/express": "^4.11.1",
     "@types/jasmine": "2.5.54",
     "@types/jasminewd2": "2.0.2",
     "@types/node": "7.0.7",
+    "@types/request": "^2.47.0",
     "autoprefixer": "7.1.4",
     "circular-dependency-plugin": "3.0.0",
     "codelyzer": "3.2.0",
@@ -66,6 +70,7 @@
     "electron-reload": "1.2.1",
     "enhanced-resolve": "3.3.0",
     "exports-loader": "0.6.4",
+    "express": "^4.16.3",
     "file-loader": "1.1.5",
     "html-loader": "0.5.1",
     "html-webpack-plugin": "2.29.0",
@@ -90,6 +95,7 @@
     "postcss-url": "7.1.2",
     "protractor": "5.1.2",
     "raw-loader": "0.5.1",
+    "request": "^2.85.0",
     "rxjs": "^5.5.2",
     "sass-loader": "6.0.6",
     "script-loader": "0.7.1",

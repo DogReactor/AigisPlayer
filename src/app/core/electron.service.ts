@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Size } from './util'
+import { ElMessageService } from 'element-angular';
+import { TranslateService } from '@ngx-translate/core';
 
 // If you import a module but never use any of the imported values other than as TypeScript types,
 // the resulting javascript file will look as if you never imported the module at all.
@@ -22,7 +24,10 @@ export class ElectronService {
   clipboard: Clipboard;
   Tray: typeof Tray;
   ipcMain: typeof Electron.ipcMain
-  constructor() {
+  constructor(
+    private message: ElMessageService,
+    private translateService: TranslateService
+  ) {
     // Conditional imports
     if (this.isElectron()) {
       this.electron = window.require('electron');
@@ -37,6 +42,8 @@ export class ElectronService {
       this.Tray = this.electron.remote.Tray;
       this.ipcMain = this.electron.remote.ipcMain;
       console.log('serve', this.serve);
+
+      this.ipcRenderer.send('Hello', 'Hello');
     }
   }
 
@@ -57,7 +64,13 @@ export class ElectronService {
       // console.log('success');
     })
   }
-
+  ClearCache() {
+    this.Session.clearCache(() => {
+      this.translateService.get('MESSAGE.CLEARCACHE-SUCCESS').subscribe(res => {
+        this.message['success'](res)
+      });
+    });
+  }
   CreateBrowserWindow = (url, option) => {
     const win = new this.electron.remote.BrowserWindow(option);
     win.loadURL(url);
