@@ -75,7 +75,12 @@ export class ProxyServer {
             }
             const modifyFileName = TranslateFileList[requestFileName]
             // 文件热封装
-            const modifyFilePath = 'mod/' + modifyFileName;
+            const protoablePath = process.env.PORTABLE_EXECUTABLE_DIR;
+            const modPath = protoablePath ? protoablePath + '/mods' : './mods';
+            if (!fs.existsSync(modPath)) {
+                fs.mkdirSync(modPath);
+            }
+            const modifyFilePath = `${modPath}/${modifyFileName}`;
             if (fs.existsSync(modifyFilePath)) {
                 console.log(requestFileName, 'modify by Server');
                 // Font文件直接回传
