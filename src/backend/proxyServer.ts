@@ -47,11 +47,13 @@ export class ProxyServer {
     createServer() {
         const app = express();
         app.use(function (req, res, next) {
-            res.header('Access-Control-Allow-Origin', '*');
+            // res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Cache-Control', 'max-age=6048000');
             next();
         })
         app.use((req, res) => {
             const headers = req.headers;
+            console.log(req.url);
             headers.host = 'assets.millennium-war.net';
             // 设置代理
             const options: any = {
