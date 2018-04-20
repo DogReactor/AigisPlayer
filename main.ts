@@ -14,13 +14,6 @@ if (serve) {
 }
 
 const proxyServer = new ProxyServer();
-try {
-  if (!fs.existsSync('mod')) {
-    fs.mkdirSync('mod');
-  }
-} catch (e) {
-
-}
 proxyServer.createServer();
 
 function createWindow() {
