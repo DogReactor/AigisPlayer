@@ -72,7 +72,7 @@ export class DecipherService {
                         }
                         // 处理assets
                         if (this.assetMaps.has(params.requestId)) {
-                            webContents.debugger.sendCommand('Network.getResponseBody', {
+                            /* webContents.debugger.sendCommand('Network.getResponseBody', {
                                 'requestId': params.requestId
                             }, (err, response) => {
                                 let buffer = response.body;
@@ -82,7 +82,7 @@ export class DecipherService {
                                 if (buffer[0] === 'A' && buffer[1] === 'L') {
                                     // console.log(parseAL(buffer));
                                 }
-                            });
+                            });*/
                         }
                         if (params.requestId === this.fileListReq) {
                             webContents.debugger.sendCommand('Network.getResponseBody', {
@@ -91,7 +91,6 @@ export class DecipherService {
                                 this.fileList = Decoder.DecodeList(response.body);
                                 this.electronService.ipcRenderer.send('fileList', this.fileList);
                                 console.log(this.fileList);
-                                // GameService 请
                             });
                         }
                         break;

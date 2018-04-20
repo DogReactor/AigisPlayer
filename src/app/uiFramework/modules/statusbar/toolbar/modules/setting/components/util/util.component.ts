@@ -6,6 +6,7 @@ import { GlobalStatusService } from '../../../../../../../../global/globalStatus
 import { Subscription } from 'rxjs/Subscription'
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageList } from '../../../../../../../../core/languageList'
+import { ElectronService } from '../../../../../../../../core/electron.service'
 
 @Component({
     selector: 'app-setting-util',
@@ -21,9 +22,10 @@ export class SettingUtilComponent implements OnDestroy {
         private globalSettingService: GlobalSettingService,
         private fb: FormBuilder,
         private globalStatusService: GlobalStatusService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private electronService: ElectronService
     ) {
-        // 在这里注册按钮
+        // 在这里注册切换按钮
         this.regProp('Mute');
         this.regProp('Lock');
         this.regProp('Zoom');
@@ -45,11 +47,13 @@ export class SettingUtilComponent implements OnDestroy {
             this.subscriptions[i].unsubscribe();
         }
     }
-
-    regProp(key, selfKey?) {
+    clearCache() {
+        this.electronService.ClearCache();
+    }
+    regProp(key, alias?) {
         const state = this.globalStatusService.GlobalStatusStore.Get(key);
         let k = key;
-        if (selfKey) { k = selfKey }
+        if (alias) { k = alias }
         this[k] = state.Value;
         this.subscriptions.push(
             state.Subscribe(v => this[k] = v)

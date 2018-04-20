@@ -1,7 +1,6 @@
 import { app, BrowserWindow, screen, session, ipcMain } from 'electron';
 import * as path from 'path';
 import { ProxyServer } from './src/backend/proxyServer'
-import { Proxy } from './src/app/global/globalSetting.service'
 import * as fs from 'fs';
 let win, serve;
 const args = process.argv.slice(1);
@@ -72,23 +71,24 @@ try {
       let url = details.url;
       const urlpath = url.replace('http://assets.millennium-war.net', '')
       let fileName = fileList[urlpath];
-      if (urlpath.indexOf('18cbbe1a57873ab0047629f77cbbcf86') !== -1) {
+      if (urlpath.indexOf('595d57bf1216f3887cb69205494eb744') !== -1) {
         fileName = 'MainFont.aft';
       }
       if (fileName === undefined) {
         callback({ cancel: false });
         return;
       }
-      url = 'http://127.0.0.1:19980' + path;
+      url = 'http://127.0.0.1:19980' + urlpath;
       callback({ cancel: false, redirectURL: url });
-      ipcMain.on('fileList', (event, arg) => {
-        fileList = arg;
-        proxyServer.setFileList(fileList);
-      });
-      ipcMain.on('proxyStatusUpdate', (Event, arg: Proxy) => {
-        proxyServer.setProxy(arg.Enabled, arg.Socks5, arg.Host, arg.Port);
-      });
     });
+    ipcMain.on('fileList', (event, arg) => {
+      fileList = arg;
+      proxyServer.setFileList(fileList);
+    });
+    ipcMain.on('proxyStatusUpdate', (Event, arg) => {
+      proxyServer.setProxy(arg.Enabled, arg.Socks5, arg.Host, arg.Port);
+    });
+    ipcMain.on('Hello', (event, arg) => { console.log('hello') })
   });
 
   // Quit when all windows are closed.

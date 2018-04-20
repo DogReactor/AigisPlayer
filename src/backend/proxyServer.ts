@@ -1,13 +1,10 @@
-// @ts-check
-'use strict';
-
-const http = require('http');
-const request = require('request');
-const express = require('express');
-const Agent = require('socks5-http-client/lib/Agent');
-const fs = require('fs');
-const zlib = require('zlib');
-const parseAL = require('./AL.js');
+import * as http from 'http';
+import * as request from 'request'
+import * as express from 'express'
+import * as Agent from 'socks5-http-client/lib/Agent'
+import * as fs from 'fs'
+import * as zlib from 'zlib'
+import { parseAL } from '../app/decipher/AL'
 const TranslateFileList = {
     'StatusText.atb': 'StatusText.txt',
     'MainFont.aft': 'MainFont.aft',
@@ -23,7 +20,7 @@ const TranslateFileList = {
 };
 
 function parse(buffer) {
-    const result = parseAL(buffer, 0);
+    const result = parseAL(buffer);
     return result;
 }
 
@@ -53,7 +50,7 @@ export class ProxyServer {
             res.header('Access-Control-Allow-Origin', '*');
             next();
         })
-        app.use(function (req, res) {
+        app.use((req, res) => {
             const headers = req.headers;
             headers.host = 'assets.millennium-war.net';
             // 设置代理
@@ -73,7 +70,7 @@ export class ProxyServer {
                 options.proxy = `http://${this.ProxyHost}:${this.ProxyPort}`
             }
             let requestFileName = this.FileList[req.path];
-            if (req.path.indexOf('18cbbe1a57873ab0047629f77cbbcf86') !== -1) {
+            if (req.path.indexOf('595d57bf1216f3887cb69205494eb744') !== -1) {
                 requestFileName = 'MainFont.aft';
             }
             const modifyFileName = TranslateFileList[requestFileName]
