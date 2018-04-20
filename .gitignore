@@ -13,4 +13,5 @@ release-green
 config.conf
 dist-green
 app-builds
-./plugin
+mod
+./plugins

@@ -1,17 +1,28 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { app, BrowserWindow, screen, session, ipcMain } from 'electron';
 import * as path from 'path';
-import { Test } from './src/backend/test'
-
+import { ProxyServer } from './src/backend/proxyServer'
+import { Proxy } from './src/app/global/globalSetting.service'
+import * as fs from 'fs';
 let win, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
 import * as url from 'url';
-Test.output();
 
+let fileList = [];
 if (serve) {
   require('electron-reload')(__dirname, {
   });
 }
+
+const proxyServer = new ProxyServer();
+try {
+  if (!fs.existsSync('mod')) {
+    fs.mkdirSync('mod');
+  }
+} catch (e) {
+
+}
+proxyServer.createServer();
 
 function createWindow() {
 
@@ -23,7 +34,7 @@ function createWindow() {
     width: 960,
     height: 694,
     frame: false,
-    // resizable: false,
+    resizable: false,
     transparent: true
   });
 
@@ -52,7 +63,33 @@ try {
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
-  app.on('ready', createWindow);
+  app.on('ready', () => {
+    createWindow();
+    const filter = {
+      urls: ['http://assets.millennium-war.net/*']
+    };
+    session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
+      let url = details.url;
+      const urlpath = url.replace('http://assets.millennium-war.net', '')
+      let fileName = fileList[urlpath];
+      if (urlpath.indexOf('18cbbe1a57873ab0047629f77cbbcf86') !== -1) {
+        fileName = 'MainFont.aft';
+      }
+      if (fileName === undefined) {
+        callback({ cancel: false });
+        return;
+      }
+      url = 'http://127.0.0.1:19980' + path;
+      callback({ cancel: false, redirectURL: url });
+      ipcMain.on('fileList', (event, arg) => {
+        fileList = arg;
+        proxyServer.setFileList(fileList);
+      });
+      ipcMain.on('proxyStatusUpdate', (Event, arg: Proxy) => {
+        proxyServer.setProxy(arg.Enabled, arg.Socks5, arg.Host, arg.Port);
+      });
+    });
+  });
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {

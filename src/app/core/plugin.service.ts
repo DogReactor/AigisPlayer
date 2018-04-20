@@ -140,3 +140,24 @@ export class PluginService {
         this.electronService.ipcMain.on('response-packages-sync', listenerSync);
     }
 }
+/*
+ap 本地版
+ap IPC版
+
+
+plugin - activePluginObject -webContent,info xxxx
+
+send、on封装
+
+channel `webContentid-channelName'
+
+右侧Plugin条
+
+浮动plugin不销毁
+
+内嵌plugin在切换时销毁
+独立plugin在关闭时销毁
+
+在激活时传入('页面启动时做的事')
+页面通过(on-load)事件来获取
+*/
