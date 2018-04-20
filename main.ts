@@ -12,7 +12,13 @@ if (serve) {
   require('electron-reload')(__dirname, {
   });
 }
-
+/*app.commandLine.appendSwitch('disable-web-security');
+app.commandLine.appendSwitch('user-data-dir');
+app.commandLine.appendSwitch('allow-cross-origin-auth-prompt');
+app.commandLine.appendSwitch('flag-switches-begin');
+app.commandLine.appendSwitch('enable-experimental-web-platform-features ');
+app.commandLine.appendSwitch('flag-switches-end');
+*/
 const proxyServer = new ProxyServer();
 proxyServer.createServer();
 
@@ -27,7 +33,10 @@ function createWindow() {
     height: 694,
     frame: false,
     resizable: false,
-    transparent: true
+    transparent: true,
+    webPreferences: {
+      webSecurity: false
+    }
   });
 
   // and load the index.html of the app.
@@ -81,7 +90,6 @@ try {
     ipcMain.on('proxyStatusUpdate', (Event, arg) => {
       proxyServer.setProxy(arg.Enabled, arg.Socks5, arg.Host, arg.Port);
     });
-    ipcMain.on('Hello', (event, arg) => { console.log('hello') })
   });
 
   // Quit when all windows are closed.
