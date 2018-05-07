@@ -2,17 +2,17 @@ const ipcrender = require('electron').ipcRenderer;
 
 let timer = null;
 let frames = [];
-ipcrender.on('catch',(event,message)=>{
-	var gameFrame = document.getElementById('game_frame');
-    if(gameFrame == null) ipcrender.sendToHost('url','error');
-    else{
+ipcrender.on('catch', (event, message) => {
+    var gameFrame = document.getElementById('game_frame');
+    if (gameFrame === null) ipcrender.sendToHost('url', 'error');
+    else {
         gameFrame.style.position = 'fixed';
         document.body.style.overflow = "hidden";
-        if(message === "kamihime"){
+        if (message === "kamihime") {
             gameFrame.style.top = '-28px';
             gameFrame.style.left = '-150px';
             gameFrame.style.zIndex = '25';
-        }else{
+        } else {
             gameFrame.style.top = '0';
             gameFrame.style.left = '0';
             gameFrame.style.zIndex = '25';
@@ -21,38 +21,38 @@ ipcrender.on('catch',(event,message)=>{
     }
 });
 
-ipcrender.on('change',(event,message)=>{
-	document.getElementById('content').style.position = 'fixed';
-	ipcrender.sendToHost('changesuccess');
+ipcrender.on('change', (event, message) => {
+    document.getElementById('content').style.position = 'fixed';
+    ipcrender.sendToHost('changesuccess');
 });
 
-ipcrender.on('start-record',(event,message)=>{
+ipcrender.on('start-record', (event, message) => {
     console.log(window.location.host);
     console.log(document.domain);
     let canvas = undefined;
-    try{
+    try {
         canvas = window.frames['game_frame'].document.getElementById('aigis').contentWindow.document.getElementById('canvas');
         let ctx = canvas.getContext('2d');
         //ipcrender.sendToHost('start-record');
-        if(timer !== null) clearInterval(timer);
+        if (timer !== null) clearInterval(timer);
         frames = [];
         //开始录制
-        timer = setInterval(()=>{
-            let imgData = ctx.getImageData(0,0,canvas.width,canvas.height);
+        timer = setInterval(() => {
+            let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             frames.push(imgData);
             console.log('添加Frames');
-        },200);
+        }, 200);
     }
-    catch(e){
+    catch (e) {
         ipcrender.sendToHost('failed-to-start-record');
-        console.log('失败',e);
+        console.log('失败', e);
     }
 });
 
-ipcrender.on('stop-record',(event,message)=>{
+ipcrender.on('stop-record', (event, message) => {
     clearInterval(timer);
     let count = 0;
-    ipcrender.sendToHost('add-new-frame',frames[0]);
+    ipcrender.sendToHost('add-new-frame', frames[0]);
     //ipcrender.sendToHost('start-add-frames');
     /*console.log('start-add-frames');
     setTimeout(()=>{
@@ -74,16 +74,16 @@ ipcrender.on('stop-record',(event,message)=>{
     //ipcrender.sendToHost('add-frames',frames);
 });
 
-ipcrender.on('login',(event,message)=>{
+ipcrender.on('login', (event, message) => {
     var login_id = document.getElementById('login_id');
     var password = document.getElementById('password');
-    if(login_id != undefined && password != undefined){
+    if (login_id != undefined && password != undefined) {
         var form = login_id.parentNode.parentNode;
         login_id.value = message.username;
         password.value = message.password;
-        setTimeout(function(){form[7].click();},1000);
+        setTimeout(function () { form[7].click(); }, 1000);
     }
-    else{
+    else {
         ipcrender.sendToHost('loginerror');
     }
     //document.getElementById

@@ -7,7 +7,13 @@
   "win": {
     "icon": "dist/favicon",
     "target": [
-      "portable"
+      {
+        "target":"portable",
+        "arch":[
+          "x64",
+          "ia32"
+        ]
+      }
     ]
   },
   "mac": {

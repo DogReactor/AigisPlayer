@@ -54,6 +54,12 @@ const gameInfo = [
         AVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1AEU1AEAB9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
         'kamihime'
     ),
+    new GameModel(
+        'グランブルーファンタジー',
+        new Size(770, 480),
+        'http://game.granbluefantasy.jp',
+        'granblue'
+    )
 ]
 
 
@@ -154,13 +160,14 @@ export class GameService {
                 const captureRect = {
                     x: 0,
                     y: 0,
-                    width: webviewMeta.captureWidth *
+                    width: Math.floor(webviewMeta.captureWidth *
                         this.electronService.electron.screen.getPrimaryDisplay().scaleFactor *
-                        (this.zoom / 100),
-                    height: webviewMeta.captureHeight *
+                        (this.zoom / 100)),
+                    height: Math.floor(webviewMeta.captureHeight *
                         this.electronService.electron.screen.getPrimaryDisplay().scaleFactor *
-                        (this.zoom / 100)
+                        (this.zoom / 100))
                 };
+                console.log(captureRect);
                 this.webView.capturePage(captureRect, (image: NativeImage) => {
                     this.electronService.clipboard.writeImage(image);
                 });
