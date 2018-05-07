@@ -6,6 +6,11 @@
     color:black;
     background:#F9FAFC;
 }
+@media screen and (max-width: 500px) {
+    :host {
+        width:400px;
+    }
+}
 .container{
     height:100%;
 }

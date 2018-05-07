@@ -3,7 +3,7 @@ import { BufferReader, Origin } from './BufferReader';
 interface AL {
     Buffer: Buffer;
     Head: string;
-    Package(path: string);
+    Package(path?: string, flag?: string);
 }
 
 class DefaultAL implements AL {
@@ -122,19 +122,12 @@ class ALLZ implements AL {
     }
 }
 
-class Header {
-    Offset = 0;
-    Type = 0;
-    NameEN = '';
-    NameJP = '';
-}
-
 class ALRD {
     Head: string;
     Vers: number;
     Count: number;
     Size: number;
-    Headers: Header[];
+    Headers: ALRD.Header[];
     Buffer: Buffer;
     constructor(buffer: Buffer) {
         this.Buffer = buffer;
@@ -148,7 +141,7 @@ class ALRD {
         this.Size = br.ReadWord();
         this.Headers = [];
         for (let i = 0; i < this.Count; i++) {
-            const header = new Header();
+            const header = new ALRD.Header();
             header.Offset = br.ReadWord();
             header.Type = br.ReadByte();
             const emptyLength = br.ReadByte();
@@ -161,6 +154,14 @@ class ALRD {
             br.Align(4);
             this.Headers.push(header);
         }
+    }
+}
+module ALRD {
+    export class Header {
+        Offset = 0;
+        Type = 0;
+        NameEN = '';
+        NameJP = '';
     }
 }
 
@@ -184,7 +185,7 @@ class ALTB implements AL {
     Label: string;
     StringField = {};
     StringOffsetList = [];
-    Headers: Header[] = [];
+    Headers: ALRD.Header[] = [];
     Contents = [];
     constructor(buffer: Buffer) {
         this.Buffer = buffer;
@@ -260,22 +261,10 @@ class ALTB implements AL {
     }
 }
 
-class Entry {
-    Index = 0;
-    Unknown1 = 0;
-    Address = 0;
-    Offset = 0;
-    Size = 0;
-    Unknown2 = new Buffer(0);
-    Name = '';
-    Unknown3 = 0;
-    Content: AL;
-    ParsedContent = new Object();
-}
 class ALAR implements AL {
     Buffer: Buffer;
     Head: string;
-    Fiels: Entry[] = [];
+    Fiels: ALAR.Entry[] = [];
     TocOffsetList = [];
     Vers: number;
     Unknown: number;
@@ -324,7 +313,7 @@ class ALAR implements AL {
             this.DataOffsetByData = this.Fiels[0].Address;
         }
         function parseTocEntry() {
-            const entry = new Entry();
+            const entry = new ALAR.Entry();
             if (self.Vers === 2) {
                 entry.Index = br.ReadWord();
                 entry.Unknown1 = br.ReadWord();
@@ -353,6 +342,21 @@ class ALAR implements AL {
 
     }
 }
+module ALAR {
+    export class Entry {
+        Index = 0;
+        Unknown1 = 0;
+        Address = 0;
+        Offset = 0;
+        Size = 0;
+        Unknown2 = new Buffer(0);
+        Name = '';
+        Unknown3 = 0;
+        Content: AL;
+        ParsedContent = new Object();
+    }
+}
+
 function parseObject(buffer: Buffer) {
     const type = buffer.toString('utf-8', 0, 4);
     let r: AL;

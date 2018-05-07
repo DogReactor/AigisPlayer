@@ -22,6 +22,7 @@ class State {
         }
     }
     public Subscribe(callback: (v: any) => void) {
+        callback(this.value);
         return this.subject.subscribe(callback);
     }
 }

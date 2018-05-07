@@ -33,6 +33,8 @@ export class GlobalSetting {
     public Zoom = 100;
 }
 
+const needDispatch = ['Zoom'];
+
 @Injectable()
 export class GlobalSettingService {
     public GlobalSetting = new GlobalSetting();
@@ -46,6 +48,11 @@ export class GlobalSettingService {
             try {
                 // 读取全局设置信息
                 this.GlobalSetting = Object.assign(this.GlobalSetting, JSON.parse(window.localStorage.getItem('globalSetting')));
+                // 装载一些数据给Service
+                for (let i = 0; i < needDispatch.length; i++) {
+                    const key = needDispatch[i];
+                    this.globalStatusService.GlobalStatusStore.Get(key).Dispatch(this.GlobalSetting[key]);
+                }
             } catch { }
         }
         if (window.localStorage.getItem('accountList')) {

@@ -49,10 +49,12 @@ export class GameComponent implements AfterViewInit, OnDestroy {
             webContent = webview.getWebContents();
             this.gameView.setZoomFactor(this.zoom / 100);
             // webview.openDevTools();
+            if (this.gameService.CurrentGame.Spec === 'granblue') {
+                webview.insertCSS('::-webkit-scrollbar{display:none!important}')
+            }
             if ((webview.getURL().indexOf('app_id') !== -1) || webview.getURL().indexOf('/play/') !== -1) {
-                // 判断是否为神姬
-                webview.send('catch', this.gameService.CurrentGame.Spec);  // 通知页面进行调整
-
+                // 通知页面进行调整
+                webview.send('catch', this.gameService.CurrentGame.Spec);
                 this.pluginService.ClearResponseList();
                 this.decipherService.Attach(webview.getWebContents()); // 注入debuger
             }
@@ -67,6 +69,9 @@ export class GameComponent implements AfterViewInit, OnDestroy {
                 }
             }
         });
+        webview.addEventListener('did-finish-load', () => {
+            this.gameView.setZoomFactor(this.zoom / 100);
+        })
         webview.addEventListener('did-fail-load', (event) => {
             if (event.errorDescription === '' || event.errorDescription === '' || event.isMainFrame === false) { return; }
             this.translateService.get('MESSAGE.PAGE-DIDNOT-LOAD').subscribe(res => this.message['warning'](res));
