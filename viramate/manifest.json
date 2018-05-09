@@ -13,7 +13,7 @@
    },
    "content_scripts": [ {
       "css": [  ],
-      "js": [ "build/encoding.js", "loc/text.js", "loc/i18n.js", "loc/stamps.js", "build/util.js", "content/sha_dev.js", "content/authentication.js", "build/external.js", "build/inject.js", "build/network.js", "build/pages.js", "build/sidebar.js", "build/combat.js", "build/conditions.js", "build/skills.js", "build/hibino.js" ],
+      "js": ["build/bundle.js" ],
       "matches": [ "*://game.granbluefantasy.jp/*", "*://gbf.game.mbga.jp/*" ],
       "run_at": "document_start"
    } ],

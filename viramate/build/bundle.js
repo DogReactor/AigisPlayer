@@ -1,3 +1,4036 @@
+(function () {
+    this.i18n = {
+        /*
+            Strings for japanese can be added like so:
+    
+            "name": {
+                "en": "Romaji"
+            },
+    
+            ->
+    
+            "name": {
+                "en": "Romaji",
+                "ja": "ローマ字"
+            },
+    
+            Just make sure you keep the commas in the right places!
+            If I screwed up and there's not a comma after the english string, 
+             you'll need to add one.
+            Making a mistake will probably break the options page.
+    
+            To preview your changes, just reload the settings window.
+            You can switch between languages in the 'Extension' part of settings,
+             then reload the settings window to apply the switch.
+    
+            Thanks!
+        */
+
+        "settings": {
+            "en": "Settings",
+            "ja": "設定",
+            "ko": "설정",
+            "zh-cn": "设置"
+        },
+        "search": {
+            "en": "Search",
+            "ja": "探索",
+            "ko": "검색",
+            "zh-cn": "搜索"
+        },
+        "nothing-found": {
+            "en": "No matches were found.",
+            "ja": "見つかりませんでした。",
+            "ko": "검색결과가 없습니다.",
+            "zh-cn": "没有找到匹配项"
+        },
+        "system-default": {
+            "en": "System default",
+            "ja": "システムディフォルト",
+            "zh-cn": "系统默认值"
+            // FIXME: ko
+        },
+
+        "category-extension": {
+            "en": "General",
+            "ja": "一般",
+            "ko": "확장 프로그램",
+            "zh-cn": "通用"
+        },
+        "category-sidebar": {
+            "en": "Sidebar",
+            "ja": "サイドバー",
+            "zh-cn": "侧边栏"
+            // FIXME: ko
+        },
+        "category-user-interface": {
+            "en": "User Interface",
+            "ja": "UI設定",
+            "ko": "UI인터페이스",
+            "zh-cn": "UI 设置"
+        },
+        "category-summons": {
+            "en": "Summons",
+            "ja": "サポーター召喚石設定",
+            "ko": "소환",
+            "zh-cn": "召唤石页面"
+        },
+        "category-keyboard": {
+            "en": "Keyboard",
+            "ja": "キーボード設定",
+            "ko": "키보드",
+            "zh-cn": "键盘设置"
+        },
+        "category-combat": {
+            "en": "Combat",
+            "ja": "戦闘設定",
+            "ko": "배틀",
+            "zh-cn": "战斗设置"
+        },
+
+        "group-bug-fixes": {
+            "en": "Bug Fixes & Workarounds",
+            // FIXME
+            "zh-cn": "Bug 修复 & 解决方案"
+        },
+        "group-language": {
+            "en": "Language",
+            "ja": "言語",
+            "ko": "언어",
+            "zh-cn": "语言"
+        },
+        "group-notifications": {
+            "en": "Notifications",
+            "ja": "通知",
+            "ko": "통지",
+            "zh-cn": "通知"
+        },
+        "group-bookmarks": {
+            "en": "Bookmarks",
+            "ja": "ブックマーク",
+            "ko": "북마크",
+            "zh-cn": "书签"
+        },
+        "group-panels": {
+            "en": "Panels",
+            "ja": "パネル",
+            "zh-cn": "面板"
+            // FIXME: ko
+        },
+        "group-summons": {
+            "en": "Summons",
+            "ja": "サポーター召喚石",
+            "ko": "소환",
+            "zh-cn": "支援召唤石"
+        },
+        "group-miscellaneous": {
+            "en": "Miscellaneous",
+            "ja": "他の",
+            "ko": "잡다한",
+            "zh-cn": "其他"
+        },
+        "group-hotkeys": {
+            "en": "Hotkeys",
+            "ja": "キーバインド",
+            "ko": "단축키",
+            "zh-cn": "热键"
+        },
+        "group-user-interface": {
+            "en": "User Interface",
+            "ja": "UI設定",
+            "ko": "UI인터페이스",
+            "zh-cn": "UI 设置"
+        },
+        "group-skills": {
+            "en": "Skills",
+            "ja": "アビリティ",
+            "ko": "어빌리티",
+            "zh-cn": "技能"
+        },
+        "group-buffs": {
+            "en": "Buffs",
+            "ja": "バフ",
+            "zh-cn": "Buffs"
+        },
+        "group-debuffs": {
+            "en": "Debuffs",
+            "ja": "デバフ",
+            "ko": "디버프",
+            "zh-cn": "Debuffs"
+        },
+        "group-skipping": {
+            "en": "Skipping",
+            "ja": "スキップ",
+            "ko": "건너 뛰기",
+            "zh-cn": "跳过"
+        },
+        "group-text": {
+            "en": "Text",
+            "ja": "フォント",
+            // FIXME: ko
+            // No Chinese Font settings
+            "zh-cn": "文本"
+        },
+        "group-version": {
+            "en": "Version",
+        },
+        "group-results": {
+            "en": "Results",
+        },
+
+        "element-none": {
+            "en": "None",
+            "ja": "なし",
+            "zh-cn": "无"
+            // FIXME: ko
+        },
+        "element-fire": {
+            "en": "Fire",
+            "ja": "火属性",
+            "ko": "불",
+            "zh-cn": "火属性"
+        },
+        "element-water": {
+            "en": "Water",
+            "ja": "水属性",
+            "ko": "물",
+            "zh-cn": "水属性"
+        },
+        "element-earth": {
+            "en": "Earth",
+            "ja": "土属性",
+            "ko": "땅",
+            "zh-cn": "土属性"
+        },
+        "element-wind": {
+            "en": "Wind",
+            "ja": "風属性",
+            "ko": "바람",
+            "zh-cn": "风属性"
+        },
+        "element-light": {
+            "en": "Light",
+            "ja": "光属性",
+            "ko": "빛",
+            "zh-cn": "光属性"
+        },
+        "element-dark": {
+            "en": "Dark",
+            "ja": "闇属性",
+            "ko": "어둠",
+            "zh-cn": "暗属性"
+        },
+        "element-free": {
+            "en": "Misc.",
+            "ja": "フリー",
+            // FIXME: ko
+            "zh-cn": "杂项"
+        },
+
+        "notifyOnFullAP": {
+            "en": "Notify when AP is full",
+            "ja": "AP全回復する時",
+            "ko": "AP가득할때 통지하기",
+            "zh-cn": "当 AP 回满时推送通知"
+        },
+        "notifyOnFullBP": {
+            "en": "Notify when BP is full",
+            "ja": "BP全回復する時",
+            "ko": "BP가득할때 통지하기",
+            "zh-cn": "当 BP 回满时推送通知"
+            // in English Version, the BP is called EP
+        },
+        "notifyBeforeDefendOrder": {
+            "en": "Notify before a Defend Order",
+            "ja": "DOが発生する直前",
+            "zh-cn": "DO 开始前通知"
+            // FIXME
+        },
+        "showBookmarks": {
+            "en": "Show bookmarks menu",
+            "ja": "ブックマークを表示する",
+            "ko": "북마크보기",
+            "zh-cn": "显示书签栏"
+        },
+        "bookmarksSize": {
+            "en": "Bookmarks icon size",
+            "ja": "アイコンサイズ",
+            "ko": "북마크 아이콘 크기",
+            "zh-cn": "书签栏图标大小"
+        },
+        "bookmarksMenuSize": {
+            "en": "Bookmarks menu size",
+            "ja": "ブックマークサイズ",
+            "zh-cn": "书签栏菜单大小"
+            // FIXME: ko
+        },
+        "openBookmarksOnClick": {
+            "en": "Click to open bookmarks menu",
+            "ja": "クリックしてブックマークの画面を表示する",
+            "zh-cn": "点击打开书签栏菜单"
+            // FIXME: ko
+        },
+        "clockBrightness": {
+            "en": "JST clock brightness",
+            "ja": "時計の明るさ",
+            "zh-cn": "时钟的亮度（东京时区）"
+            // FIXME: ko
+        },
+        "preferBahamut": {
+            "en": "Prioritize Bahamut and Lucifer",
+            "ja": "バハムート・ルシフェルを優先する",
+            "ko": "바하·루시퍼 우선하기",
+            "zh-cn": "优先显示路西法和巴哈姆特"
+        },
+        "preferBunny": {
+            "en": "Prioritize Kaguya and Rabbit",
+            "ja": "カグヤ・ホワイトラビット・ブラックラビットを優先する",
+            "zh-cn": "优先显示輝夜和兔子"
+            // FIXME: ko
+        },
+        "preferFriendSummons": {
+            "en": "Prefer friend summons",
+            "ja": "フレンド召喚石を優先する",
+            "ko": "친구 소환을 우선하기",
+            "zh-cn": "优先显示朋友的召唤石"
+        },
+        "preferNonFriendSummonsInFavorites": {
+            "en": "Prefer non-friend summons in favorites list",
+            // FIXME
+        },
+        "preferLimitBrokenSummons": {
+            "en": "Prefer limit-broken summons",
+            "ja": "最終上限解放召喚石を優先する",
+            "ko": "최종 상한 해방 소환석을 우선하기",
+            "zh-cn": "优先显示终破的召唤石"
+        },
+        "preferHighLevelSummons": {
+            "en": "Prefer high-level summons",
+            "ja": "レベル高い召喚石を優先する",
+            "ko": "수준 높은 소환석을 우선하기",
+            "zh-cn": "优先显示等级更高的召唤石"
+        },
+        "preferredSummonElement": {
+            "en": "Default element",
+            "ja": "メイン属性",
+            "ko": "기본 소환석",
+            "zh-cn": "默认属性"
+        },
+        "allowDragSelect": {
+            "en": "EXPERIMENTAL: Allow drag-selecting items",
+            "ja": "実験中：クリック&ドラッグを有効にする",
+            "ko": "실험중:목록 클릭과드래그를 사용하기",
+            "zh-cn": "实验中：允许拖放物品"
+        },
+        "submenuSize": {
+            "en": "Submenu size",
+            "ja": "サブメニューのサイズ",
+            "ko": "서브메뉴의 크기",
+            "zh-cn": "副菜单大小"
+        },
+        "fixJPFontRendering": {
+            "en": "Improve Japanese font rendering",
+            "ja": "フォンレンダリングを改善する",
+            "zh-cn": "日文字体渲染改善"
+            // FIXME: ko
+        },
+        "disableMiddleRightClick": {
+            "en": "Prevent middle and right clicks from clicking buttons",
+            "ja": "中・右マウスボタンをゲーム内にクルックしないようにする",
+            "zh-cn": "防止按到中键和右键"
+            // FIXME: ko
+        },
+        /*
+        "hiddenTwitterRefills": {
+            "en": "Send twitter refills as invisible direct messages",
+            "ja": "ツイッター投稿をダイレクトメッセージで受け取る",
+            "zh-cn": "用 Invisible DM 来补满 AP·BP"
+            // FIXME: ko
+        },
+        */
+        "showSkillCooldowns": {
+            "en": "Show skill cooldowns in main view",
+            "ja": "アビリティの再使用時間を指示する",
+            "ko": "어빌리티CD를 메인뷰의 보여주기",
+            "zh-cn": "在主视图中显示技能冷却"
+        },
+        "showQuickPanels": {
+            "en": "EXPERIMENTAL: Show quick skill & summon buttons",
+            "ja": "実験中：アビリティと召喚石のショートカットを指示する",
+            "ko": "실험중:빠른 어빌리티와 소환 버튼를 보여주기",
+            "zh-cn": "实验中：使用快速技能栏和召唤兽栏"
+        },
+        "showSkillQueue": {
+            "en": "Show skill queue",
+            "ja": "先行入力したアビリティを指示する",
+            "ko": "어빌리티열를 보여주기",
+            "zh-cn": "显示技能队列"
+        },
+        "showDebuffTimers": {
+            "en": "Show enemy debuff timers",
+            "ja": "敵のデバフ時間を指示する",
+            "ko": "적의 디버프 시간을 보여주기",
+            "zh-cn": "显示敌方 Debuff 计时"
+        },
+        "showBuffTimers": {
+            "en": "Show enemy buff timers",
+            "ja": "敵のバフ時間を指示する",
+            "zh-cn": "显示敌方 Buff 计时"
+            // FIXME: ko
+        },
+        "filterEnemyTimers": {
+            "en": "Only show buff/debuff timers for current target",
+            "ja": "選択中の敵のデバフとバフ時間のみを指示する",
+            "zh-cn": "只对当前选中的敌人显示 Buff/Debuff 计时"
+            // FIXME: ko
+        },
+        "showPartyHelp": {
+            "en": "VERY EXPERIMENTAL: Show party buff summary",
+            "ja": "味方のバフ時間を指示する",
+            "zh-cn": "实验中：显示友方总的 Buff"
+            // FIXME: ko
+        },
+        "showGaugeOverlays": {
+            "en": "Show health and mode overlays",
+            "ja": "敵のHPとモードゲージを指示する",
+            "ko": "HP과MODE 오버레이 보여주기",
+            "zh-cn": "覆盖显示血量和 mode 条"
+        },
+        "highPrecisionHP": {
+            "en": "Precise health overlay numbers",
+            "ja": "敵のHPとモードゲージを正確に指示する",
+            "ko": "정확한HP 오버레이 보여주기",
+            "zh-cn": "精确显示血量数字"
+        },
+        "queueSkills": {
+            "en": "Queue skill activations",
+            "ja": "アビリティを先行入力できる",
+            "ko": "어빌리티열를 선행 입력 할 수",
+            "zh-cn": "激活技能队列"
+
+        },
+        "retryQueuedSkills": {
+            "en": "Retry queued skills if first activation fails",
+            "ja": "アビリティの使用が失敗した場合は再使用する",
+            "ko": "어빌리티 사용이 실패한 경우 다시 사용하기",
+            "zh-cn": "如果首次使用技能失败则重试"
+        },
+        "monitorRaidDebuffs": {
+            "en": "Re-check debuffs when other players act",
+            "ja": "他の参加者の通知が出る時にデバフ時間を更新する",
+            "ko": "다른 플레이어 통지가 나올때 디버프 시간을 업데이트",
+            "zh-cn": "当其他参展者行动时重新检查 Debuff"
+        },
+        "autoSkipToQuestResults": {
+            "en": "Automatically end quests",
+            "ja": "クエストが終わると自動で次の画面へ",
+            "ko": "퀘스트가 끝나면 자동으로 다음 화면으로가기",
+            "zh-cn": "自动结束任务"
+        },
+        "autoSkipToRaidResults": {
+            "en": "Automatically end raids",
+            "ja": "マルチバトルが終わると自動で次の画面へ",
+            "ko": "멀티 플레이어 배틀이 끝나면 자동으로 다음 화면으로가기",
+            "zh-cn": "自动结束 Raid 战斗"
+        },
+        "autoAdvancePreQuest": {
+            "en": "Automatically advance through pre-quest enemies",
+            "ja": "クエスト道中を自動で進む",
+            "ko": "퀘스트 도중 자동으로 진행",
+            "zh-cn": "自动跳过任务前的敌人"
+        },
+        "touchInputSupport": {
+            "en": "BROKEN: Enable touch input<br>" +
+                "Only turn this on if you need it! It causes issues.",
+            "ja": "破損: タッチ入力機能を使用する<br>" +
+                "必要な場合にのみ使用してください。エラーが出る可能性があります。",
+            "zh-cn": "损坏的功能：启用触摸输入<br>" +
+                "只有当你需要它的时候启用这项功能！它会导致一些问题"
+            // FIXME: ko
+        },
+        "condensedUI": {
+            "en": "Condensed user interface<br>" +
+                "<ul>" +
+                "<li>Smaller supply icons</li>" +
+                "<li>Smaller job list items</li>" +
+                "<li>Smaller subskill list items</li>" +
+                "</ul>",
+            "ja": "UIを縮小する" +
+                "<ul>" +
+                "<li>回復アイテムのアイコンを縮小する</li>" +
+                "<li>ジョブアイコンを縮小する</li>" +
+                "<li>EXアビリティのアイコンを縮小する</li>" +
+                "</ul>",
+            "ko": "미니UI인터페이스" +
+                "<ul>" +
+                "<li>미니회복 아이템의 아이콘</li>" +
+                "<li>미니직업 아이콘</li>" +
+                "<li>미니EX어빌리티의 아이콘</li>" +
+                "</ul>",
+            "zh-cn": "精简 UI 界面" +
+                "<ul>" +
+                "<li>缩小补给图标</li>" +
+                "<li>缩小职业图标</li>" +
+                "<li>缩小 EX 技能列表图标</li>" +
+                "</ul>",
+        },
+        "keyboardShortcuts2": {
+            "en": "EXPERIMENTAL: Enable<br><hr>" +
+                "Customizable shortcuts are coming <i>someday!</i><br>Until then - a quick reference:<br><br>" +
+                "<b>General Shortcuts</b><br>" +
+                "<ul>" +
+                "<li><b>Space</b> to select OK buttons.</li>" +
+                "<li><b>`</b> or <b>Escape</b> to select cancel buttons.</li>" +
+                "</ul>" +
+                "<b>Combat Shortcuts</b><br>" +
+                "<ul>" +
+                "<li><b>1/2/3/4</b> to select characters.</li>" +
+                "<li><b>Left/Right arrow</b> to cycle characters.</li>" +
+                "<li><b>F/G</b> or <b>[</b>/<b>]</b> to cycle targets.</li>" +
+                "<li><b>q/w/e/r</b> to use character abilities.</li>" +
+                "<li><b>Arrow keys</b> to select ninja marks.</li>" +
+                "<li><b>5</b> to select the summons panel.</li>" +
+                "<li><b>q/w/e/r/t/y</b> to use summons.</li>" +
+                "<li><b>`</b> to select Back or otherwise cancel out of things.</li>" +
+                "<li><b>C</b> to toggle charge attack.</li>" +
+                "<li><b>H</b> to open healing window.</li>" +
+                "<li><b>Escape</b> to empty the skill queue.</li>" +
+                "<li><b>K</b> to open the Stickers window.</li>" +
+                "</ul>",
+            "ja": "実験中：有効にする<br><hr>" +
+                "カスタマイズ可能なキーバインドは実施する予定です。<br>現在の設定はこちら：<br><br>" +
+                "<b>基準</b><br>" +
+                "<ul>" +
+                "<li>「<b>SPACE</b>」= OK</li>" +
+                "<li>「<b>`</b>」か「<b>ESC</b>」= キャンセル</li>" +
+                "</ul>" +
+                "<b>バトル</b><br>" +
+                "<ul>" +
+                "<li>「<b>1-4</b>」= キャラクターを選択する。</li>" +
+                "<li>「<b>左/右 方向キー</b>」= キャラクターチェンジする。</li>" +
+                "<li>「<b>F/G</b>」か「<b>[</b>/<b>]</b>」= ターゲットを循環する。</li>" +
+                "<li>「<b>Q/W/E/R</b>」= キャラクターのアビリティを発動する。</li>" +
+                "<li>「<b>方向キー</b>」= 忍者の印を選択する。</li>" +
+                "<li>「<b>5</b>」= 召喚石を画面を表示する。</li>" +
+                "<li>「<b>Q/W/E/R/T/Y</b>」= 召喚石を使用する。</li>" +
+                "<li>「<b>`</b>」= キャンセルや戻る。</li>" +
+                "<li>「<b>C</b>」= 奥義の発動。</li>" +
+                "<li>「<b>H</b>」= 回復画面を表示する。</li>" +
+                "<li>「<b>ESC</b>」= 先行入力したアビリティを解除する。</li>" +
+                "<li>「<b>K</b>」= Stamp</li>" +
+                "</ul>",
+            "ko": "실험중:Enable<br><hr>" +
+                "사용자정의 키바인딩이 곧 올 겁니다!<br>그때까지 - 현재설정:<br><br>" +
+                "<b>General Shortcuts</b><br>" +
+                "<ul>" +
+                "<li>「<b>SPACE</b>」= OK</li>" +
+                "<li>「<b>`</b>」과「<b>ESC</b>」= 취소</li>" +
+                "</ul>" +
+                "<b>단축키</b><br>" +
+                "<ul>" +
+                "<li>「<b>1-4</b>」= 캐릭터 선택</li>" +
+                "<li>「<b>왼쪽/오른쪽 화살표키</b>」= 캐릭터 체인지</li>" +
+                "<li>「<b>F/G</b> or <b>[</b>/<b>]</b>」= cycle targets.</li>" +
+                "<li>「<b>Q/W/E/R</b>」= 캐릭터의 어빌리티를 발동하기</li>" +
+                "<li>「<b>화살표키</b>」= 닌자 표시를 선택</li>" +
+                "<li>「<b>5</b>」= 소환 석을 화면보기</li>" +
+                "<li>「<b>Q/W/E/R/T/Y</b>」= 소환 석을 사용하기</li>" +
+                "<li>「<b>`</b>」= 취소나 돌아보기</li>" +
+                "<li>「<b>C</b>」= 비밀</li>" +
+                "<li>「<b>H</b>」= 복구 화면을 보여주기</li>" +
+                "<li>「<b>ESC</b>」= 선행 입력 한 어빌리티를 해제</li>" +
+                "<li>「<b>K</b>」= Stamp</li>" +
+                "</ul>",
+            // FIXME: ko
+            "zh-cn": "实验中：启用<br><hr>" +
+                "自定义快捷键正在开发中，未来<i>某日</i>会实装<br>现在的设定：<br><br>" +
+                "<b>通用快捷键</b><br>" +
+                "<ul>" +
+                "<li><b>空格</b> OK 按钮</li>" +
+                "<li><b>`</b> or <b>ESC</b> cancel 按钮</li>" +
+                "</ul>" +
+                "<b>战斗中快捷键</b><br>" +
+                "<ul>" +
+                "<li><b>1/2/3/4</b> 选择人物。</li>" +
+                "<li><b>左/右方向键</b> 切换人物。</li>" +
+                "<li><b>F/G</b> or <b>[</b>/<b>]</b> 切换目标。</li>" +
+                "<li><b>q/w/e/r</b> 使用人物技能。</li>" +
+                "<li><b>方向键</b> 选择忍者的印记。</li>" +
+                "<li><b>5</b> 打开召唤石栏</li>" +
+                "<li><b>q/w/e/r/t/y</b> 使用召唤石</li>" +
+                "<li><b>`</b> 返回或者取消。</li>" +
+                "<li><b>C</b> 切换是否释放奥义。</li>" +
+                "<li><b>H</b> 打开回复界面。</li>" +
+                "<li><b>Escape</b> 清空技能队列。</li>" +
+                "<li><b>K</b> 打开表情窗口</li>" +
+                "</ul>",
+        },
+        "focusQuickPanels": {
+            "en": "Highlight quick panels instead of opening character panels",
+            "zh-cn": "以高亮快速选择面板的方式取代打开角色面板"
+            // FIXME: ja, ko
+        },
+        "enableCoOpEnhancements": {
+            "en": "Enhanced co-op UI",
+            "ja": "共闘クエストのUIを改善する",
+            "zh-cn": "改善共斗 UI "
+            // FIXME: ko
+        },
+        "dropdownFix": {
+            "en": "EXPERIMENTAL: Dropdown/textbox mouse fix",
+            "ja": "実験中：マウスに関するのドロップダウンとテキストボックスのバグを治す",
+            "zh-cn": "实验中： Dropdown/textbox mouse fix"
+            // FIXME: ko
+        },
+        "oneClickQuickSummons": {
+            "en": "One-click quick summons",
+            "ja": "召喚石のショートカットを一クリックで発動する",
+            "zh-cn": "单击发动召唤石"
+            // FIXME: ko
+        },
+        "statusPanel": {
+            "en": "Show status panel below bookmarks",
+            "ja": "ブックマークの下にステータスを表示する",
+            "zh-cn": "在书签栏下显示状态面板"
+            // FIXME: ko
+        },
+        "statusPanelBuffs": {
+            "en": "Show guild and personal buffs in status panel",
+            "ja": "騎空団・よろず屋サポートのステータスを表示する",
+            "zh-cn": "在状态栏显示骑空团和自己的 Buff"
+            // FIXME: ko
+        },
+        "statusPanelExpiringBuffs": {
+            "en": "Only show buffs that will expire soon",
+            "ja": "もうじきなくなるのサポート効果のみを表示する",
+            "zh-cn": "只有当 Buff 快要结束时才显示"
+            // FIXME: ko
+        },
+        "raidsPanel": {
+            "en": "Show raids panel below bookmarks",
+            "ja": "ブックマークの下にマルチバトル一覧を表示する",
+            "zh-cn": "在书签栏下以面板的形式显示当前刷新出的 Raids"
+            // FIXME: ko
+        },
+        "raidsPanelBpFilter": {
+            "en": "Only show raids panel if you have >= 3 BP",
+            "ja": "3BP以上の場合のみマルチバトル一覧のパネルを表示する",
+            "zh-cn": "只有当你有 3BP 以上时才显示 Raid 面板"
+            // FIXME: ko
+        },
+        "realtimeRaidList": {
+            "en": "Refresh list automatically when on raids page",
+            "ja": "自動的にマルチバトル一覧を更新する",
+            "zh-cn": "当位于 Raids 页面是自动刷新列表"
+            // FIXME: ko
+        },
+        "bookmarksInactiveIcon": {
+            "en": "Inactive icon",
+            "ja": "閉じている時のアイコン",
+            "zh-cn": "未激活时的图标"
+            // FIXME:　ko
+        },
+        "bookmarksActiveIcon": {
+            "en": "Active icon",
+            "ja": "開いている時のアイコン",
+            "zh-cn": "激活时的图标"
+            // FIXME: ko
+        },
+        "bookmarksIconPadding": {
+            "en": "Padding between icon and panels",
+            "ja": "ブックマークとパネルの間の余白",
+            "zh-cn": "图标和面板之间的空隙"
+            // FIXME: ko
+        },
+        "horizontalBookmarks": {
+            "en": "Show bookmarks & panels horizontally",
+            "ja": "ブックマークとパネルを横に表示する",
+            "zh-cn": "水平显示书签和各种面板"
+            // FIXME: ko
+        },
+        "betterEnglishFont": {
+            "en": "Superior English font",
+            "ja": "英語の文字のフォントを改善する",
+            "zh-cn": "改善英文字体的显示"
+            // FIXME: ko
+        },
+        "showItemWatchButtons": {
+            "en": "Enable 'show item on sidebar' buttons",
+            "ja": "アイテムをサイドバーに表示するのボタンを表示する",
+            "zh-cn": "启动“在侧边栏上显示物品”的按钮"
+            // FIXME: ko
+        },
+        "showPartyNames": {
+            "en": "Show names in party selector",
+            "ja": "編成切り替えのボタンで編成の名前を表示する",
+            "zh-cn": "在队伍选择器上显示各队名字"
+            // FIXME: ko
+        },
+        "showPerformanceHud": {
+            "en": "Show performance HUD",
+            "ja": "パフォーマンスの統計を表示する",
+            "zh-cn": "显示性能 HUD"
+            // FIXME: ko
+        },
+        "lagWorkaround": {
+            "en": "Compensate for lag and low refresh rates",
+            "ja": "実験中：フレームレートを上げる",
+            "zh-cn": "实验中： 启用卡顿的解决方法"
+            // FIXME: ko
+        },
+        "imageSmoothingHack": {
+            "en": "Disable image smoothing to reduce lag",
+            // FIXME: ja, ko, zh-cn
+        },
+        "showNetworkHud": {
+            "en": "Show network HUD",
+            "ja": "ネットワークの統計を表示する",
+            "zh-cn": "显示网络状况 HUD"
+            // FIXME: ko
+        },
+        "keepSoundOnBlur": {
+            "en": "Continue playing sound when browser loses focus",
+            "ja": "ブラウザのフォーカスが外してもサウンドを再生し続けるようにする",
+            "zh-cn": "浏览器失去焦点时继续播放音乐"
+            // FIXME: ko
+        },
+        "showWeaponAttack": {
+            "en": "Show weapon ATK in skill level view",
+            "ja": "編成の武器のスキルを見る時、武器の攻撃力を表示する",
+            "zh-cn": "在编成中查看武器的技能时同时显示武器的攻击力"
+            // FIXME: ko
+        },
+        "showSkillActivationIndicator": {
+            "en": "Show indicator when skills are activating",
+            "ja": "発動中のアビリティのアイコンを強調する",
+            "zh-cn": "在技能施放时显示计时"
+            // FIXME: ko
+        },
+        "autofillBackupTweets": {
+            "en": "Auto-fill Japanese name when requesting backup via Twitter",
+            "ja": "ツイッターの救援依頼のテキスト入力で敵の名前を追加する",
+            "zh-cn": "在放推时自动填入怪的日文名"
+            // FIXME: ko
+        },
+        "moveCoOpFooter": {
+            "en": "Move co-op room footer to the top of the window",
+            "ja": "共闘クエストのルームのフッターをページの上に移動する",
+            "zh-cn": "将共斗房的页脚移到窗口顶端"
+            // FIXME: ko
+        },
+        "largeQuickPanels": {
+            "en": "Show larger quick skill buttons",
+            "ja": "アビリティのショートカットを大きくにする",
+            "zh-cn": "在快速技能栏显示大图标"
+            // FIXME: ko
+        },
+        "stuckButtonWorkaround2": {
+            "en": "Stuck skill button workaround",
+            // FIXME: ja, ko
+            "zh-cn": "解决卡住的技能"
+        },
+        "showFieldEffectTimers": {
+            "en": "EXPERIMENTAL: Show field effect timers",
+            // FIXME: ja, ko
+            "zh-cn": "实验性：显示场地效果计时器"
+        },
+        "showLastActionTimer": {
+            "en": "Show action timer after reloading",
+            "zh-cn": "在刷新后继续显示动作计时器"
+            // FIXME: ja, ko
+        },
+        "smartSupports": {
+            "en": "EXPERIMENTAL: Add favorite summons tab",
+            "zh-cn": "实验性： 增加最爱召唤选项卡"
+            // FIXME: ja, ko
+        },
+        "defaultToSmartSupports": {
+            "en": "Default to favorite summons tab if available",
+            "zh-cn": "当可用时，默认切换到最爱召唤选项卡"
+            // FIXME: ja, ko
+        },
+        "disablePhalanxSticker": {
+            "en": "Disable the Phalanx sticker if you don't have Phalanx",
+            "zh-cn": "当你没有神盾技能时禁用神盾表情"
+            // FIXME: ja, ko
+        },
+        "autoHidePopups": {
+            "en": "VERY EXPERIMENTAL: Auto-hide popups",
+            "zh-cn": "实验性： 自动隐藏弹出窗口"
+            // FIXME: ja, ko
+        },
+        "minimumPopupWait": {
+            "en": "Minimum delay before popups auto-hide",
+            "zh-cn": "在自动隐藏弹出窗口前增加的最小延迟"
+            // FIXME: ja, ko
+        },
+        "maximumPopupWait": {
+            "en": "Maximum delay before popups auto-hide",
+            "zh-cn": "在自动隐藏弹出窗口前增加的最大延迟"
+            // FIXME: ja, ko
+        },
+        "singlePageStickers": {
+            "en": "Enhanced sticker UI",
+            "zh-cn": "增强表情 UI"
+            // FIXME: ja, ko
+        },
+        "permanentTurnCounter": {
+            "en": "Always show turn counter",
+            "zh-cn": "总是显示回合计数器"
+            // FIXME: ja, ko
+        },
+        "itemsPanel": {
+            "en": "Show watched items panel on sidebar",
+            "zh-cn": "在侧边栏上显示监视的物品面板"
+            // FIXME: ja, ko
+        },
+        "largeItemsPanel": {
+            "en": "Show large icons in items panel",
+            // FIXME
+        },
+        "newSkillSystem": {
+            "en": "EXPERIMENTAL: New skill system v2.0 (fixes cooldown resets and party shuffles)",
+            "zh-cn": "实验性：新的技能系统（修复一些角色的重置技能，比如卡特比拉的重置等"
+        },
+        "buttonSwipeFix": {
+            "en": "EXPERIMENTAL: Fix swipes not activating skill buttons",
+            "zh-cn": "实验性：修正滑动无法激活技能按钮"
+        },
+        "arcarumFix": {
+            "en": "Fix mouse clicks breaking in Arcarum stages"
+        },
+        "disablePerCharacterOugiSkip": {
+            "en": "Disable toggling charge attack skip by clicking characters"
+        },
+        "webAPI": {
+            "en": '<a href="/content/api.html">Web API</a>: Allow websites to communicate with Viramate'
+        },
+        "tinySupportSummons": {
+            "en": "Compact summons list"
+        },
+        "detailedUpgradePage": {
+            "en": "Always show skill levels on upgrade page"
+        },
+        "popupPositionFix": {
+            "en": "Stop popups from appearing offscreen",
+        },
+        "enableRaidSync": {
+            "en": "Synchronize status between raid windows",
+        },
+        "enableAutomaticUpdates": {
+            "en": "Enable automatic updates",
+        },
+        "hideMobageSidebar": {
+            "en": "EXPERIMENTAL: Hide Mobage sidebar",
+        },
+        "mistakeGuard": {
+            "en": "Make stash/inventory mass sell buttons red"
+        },
+        "showTransientMessages": {
+            "en": "Show popup messages at the top of the page"
+        },
+        "showNextRankExp": {
+            "en": "Show RP until next rank"
+        },
+        "globalDisable": {
+            "en": "Disable extension"
+        },
+        "alwaysShowActionTimer": {
+            "en": "Always show action timer"
+        },
+
+        "name-tia": {
+            "en": "Tiamat",
+            "ja": "ティアマト",
+            "zh-cn": "提亚马特(风妈)"
+        },
+        "name-colo": {
+            "en": "Colossus",
+            "ja": "コロッサス",
+            "zh-cn": "克洛苏斯(高达)"
+        },
+        "name-levi": {
+            "en": "Leviathan",
+            "ja": "リヴァイアサン",
+            "zh-cn": "利维坦(泥鳅)"
+        },
+        "name-yugu": {
+            "en": "Yggdrasil",
+            "ja": "ユグドラシル",
+            "zh-cn": "鱼骨鱼骨(土妹)"
+        },
+        "name-chev": {
+            "en": "Chevalier",
+            "ja": "シュヴァリエ",
+            "zh-cn": "修瓦利耶(光妈)"
+        },
+        "name-cel": {
+            "en": "Celeste",
+            "ja": "セレスト",
+            "zh-cn": "塞雷斯特(暗船)"
+        },
+
+
+        "m-home": {
+            "en": "Home",
+            "ja": "マイページ",
+            "zh-cn": "Home"
+        },
+        "m-party": {
+            "en": "Party",
+            "ja": "編成",
+            "zh-cn": "编成"
+        },
+
+        "m-mystuff": {
+            "en": "My Stuff",
+            "ja": "リスト",
+            "zh-cn": "我的物品"
+        },
+        "m-inventory": {
+            "en": "Inventory",
+            "ja": "リスト",
+            "zh-cn": "列表"
+        },
+        "m-stash": {
+            "en": "Stash",
+            "ja": "倉庫",
+            "zh-cn": "仓库"
+        },
+        "m-crate": {
+            "en": "Crate",
+            "ja": "プレセント",
+            "zh-cn": "邮箱"
+        },
+        "m-supplies": {
+            "en": "Supplies",
+            "ja": "アイテム",
+            "zh-cn": "补给"
+        },
+
+        "m-quest": {
+            "en": "Quests",
+            "ja": "クエスト",
+            "zh-cn": "任务"
+        },
+        "m-quest-all": {
+            "en": "Recommended",
+            "ja": "クエスト",
+            "zh-cn": "推荐"
+        },
+        "m-quest-special": {
+            "en": "Special",
+            "ja": "エクストラ",
+            "zh-cn": "特殊"
+        },
+        "m-join-raid": {
+            "en": "Join Raid",
+            "ja": "マルチバトル",
+            "zh-cn": "参加 Raid"
+        },
+        "m-pending-raids": {
+            "en": "Pending Raids",
+            "ja": "未確認バトル",
+            "zh-cn": "未确认的 Raids"
+        },
+        "m-defend-order": {
+            "en": "Defend Order",
+            "ja": "DEFEND ORDER",
+            // FIXME: ko
+        },
+        "m-event": {
+            "en": "Event",
+            "ja": "イベント",
+            // FIXME: ko
+        },
+        "m-quest-repeat": {
+            "en": "Repeat Quest",
+            "ja": "クエストを繰り返す",
+            "zh-cn": "重复上次任务"
+        },
+
+        "m-hard-raids": {
+            "en": "Hard Raids",
+            "ja": "HARD",
+            "zh-cn": "Hard Raids"
+        },
+        "m-hard-tia": "name-tia",
+        "m-hard-colo": "name-colo",
+        "m-hard-levi": "name-levi",
+        "m-hard-yugu": "name-yugu",
+        "m-hard-chev": "name-chev",
+        "m-hard-cel": "name-cel",
+
+        "m-magna-raids": {
+            "en": "Magna Raids",
+            "ja": "マグナ",
+            "zh-cn": "马格纳"
+        },
+        "m-magna-tia": "name-tia",
+        "m-magna-colo": "name-colo",
+        "m-magna-levi": "name-levi",
+        "m-magna-yugu": "name-yugu",
+        "m-magna-chev": "name-chev",
+        "m-magna-cel": "name-cel",
+
+        "m-hl-raids": {
+            "en": "HL Raids",
+            "ja": "HLマグナ",
+            "zh-cn": "HL 马格纳"
+        },
+        "m-hl-tia": "name-tia",
+        "m-hl-colo": "name-colo",
+        "m-hl-levi": "name-levi",
+        "m-hl-yugu": "name-yugu",
+        "m-hl-chev": "name-chev",
+        "m-hl-cel": "name-cel",
+        "m-hl-rosequeen": {
+            "en": "Rose Queen",
+            "ja": "ローズクイーン",
+            "zh-cn": "玫瑰女皇(BBA)",
+        },
+
+        "m-primal-raids": {
+            "en": "Summon Raids",
+            "ja": "星晶獣",
+            "zh-cn": "星晶兽",
+        },
+        "m-nataku": {
+            "en": "Nezha",
+            "ja": "ナタク",
+            "zh-cn": "哪吒",
+        },
+        "m-flame-glass": {
+            "en": "Twin Elements",
+            "ja": "フラム＝グラス",
+            "zh-cn": "双生元素(黑皮)",
+        },
+        "m-macula-marius": {
+            "en": "Macula Marius",
+            "ja": "マキュラ・マリウス",
+            "zh-cn": "马科拉·马里乌斯(冰皇)",
+        },
+        "m-medusa": {
+            "en": "Medusa",
+            "ja": "メドゥーサ",
+            "zh-cn": "美杜莎",
+        },
+        "m-apollo": {
+            "en": "Apollo",
+            "ja": "アポロン",
+            "zh-cn": "阿波罗",
+        },
+        "m-olivia": {
+            "en": "D. Angel Olivia",
+            "ja": "Dエンジェル・オリヴィエ",
+            "zh-cn": "暗黑天使奥利维亚",
+        },
+        "m-athena": {
+            "en": "Athena",
+            "ja": "アテナ",
+            "zh-cn": "雅典娜",
+        },
+        "m-odin": {
+            "en": "Odin",
+            "ja": "オーディン",
+            "zh-cn": "奥丁",
+        },
+
+        "m-coop": {
+            "en": "Co-op",
+            "ja": "共闘",
+            "zh-cn": "共斗"
+        },
+        "m-coop-host": {
+            "en": "Host",
+            "ja": "仲間を集める",
+            "zh-cn": "召集同伴"
+        },
+        "m-coop-join": {
+            "en": "Join",
+            "ja": "参加する",
+            "zh-cn": "参加"
+        },
+        "m-coop-shop": {
+            "en": "Shop",
+            "ja": "トレジャー交換",
+            "zh-cn": "奸商"
+        },
+
+        "m-me": {
+            "en": "Me",
+            "ja": "プロフィール",
+            "zh-cn": "我"
+        },
+        "m-profile": {
+            "en": "My Profile",
+            "ja": "プロフィール",
+            "zh-cn": "我的个人资料"
+        },
+        "m-crew": {
+            "en": "Crew",
+            "ja": "騎空団",
+            "zh-cn": "骑空团"
+        },
+        "m-friends": {
+            "en": "Friends",
+            "ja": "フレンド",
+            "zh-cn": "好友"
+        },
+        "m-trophies": {
+            "en": "Trophies",
+            "ja": "称号",
+            "zh-cn": "称号"
+        },
+
+        /*
+        "m-get-stuff": {
+            "en": "Get Stuff",
+            "ja": "交換",
+        },
+        "m-gacha": {
+            "en": "Draw",
+            "ja": "ガチャ",
+        },
+        */
+
+        "m-shop": {
+            "en": "Shop",
+            "ja": "ショップ",
+            "zh-cn": "奸商"
+        },
+        "m-shop-mobacoins": {
+            "en": "MobaCoins",
+            "ja": "モバコイン",
+            "zh-cn": "MobaCoins"
+            // FIXME: ko
+        },
+        "m-shop-crystals": {
+            "en": "Crystals",
+            "ja": "宝晶石",
+            "zh-cn": "宝晶石"
+            // FIXME: ko
+        },
+        "m-shop-points": {
+            "en": "Pendants",
+            "ja": "武勲・栄誉の輝き",
+            "zh-cn": "武勋、荣誉"
+            // FIXME: ko
+        },
+        "m-shop-moon": {
+            "en": "Moons",
+            "ja": "ムーン",
+            "zh-cn": "月亮"
+            // FIXME: ko
+        },
+        "m-shop-treasure": {
+            "en": "Treasure",
+            "ja": "トレジャー",
+            "zh-cn": "素材"
+            // FIXME: ko
+        },
+        "m-shop-whale-tears": {
+            "en": "Cerulean Stones",
+            "ja": "蒼光の輝石",
+            "zh-cn": "苍光之辉石"
+            // FIXME: ko
+        },
+        "m-shop-trajectory": {
+            "en": "Journey Drops",
+            "ja": "軌跡の雫",
+            "zh-cn": "轨迹之雫(水滴)"
+            // FIXME: ko
+        },
+        "m-shop-defend-order": {
+            "en": "Defend Order",
+            "ja": "DEFEND ORDER",
+            "zh-cn": "Defend Order"
+            // FIXME: ko
+        },
+        "m-shop-weapon-series": {
+            "en": "Weapon Series",
+            "ja": "特殊武器",
+            "zh-cn": "特殊武器"
+            // FIXME: ko
+        },
+
+        "m-casino": {
+            "en": "Casino",
+            "ja": "カジノ",
+            "zh-cn": "赌场"
+            // FIXME: ko
+        },
+        "m-poker": {
+            "en": "Poker",
+            "ja": "ポーカ",
+            "zh-cn": "Poker"
+            // FIXME: ko
+        },
+        "m-bingo": {
+            "en": "Bingo",
+            "ja": "ビンゴ",
+            "zh-cn": "Bingo"
+            // FIXME: ko
+        },
+        "m-casino-shop": {
+            "en": "Shop",
+            "ja": "景品交換",
+            "zh-cn": "奖品交换"
+            // FIXME: ko
+        },
+
+        "m-settings": {
+            "en": "Settings",
+            "ja": "設定",
+            "zh-cn": "设置"
+        },
+        "m-update-notes": {
+            "en": "Update Notes",
+            "ja": "チェンジログ",
+            "zh-cn": "升级日志"
+        },
+
+        "m-guild-war": {
+            "en": "Unite And Fight",
+            "ja": "決戦！星の古戦場",
+            "zh-cn": "决战！星之古战场"
+            // FIXME: ko
+        },
+        "m-guild-war-home": {
+            "en": "Home",
+            "ja": "イベントトップ",
+            // FIXME: ko
+        },
+        "m-guild-war-gacha": {
+            "en": "Token Draw",
+            "ja": "戦貨ガチャ",
+            // FIXME: ko
+        },
+        "m-guild-war-reward": {
+            "en": "Loot",
+            "ja": "報酬",
+            // FIXME: ko
+        },
+        "m-guild-war-eye-vh": {
+            "en": "Eye (Very Hard)",
+            "ja": "目玉 (V. HARD)",
+            // FIXME: ko
+        },
+        "m-guild-war-dog-vh": {
+            "en": "Dog (Very Hard)",
+            "ja": "犬 (V. HARD)",
+            // FIXME: ko
+        },
+        "m-guild-war-dog-ex": {
+            "en": "Dog (Extreme)",
+            "ja": "犬 (EXTREME)",
+            // FIXME: ko
+        },
+        "m-guild-war-dog-ex-plus": {
+            "en": "Dog (Extreme+)",
+            "ja": "犬 (EXTREME+)",
+            // FIXME: ko
+        },
+        "m-guild-war-hell-90": {
+            "en": "Nightmare 90",
+            "ja": "Hell 90",
+            // FIXME: ko
+        },
+        "m-guild-war-hell-95": {
+            "en": "Nightmare 95",
+            "ja": "Hell 95",
+            // FIXME: ko
+        },
+        "m-trial-battles": {
+            "en": "Trial Battles",
+            "ja": "トライアルバトル",
+            // FIXME: ko
+        },
+        "m-fate-episodes": {
+            "en": "Fate Episodes",
+            "ja": "フェイトエピソード",
+            // FIXME: ko
+        },
+        "m-set-language": {
+            "en": "Set game language",
+            // FIXME: ja, ko
+        },
+
+
+        "coop-repeat-last": {
+            "en": "Last Hosted",
+            "ja": "繰り返す",
+            "zh-cn": "上次开设"
+            // FIXME
+        },
+
+
+        "p-ok": {
+            "en": "OK",
+            "ja": "OK",
+            "zh-cn": "OK"
+            // FIXME
+        },
+        "p-confirm": {
+            "en": "Yes",
+            "ja": "はい",
+            "zh-cn": "Yes"
+            // FIXME
+        },
+        "p-cancel": {
+            "en": "No",
+            "ja": "いいえ",
+            "zh-cn": "No"
+            // FIXME
+        },
+        "p-join": {
+            "en": "Join",
+            // FIXME
+        },
+        "p-joinRaid": {
+            "en": "Join Raid",
+            "ja": "参加する",
+            "zh-cn": "加入 Raid"
+            // FIXME
+        },
+        "p-joinRoom": {
+            "en": "Join Room",
+            // FIXME
+        },
+        "p-tabNotFound": {
+            "en": "No game tab found.",
+            "ja": "ゲームのタブは見つかりませんでした。",
+            // FIXME
+        },
+        "p-pleaseReload": {
+            "en": "Please reload the game.",
+            "ja": "ゲームをリロードしてください。",
+            "zh-cn": "请重载游戏(刷新)"
+            // FIXME
+        },
+        "p-raidJoinFailed": {
+            "en": "Failed to join raid.",
+            "ja": "マルチバトルを参加できませんでした。",
+            "zh-cn": "加入 Raid 失败"
+            // FIXME
+        },
+        "p-bpRequired": {
+            "en": "{0} BP required.",
+            "ja": "{0}BPが必要です。",
+            "zh-cn": "需要 {0} BP"
+            // FIXME
+        },
+        "p-invalidRaidCode": {
+            "en": "Invalid raid code.",
+            "ja": "参戦IDは間違っています。",
+            "zh-cn": "无效的参战码"
+            // FIXME
+        },
+        "p-use": {
+            "en": "Use {0}",
+            "ja": "{0}を使用する",
+            "zh-cn": "使用 {0}"
+            // FIXME
+        },
+        "p-use-n": {
+            "en": "Use {1}x {0}",
+            "ja": "{0}を{1}個使用する",
+            "zh-cn": "使用 {0} X {1}"
+            // FIXME
+        },
+        "p-use-question": {
+            "en": "Use {0}?",
+            "ja": "{0}を使用しますか？",
+            "zh-cn": "使用 {0} 个？"
+            // FIXME
+        },
+        "p-use-n-question": {
+            "en": "Use {drop|{1}|{2}|{3}}x {0}?",
+            "ja": "{0}を{drop|{1}|{2}|{3}}個使用しますか？",
+            "zh-cn": "使用 {drop|{1}|{2}|{3}} 个 {0}？"
+            // FIXME
+        },
+        "p-copyRaidCode": {
+            "en": "Copy",
+            "ja": "コピー",
+            "zh-cn": "复制"
+            // FIXME
+        },
+        "p-xp": {
+            "en": "Experience. Click to show the amount needed to level.",
+            "ja": "Rankポイント。クリックで次のRankまでのポイントを表示します。",
+            "zh-cn": "Rank Point. 点击显示离升级还需多少。"
+            // FIXME
+        },
+        "p-status": {
+            "en": "{0} people, {1}% HP",
+            "ja": "{0}人、残り{1}% HP",
+            "zh-cn": "{0} 人，剩余{1}%HP"
+            // FIXME
+        },
+        "p-refill": {
+            "en": "Refill with berries",
+            "ja": "シードで回復",
+            "zh-cn": "使用豆子回复"
+            // FIXME
+        },
+        "p-incompatibleVersion": {
+            "en": "Incompatible game version. Please update the extension.",
+            "ja": "ヴィーラメイトをアップデートして下さい。",
+            "zh-cn": "不适配的游戏版本，请升级维拉助手"
+            // FIXME: ko
+        },
+        "p-notLoggedIn": {
+            "en": "You don't seem to be logged in.",
+        },
+        "p-globalDisable": {
+            "en": "Extension disabled",
+        },
+        "p-enable": {
+            "en": "Enable",
+        },
+        "p-triedToEnable": {
+            "en": "Setting changed. Reload the game.",
+        },
+        "p-triedToDisable": {
+            "en": "Setting changed. Reload the game.",
+        },
+
+        "i-soulBerry": {
+            "en": "Soul Berry",
+            "ja": "ソウルシード",
+            "zh-cn": "豆子"
+            // FIXME: ko
+        },
+        "i-soulBalm": {
+            "en": "Soul Balm",
+            "ja": "ソウルパウダー",
+            "zh-cn": "粉盒"
+            // FIXME: ko
+        },
+        "i-halfElixir": {
+            "en": "Half Elixir",
+            "ja": "エリクシールハーフ",
+            "zh-cn": "半红"
+            // FIXME: ko
+        },
+        "i-fullElixir": {
+            "en": "Full Elixir",
+            "ja": "エリクシール",
+            "zh-cn": "大红"
+            // FIXME: ko
+        },
+
+        "treasure-raid-info": {
+            "en": "{0}: -{1}/{2} {3},<br> -{4} AP",
+            "ja": "{0}: -{1}/{2}{3}、<br> -{4}AP",
+            // FIXME
+        },
+        "raid-info": {
+            "en": "{0}:<br> -{1} AP",
+            "ja": "{0}:<br> -{1}AP",
+            // FIXME
+        },
+
+        "event-gacha-total": {
+            "en": "Total",
+            "ja": "総計",
+            "zh-cn": "合计"
+            // FIXME
+        },
+    };
+}());
+
+// hibino.js
+(function () {
+    window.hibino = {
+        encodeNumber: encodeNumber,
+        decodeNumber: decodeNumber,
+        createUrl: createUrl
+    };
+    var arraySummon = [
+        "none",
+        "attribute",
+        "character",
+        "magna",
+        "unknown",
+        "zeus"
+    ];
+    var arrayType = [
+        "off",
+        "on0",
+        "on1",
+        "on2",
+        "on3",
+        "on6"
+    ];
+    var arraySkill = [
+        "none",
+        "kj1",
+        "kj2",
+        "kj3",
+        "bw3",
+        "mkj1",
+        "mkj2",
+        "mbw3",
+        "bha",
+        "bhah",
+        "unk2",
+        "unk3",
+        "unk3",
+        "kj4",
+        "bw1",
+        "bw2",
+        "mbw1",
+        "mbw2",
+        "mkm1",
+        "km1",
+        "unk1",
+        "ubw1",
+        "ubw2",
+        "ubw3",
+        "ks",
+    ];
+    var arraySkillHTML = [
+        "none",
+        "kj1",
+        "kj2",
+        "kj3",
+        "kj4",
+        "bw1",
+        "bw2",
+        "bw3",
+        "km1",
+        "ks",
+        "mkj1",
+        "mkj2",
+        "mbw1",
+        "mbw2",
+        "mbw3",
+        "mkm1",
+        "bha",
+        "bhah",
+        "unk1",
+        "unk2",
+        "unk3",
+        "ubw1",
+        "ubw2",
+        "ubw3",
+    ];
+    function encodeNumber(digit, value) {
+        if (value < 0)
+            value = 0;
+        var encodeSrting = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        var encodeLength = encodeSrting.length;
+        var ret = new String();
+        var quotient = value;
+        var surplus = 0;
+        for (var i = 0; i < digit; i++) {
+            surplus = quotient % encodeLength;
+            quotient = quotient / encodeLength;
+            ret = encodeSrting.charAt(surplus) + ret;
+        }
+        return ret;
+    }
+    ;
+    function decodeNumber(digit) {
+        var encodeSrting = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        var encodeLength = encodeSrting.length;
+        var value = 0;
+        if (localUrl.length < digit)
+            return 0;
+        for (var i = 0; i < digit; i++) {
+            value *= encodeLength;
+            value += encodeSrting.indexOf(localUrl.substr(i, 1));
+        }
+        localUrl = localUrl.substr(digit);
+        return value;
+    }
+    function createUrl(data) {
+        var urlString = "";
+        urlString += encodeNumber(2, 2000); // flag
+        urlString += encodeNumber(2, 2); // Version
+        urlString += encodeNumber(2, data.rank);
+        urlString += encodeNumber(3, data.job_atk);
+        urlString += encodeNumber(2, data.master_atk);
+        urlString += encodeNumber(2, data.ship_bonus);
+        urlString += encodeNumber(2, data.attribute_bonus);
+        urlString += encodeNumber(2, data.hp_percent);
+        for (var i = 0; i < 4; i++) {
+            var summon_code = 0;
+            var summon_num = 0;
+            summon_code = arraySummon.indexOf(data.summon_type[i]);
+            if (data.summon_percent[0] === null) {
+                summon_num = 0;
+            }
+            else {
+                summon_num = data.summon_percent[i];
+            }
+            urlString += encodeNumber(1, summon_code);
+            urlString += encodeNumber(2, summon_num);
+        }
+        for (var i = 0; i < 10; i++) {
+            urlString += encodeNumber(3, data.weapon_atk[i]);
+            var type_num = arrayType.indexOf(data.type_bonus[i]);
+            var skill_num1 = arraySkill.indexOf(data.skill_type1[i]);
+            var skill_num2 = arraySkill.indexOf(data.skill_type2[i]);
+            var level = data.skill_lv[i];
+            urlString += encodeNumber(1, type_num);
+            urlString += encodeNumber(1, skill_num1);
+            urlString += encodeNumber(1, skill_num2);
+            urlString += encodeNumber(1, level);
+        }
+        for (var i = 0; i < 5; i++)
+            urlString += encodeNumber(3, data.summon_atk[i]);
+        urlString += encodeNumber(2, data.buff_koujin);
+        urlString += encodeNumber(2, data.buff_attribute);
+        urlString += encodeNumber(2, data.buff_multiply);
+        for (var i = 0; i < 10; i++)
+            urlString += encodeNumber(1, data.cosmos[i] ? 1 : 0);
+        return "http://hibin0.web.fc2.com/grbr_atk_calc/atk_calc.html?" + urlString;
+    }
+})()
+
+    // hibino.js over
+
+    (function () {
+        var defaultLanguageGetter = function () {
+            var lang = navigator.language;
+            lang = lang.toLowerCase();
+            if (lang.indexOf("en-") === 0)
+                lang = "en";
+        };
+
+        var languageGetter = defaultLanguageGetter;
+
+        if (this.i18n === undefined) {
+            this.i18n = {};
+        }
+
+        this.i18n.setLanguageGetter = function (getLanguage) {
+            if (!getLanguage) {
+                languageGetter = defaultLanguageGetter;
+            } else {
+                languageGetter = function () {
+                    var result = getLanguage();
+                    if (!result)
+                        result = defaultLanguageGetter();
+                    return result;
+                };
+            }
+        };
+
+        var isDebugMode = false;
+        try {
+            isDebugMode = !('update_url' in chrome.runtime.getManifest());
+        } catch (exc) {
+        }
+
+        this.i18n.getExpand = function (key, expansions) {
+            var result = this.get(key);
+
+            for (var i = 0; i < expansions.length; i++) {
+                var expansion = expansions[i];
+                var toFind = "{" + i + "}", toReplace;
+
+                if (typeof (expansion) === "string") {
+                    if (expansion[0] == "@")
+                        toReplace = this.get(expansion.substr(1));
+                    else
+                        toReplace = expansion;
+                } else if (typeof (expansion) === "number")
+                    toReplace = String(expansion);
+                else
+                    throw new Error("Expected string or number");
+
+                result = result.replace(toFind, toReplace);
+            }
+
+            return result;
+        };
+
+        this.i18n.get = function (value) {
+            var lang = languageGetter();
+            // HACK: We don't want to show garbage for system languages we 
+            //  have no intent to support yet; show them english
+            switch (lang) {
+                // case "ko":
+                case "ja":
+                case "en":
+                case "zh-cn":
+                    break;
+                default:
+                    lang = "en";
+                    break;
+            }
+
+            if (value === "lang")
+                return lang;
+
+            var key = value;
+            while (key) {
+                if (this.hasOwnProperty(key)) {
+                    var dict = this[key];
+
+                    if (typeof (dict) === "string") {
+                        if (key === dict)
+                            break;
+
+                        key = dict;
+                        continue;
+                    }
+
+                    if (dict.hasOwnProperty(lang))
+                        return dict[lang];
+
+                    if (dict.hasOwnProperty("en")) {
+                        if (isDebugMode)
+                            return value + " '" + dict["en"] + "'";
+                        else
+                            return dict["en"];
+                    }
+                }
+
+                key = null;
+            }
+
+            var placeholder = value + " (" + lang + ")";
+            return placeholder;
+        };
+    }());
+
+(function () {
+    this.stampInfo = {
+        1: "vii here goes ikuze",
+        2: "lyria hurray hooray",
+        3: "io awesome gujjobu good job",
+        4: "rackam much obliged thanks yoroshikuna",
+        5: "katalina reporting in", // todo
+        6: "lyria come forth", // todo
+        7: "jita pots potions please pls plz heals healing hirupurizu",
+        8: "gran give up", // todo
+        9: "gran thanks arigatou",
+        10: "jita good work otsukaresama",
+        11: "eugen asarutotaimudaze strike time",
+        12: "rosetta lets do it chansune",
+        13: "io wait up chotto", // todo
+        14: "lyria sorry gomennasai",
+        15: "katalina wait for backup", // todo
+        16: "vii totally crushed yararechimattaze",
+        17: "rackam go wild", // todo
+        18: "walder ive got your back", // todo
+        19: "farrah im on it yarussu",
+        20: "mary gimme loot torehanchodai",
+        21: "gran full arsenal ueponbasuto",
+        22: "jita phalanx farankusu",
+        23: "gran panacea hiruoru",
+        24: "jita laser focus fokasu",
+        25: "jita crack shot bureikuasashin",
+        26: "gran gravity wave gurabiti",
+        27: "jita pandemonium", // todo
+        28: "gran bullseye run kirusutoriku",
+        29: "eugen heave ho soiya",
+        30: "jin heave ho soiya",
+        31: "soriz yo heave ho seiya",
+        32: "legend of rackam",
+        33: "rackam rakamuuuu",
+        34: "rackaaam rakamuuuu",
+        35: "rackaaaaam rakamuuuu",
+        36: "rackaaam rakamuuuu",
+        37: "amazing hesuge",
+        38: "there you have it toiuwakenanjyayo",
+        39: "farrah im on it yarussu",
+        40: "lyria drool gyun",
+        41: "lyria hi ohayou",
+        42: "lyria vii congrats omedetou",
+        43: "katalina stare",
+        44: "lyria ok hai",
+        45: "siero hello there! irasshai" /* sierokarte shortened because of conflict with lyria */,
+        46: "lyria let me help", // todo
+        47: "sir yes sir saiesusa",
+        48: "jita gotta run", // todo
+        49: "rosetta teehee tehepero star kira",
+        50: "rosetta !? shock",
+        51: "sturm ??? confused sweating flustered",
+        52: "drang ouch!", // todo
+        53: "rosamia let me at em feeling madayarerudesho?" /* ok omitted because of conflict with lyria */,
+        55: "vira bam bam plush",
+        56: "vira it's a secret himitsu",
+        57: "ferry whoa fuee huee",
+        58: "pommern nightmare",
+        60: "lyria gong jyan jan",
+        63: "ferry sigh desuyoda",
+        70: "sutera hey! stop it! kunanno",
+        71: "lyria vii viicakes warabimochi",
+        72: "lyria vii go",
+        77: "siero about that", // todo
+        78: "vii nice he",
+        79: "vii zzz sleep",
+        80: "rosetta for you kiss chuu",
+        81: "drang aww... deredere",
+        82: "sturm ...",
+        83: "lyria chomp musha",
+        84: "mary boom bun",
+        85: "achoo hekushu", // todo
+        86: "tada", // todo
+        87: "stan whoops daradara", // todo
+        88: "vii", // todo
+        89: "vii alec oh no... gatagatagatagata",
+        90: "rackam wobble fura",
+        91: "katalina bop bogo",
+        92: "lyria vii drip drop zaaaa",
+        93: "sen nya meow",
+        94: "jita kira star wink",
+        96: "gran nailed it yatta",
+        97: "katalina please tanomu",
+        98: "lyria peace",
+        99: "lyria yummy jyururia",
+        100: "rackam uh bye", // todo
+        101: "io be quiet urusaibakaa",
+        102: "siero stare",
+        103: "siero pffft puu",
+        104: "rowain aw yeah", // todo
+        105: "vira wiggle ufufuniginigi",
+        106: "jin command me", // todo
+        107: "sturm drang poke punipunipunipunipuni",
+        108: "yuel whats up gacha",
+        109: "yuel nope batan",
+        110: "vii heyo zu",
+        111: "charlotta box nooooo waaaaaaaaaa",
+        112: "metera bad slap bakapan",
+        113: "sutera fail", // todo
+        // todo 114
+        115: "katalina ten", // todo
+        116: "seruel no can do", // todo
+        117: "danua",
+        118: "zeta wha-wha-what haa",
+        119: "vaseraga ive said too much", // todo
+        120: "eustace mission accomplished", // todo
+        121: "beatrix why me kusookusoo",
+        122: "bea thump kneel bow dogeza ban",
+    };
+
+    this.kanaToRomajiTable = {
+        あ: 'a',
+        い: 'i',
+        う: 'u',
+        え: 'e',
+        お: 'o',
+        ゔぁ: 'va',
+        ゔぃ: 'vi',
+        ゔ: 'vu',
+        ゔぇ: 've',
+        ゔぉ: 'vo',
+        か: 'ka',
+        き: 'ki',
+        きゃ: 'kya',
+        きぃ: 'kyi',
+        きゅ: 'kyu',
+        く: 'ku',
+        け: 'ke',
+        こ: 'ko',
+        が: 'ga',
+        ぎ: 'gi',
+        ぐ: 'gu',
+        げ: 'ge',
+        ご: 'go',
+        ぎゃ: 'gya',
+        ぎぃ: 'gyi',
+        ぎゅ: 'gyu',
+        ぎぇ: 'gye',
+        ぎょ: 'gyo',
+        さ: 'sa',
+        す: 'su',
+        せ: 'se',
+        そ: 'so',
+        ざ: 'za',
+        ず: 'zu',
+        ぜ: 'ze',
+        ぞ: 'zo',
+        し: 'shi',
+        しゃ: 'sha',
+        しゅ: 'shu',
+        しょ: 'sho',
+        じ: 'ji',
+        じゃ: 'ja',
+        じゅ: 'ju',
+        じょ: 'jo',
+        た: 'ta',
+        ち: 'chi',
+        ちゃ: 'cha',
+        ちゅ: 'chu',
+        ちょ: 'cho',
+        つ: 'tsu',
+        て: 'te',
+        と: 'to',
+        だ: 'da',
+        ぢ: 'di',
+        づ: 'du',
+        で: 'de',
+        ど: 'do',
+        な: 'na',
+        に: 'ni',
+        にゃ: 'nya',
+        にゅ: 'nyu',
+        にょ: 'nyo',
+        ぬ: 'nu',
+        ね: 'ne',
+        の: 'no',
+        は: 'ha',
+        ひ: 'hi',
+        ふ: 'fu',
+        へ: 'he',
+        ほ: 'ho',
+        ひゃ: 'hya',
+        ひゅ: 'hyu',
+        ひょ: 'hyo',
+        ふぁ: 'fa',
+        ふぃ: 'fi',
+        ふぇ: 'fe',
+        ふぉ: 'fo',
+        ば: 'ba',
+        び: 'bi',
+        ぶ: 'bu',
+        べ: 'be',
+        ぼ: 'bo',
+        びゃ: 'bya',
+        びゅ: 'byu',
+        びょ: 'byo',
+        ぱ: 'pa',
+        ぴ: 'pi',
+        ぷ: 'pu',
+        ぺ: 'pe',
+        ぽ: 'po',
+        ぴゃ: 'pya',
+        ぴゅ: 'pyu',
+        ぴょ: 'pyo',
+        ま: 'ma',
+        み: 'mi',
+        む: 'mu',
+        め: 'me',
+        も: 'mo',
+        みゃ: 'mya',
+        みゅ: 'myu',
+        みょ: 'myo',
+        や: 'ya',
+        ゆ: 'yu',
+        よ: 'yo',
+        ら: 'ra',
+        り: 'ri',
+        る: 'ru',
+        れ: 're',
+        ろ: 'ro',
+        りゃ: 'rya',
+        りゅ: 'ryu',
+        りょ: 'ryo',
+        わ: 'wa',
+        を: 'wo',
+        ん: 'n',
+        ゐ: 'wi',
+        ゑ: 'we',
+        きぇ: 'kye',
+        きょ: 'kyo',
+        じぃ: 'jyi',
+        じぇ: 'jye',
+        ちぃ: 'cyi',
+        ちぇ: 'che',
+        ひぃ: 'hyi',
+        ひぇ: 'hye',
+        びぃ: 'byi',
+        びぇ: 'bye',
+        ぴぃ: 'pyi',
+        ぴぇ: 'pye',
+        みぇ: 'mye',
+        みぃ: 'myi',
+        りぃ: 'ryi',
+        りぇ: 'rye',
+        にぃ: 'nyi',
+        にぇ: 'nye',
+        しぃ: 'syi',
+        しぇ: 'she',
+        いぇ: 'ye',
+        うぁ: 'wha',
+        うぉ: 'who',
+        うぃ: 'wi',
+        うぇ: 'we',
+        ゔゃ: 'vya',
+        ゔゅ: 'vyu',
+        ゔょ: 'vyo',
+        すぁ: 'swa',
+        すぃ: 'swi',
+        すぅ: 'swu',
+        すぇ: 'swe',
+        すぉ: 'swo',
+        くゃ: 'qya',
+        くゅ: 'qyu',
+        くょ: 'qyo',
+        くぁ: 'qwa',
+        くぃ: 'qwi',
+        くぅ: 'qwu',
+        くぇ: 'qwe',
+        くぉ: 'qwo',
+        ぐぁ: 'gwa',
+        ぐぃ: 'gwi',
+        ぐぅ: 'gwu',
+        ぐぇ: 'gwe',
+        ぐぉ: 'gwo',
+        つぁ: 'tsa',
+        つぃ: 'tsi',
+        つぇ: 'tse',
+        つぉ: 'tso',
+        てゃ: 'tha',
+        てぃ: 'thi',
+        てゅ: 'thu',
+        てぇ: 'the',
+        てょ: 'tho',
+        とぁ: 'twa',
+        とぃ: 'twi',
+        とぅ: 'twu',
+        とぇ: 'twe',
+        とぉ: 'two',
+        ぢゃ: 'dya',
+        ぢぃ: 'dyi',
+        ぢゅ: 'dyu',
+        ぢぇ: 'dye',
+        ぢょ: 'dyo',
+        でゃ: 'dha',
+        でぃ: 'dhi',
+        でゅ: 'dhu',
+        でぇ: 'dhe',
+        でょ: 'dho',
+        どぁ: 'dwa',
+        どぃ: 'dwi',
+        どぅ: 'dwu',
+        どぇ: 'dwe',
+        どぉ: 'dwo',
+        ふぅ: 'fwu',
+        ふゃ: 'fya',
+        ふゅ: 'fyu',
+        ふょ: 'fyo',
+        ぁ: 'a',
+        ぃ: 'i',
+        ぇ: 'e',
+        ぅ: 'u',
+        ぉ: 'o',
+        ゃ: 'ya',
+        ゅ: 'yu',
+        ょ: 'yo',
+        っ: '',
+        ゕ: 'ka',
+        ゖ: 'ka',
+        ゎ: 'wa',
+        '　': ' ',
+        んあ: 'n\'a',
+        んい: 'n\'i',
+        んう: 'n\'u',
+        んえ: 'n\'e',
+        んお: 'n\'o',
+        んや: 'n\'ya',
+        んゆ: 'n\'yu',
+        んよ: 'n\'yo',
+    };
+
+}());
+
+/**
+ * @preserve A JavaScript implementation of the SHA family of hashes, as
+ * defined in FIPS PUB 180-4 and FIPS PUB 202, as well as the corresponding
+ * HMAC implementation as defined in FIPS PUB 198a
+ *
+ * Copyright Brian Turek 2008-2016
+ * Distributed under the BSD License
+ * See http://caligatio.github.com/jsSHA/ for more information
+ *
+ * Several functions taken from Paul Johnston
+ */
+
+/*jslint
+	bitwise: true, multivar: true, for: true, this: true, sub: true, esversion: 3
+*/
+
+/**
+ * SUPPORTED_ALGS is the stub for a compile flag that will cause pruning of
+ * functions that are not needed when a limited number of SHA families are
+ * selected
+ *
+ * @define {number} ORed value of SHA variants to be supported
+ *   1 = SHA-1, 2 = SHA-224/SHA-256, 4 = SHA-384/SHA-512, 8 = SHA3
+ */
+
+var _loadShaScript = function (global) {
+    "use strict";
+
+    var SUPPORTED_ALGS = 8 | 4 | 2 | 1;
+
+    /* Globals */
+    var TWO_PWR_32 = (1 << 16) * (1 << 16);
+
+	/**
+	 * Int_64 is a object for 2 32-bit numbers emulating a 64-bit number
+	 *
+	 * @private
+	 * @constructor
+	 * @this {Int_64}
+	 * @param {number} msint_32 The most significant 32-bits of a 64-bit number
+	 * @param {number} lsint_32 The least significant 32-bits of a 64-bit number
+	 */
+    function Int_64(msint_32, lsint_32) {
+        this.highOrder = msint_32;
+        this.lowOrder = lsint_32;
+    }
+
+	/**
+	 * Convert a string to an array of big-endian words
+	 *
+	 * There is a known bug with an odd number of existing bytes and using a
+	 * UTF-16 encoding.  However, this function is used such that the existing
+	 * bytes are always a result of a previous UTF-16 str2binb call and
+	 * therefore there should never be an odd number of existing bytes
+	 *
+	 * @private
+	 * @param {string} str String to be converted to binary representation
+	 * @param {string} utfType The Unicode type, UTF8 or UTF16BE, UTF16LE, to
+	 *   use to encode the source string
+	 * @param {Array<number>} existingBin A packed int array of bytes to
+	 *   append the results to
+	 * @param {number} existingBinLen The number of bits in the existingBin
+	 *   array
+	 * @return {{value : Array<number>, binLen : number}} Hash list where
+	 *   "value" contains the output number array and "binLen" is the binary
+	 *   length of "value"
+	 */
+    function str2binb(str, utfType, existingBin, existingBinLen) {
+        var bin = [], codePnt, binArr = [], byteCnt = 0, i, j, existingByteLen,
+            intOffset, byteOffset;
+
+        bin = existingBin || [0];
+        existingBinLen = existingBinLen || 0;
+        existingByteLen = existingBinLen >>> 3;
+
+        if ("UTF8" === utfType) {
+            for (i = 0; i < str.length; i += 1) {
+                codePnt = str.charCodeAt(i);
+                binArr = [];
+
+                if (0x80 > codePnt) {
+                    binArr.push(codePnt);
+                }
+                else if (0x800 > codePnt) {
+                    binArr.push(0xC0 | (codePnt >>> 6));
+                    binArr.push(0x80 | (codePnt & 0x3F));
+                }
+                else if ((0xd800 > codePnt) || (0xe000 <= codePnt)) {
+                    binArr.push(
+                        0xe0 | (codePnt >>> 12),
+                        0x80 | ((codePnt >>> 6) & 0x3f),
+                        0x80 | (codePnt & 0x3f)
+                    );
+                }
+                else {
+                    i += 1;
+                    codePnt = 0x10000 + (((codePnt & 0x3ff) << 10) | (str.charCodeAt(i) & 0x3ff));
+                    binArr.push(
+                        0xf0 | (codePnt >>> 18),
+                        0x80 | ((codePnt >>> 12) & 0x3f),
+                        0x80 | ((codePnt >>> 6) & 0x3f),
+                        0x80 | (codePnt & 0x3f)
+                    );
+                }
+
+                for (j = 0; j < binArr.length; j += 1) {
+                    byteOffset = byteCnt + existingByteLen;
+                    intOffset = byteOffset >>> 2;
+                    while (bin.length <= intOffset) {
+                        bin.push(0);
+                    }
+                    /* Known bug kicks in here */
+                    bin[intOffset] |= binArr[j] << (8 * (3 - (byteOffset % 4)));
+                    byteCnt += 1;
+                }
+            }
+        }
+        else if (("UTF16BE" === utfType) || "UTF16LE" === utfType) {
+            for (i = 0; i < str.length; i += 1) {
+                codePnt = str.charCodeAt(i);
+                /* Internally strings are UTF-16BE so only change if UTF-16LE */
+                if ("UTF16LE" === utfType) {
+                    j = codePnt & 0xFF;
+                    codePnt = (j << 8) | (codePnt >>> 8);
+                }
+
+                byteOffset = byteCnt + existingByteLen;
+                intOffset = byteOffset >>> 2;
+                while (bin.length <= intOffset) {
+                    bin.push(0);
+                }
+                bin[intOffset] |= codePnt << (8 * (2 - (byteOffset % 4)));
+                byteCnt += 2;
+            }
+        }
+        return { "value": bin, "binLen": byteCnt * 8 + existingBinLen };
+    }
+
+	/**
+	 * Convert a hex string to an array of big-endian words
+	 *
+	 * @private
+	 * @param {string} str String to be converted to binary representation
+	 * @param {Array<number>} existingBin A packed int array of bytes to
+	 *   append the results to
+	 * @param {number} existingBinLen The number of bits in the existingBin
+	 *   array
+	 * @return {{value : Array<number>, binLen : number}} Hash list where
+	 *   "value" contains the output number array and "binLen" is the binary
+	 *   length of "value"
+	 */
+    function hex2binb(str, existingBin, existingBinLen) {
+        var bin, length = str.length, i, num, intOffset, byteOffset,
+            existingByteLen;
+
+        bin = existingBin || [0];
+        existingBinLen = existingBinLen || 0;
+        existingByteLen = existingBinLen >>> 3;
+
+        if (0 !== (length % 2)) {
+            throw new Error("String of HEX type must be in byte increments");
+        }
+
+        for (i = 0; i < length; i += 2) {
+            num = parseInt(str.substr(i, 2), 16);
+            if (!isNaN(num)) {
+                byteOffset = (i >>> 1) + existingByteLen;
+                intOffset = byteOffset >>> 2;
+                while (bin.length <= intOffset) {
+                    bin.push(0);
+                }
+                bin[intOffset] |= num << 8 * (3 - (byteOffset % 4));
+            }
+            else {
+                throw new Error("String of HEX type contains invalid characters");
+            }
+        }
+
+        return { "value": bin, "binLen": length * 4 + existingBinLen };
+    }
+
+	/**
+	 * Convert a string of raw bytes to an array of big-endian words
+	 *
+	 * @private
+	 * @param {string} str String of raw bytes to be converted to binary representation
+	 * @param {Array<number>} existingBin A packed int array of bytes to
+	 *   append the results to
+	 * @param {number} existingBinLen The number of bits in the existingBin
+	 *   array
+	 * @return {{value : Array<number>, binLen : number}} Hash list where
+	 *   "value" contains the output number array and "binLen" is the binary
+	 *   length of "value"
+	 */
+    function bytes2binb(str, existingBin, existingBinLen) {
+        var bin = [], codePnt, i, existingByteLen, intOffset,
+            byteOffset;
+
+        bin = existingBin || [0];
+        existingBinLen = existingBinLen || 0;
+        existingByteLen = existingBinLen >>> 3;
+
+        for (i = 0; i < str.length; i += 1) {
+            codePnt = str.charCodeAt(i);
+
+            byteOffset = i + existingByteLen;
+            intOffset = byteOffset >>> 2;
+            if (bin.length <= intOffset) {
+                bin.push(0);
+            }
+            bin[intOffset] |= codePnt << 8 * (3 - (byteOffset % 4));
+        }
+
+        return { "value": bin, "binLen": str.length * 8 + existingBinLen };
+    }
+
+	/**
+	 * Convert a base-64 string to an array of big-endian words
+	 *
+	 * @private
+	 * @param {string} str String to be converted to binary representation
+	 * @param {Array<number>} existingBin A packed int array of bytes to
+	 *   append the results to
+	 * @param {number} existingBinLen The number of bits in the existingBin
+	 *   array
+	 * @return {{value : Array<number>, binLen : number}} Hash list where
+	 *   "value" contains the output number array and "binLen" is the binary
+	 *   length of "value"
+	 */
+    function b642binb(str, existingBin, existingBinLen) {
+        var bin = [], byteCnt = 0, index, i, j, tmpInt, strPart, firstEqual,
+            b64Tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+            existingByteLen, intOffset, byteOffset;
+
+        bin = existingBin || [0];
+        existingBinLen = existingBinLen || 0;
+        existingByteLen = existingBinLen >>> 3;
+
+        if (-1 === str.search(/^[a-zA-Z0-9=+\/]+$/)) {
+            throw new Error("Invalid character in base-64 string");
+        }
+        firstEqual = str.indexOf("=");
+        str = str.replace(/\=/g, "");
+        if ((-1 !== firstEqual) && (firstEqual < str.length)) {
+            throw new Error("Invalid '=' found in base-64 string");
+        }
+
+        for (i = 0; i < str.length; i += 4) {
+            strPart = str.substr(i, 4);
+            tmpInt = 0;
+
+            for (j = 0; j < strPart.length; j += 1) {
+                index = b64Tab.indexOf(strPart[j]);
+                tmpInt |= index << (18 - (6 * j));
+            }
+
+            for (j = 0; j < strPart.length - 1; j += 1) {
+                byteOffset = byteCnt + existingByteLen;
+                intOffset = byteOffset >>> 2;
+                while (bin.length <= intOffset) {
+                    bin.push(0);
+                }
+                bin[intOffset] |= ((tmpInt >>> (16 - (j * 8))) & 0xFF) <<
+                    8 * (3 - (byteOffset % 4));
+                byteCnt += 1;
+            }
+        }
+
+        return { "value": bin, "binLen": byteCnt * 8 + existingBinLen };
+    }
+
+	/**
+	 * Convert an ArrayBuffer to an array of big-endian words
+	 *
+	 * @private
+	 * @param {ArrayBuffer} arr ArrayBuffer to be converted to binary
+	 *   representation
+	 * @param {Array<number>} existingBin A packed int array of bytes to
+	 *   append the results to
+	 * @param {number} existingBinLen The number of bits in the existingBin
+	 *   array
+	 * @return {{value : Array<number>, binLen : number}} Hash list where
+	 *   "value" contains the output number array and "binLen" is the binary
+	 *   length of "value"
+	 */
+    function arraybuffer2binb(arr, existingBin, existingBinLen) {
+        var bin = [], i, existingByteLen, intOffset, byteOffset;
+
+        bin = existingBin || [0];
+        existingBinLen = existingBinLen || 0;
+        existingByteLen = existingBinLen >>> 3;
+
+        for (i = 0; i < arr.byteLength; i += 1) {
+            byteOffset = i + existingByteLen;
+            intOffset = byteOffset >>> 2;
+            if (bin.length <= intOffset) {
+                bin.push(0);
+            }
+            bin[intOffset] |= arr[i] << 8 * (3 - (byteOffset % 4));
+        }
+
+        return { "value": bin, "binLen": arr.byteLength * 8 + existingBinLen };
+    }
+
+	/**
+	 * Convert an array of big-endian words to a hex string.
+	 *
+	 * @private
+	 * @param {Array<number>} binarray Array of integers to be converted to
+	 *   hexidecimal representation
+	 * @param {number} outputLength Length of output in bits
+	 * @param {{outputUpper : boolean, b64Pad : string}} formatOpts Hash list
+	 *   containing validated output formatting options
+	 * @return {string} Hexidecimal representation of the parameter in string
+	 *   form
+	 */
+    function binb2hex(binarray, outputLength, formatOpts) {
+        var hex_tab = "0123456789abcdef", str = "",
+            length = outputLength / 8, i, srcByte;
+
+        for (i = 0; i < length; i += 1) {
+            /* The below is more than a byte but it gets taken care of later */
+            srcByte = binarray[i >>> 2] >>> ((3 - (i % 4)) * 8);
+            str += hex_tab.charAt((srcByte >>> 4) & 0xF) +
+                hex_tab.charAt(srcByte & 0xF);
+        }
+
+        return (formatOpts["outputUpper"]) ? str.toUpperCase() : str;
+    }
+
+	/**
+	 * Convert an array of big-endian words to a base-64 string
+	 *
+	 * @private
+	 * @param {Array<number>} binarray Array of integers to be converted to
+	 *   base-64 representation
+	 * @param {number} outputLength Length of output in bits
+	 * @param {{outputUpper : boolean, b64Pad : string}} formatOpts Hash list
+	 *   containing validated output formatting options
+	 * @return {string} Base-64 encoded representation of the parameter in
+	 *   string form
+	 */
+    function binb2b64(binarray, outputLength, formatOpts) {
+        var str = "", length = outputLength / 8, i, j, triplet, int1, int2,
+            b64Tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+        for (i = 0; i < length; i += 3) {
+            int1 = ((i + 1) < length) ? binarray[(i + 1) >>> 2] : 0;
+            int2 = ((i + 2) < length) ? binarray[(i + 2) >>> 2] : 0;
+            triplet = (((binarray[i >>> 2] >>> 8 * (3 - i % 4)) & 0xFF) << 16) |
+                (((int1 >>> 8 * (3 - (i + 1) % 4)) & 0xFF) << 8) |
+                ((int2 >>> 8 * (3 - (i + 2) % 4)) & 0xFF);
+            for (j = 0; j < 4; j += 1) {
+                if (i * 8 + j * 6 <= outputLength) {
+                    str += b64Tab.charAt((triplet >>> 6 * (3 - j)) & 0x3F);
+                }
+                else {
+                    str += formatOpts["b64Pad"];
+                }
+            }
+        }
+        return str;
+    }
+
+	/**
+	 * Convert an array of big-endian words to raw bytes string
+	 *
+	 * @private
+	 * @param {Array<number>} binarray Array of integers to be converted to
+	 *   a raw bytes string representation
+	 * @param {number} outputLength Length of output in bits
+	 * @return {string} Raw bytes representation of the parameter in string
+	 *   form
+	 */
+    function binb2bytes(binarray, outputLength) {
+        var str = "", length = outputLength / 8, i, srcByte;
+
+        for (i = 0; i < length; i += 1) {
+            srcByte = (binarray[i >>> 2] >>> ((3 - (i % 4)) * 8)) & 0xFF;
+            str += String.fromCharCode(srcByte);
+        }
+
+        return str;
+    }
+
+	/**
+	 * Convert an array of big-endian words to an ArrayBuffer
+	 *
+	 * @private
+	 * @param {Array<number>} binarray Array of integers to be converted to
+	 *   an ArrayBuffer
+	 * @param {number} outputLength Length of output in bits
+	 * @return {ArrayBuffer} Raw bytes representation of the parameter in an
+	 *   ArrayBuffer
+	 */
+    function binb2arraybuffer(binarray, outputLength) {
+        var length = outputLength / 8, i, retVal = new ArrayBuffer(length);
+
+        for (i = 0; i < length; i += 1) {
+            retVal[i] = (binarray[i >>> 2] >>> ((3 - (i % 4)) * 8)) & 0xFF;
+        }
+
+        return retVal;
+    }
+
+	/**
+	 * Validate hash list containing output formatting options, ensuring
+	 * presence of every option or adding the default value
+	 *
+	 * @private
+	 * @param {{outputUpper : (boolean|undefined), b64Pad : (string|undefined),
+	 *   shakeLen : (number|undefined)}=} options Hash list of output formatting options
+	 * @return {{outputUpper : boolean, b64Pad : string, shakeLen : number}} Validated
+	 *   hash list containing output formatting options
+	 */
+    function getOutputOpts(options) {
+        var retVal = { "outputUpper": false, "b64Pad": "=", "shakeLen": -1 },
+            outputOptions;
+        outputOptions = options || {};
+
+        retVal["outputUpper"] = outputOptions["outputUpper"] || false;
+
+        if (true === outputOptions.hasOwnProperty("b64Pad")) {
+            retVal["b64Pad"] = outputOptions["b64Pad"];
+        }
+
+        if ((true === outputOptions.hasOwnProperty("shakeLen")) && ((8 & SUPPORTED_ALGS) !== 0)) {
+            if (outputOptions["shakeLen"] % 8 !== 0) {
+                throw new Error("shakeLen must be a multiple of 8");
+            }
+            retVal["shakeLen"] = outputOptions["shakeLen"];
+        }
+
+        if ("boolean" !== typeof (retVal["outputUpper"])) {
+            throw new Error("Invalid outputUpper formatting option");
+        }
+
+        if ("string" !== typeof (retVal["b64Pad"])) {
+            throw new Error("Invalid b64Pad formatting option");
+        }
+
+        return retVal;
+    }
+
+	/**
+	 * Function that takes an input format and UTF encoding and returns the
+	 * appropriate function used to convert the input.
+	 *
+	 * @private
+	 * @param {string} format The format of the string to be converted
+	 * @param {string} utfType The string encoding to use (UTF8, UTF16BE,
+	 *	UTF16LE)
+	 * @return {function(string, Array<number>=, number=): {value :
+	 *   Array<number>, binLen : number}} Function that will convert an input
+	 *   string to a packed int array
+	 */
+    function getStrConverter(format, utfType) {
+        var retVal;
+
+        /* Validate encoding */
+        switch (utfType) {
+            case "UTF8":
+            /* Fallthrough */
+            case "UTF16BE":
+            /* Fallthrough */
+            case "UTF16LE":
+                /* Fallthrough */
+                break;
+            default:
+                throw new Error("encoding must be UTF8, UTF16BE, or UTF16LE");
+        }
+
+        /* Map inputFormat to the appropriate converter */
+        switch (format) {
+            case "HEX":
+                retVal = hex2binb;
+                break;
+            case "TEXT":
+                retVal = function (str, existingBin, existingBinLen) {
+                    return str2binb(str, utfType, existingBin, existingBinLen);
+                };
+                break;
+            case "B64":
+                retVal = b642binb;
+                break;
+            case "BYTES":
+                retVal = bytes2binb;
+                break;
+            case "ARRAYBUFFER":
+                try {
+                    retVal = new ArrayBuffer(0);
+                } catch (ignore) {
+                    throw new Error("ARRAYBUFFER not supported by this environment");
+                }
+                retVal = arraybuffer2binb;
+                break;
+            default:
+                throw new Error("format must be HEX, TEXT, B64, BYTES, or ARRAYBUFFER");
+        }
+
+        return retVal;
+    }
+
+	/**
+	 * The 32-bit implementation of circular rotate left
+	 *
+	 * @private
+	 * @param {number} x The 32-bit integer argument
+	 * @param {number} n The number of bits to shift
+	 * @return {number} The x shifted circularly by n bits
+	 */
+    function rotl_32(x, n) {
+        return (x << n) | (x >>> (32 - n));
+    }
+
+    function rotl_64(x, n) {
+        if (n > 32) {
+            n = n - 32;
+            return new Int_64(
+                x.lowOrder << n | x.highOrder >>> (32 - n),
+                x.highOrder << n | x.lowOrder >>> (32 - n)
+            );
+        }
+        else if (0 !== n) {
+            return new Int_64(
+                x.highOrder << n | x.lowOrder >>> (32 - n),
+                x.lowOrder << n | x.highOrder >>> (32 - n)
+            );
+        }
+        else {
+            return x;
+        }
+    }
+
+	/**
+	 * The 32-bit implementation of circular rotate right
+	 *
+	 * @private
+	 * @param {number} x The 32-bit integer argument
+	 * @param {number} n The number of bits to shift
+	 * @return {number} The x shifted circularly by n bits
+	 */
+    function rotr_32(x, n) {
+        return (x >>> n) | (x << (32 - n));
+    }
+
+	/**
+	 * The 64-bit implementation of circular rotate right
+	 *
+	 * @private
+	 * @param {Int_64} x The 64-bit integer argument
+	 * @param {number} n The number of bits to shift
+	 * @return {Int_64} The x shifted circularly by n bits
+	 */
+    function rotr_64(x, n) {
+        var retVal = null, tmp = new Int_64(x.highOrder, x.lowOrder);
+
+        if (32 >= n) {
+            retVal = new Int_64(
+                (tmp.highOrder >>> n) | ((tmp.lowOrder << (32 - n)) & 0xFFFFFFFF),
+                (tmp.lowOrder >>> n) | ((tmp.highOrder << (32 - n)) & 0xFFFFFFFF)
+            );
+        }
+        else {
+            retVal = new Int_64(
+                (tmp.lowOrder >>> (n - 32)) | ((tmp.highOrder << (64 - n)) & 0xFFFFFFFF),
+                (tmp.highOrder >>> (n - 32)) | ((tmp.lowOrder << (64 - n)) & 0xFFFFFFFF)
+            );
+        }
+
+        return retVal;
+    }
+
+	/**
+	 * The 32-bit implementation of shift right
+	 *
+	 * @private
+	 * @param {number} x The 32-bit integer argument
+	 * @param {number} n The number of bits to shift
+	 * @return {number} The x shifted by n bits
+	 */
+    function shr_32(x, n) {
+        return x >>> n;
+    }
+
+	/**
+	 * The 64-bit implementation of shift right
+	 *
+	 * @private
+	 * @param {Int_64} x The 64-bit integer argument
+	 * @param {number} n The number of bits to shift
+	 * @return {Int_64} The x shifted by n bits
+	 */
+    function shr_64(x, n) {
+        var retVal = null;
+
+        if (32 >= n) {
+            retVal = new Int_64(
+                x.highOrder >>> n,
+                x.lowOrder >>> n | ((x.highOrder << (32 - n)) & 0xFFFFFFFF)
+            );
+        }
+        else {
+            retVal = new Int_64(
+                0,
+                x.highOrder >>> (n - 32)
+            );
+        }
+
+        return retVal;
+    }
+
+	/**
+	 * The 32-bit implementation of the NIST specified Parity function
+	 *
+	 * @private
+	 * @param {number} x The first 32-bit integer argument
+	 * @param {number} y The second 32-bit integer argument
+	 * @param {number} z The third 32-bit integer argument
+	 * @return {number} The NIST specified output of the function
+	 */
+    function parity_32(x, y, z) {
+        return x ^ y ^ z;
+    }
+
+	/**
+	 * The 32-bit implementation of the NIST specified Ch function
+	 *
+	 * @private
+	 * @param {number} x The first 32-bit integer argument
+	 * @param {number} y The second 32-bit integer argument
+	 * @param {number} z The third 32-bit integer argument
+	 * @return {number} The NIST specified output of the function
+	 */
+    function ch_32(x, y, z) {
+        return (x & y) ^ (~x & z);
+    }
+
+	/**
+	 * The 64-bit implementation of the NIST specified Ch function
+	 *
+	 * @private
+	 * @param {Int_64} x The first 64-bit integer argument
+	 * @param {Int_64} y The second 64-bit integer argument
+	 * @param {Int_64} z The third 64-bit integer argument
+	 * @return {Int_64} The NIST specified output of the function
+	 */
+    function ch_64(x, y, z) {
+        return new Int_64(
+            (x.highOrder & y.highOrder) ^ (~x.highOrder & z.highOrder),
+            (x.lowOrder & y.lowOrder) ^ (~x.lowOrder & z.lowOrder)
+        );
+    }
+
+	/**
+	 * The 32-bit implementation of the NIST specified Maj function
+	 *
+	 * @private
+	 * @param {number} x The first 32-bit integer argument
+	 * @param {number} y The second 32-bit integer argument
+	 * @param {number} z The third 32-bit integer argument
+	 * @return {number} The NIST specified output of the function
+	 */
+    function maj_32(x, y, z) {
+        return (x & y) ^ (x & z) ^ (y & z);
+    }
+
+	/**
+	 * The 64-bit implementation of the NIST specified Maj function
+	 *
+	 * @private
+	 * @param {Int_64} x The first 64-bit integer argument
+	 * @param {Int_64} y The second 64-bit integer argument
+	 * @param {Int_64} z The third 64-bit integer argument
+	 * @return {Int_64} The NIST specified output of the function
+	 */
+    function maj_64(x, y, z) {
+        return new Int_64(
+            (x.highOrder & y.highOrder) ^
+            (x.highOrder & z.highOrder) ^
+            (y.highOrder & z.highOrder),
+            (x.lowOrder & y.lowOrder) ^
+            (x.lowOrder & z.lowOrder) ^
+            (y.lowOrder & z.lowOrder)
+        );
+    }
+
+	/**
+	 * The 32-bit implementation of the NIST specified Sigma0 function
+	 *
+	 * @private
+	 * @param {number} x The 32-bit integer argument
+	 * @return {number} The NIST specified output of the function
+	 */
+    function sigma0_32(x) {
+        return rotr_32(x, 2) ^ rotr_32(x, 13) ^ rotr_32(x, 22);
+    }
+
+	/**
+	 * The 64-bit implementation of the NIST specified Sigma0 function
+	 *
+	 * @private
+	 * @param {Int_64} x The 64-bit integer argument
+	 * @return {Int_64} The NIST specified output of the function
+	 */
+    function sigma0_64(x) {
+        var rotr28 = rotr_64(x, 28), rotr34 = rotr_64(x, 34),
+            rotr39 = rotr_64(x, 39);
+
+        return new Int_64(
+            rotr28.highOrder ^ rotr34.highOrder ^ rotr39.highOrder,
+            rotr28.lowOrder ^ rotr34.lowOrder ^ rotr39.lowOrder);
+    }
+
+	/**
+	 * The 32-bit implementation of the NIST specified Sigma1 function
+	 *
+	 * @private
+	 * @param {number} x The 32-bit integer argument
+	 * @return {number} The NIST specified output of the function
+	 */
+    function sigma1_32(x) {
+        return rotr_32(x, 6) ^ rotr_32(x, 11) ^ rotr_32(x, 25);
+    }
+
+	/**
+	 * The 64-bit implementation of the NIST specified Sigma1 function
+	 *
+	 * @private
+	 * @param {Int_64} x The 64-bit integer argument
+	 * @return {Int_64} The NIST specified output of the function
+	 */
+    function sigma1_64(x) {
+        var rotr14 = rotr_64(x, 14), rotr18 = rotr_64(x, 18),
+            rotr41 = rotr_64(x, 41);
+
+        return new Int_64(
+            rotr14.highOrder ^ rotr18.highOrder ^ rotr41.highOrder,
+            rotr14.lowOrder ^ rotr18.lowOrder ^ rotr41.lowOrder);
+    }
+
+	/**
+	 * The 32-bit implementation of the NIST specified Gamma0 function
+	 *
+	 * @private
+	 * @param {number} x The 32-bit integer argument
+	 * @return {number} The NIST specified output of the function
+	 */
+    function gamma0_32(x) {
+        return rotr_32(x, 7) ^ rotr_32(x, 18) ^ shr_32(x, 3);
+    }
+
+	/**
+	 * The 64-bit implementation of the NIST specified Gamma0 function
+	 *
+	 * @private
+	 * @param {Int_64} x The 64-bit integer argument
+	 * @return {Int_64} The NIST specified output of the function
+	 */
+    function gamma0_64(x) {
+        var rotr1 = rotr_64(x, 1), rotr8 = rotr_64(x, 8), shr7 = shr_64(x, 7);
+
+        return new Int_64(
+            rotr1.highOrder ^ rotr8.highOrder ^ shr7.highOrder,
+            rotr1.lowOrder ^ rotr8.lowOrder ^ shr7.lowOrder
+        );
+    }
+
+	/**
+	 * The 32-bit implementation of the NIST specified Gamma1 function
+	 *
+	 * @private
+	 * @param {number} x The 32-bit integer argument
+	 * @return {number} The NIST specified output of the function
+	 */
+    function gamma1_32(x) {
+        return rotr_32(x, 17) ^ rotr_32(x, 19) ^ shr_32(x, 10);
+    }
+
+	/**
+	 * The 64-bit implementation of the NIST specified Gamma1 function
+	 *
+	 * @private
+	 * @param {Int_64} x The 64-bit integer argument
+	 * @return {Int_64} The NIST specified output of the function
+	 */
+    function gamma1_64(x) {
+        var rotr19 = rotr_64(x, 19), rotr61 = rotr_64(x, 61),
+            shr6 = shr_64(x, 6);
+
+        return new Int_64(
+            rotr19.highOrder ^ rotr61.highOrder ^ shr6.highOrder,
+            rotr19.lowOrder ^ rotr61.lowOrder ^ shr6.lowOrder
+        );
+    }
+
+	/**
+	 * Add two 32-bit integers, wrapping at 2^32. This uses 16-bit operations
+	 * internally to work around bugs in some JS interpreters.
+	 *
+	 * @private
+	 * @param {number} a The first 32-bit integer argument to be added
+	 * @param {number} b The second 32-bit integer argument to be added
+	 * @return {number} The sum of a + b
+	 */
+    function safeAdd_32_2(a, b) {
+        var lsw = (a & 0xFFFF) + (b & 0xFFFF),
+            msw = (a >>> 16) + (b >>> 16) + (lsw >>> 16);
+
+        return ((msw & 0xFFFF) << 16) | (lsw & 0xFFFF);
+    }
+
+	/**
+	 * Add four 32-bit integers, wrapping at 2^32. This uses 16-bit operations
+	 * internally to work around bugs in some JS interpreters.
+	 *
+	 * @private
+	 * @param {number} a The first 32-bit integer argument to be added
+	 * @param {number} b The second 32-bit integer argument to be added
+	 * @param {number} c The third 32-bit integer argument to be added
+	 * @param {number} d The fourth 32-bit integer argument to be added
+	 * @return {number} The sum of a + b + c + d
+	 */
+    function safeAdd_32_4(a, b, c, d) {
+        var lsw = (a & 0xFFFF) + (b & 0xFFFF) + (c & 0xFFFF) + (d & 0xFFFF),
+            msw = (a >>> 16) + (b >>> 16) + (c >>> 16) + (d >>> 16) +
+                (lsw >>> 16);
+
+        return ((msw & 0xFFFF) << 16) | (lsw & 0xFFFF);
+    }
+
+	/**
+	 * Add five 32-bit integers, wrapping at 2^32. This uses 16-bit operations
+	 * internally to work around bugs in some JS interpreters.
+	 *
+	 * @private
+	 * @param {number} a The first 32-bit integer argument to be added
+	 * @param {number} b The second 32-bit integer argument to be added
+	 * @param {number} c The third 32-bit integer argument to be added
+	 * @param {number} d The fourth 32-bit integer argument to be added
+	 * @param {number} e The fifth 32-bit integer argument to be added
+	 * @return {number} The sum of a + b + c + d + e
+	 */
+    function safeAdd_32_5(a, b, c, d, e) {
+        var lsw = (a & 0xFFFF) + (b & 0xFFFF) + (c & 0xFFFF) + (d & 0xFFFF) +
+            (e & 0xFFFF),
+            msw = (a >>> 16) + (b >>> 16) + (c >>> 16) + (d >>> 16) +
+                (e >>> 16) + (lsw >>> 16);
+
+        return ((msw & 0xFFFF) << 16) | (lsw & 0xFFFF);
+    }
+
+	/**
+	 * Add two 64-bit integers, wrapping at 2^64. This uses 16-bit operations
+	 * internally to work around bugs in some JS interpreters.
+	 *
+	 * @private
+	 * @param {Int_64} x The first 64-bit integer argument to be added
+	 * @param {Int_64} y The second 64-bit integer argument to be added
+	 * @return {Int_64} The sum of x + y
+	 */
+    function safeAdd_64_2(x, y) {
+        var lsw, msw, lowOrder, highOrder;
+
+        lsw = (x.lowOrder & 0xFFFF) + (y.lowOrder & 0xFFFF);
+        msw = (x.lowOrder >>> 16) + (y.lowOrder >>> 16) + (lsw >>> 16);
+        lowOrder = ((msw & 0xFFFF) << 16) | (lsw & 0xFFFF);
+
+        lsw = (x.highOrder & 0xFFFF) + (y.highOrder & 0xFFFF) + (msw >>> 16);
+        msw = (x.highOrder >>> 16) + (y.highOrder >>> 16) + (lsw >>> 16);
+        highOrder = ((msw & 0xFFFF) << 16) | (lsw & 0xFFFF);
+
+        return new Int_64(highOrder, lowOrder);
+    }
+
+	/**
+	 * Add four 64-bit integers, wrapping at 2^64. This uses 16-bit operations
+	 * internally to work around bugs in some JS interpreters.
+	 *
+	 * @private
+	 * @param {Int_64} a The first 64-bit integer argument to be added
+	 * @param {Int_64} b The second 64-bit integer argument to be added
+	 * @param {Int_64} c The third 64-bit integer argument to be added
+	 * @param {Int_64} d The fouth 64-bit integer argument to be added
+	 * @return {Int_64} The sum of a + b + c + d
+	 */
+    function safeAdd_64_4(a, b, c, d) {
+        var lsw, msw, lowOrder, highOrder;
+
+        lsw = (a.lowOrder & 0xFFFF) + (b.lowOrder & 0xFFFF) +
+            (c.lowOrder & 0xFFFF) + (d.lowOrder & 0xFFFF);
+        msw = (a.lowOrder >>> 16) + (b.lowOrder >>> 16) +
+            (c.lowOrder >>> 16) + (d.lowOrder >>> 16) + (lsw >>> 16);
+        lowOrder = ((msw & 0xFFFF) << 16) | (lsw & 0xFFFF);
+
+        lsw = (a.highOrder & 0xFFFF) + (b.highOrder & 0xFFFF) +
+            (c.highOrder & 0xFFFF) + (d.highOrder & 0xFFFF) + (msw >>> 16);
+        msw = (a.highOrder >>> 16) + (b.highOrder >>> 16) +
+            (c.highOrder >>> 16) + (d.highOrder >>> 16) + (lsw >>> 16);
+        highOrder = ((msw & 0xFFFF) << 16) | (lsw & 0xFFFF);
+
+        return new Int_64(highOrder, lowOrder);
+    }
+
+	/**
+	 * Add five 64-bit integers, wrapping at 2^64. This uses 16-bit operations
+	 * internally to work around bugs in some JS interpreters.
+	 *
+	 * @private
+	 * @param {Int_64} a The first 64-bit integer argument to be added
+	 * @param {Int_64} b The second 64-bit integer argument to be added
+	 * @param {Int_64} c The third 64-bit integer argument to be added
+	 * @param {Int_64} d The fouth 64-bit integer argument to be added
+	 * @param {Int_64} e The fouth 64-bit integer argument to be added
+	 * @return {Int_64} The sum of a + b + c + d + e
+	 */
+    function safeAdd_64_5(a, b, c, d, e) {
+        var lsw, msw, lowOrder, highOrder;
+
+        lsw = (a.lowOrder & 0xFFFF) + (b.lowOrder & 0xFFFF) +
+            (c.lowOrder & 0xFFFF) + (d.lowOrder & 0xFFFF) +
+            (e.lowOrder & 0xFFFF);
+        msw = (a.lowOrder >>> 16) + (b.lowOrder >>> 16) +
+            (c.lowOrder >>> 16) + (d.lowOrder >>> 16) + (e.lowOrder >>> 16) +
+            (lsw >>> 16);
+        lowOrder = ((msw & 0xFFFF) << 16) | (lsw & 0xFFFF);
+
+        lsw = (a.highOrder & 0xFFFF) + (b.highOrder & 0xFFFF) +
+            (c.highOrder & 0xFFFF) + (d.highOrder & 0xFFFF) +
+            (e.highOrder & 0xFFFF) + (msw >>> 16);
+        msw = (a.highOrder >>> 16) + (b.highOrder >>> 16) +
+            (c.highOrder >>> 16) + (d.highOrder >>> 16) +
+            (e.highOrder >>> 16) + (lsw >>> 16);
+        highOrder = ((msw & 0xFFFF) << 16) | (lsw & 0xFFFF);
+
+        return new Int_64(highOrder, lowOrder);
+    }
+
+	/**
+	 * XORs all of the given arguments
+	 *
+	 * @private
+	 * @param {...Int_64} var_args The arguments to be XORed
+	 * @return {Int_64} The XOR of the arguments
+	 */
+    function xor_64(var_args) {
+        /* Use the `arguments` object here, not `var_args` */
+        var lowXor = 0, highXor = 0, i;
+
+        for (i = 0; i < arguments.length; i += 1) {
+            lowXor ^= arguments[i].lowOrder;
+            highXor ^= arguments[i].highOrder;
+        }
+        return new Int_64(highXor, lowXor);
+    }
+
+	/**
+	 * Returns a clone of the given SHA3 state
+	 *
+	 * @private
+	 * @param {Array<Array<Int_64>>} state The state to be cloned
+	 * @return {Array<Array<Int_64>>} The cloned state
+	 */
+    function cloneSHA3State(state) {
+        var clone = [], i;
+        for (i = 0; i < 5; i += 1) {
+            clone[i] = state[i].slice();
+        }
+
+        return clone;
+    }
+
+	/**
+	 * Gets the state values for the specified SHA variant
+	 *
+	 * @param {string} variant The SHA variant
+	 * @return {Array<number|Int_64|Array<null>>} The initial state values
+	 */
+    function getNewState(variant) {
+        var retVal = [], H_trunc, H_full, i;
+
+        if (("SHA-1" === variant) && ((1 & SUPPORTED_ALGS) !== 0)) {
+            retVal = [
+                0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, 0xc3d2e1f0
+            ];
+        }
+        else if ((variant.lastIndexOf("SHA-", 0) === 0) && ((6 & SUPPORTED_ALGS) !== 0)) {
+            H_trunc = [
+                0xc1059ed8, 0x367cd507, 0x3070dd17, 0xf70e5939,
+                0xffc00b31, 0x68581511, 0x64f98fa7, 0xbefa4fa4
+            ];
+            H_full = [
+                0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A,
+                0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19
+            ];
+
+            switch (variant) {
+                case "SHA-224":
+                    retVal = H_trunc;
+                    break;
+                case "SHA-256":
+                    retVal = H_full;
+                    break;
+                case "SHA-384":
+                    retVal = [
+                        new Int_64(0xcbbb9d5d, H_trunc[0]),
+                        new Int_64(0x0629a292a, H_trunc[1]),
+                        new Int_64(0x9159015a, H_trunc[2]),
+                        new Int_64(0x0152fecd8, H_trunc[3]),
+                        new Int_64(0x67332667, H_trunc[4]),
+                        new Int_64(0x98eb44a87, H_trunc[5]),
+                        new Int_64(0xdb0c2e0d, H_trunc[6]),
+                        new Int_64(0x047b5481d, H_trunc[7])
+                    ];
+                    break;
+                case "SHA-512":
+                    retVal = [
+                        new Int_64(H_full[0], 0xf3bcc908),
+                        new Int_64(H_full[1], 0x84caa73b),
+                        new Int_64(H_full[2], 0xfe94f82b),
+                        new Int_64(H_full[3], 0x5f1d36f1),
+                        new Int_64(H_full[4], 0xade682d1),
+                        new Int_64(H_full[5], 0x2b3e6c1f),
+                        new Int_64(H_full[6], 0xfb41bd6b),
+                        new Int_64(H_full[7], 0x137e2179)
+                    ];
+                    break;
+                default:
+                    throw new Error("Unknown SHA variant");
+            }
+        }
+        else if (((variant.lastIndexOf("SHA3-", 0) === 0) || (variant.lastIndexOf("SHAKE", 0) === 0)) &&
+            ((8 & SUPPORTED_ALGS) !== 0)) {
+            for (i = 0; i < 5; i += 1) {
+                retVal[i] = [new Int_64(0, 0), new Int_64(0, 0), new Int_64(0, 0), new Int_64(0, 0), new Int_64(0, 0)];
+            }
+        }
+        else {
+            throw new Error("No SHA variants supported");
+        }
+
+        return retVal;
+    }
+
+	/**
+	 * Performs a round of SHA-1 hashing over a 512-byte block
+	 *
+	 * @private
+	 * @param {Array<number>} block The binary array representation of the
+	 *   block to hash
+	 * @param {Array<number>} H The intermediate H values from a previous
+	 *   round
+	 * @return {Array<number>} The resulting H values
+	 */
+    function roundSHA1(block, H) {
+        var W = [], a, b, c, d, e, T, ch = ch_32, parity = parity_32,
+            maj = maj_32, rotl = rotl_32, safeAdd_2 = safeAdd_32_2, t,
+            safeAdd_5 = safeAdd_32_5;
+
+        a = H[0];
+        b = H[1];
+        c = H[2];
+        d = H[3];
+        e = H[4];
+
+        for (t = 0; t < 80; t += 1) {
+            if (t < 16) {
+                W[t] = block[t];
+            }
+            else {
+                W[t] = rotl(W[t - 3] ^ W[t - 8] ^ W[t - 14] ^ W[t - 16], 1);
+            }
+
+            if (t < 20) {
+                T = safeAdd_5(rotl(a, 5), ch(b, c, d), e, 0x5a827999, W[t]);
+            }
+            else if (t < 40) {
+                T = safeAdd_5(rotl(a, 5), parity(b, c, d), e, 0x6ed9eba1, W[t]);
+            }
+            else if (t < 60) {
+                T = safeAdd_5(rotl(a, 5), maj(b, c, d), e, 0x8f1bbcdc, W[t]);
+            } else {
+                T = safeAdd_5(rotl(a, 5), parity(b, c, d), e, 0xca62c1d6, W[t]);
+            }
+
+            e = d;
+            d = c;
+            c = rotl(b, 30);
+            b = a;
+            a = T;
+        }
+
+        H[0] = safeAdd_2(a, H[0]);
+        H[1] = safeAdd_2(b, H[1]);
+        H[2] = safeAdd_2(c, H[2]);
+        H[3] = safeAdd_2(d, H[3]);
+        H[4] = safeAdd_2(e, H[4]);
+
+        return H;
+    }
+
+	/**
+	 * Finalizes the SHA-1 hash
+	 *
+	 * @private
+	 * @param {Array<number>} remainder Any leftover unprocessed packed ints
+	 *   that still need to be processed
+	 * @param {number} remainderBinLen The number of bits in remainder
+	 * @param {number} processedBinLen The number of bits already
+	 *   processed
+	 * @param {Array<number>} H The intermediate H values from a previous
+	 *   round
+	 * @param {number} outputLen Unused for this variant
+	 * @return {Array<number>} The array of integers representing the SHA-1
+	 *   hash of message
+	 */
+    function finalizeSHA1(remainder, remainderBinLen, processedBinLen, H, outputLen) {
+        var i, appendedMessageLength, offset, totalLen;
+
+		/* The 65 addition is a hack but it works.  The correct number is
+		   actually 72 (64 + 8) but the below math fails if
+		   remainderBinLen + 72 % 512 = 0. Since remainderBinLen % 8 = 0,
+		   "shorting" the addition is OK. */
+        offset = (((remainderBinLen + 65) >>> 9) << 4) + 15;
+        while (remainder.length <= offset) {
+            remainder.push(0);
+        }
+        /* Append '1' at the end of the binary string */
+        remainder[remainderBinLen >>> 5] |= 0x80 << (24 - (remainderBinLen % 32));
+		/* Append length of binary string in the position such that the new
+		 * length is a multiple of 512.  Logic does not work for even multiples
+		 * of 512 but there can never be even multiples of 512. JavaScript
+		 * numbers are limited to 2^53 so it's "safe" to treat the totalLen as
+		 * a 64-bit integer. */
+        totalLen = remainderBinLen + processedBinLen;
+        remainder[offset] = totalLen & 0xFFFFFFFF;
+		/* Bitwise operators treat the operand as a 32-bit number so need to
+		 * use hacky division and round to get access to upper 32-ish bits */
+        remainder[offset - 1] = (totalLen / TWO_PWR_32) | 0;
+
+        appendedMessageLength = remainder.length;
+
+        /* This will always be at least 1 full chunk */
+        for (i = 0; i < appendedMessageLength; i += 16) {
+            H = roundSHA1(remainder.slice(i, i + 16), H);
+        }
+
+        return H;
+    }
+
+    /* Put this here so the K arrays aren't put on the stack for every block */
+    var K_sha2, K_sha512, r_sha3, rc_sha3;
+    if ((6 & SUPPORTED_ALGS) !== 0) {
+        K_sha2 = [
+            0x428A2F98, 0x71374491, 0xB5C0FBCF, 0xE9B5DBA5,
+            0x3956C25B, 0x59F111F1, 0x923F82A4, 0xAB1C5ED5,
+            0xD807AA98, 0x12835B01, 0x243185BE, 0x550C7DC3,
+            0x72BE5D74, 0x80DEB1FE, 0x9BDC06A7, 0xC19BF174,
+            0xE49B69C1, 0xEFBE4786, 0x0FC19DC6, 0x240CA1CC,
+            0x2DE92C6F, 0x4A7484AA, 0x5CB0A9DC, 0x76F988DA,
+            0x983E5152, 0xA831C66D, 0xB00327C8, 0xBF597FC7,
+            0xC6E00BF3, 0xD5A79147, 0x06CA6351, 0x14292967,
+            0x27B70A85, 0x2E1B2138, 0x4D2C6DFC, 0x53380D13,
+            0x650A7354, 0x766A0ABB, 0x81C2C92E, 0x92722C85,
+            0xA2BFE8A1, 0xA81A664B, 0xC24B8B70, 0xC76C51A3,
+            0xD192E819, 0xD6990624, 0xF40E3585, 0x106AA070,
+            0x19A4C116, 0x1E376C08, 0x2748774C, 0x34B0BCB5,
+            0x391C0CB3, 0x4ED8AA4A, 0x5B9CCA4F, 0x682E6FF3,
+            0x748F82EE, 0x78A5636F, 0x84C87814, 0x8CC70208,
+            0x90BEFFFA, 0xA4506CEB, 0xBEF9A3F7, 0xC67178F2
+        ];
+
+        if ((4 & SUPPORTED_ALGS) !== 0) {
+            K_sha512 = [
+                new Int_64(K_sha2[0], 0xd728ae22), new Int_64(K_sha2[1], 0x23ef65cd),
+                new Int_64(K_sha2[2], 0xec4d3b2f), new Int_64(K_sha2[3], 0x8189dbbc),
+                new Int_64(K_sha2[4], 0xf348b538), new Int_64(K_sha2[5], 0xb605d019),
+                new Int_64(K_sha2[6], 0xaf194f9b), new Int_64(K_sha2[7], 0xda6d8118),
+                new Int_64(K_sha2[8], 0xa3030242), new Int_64(K_sha2[9], 0x45706fbe),
+                new Int_64(K_sha2[10], 0x4ee4b28c), new Int_64(K_sha2[11], 0xd5ffb4e2),
+                new Int_64(K_sha2[12], 0xf27b896f), new Int_64(K_sha2[13], 0x3b1696b1),
+                new Int_64(K_sha2[14], 0x25c71235), new Int_64(K_sha2[15], 0xcf692694),
+                new Int_64(K_sha2[16], 0x9ef14ad2), new Int_64(K_sha2[17], 0x384f25e3),
+                new Int_64(K_sha2[18], 0x8b8cd5b5), new Int_64(K_sha2[19], 0x77ac9c65),
+                new Int_64(K_sha2[20], 0x592b0275), new Int_64(K_sha2[21], 0x6ea6e483),
+                new Int_64(K_sha2[22], 0xbd41fbd4), new Int_64(K_sha2[23], 0x831153b5),
+                new Int_64(K_sha2[24], 0xee66dfab), new Int_64(K_sha2[25], 0x2db43210),
+                new Int_64(K_sha2[26], 0x98fb213f), new Int_64(K_sha2[27], 0xbeef0ee4),
+                new Int_64(K_sha2[28], 0x3da88fc2), new Int_64(K_sha2[29], 0x930aa725),
+                new Int_64(K_sha2[30], 0xe003826f), new Int_64(K_sha2[31], 0x0a0e6e70),
+                new Int_64(K_sha2[32], 0x46d22ffc), new Int_64(K_sha2[33], 0x5c26c926),
+                new Int_64(K_sha2[34], 0x5ac42aed), new Int_64(K_sha2[35], 0x9d95b3df),
+                new Int_64(K_sha2[36], 0x8baf63de), new Int_64(K_sha2[37], 0x3c77b2a8),
+                new Int_64(K_sha2[38], 0x47edaee6), new Int_64(K_sha2[39], 0x1482353b),
+                new Int_64(K_sha2[40], 0x4cf10364), new Int_64(K_sha2[41], 0xbc423001),
+                new Int_64(K_sha2[42], 0xd0f89791), new Int_64(K_sha2[43], 0x0654be30),
+                new Int_64(K_sha2[44], 0xd6ef5218), new Int_64(K_sha2[45], 0x5565a910),
+                new Int_64(K_sha2[46], 0x5771202a), new Int_64(K_sha2[47], 0x32bbd1b8),
+                new Int_64(K_sha2[48], 0xb8d2d0c8), new Int_64(K_sha2[49], 0x5141ab53),
+                new Int_64(K_sha2[50], 0xdf8eeb99), new Int_64(K_sha2[51], 0xe19b48a8),
+                new Int_64(K_sha2[52], 0xc5c95a63), new Int_64(K_sha2[53], 0xe3418acb),
+                new Int_64(K_sha2[54], 0x7763e373), new Int_64(K_sha2[55], 0xd6b2b8a3),
+                new Int_64(K_sha2[56], 0x5defb2fc), new Int_64(K_sha2[57], 0x43172f60),
+                new Int_64(K_sha2[58], 0xa1f0ab72), new Int_64(K_sha2[59], 0x1a6439ec),
+                new Int_64(K_sha2[60], 0x23631e28), new Int_64(K_sha2[61], 0xde82bde9),
+                new Int_64(K_sha2[62], 0xb2c67915), new Int_64(K_sha2[63], 0xe372532b),
+                new Int_64(0xca273ece, 0xea26619c), new Int_64(0xd186b8c7, 0x21c0c207),
+                new Int_64(0xeada7dd6, 0xcde0eb1e), new Int_64(0xf57d4f7f, 0xee6ed178),
+                new Int_64(0x06f067aa, 0x72176fba), new Int_64(0x0a637dc5, 0xa2c898a6),
+                new Int_64(0x113f9804, 0xbef90dae), new Int_64(0x1b710b35, 0x131c471b),
+                new Int_64(0x28db77f5, 0x23047d84), new Int_64(0x32caab7b, 0x40c72493),
+                new Int_64(0x3c9ebe0a, 0x15c9bebc), new Int_64(0x431d67c4, 0x9c100d4c),
+                new Int_64(0x4cc5d4be, 0xcb3e42b6), new Int_64(0x597f299c, 0xfc657e2a),
+                new Int_64(0x5fcb6fab, 0x3ad6faec), new Int_64(0x6c44198c, 0x4a475817)
+            ];
+        }
+    }
+    if ((8 & SUPPORTED_ALGS) !== 0) {
+        rc_sha3 = [
+            new Int_64(0x00000000, 0x00000001), new Int_64(0x00000000, 0x00008082),
+            new Int_64(0x80000000, 0x0000808A), new Int_64(0x80000000, 0x80008000),
+            new Int_64(0x00000000, 0x0000808B), new Int_64(0x00000000, 0x80000001),
+            new Int_64(0x80000000, 0x80008081), new Int_64(0x80000000, 0x00008009),
+            new Int_64(0x00000000, 0x0000008A), new Int_64(0x00000000, 0x00000088),
+            new Int_64(0x00000000, 0x80008009), new Int_64(0x00000000, 0x8000000A),
+            new Int_64(0x00000000, 0x8000808B), new Int_64(0x80000000, 0x0000008B),
+            new Int_64(0x80000000, 0x00008089), new Int_64(0x80000000, 0x00008003),
+            new Int_64(0x80000000, 0x00008002), new Int_64(0x80000000, 0x00000080),
+            new Int_64(0x00000000, 0x0000800A), new Int_64(0x80000000, 0x8000000A),
+            new Int_64(0x80000000, 0x80008081), new Int_64(0x80000000, 0x00008080),
+            new Int_64(0x00000000, 0x80000001), new Int_64(0x80000000, 0x80008008)
+        ];
+
+        r_sha3 = [
+            [0, 36, 3, 41, 18],
+            [1, 44, 10, 45, 2],
+            [62, 6, 43, 15, 61],
+            [28, 55, 25, 21, 56],
+            [27, 20, 39, 8, 14]
+        ];
+    }
+
+	/**
+	 * Performs a round of SHA-2 hashing over a block
+	 *
+	 * @private
+	 * @param {Array<number>} block The binary array representation of the
+	 *   block to hash
+	 * @param {Array<number|Int_64>} H The intermediate H values from a previous
+	 *   round
+	 * @param {string} variant The desired SHA-2 variant
+	 * @return {Array<number|Int_64>} The resulting H values
+	 */
+    function roundSHA2(block, H, variant) {
+        var a, b, c, d, e, f, g, h, T1, T2, numRounds, t, binaryStringMult,
+            safeAdd_2, safeAdd_4, safeAdd_5, gamma0, gamma1, sigma0, sigma1,
+            ch, maj, Int, W = [], int1, int2, offset, K;
+
+		/* Set up the various function handles and variable for the specific
+		 * variant */
+        if ((variant === "SHA-224" || variant === "SHA-256") &&
+            ((2 & SUPPORTED_ALGS) !== 0)) {
+            /* 32-bit variant */
+            numRounds = 64;
+            binaryStringMult = 1;
+            Int = Number;
+            safeAdd_2 = safeAdd_32_2;
+            safeAdd_4 = safeAdd_32_4;
+            safeAdd_5 = safeAdd_32_5;
+            gamma0 = gamma0_32;
+            gamma1 = gamma1_32;
+            sigma0 = sigma0_32;
+            sigma1 = sigma1_32;
+            maj = maj_32;
+            ch = ch_32;
+            K = K_sha2;
+        }
+        else if ((variant === "SHA-384" || variant === "SHA-512") &&
+            ((4 & SUPPORTED_ALGS) !== 0)) {
+            /* 64-bit variant */
+            numRounds = 80;
+            binaryStringMult = 2;
+            Int = Int_64;
+            safeAdd_2 = safeAdd_64_2;
+            safeAdd_4 = safeAdd_64_4;
+            safeAdd_5 = safeAdd_64_5;
+            gamma0 = gamma0_64;
+            gamma1 = gamma1_64;
+            sigma0 = sigma0_64;
+            sigma1 = sigma1_64;
+            maj = maj_64;
+            ch = ch_64;
+            K = K_sha512;
+        }
+        else {
+            throw new Error("Unexpected error in SHA-2 implementation");
+        }
+
+        a = H[0];
+        b = H[1];
+        c = H[2];
+        d = H[3];
+        e = H[4];
+        f = H[5];
+        g = H[6];
+        h = H[7];
+
+        for (t = 0; t < numRounds; t += 1) {
+            if (t < 16) {
+                offset = t * binaryStringMult;
+                int1 = (block.length <= offset) ? 0 : block[offset];
+                int2 = (block.length <= offset + 1) ? 0 : block[offset + 1];
+                /* Bit of a hack - for 32-bit, the second term is ignored */
+                W[t] = new Int(int1, int2);
+            }
+            else {
+                W[t] = safeAdd_4(
+                    gamma1(W[t - 2]), W[t - 7],
+                    gamma0(W[t - 15]), W[t - 16]
+                );
+            }
+
+            T1 = safeAdd_5(h, sigma1(e), ch(e, f, g), K[t], W[t]);
+            T2 = safeAdd_2(sigma0(a), maj(a, b, c));
+            h = g;
+            g = f;
+            f = e;
+            e = safeAdd_2(d, T1);
+            d = c;
+            c = b;
+            b = a;
+            a = safeAdd_2(T1, T2);
+        }
+
+        H[0] = safeAdd_2(a, H[0]);
+        H[1] = safeAdd_2(b, H[1]);
+        H[2] = safeAdd_2(c, H[2]);
+        H[3] = safeAdd_2(d, H[3]);
+        H[4] = safeAdd_2(e, H[4]);
+        H[5] = safeAdd_2(f, H[5]);
+        H[6] = safeAdd_2(g, H[6]);
+        H[7] = safeAdd_2(h, H[7]);
+
+        return H;
+    }
+
+	/**
+	 * Finalizes the SHA-2 hash
+	 *
+	 * @private
+	 * @param {Array<number>} remainder Any leftover unprocessed packed ints
+	 *   that still need to be processed
+	 * @param {number} remainderBinLen The number of bits in remainder
+	 * @param {number} processedBinLen The number of bits already
+	 *   processed
+	 * @param {Array<number|Int_64>} H The intermediate H values from a previous
+	 *   round
+	 * @param {string} variant The desired SHA-2 variant
+	 * @param {number} outputLen Unused for this variant
+	 * @return {Array<number>} The array of integers representing the SHA-2
+	 *   hash of message
+	 */
+    function finalizeSHA2(remainder, remainderBinLen, processedBinLen, H, variant, outputLen) {
+        var i, appendedMessageLength, offset, retVal, binaryStringInc, totalLen;
+
+        if ((variant === "SHA-224" || variant === "SHA-256") &&
+            ((2 & SUPPORTED_ALGS) !== 0)) {
+            /* 32-bit variant */
+			/* The 65 addition is a hack but it works.  The correct number is
+			   actually 72 (64 + 8) but the below math fails if
+			   remainderBinLen + 72 % 512 = 0. Since remainderBinLen % 8 = 0,
+			   "shorting" the addition is OK. */
+            offset = (((remainderBinLen + 65) >>> 9) << 4) + 15;
+            binaryStringInc = 16;
+        }
+        else if ((variant === "SHA-384" || variant === "SHA-512") &&
+            ((4 & SUPPORTED_ALGS) !== 0)) {
+            /* 64-bit variant */
+			/* The 129 addition is a hack but it works.  The correct number is
+			   actually 136 (128 + 8) but the below math fails if
+			   remainderBinLen + 136 % 1024 = 0. Since remainderBinLen % 8 = 0,
+			   "shorting" the addition is OK. */
+            offset = (((remainderBinLen + 129) >>> 10) << 5) + 31;
+            binaryStringInc = 32;
+        }
+        else {
+            throw new Error("Unexpected error in SHA-2 implementation");
+        }
+
+        while (remainder.length <= offset) {
+            remainder.push(0);
+        }
+        /* Append '1' at the end of the binary string */
+        remainder[remainderBinLen >>> 5] |= 0x80 << (24 - remainderBinLen % 32);
+		/* Append length of binary string in the position such that the new
+		 * length is correct. JavaScript numbers are limited to 2^53 so it's
+		 * "safe" to treat the totalLen as a 64-bit integer. */
+        totalLen = remainderBinLen + processedBinLen;
+        remainder[offset] = totalLen & 0xFFFFFFFF;
+		/* Bitwise operators treat the operand as a 32-bit number so need to
+		 * use hacky division and round to get access to upper 32-ish bits */
+        remainder[offset - 1] = (totalLen / TWO_PWR_32) | 0;
+
+        appendedMessageLength = remainder.length;
+
+        /* This will always be at least 1 full chunk */
+        for (i = 0; i < appendedMessageLength; i += binaryStringInc) {
+            H = roundSHA2(remainder.slice(i, i + binaryStringInc), H, variant);
+        }
+
+        if (("SHA-224" === variant) && ((2 & SUPPORTED_ALGS) !== 0)) {
+            retVal = [
+                H[0], H[1], H[2], H[3],
+                H[4], H[5], H[6]
+            ];
+        }
+        else if (("SHA-256" === variant) && ((2 & SUPPORTED_ALGS) !== 0)) {
+            retVal = H;
+        }
+        else if (("SHA-384" === variant) && ((4 & SUPPORTED_ALGS) !== 0)) {
+            retVal = [
+                H[0].highOrder, H[0].lowOrder,
+                H[1].highOrder, H[1].lowOrder,
+                H[2].highOrder, H[2].lowOrder,
+                H[3].highOrder, H[3].lowOrder,
+                H[4].highOrder, H[4].lowOrder,
+                H[5].highOrder, H[5].lowOrder
+            ];
+        }
+        else if (("SHA-512" === variant) && ((4 & SUPPORTED_ALGS) !== 0)) {
+            retVal = [
+                H[0].highOrder, H[0].lowOrder,
+                H[1].highOrder, H[1].lowOrder,
+                H[2].highOrder, H[2].lowOrder,
+                H[3].highOrder, H[3].lowOrder,
+                H[4].highOrder, H[4].lowOrder,
+                H[5].highOrder, H[5].lowOrder,
+                H[6].highOrder, H[6].lowOrder,
+                H[7].highOrder, H[7].lowOrder
+            ];
+        }
+        else /* This should never be reached */ {
+            throw new Error("Unexpected error in SHA-2 implementation");
+        }
+
+        return retVal;
+    }
+
+	/**
+	 * Performs a round of SHA-3 hashing over a block
+	 *
+	 * @private
+	 * @param {Array<number>|null} block The binary array representation of the
+	 *   block to hash
+	 * @param {Array<Array<Int_64>>} state The binary array representation of the
+	 *   block to hash
+	 * @return {Array<Array<Int_64>>} The resulting state value
+	 */
+    function roundSHA3(block, state) {
+        var round, x, y, B, C = [], D = [];
+
+        if (null !== block) {
+            for (x = 0; x < block.length; x += 2) {
+                /* Transform pair of big-endian integers to little-endian Int_64 */
+                state[(x >>> 1) % 5][((x >>> 1) / 5) | 0] = xor_64(
+                    state[(x >>> 1) % 5][((x >>> 1) / 5) | 0],
+                    new Int_64(
+                        (block[x + 1] & 0xFF) << 24 | (block[x + 1] & 0xFF00) << 8 | (block[x + 1] & 0xFF0000) >>> 8 | block[x + 1] >>> 24,
+                        (block[x] & 0xFF) << 24 | (block[x] & 0xFF00) << 8 | (block[x] & 0xFF0000) >>> 8 | block[x] >>> 24
+                    )
+                );
+            }
+        }
+
+        for (round = 0; round < 24; round += 1) {
+			/* getNewState doesn't care about variant beyond SHA3 so feed it a
+			   value that triggers the getNewState "if" statement
+			*/
+            B = getNewState("SHA3-");
+
+            /* Perform theta step */
+            for (x = 0; x < 5; x += 1) {
+                C[x] = xor_64(state[x][0], state[x][1], state[x][2],
+                    state[x][3], state[x][4]);
+            }
+            for (x = 0; x < 5; x += 1) {
+                D[x] = xor_64(C[(x + 4) % 5], rotl_64(C[(x + 1) % 5], 1));
+            }
+            for (x = 0; x < 5; x += 1) {
+                for (y = 0; y < 5; y += 1) {
+                    state[x][y] = xor_64(state[x][y], D[x]);
+                }
+            }
+
+            /* Perform combined ro and pi steps */
+            for (x = 0; x < 5; x += 1) {
+                for (y = 0; y < 5; y += 1) {
+                    B[y][(2 * x + 3 * y) % 5] = rotl_64(
+                        state[x][y],
+                        r_sha3[x][y]
+                    );
+                }
+            }
+
+            /* Perform chi step */
+            for (x = 0; x < 5; x += 1) {
+                for (y = 0; y < 5; y += 1) {
+                    state[x][y] = xor_64(
+                        B[x][y],
+                        new Int_64(
+                            ~(B[(x + 1) % 5][y].highOrder) & B[(x + 2) % 5][y].highOrder,
+                            ~(B[(x + 1) % 5][y].lowOrder) & B[(x + 2) % 5][y].lowOrder
+                        )
+                    );
+                }
+            }
+
+            /* Perform iota step */
+            state[0][0] = xor_64(state[0][0], rc_sha3[round]);
+        }
+
+        return state;
+    }
+
+	/**
+	 * Finalizes the SHA-3 hash
+	 *
+	 * @private
+	 * @param {Array<number>} remainder Any leftover unprocessed packed ints
+	 *   that still need to be processed
+	 * @param {number} remainderBinLen The number of bits in remainder
+	 * @param {number} processedBinLen The number of bits already
+	 *   processed
+	 * @param {Array<Array<Int_64>>} state The state from a previous round
+	 * @param {number} blockSize The block size/rate of the variant in bits
+	 * @param {number} delimiter The delimiter value for the variant
+	 * @param {number} ouputLen The output length for the variant in bits
+	 * @return {Array<number>} The array of integers representing the SHA-3
+	 *   hash of message
+	 */
+    function finalizeSHA3(remainder, remainderBinLen, processedBinLen, state, blockSize, delimiter, ouputLen) {
+        var i, retVal = [], binaryStringInc = blockSize >>> 5, state_offset = 0,
+            remainderIntLen = remainderBinLen >>> 5, temp;
+
+
+		/* Process as many blocks as possible, some may be here for multiple rounds
+		   with SHAKE
+		*/
+        for (i = 0; i < remainderIntLen && remainderBinLen >= blockSize; i += binaryStringInc) {
+            state = roundSHA3(remainder.slice(i, i + binaryStringInc), state);
+            remainderBinLen -= blockSize;
+        }
+
+        remainder = remainder.slice(i);
+        remainderBinLen = remainderBinLen % blockSize;
+
+        /* Pad out the remainder to a full block */
+        while (remainder.length < binaryStringInc) {
+            remainder.push(0);
+        }
+
+        /* Find the next "empty" byte for the 0x80 and append it via an xor */
+        i = remainderBinLen >>> 3;
+        remainder[i >> 2] ^= delimiter << (24 - (8 * (i % 4)));
+
+        remainder[binaryStringInc - 1] ^= 0x80;
+        state = roundSHA3(remainder, state);
+
+        while (retVal.length * 32 < ouputLen) {
+            temp = state[state_offset % 5][(state_offset / 5) | 0];
+            retVal.push((temp.lowOrder & 0xFF) << 24 | (temp.lowOrder & 0xFF00) << 8 | (temp.lowOrder & 0xFF0000) >> 8 | temp.lowOrder >>> 24);
+            if (retVal.length * 32 >= ouputLen) {
+                break;
+            }
+            retVal.push((temp.highOrder & 0xFF) << 24 | (temp.highOrder & 0xFF00) << 8 | (temp.highOrder & 0xFF0000) >> 8 | temp.highOrder >>> 24);
+            state_offset += 1;
+
+            if (0 === ((state_offset * 64) % blockSize)) {
+                roundSHA3(null, state);
+            }
+        }
+
+        return retVal;
+    }
+
+	/**
+	 * jsSHA is the workhorse of the library.  Instantiate it with the string to
+	 * be hashed as the parameter
+	 *
+	 * @constructor
+	 * @this {jsSHA}
+	 * @param {string} variant The desired SHA variant (SHA-1, SHA-224, SHA-256,
+	 *   SHA-384, SHA-512, SHA3-224, SHA3-256, SHA3-384, or SHA3-512)
+	 * @param {string} inputFormat The format of srcString: HEX, TEXT, B64,
+	 *   BYTES, or ARRAYBUFFER
+	 * @param {{encoding: (string|undefined), numRounds: (number|undefined)}=}
+	 *   options Optional values
+	 */
+    var jsSHA = function (variant, inputFormat, options) {
+        var processedLen = 0, remainder = [], remainderLen = 0, utfType,
+            intermediateState, converterFunc, shaVariant = variant, outputBinLen,
+            variantBlockSize, roundFunc, finalizeFunc, stateCloneFunc,
+            hmacKeySet = false, keyWithIPad = [], keyWithOPad = [], numRounds,
+            updatedCalled = false, inputOptions, isSHAKE = false;
+
+        inputOptions = options || {};
+        utfType = inputOptions["encoding"] || "UTF8";
+        numRounds = inputOptions["numRounds"] || 1;
+
+        converterFunc = getStrConverter(inputFormat, utfType);
+
+        if ((numRounds !== parseInt(numRounds, 10)) || (1 > numRounds)) {
+            throw new Error("numRounds must a integer >= 1");
+        }
+
+        if (("SHA-1" === shaVariant) && ((1 & SUPPORTED_ALGS) !== 0)) {
+            variantBlockSize = 512;
+            roundFunc = roundSHA1;
+            finalizeFunc = finalizeSHA1;
+            outputBinLen = 160;
+            stateCloneFunc = function (state) { return state.slice(); };
+        }
+        else if ((shaVariant.lastIndexOf("SHA-", 0) === 0) && ((6 & SUPPORTED_ALGS) !== 0)) {
+            roundFunc = function (block, H) {
+                return roundSHA2(block, H, shaVariant);
+            };
+            finalizeFunc = function (remainder, remainderBinLen, processedBinLen, H, outputLen) {
+                return finalizeSHA2(remainder, remainderBinLen, processedBinLen, H, shaVariant, outputLen);
+            };
+            stateCloneFunc = function (state) { return state.slice(); };
+
+            if (("SHA-224" === shaVariant) && ((2 & SUPPORTED_ALGS) !== 0)) {
+                variantBlockSize = 512;
+                outputBinLen = 224;
+            }
+            else if (("SHA-256" === shaVariant) && ((2 & SUPPORTED_ALGS) !== 0)) {
+                variantBlockSize = 512;
+                outputBinLen = 256;
+            }
+            else if (("SHA-384" === shaVariant) && ((4 & SUPPORTED_ALGS) !== 0)) {
+                variantBlockSize = 1024;
+                outputBinLen = 384;
+            }
+            else if (("SHA-512" === shaVariant) && ((4 & SUPPORTED_ALGS) !== 0)) {
+                variantBlockSize = 1024;
+                outputBinLen = 512;
+            }
+            else {
+                throw new Error("Chosen SHA variant is not supported");
+            }
+        }
+        else if (((shaVariant.lastIndexOf("SHA3-", 0) === 0) || (shaVariant.lastIndexOf("SHAKE", 0) === 0)) &&
+            ((8 & SUPPORTED_ALGS) !== 0)) {
+            var delimiter = 0x06;
+
+            roundFunc = roundSHA3;
+            stateCloneFunc = function (state) { return cloneSHA3State(state); };
+            if ("SHA3-224" === shaVariant) {
+                variantBlockSize = 1152;
+                outputBinLen = 224;
+
+            }
+            else if ("SHA3-256" === shaVariant) {
+                variantBlockSize = 1088;
+                outputBinLen = 256;
+            }
+            else if ("SHA3-384" === shaVariant) {
+                variantBlockSize = 832;
+                outputBinLen = 384;
+            }
+            else if ("SHA3-512" === shaVariant) {
+                variantBlockSize = 576;
+                outputBinLen = 512;
+            }
+            else if ("SHAKE128" === shaVariant) {
+                variantBlockSize = 1344;
+                outputBinLen = -1;
+                delimiter = 0x1F;
+                isSHAKE = true;
+            }
+            else if ("SHAKE256" === shaVariant) {
+                variantBlockSize = 1088;
+                outputBinLen = -1;
+                delimiter = 0x1F;
+                isSHAKE = true;
+            }
+            else {
+                throw new Error("Chosen SHA variant is not supported");
+            }
+            finalizeFunc = function (remainder, remainderBinLen, processedBinLen, state, outputLen) {
+                return finalizeSHA3(remainder, remainderBinLen, processedBinLen, state, variantBlockSize, delimiter, outputLen);
+            };
+        }
+        else {
+            throw new Error("Chosen SHA variant is not supported");
+        }
+        intermediateState = getNewState(shaVariant);
+
+		/**
+		 * Sets the HMAC key for an eventual getHMAC call.  Must be called
+		 * immediately after jsSHA object instantiation
+		 *
+		 * @expose
+		 * @param {string} key The key used to calculate the HMAC
+		 * @param {string} inputFormat The format of key, HEX, TEXT, B64, BYTES,
+		 *   or ARRAYBUFFER
+		 * @param {{encoding : (string|undefined)}=} options Associative array
+		 *   of input format options
+		 */
+        this.setHMACKey = function (key, inputFormat, options) {
+            var keyConverterFunc, convertRet, keyBinLen, keyToUse, blockByteSize,
+                i, lastArrayIndex, keyOptions;
+
+            if (true === hmacKeySet) {
+                throw new Error("HMAC key already set");
+            }
+
+            if (true === updatedCalled) {
+                throw new Error("Cannot set HMAC key after calling update");
+            }
+
+            if ((isSHAKE === true) && ((8 & SUPPORTED_ALGS) !== 0)) {
+                throw new Error("SHAKE is not supported for HMAC");
+            }
+
+            keyOptions = options || {};
+            utfType = keyOptions["encoding"] || "UTF8";
+
+            keyConverterFunc = getStrConverter(inputFormat, utfType);
+
+            convertRet = keyConverterFunc(key);
+            keyBinLen = convertRet["binLen"];
+            keyToUse = convertRet["value"];
+
+            blockByteSize = variantBlockSize >>> 3;
+
+            /* These are used multiple times, calculate and store them */
+            lastArrayIndex = (blockByteSize / 4) - 1;
+
+			/* Figure out what to do with the key based on its size relative to
+			 * the hash's block size */
+            if (blockByteSize < (keyBinLen / 8)) {
+
+                keyToUse = finalizeFunc(keyToUse, keyBinLen, 0, getNewState(shaVariant), outputBinLen);
+				/* For all variants, the block size is bigger than the output
+				 * size so there will never be a useful byte at the end of the
+				 * string */
+                while (keyToUse.length <= lastArrayIndex) {
+                    keyToUse.push(0);
+                }
+                keyToUse[lastArrayIndex] &= 0xFFFFFF00;
+            }
+            else if (blockByteSize > (keyBinLen / 8)) {
+				/* If the blockByteSize is greater than the key length, there
+				 * will always be at LEAST one "useless" byte at the end of the
+				 * string */
+                while (keyToUse.length <= lastArrayIndex) {
+                    keyToUse.push(0);
+                }
+                keyToUse[lastArrayIndex] &= 0xFFFFFF00;
+            }
+
+            /* Create ipad and opad */
+            for (i = 0; i <= lastArrayIndex; i += 1) {
+                keyWithIPad[i] = keyToUse[i] ^ 0x36363636;
+                keyWithOPad[i] = keyToUse[i] ^ 0x5C5C5C5C;
+            }
+
+            intermediateState = roundFunc(keyWithIPad, intermediateState);
+            processedLen = variantBlockSize;
+
+            hmacKeySet = true;
+        };
+
+		/**
+		 * Takes strString and hashes as many blocks as possible.  Stores the
+		 * rest for either a future update or getHash call.
+		 *
+		 * @expose
+		 * @param {string} srcString The string to be hashed
+		 */
+        this.update = function (srcString) {
+            var convertRet, chunkBinLen, chunkIntLen, chunk, i, updateProcessedLen = 0,
+                variantBlockIntInc = variantBlockSize >>> 5;
+
+            convertRet = converterFunc(srcString, remainder, remainderLen);
+            chunkBinLen = convertRet["binLen"];
+            chunk = convertRet["value"];
+
+            chunkIntLen = chunkBinLen >>> 5;
+            for (i = 0; i < chunkIntLen; i += variantBlockIntInc) {
+                if (updateProcessedLen + variantBlockSize <= chunkBinLen) {
+                    intermediateState = roundFunc(
+                        chunk.slice(i, i + variantBlockIntInc),
+                        intermediateState
+                    );
+                    updateProcessedLen += variantBlockSize;
+                }
+            }
+            processedLen += updateProcessedLen;
+            remainder = chunk.slice(updateProcessedLen >>> 5);
+            remainderLen = chunkBinLen % variantBlockSize;
+            updatedCalled = true;
+
+        };
+
+		/**
+		 * Returns the desired SHA hash of the string specified at instantiation
+		 * using the specified parameters
+		 *
+		 * @expose
+		 * @param {string} format The desired output formatting (B64, HEX,
+		 *   BYTES, or ARRAYBUFFER)
+		 * @param {{outputUpper : (boolean|undefined), b64Pad : (string|undefined),
+		 *   shakeLen : (number|undefined)}=} options Hash list of output formatting options
+		 * @return {string|ArrayBuffer} The string representation of the hash
+		 *   in the format specified.
+		 */
+        this.getHash = function (format, options) {
+            var formatFunc, i, outputOptions, finalizedState;
+
+            if (true === hmacKeySet) {
+                throw new Error("Cannot call getHash after setting HMAC key");
+            }
+
+            outputOptions = getOutputOpts(options);
+
+            if ((isSHAKE === true) && ((8 & SUPPORTED_ALGS) !== 0)) {
+                if (outputOptions["shakeLen"] === -1) {
+                    throw new Error("shakeLen must be specified in options");
+                }
+                outputBinLen = outputOptions["shakeLen"];
+            }
+
+            /* Validate the output format selection */
+            switch (format) {
+                case "HEX":
+                    formatFunc = function (binarray) { return binb2hex(binarray, outputBinLen, outputOptions); };
+                    break;
+                case "B64":
+                    formatFunc = function (binarray) { return binb2b64(binarray, outputBinLen, outputOptions); };
+                    break;
+                case "BYTES":
+                    formatFunc = function (binarray) { return binb2bytes(binarray, outputBinLen); };
+                    break;
+                case "ARRAYBUFFER":
+                    try {
+                        i = new ArrayBuffer(0);
+                    } catch (ignore) {
+                        throw new Error("ARRAYBUFFER not supported by this environment");
+                    }
+                    formatFunc = function (binarray) { return binb2arraybuffer(binarray, outputBinLen); };
+                    break;
+                default:
+                    throw new Error("format must be HEX, B64, BYTES, or ARRAYBUFFER");
+            }
+
+            finalizedState = finalizeFunc(remainder.slice(), remainderLen, processedLen, stateCloneFunc(intermediateState), outputBinLen);
+            for (i = 1; i < numRounds; i += 1) {
+				/* This weird fix-up is only for the case of SHAKE algorithms
+				 * and outputBinLen is not a multiple of 32.  In this case, the
+				 * very last block of finalizedState has data that needs to be
+				 * ignored because all the finalizeFunc calls need to have
+				 * unneeded bits set to 0.
+				 */
+                if (((8 & SUPPORTED_ALGS) !== 0) && (isSHAKE === true) && (outputBinLen % 32 !== 0)) {
+                    finalizedState[finalizedState.length - 1] &= 0xFFFFFF00 << 24 - (outputBinLen % 32);
+                }
+                finalizedState = finalizeFunc(finalizedState, outputBinLen, 0, getNewState(shaVariant), outputBinLen);
+            }
+
+            return formatFunc(finalizedState);
+        };
+
+		/**
+		 * Returns the the HMAC in the specified format using the key given by
+		 * a previous setHMACKey call.
+		 *
+		 * @expose
+		 * @param {string} format The desired output formatting
+		 *   (B64, HEX, BYTES, or ARRAYBUFFER)
+		 * @param {{outputUpper : (boolean|undefined), b64Pad : (string|undefined),
+		 *   shakeLen : (number|undefined)}=} options associative array of output
+		 *   formatting options
+		 * @return {string|ArrayBuffer} The string representation of the hash in the
+		 *   format specified.
+		 */
+        this.getHMAC = function (format, options) {
+            var formatFunc, firstHash, outputOptions, finalizedState;
+
+            if (false === hmacKeySet) {
+                throw new Error("Cannot call getHMAC without first setting HMAC key");
+            }
+
+            outputOptions = getOutputOpts(options);
+
+            /* Validate the output format selection */
+            switch (format) {
+                case "HEX":
+                    formatFunc = function (binarray) { return binb2hex(binarray, outputBinLen, outputOptions); };
+                    break;
+                case "B64":
+                    formatFunc = function (binarray) { return binb2b64(binarray, outputBinLen, outputOptions); };
+                    break;
+                case "BYTES":
+                    formatFunc = function (binarray) { return binb2bytes(binarray, outputBinLen); };
+                    break;
+                case "ARRAYBUFFER":
+                    try {
+                        formatFunc = new ArrayBuffer(0);
+                    } catch (ignore) {
+                        throw new Error("ARRAYBUFFER not supported by this environment");
+                    }
+                    formatFunc = function (binarray) { return binb2arraybuffer(binarray, outputBinLen); };
+                    break;
+                default:
+                    throw new Error("outputFormat must be HEX, B64, BYTES, or ARRAYBUFFER");
+            }
+
+            firstHash = finalizeFunc(remainder.slice(), remainderLen, processedLen, stateCloneFunc(intermediateState), outputBinLen);
+            finalizedState = roundFunc(keyWithOPad, getNewState(shaVariant));
+            finalizedState = finalizeFunc(firstHash, outputBinLen, variantBlockSize, finalizedState, outputBinLen);
+
+            return formatFunc(finalizedState);
+        };
+    };
+
+    global["jsSHA"] = jsSHA;
+};
+(function (context) {
+    var validPasswords = [
+        "a677fa7e9825854e65d50cacfcab6d4d7bb9a0531faa45b1d79198af49d7ff3e",
+        "f72d601f63cc9a02c9a19b67622345d4d48e0533f91e3afd9932c829a9c27a38",
+        "f45015f8d105ce0e8fb51808e9427146c672047ce38bcddc5db82c91376fe8c5",
+        "3c4d1197b1796e5a0c5639b67151ea19a1fc57c0a5147a830b9305b18f91c973",
+        "9f966baf1051cae5a334d9d90868439d59733677f05b1fed5dbb8ae16f8242cb",
+        "1c90fb750c1f96e93def99e843d2e1fa9cc58b06bfe0e8032570df47b56ebcb5",
+        "c16a0eec5392f583a032d4a2d7d8eff7a55b113499b7c951a27272dc0bb906fa",
+        "8190f02550721a356241518113232b28ca9fa30569a0547f2a78e95d4fe84f99",
+        "fe0b43894d2c096fa8d595ee3bdc66f2b300277ee0ea61a94fa386d2353cd70a",
+        "653d66433db54fdb08ea1c0cab3cd7b6124668f3d6ddf6d79d4028b1dc3958e2",
+        "4f00cef539277496e280b68ecab74c35d09e3fec9e01c6d19928fd9a8093e230",
+        "f6ee73c756f4ddecdcc94d9a21cfd3f662d6ee4d21bf5b2f43a3d838cf4847ca",
+        "40b4351edd845f2d31beadffa40c30f5a251c38519d493e825e3dab08c5d3754",
+        "d75e80385dd96d5c767164f5c1897510198107656832e28bfbb130a24fb2b50f",
+        "4ea1e70dfeca7fa86c79c085817e261587ee3a7b8733513b61cdd9d022976e2a",
+        "2e748f437a9f290218718e0536fc5bd6a42485ec845353b1e740eb124bd967be",
+        "5ad4c1bc039d826ee81ae474942651d77ff681645dc46a193687f8f113254660",
+        "64058497f1e8a98b813778ec2cc12161b017e32078739198efbd464daa5a59ef",
+        "c9d1adda22f5fbf19e76137ae450601fcc41d6acbd718dbbd3b9cdb2fd79866f",
+        "372ee1863c451400423e83c9e190dbed40c72d24e91c9f51cefee683c44a12bc",
+        "5e95ba44fe1c7ad1c698077b8ebb19ca7af59a7710bb83e38c666d5f82796705",
+        "a8cdf6b9b2a53b220ddeaa9b03b19876c96168e8091019f6a08975aa82902033",
+        "496b05b4cc973efa2294dcf623d1844cc5d32c7870f654acf0ca94e6699db238",
+        "8b1fdd0442c4cf1858fe7db91a50358131989bd077536aecf9b50677e77e6cfe",
+        "b0dd18a3e2c5abbc0cbc6676172e1238e9ae7ebaf3d8d8cbfb32fca64ce583ed",
+        "06b479db0f6c8a7f2c37e3e88df516a2c82b61d7fe9e65f6cd97bf88d904c0af",
+        "8ae2c3046b983f566d8f4aaa82df32cd8a87d4d45e6dd6a36b8badc081b24779",
+        "56975f06db5e3c47dabe191b19fe9d0b5515c27ed2d8d2f22f6170708d982107",
+        "02a1ec4ccd7508d500c6828344a05cdde677c45f657c6666a013103c65c92961",
+        "e4f4181bf5454570c2c81e25ca0355185ce79d4571cd36375d3b1d4d3c60faae",
+        "1d90237aa5fc9d4b56c1018ff2ba5785aadbdbffac74b90666b326809bdf3162",
+        "f0605725bd1072de5a74c7a023292ad8902ae733caaf8a43fa83abf97cf6fc8d",
+        "27e9dc666ef2e98efa326fbec17c0537ab5d0ad68d97fbe7498542d6ce5f4439",
+        "7261a50fe0748dac509de21d409029add955df6945ac31c7f150ed8263a7af42",
+        "a789c9996747c6deb154aafe52eb30eb0bf78722ccda109367a4bba6efd6b8fa",
+        "d8a7d242452f9d06e3d43a68e1a3d5c588cb94e58ca9d0341e6ec185ae973194",
+        "72c4c219fa9885118bce36ed17ee8c6c50717197ca92a0a4782490e954dc5a00",
+        "f253281ec6aa30da9b2a688bb59441e800db1eeb122d11b3304aa17d0dafa73c",
+        "7f6f8e53a859b819e8871a505d187365769ece3224dd9dae9125f79a07bd4000",
+        "03b281359924154c853781602fbfe8e1086a1a49d4d6e9b8e384a20b76f1c4b3",
+        "5bf6b5c7586e848c01452fd9ff3fdde45ba24c07dd0433356ae23283c6ce2168",
+        "276c6646804201b4acacb2c8fc30730dcbdbe371eea3cb6cbc8945a601b66497",
+    ];
+
+    var revokedPasswords = [
+    ];
+
+    function getAuthenticationHash(password) {
+        var hasher = new jsSHA("SHA-256", "TEXT");
+        hasher.update("vira " + password.trim().toLowerCase() + " mate");
+        return hasher.getHash("HEX");
+    };
+
+    function isValidPassword(password) {
+        if (revokedPasswords.indexOf(hash) >= 0)
+            return false;
+
+        var hash = getAuthenticationHash(password);
+        if (validPasswords.indexOf(hash) >= 0)
+            return true;
+
+        return false;
+    };
+
+    context.getAuthenticationHash = getAuthenticationHash;
+    context.isValidPassword = isValidPassword;
+})(window);
+
 var settings = new Store("settings", {
     "preferFriendSummons": true,
     "preferNonFriendSummonsInFavorites": true,
@@ -703,17 +4736,17 @@ function broadcastActionTimestamps(uid, userDict) {
         uid: uid
     };
     chrome.tabs.query(
-    // FIXME: Can we narrow this to granblue tabs without the 'tabs' permission?
-    {}, function (tabs) {
-        if (!tabs)
-            return;
-        for (var i = 0; i < tabs.length; i++) {
-            var tab = tabs[i];
-            chrome.tabs.sendMessage(tab.id, msg);
-            if (chrome.runtime.lastError)
-                log(chrome.runtime.lastError);
-        }
-    });
+        // FIXME: Can we narrow this to granblue tabs without the 'tabs' permission?
+        {}, function (tabs) {
+            if (!tabs)
+                return;
+            for (var i = 0; i < tabs.length; i++) {
+                var tab = tabs[i];
+                chrome.tabs.sendMessage(tab.id, msg);
+                if (chrome.runtime.lastError)
+                    log(chrome.runtime.lastError);
+            }
+        });
 }
 ;
 function makeActionTimestamps(userDict) {
@@ -1945,8 +5978,8 @@ function refreshEnemyUI() {
             (typeof (combatState.turn) === "number")) {
             var computedStyle = window.getComputedStyle(gauge);
             if (
-            // Why is this check necessary?
-            (computedStyle.display === "block") &&
+                // Why is this check necessary?
+                (computedStyle.display === "block") &&
                 ((container.turnIndex != combatState.turn) ||
                     (container.lastSecond != sec))) {
                 container.parentNode.removeChild(container);
@@ -4391,7 +8424,7 @@ var _loadExternalScript = function (window) {
         if (result) {
             state.response =
                 state.responseText =
-                    JSON.stringify(result);
+                JSON.stringify(result);
             return true;
         }
         return false;
@@ -6451,10 +10484,10 @@ function updateNetworkHud() {
     }
     html +=
         "<br>" +
-            "wait " + (maxDelay / 1000).toFixed(2) + "<br>" +
-            "&nbsp;avg " + (avgDelay / 1000).toFixed(2) + "<br>" +
-            "dur &nbsp;" + (maxDuration / 1000).toFixed(2) + "<br>" +
-            "&nbsp;avg " + (avgDuration / 1000).toFixed(2);
+        "wait " + (maxDelay / 1000).toFixed(2) + "<br>" +
+        "&nbsp;avg " + (avgDelay / 1000).toFixed(2) + "<br>" +
+        "dur &nbsp;" + (maxDuration / 1000).toFixed(2) + "<br>" +
+        "&nbsp;avg " + (avgDuration / 1000).toFixed(2);
     networkHudElement.innerHTML = html;
     if (hideNetworkHudTimeoutHandle)
         clearTimeout(hideNetworkHudTimeoutHandle);
@@ -10661,9 +14694,9 @@ function tryUseItemByNumber(number) {
 function trySelectCharacterByNumber(number) {
     var waitingForCharacterSelection = !!findVisibleElementWithSelector("div.txt-select-chara");
     if (
-    // HACK: If the 'tap a member to heal' text is visible, we actually want to pick characters
-    //  with the number keys, so skip this
-    !waitingForCharacterSelection &&
+        // HACK: If the 'tap a member to heal' text is visible, we actually want to pick characters
+        //  with the number keys, so skip this
+        !waitingForCharacterSelection &&
         // HACK: Some sort of modal is open, so let's try the possibilities...
         isMaskVisible()) {
         return tryUseItemByNumber(number) ||
@@ -11746,3 +15779,1442 @@ function areYouFeelingLucky() {
     }
 }
 
+var combatState = null;
+var currentSkillRequestId = null;
+var debuffTimerElement = null, buffTimerElements = null;
+var refreshBuffsButton = null;
+var activatingSkillId = null;
+var mostRecentTurn = -1;
+var currentSettings = {};
+var lastDebuffTimerUpdate = -1;
+var currentConditions;
+var hasAutoAdvanced = false;
+var normalAttacking = false, usingSummon = false;
+var autoSkipInProgress = false;
+var suppressAutoSkip = false;
+var partyStateIsDirty = true;
+var combatUIIsPrepared = false;
+var pendingOneClickSummon = null, pendingOneClickSummonId = null;
+var bufferedTargetSwitch = null;
+var hasInvalidatedRaidListAfterCombat = false;
+var hasLoadedQuestResults = false;
+var skillMap = null;
+var currentBattleUid = null, currentBattleTabId = null;
+var conditionUpdateIsPending = false, conditionUpdateInProgress = false;
+var lastConditionUpdateTimestamp = null, lastSlowConditionUpdateTimestamp = null;
+var recheckTimeout = null;
+var resultCheckTimeout = null;
+var pollingInterval = null;
+var statusInterval = null;
+var cancelTouch = false;
+var updatePanels = false;
+var isAttackingLastUpdate = false;
+var lastActionTimestamps = null;
+var isRemoteConnected = false;
+// Callbacks for manipulating the status panel
+var updateStatusPanel = null, doUpdateStatusPanel = null, invalidateStatus = null;
+var doUpdateGuildSupportBuffs = null, doUpdatePersonalSupportBuffs = null, invalidateSupportBuffs = null;
+var statusPanelUpdateIntervalMinutes = 5;
+var partyIcons = null, skillContainers = null, partyContainer = null, lisAbility = null, quickPanels = null, commandTop = null, skipButton = null, enemyGauges = null, quickSummonPanel = null, summonDetailModal = null, raidContainer = null, fieldEffectsPanel = null, actionTimerElement = null;
+var myTabId = null;
+var activeWatches = [];
+function resetState() {
+    partyStateIsDirty = true;
+    combatState = null;
+    mostRecentTurn = -1;
+    conditionUpdateIsPending = false;
+    currentConditions = {};
+    currentConditions.enemy = [
+        new ConditionRecord(1, 0),
+        new ConditionRecord(1, 1),
+        new ConditionRecord(1, 2)
+    ];
+    currentConditions.party = [
+        new ConditionRecord(0, 0),
+        new ConditionRecord(0, 1),
+        new ConditionRecord(0, 2),
+        new ConditionRecord(0, 3)
+    ];
+    // Don't update conditions right away, to avoid the server shouting at us
+    lastConditionUpdateTimestamp = Date.now();
+    lastDebuffTimerUpdate = -1;
+    activatingSkillId = null;
+    normalAttacking = false;
+    usingSummon = false;
+    autoSkipInProgress = false;
+    combatUIIsPrepared = false;
+    previousConditions = null;
+    previousConditionsTimestamps = null;
+    bufferedTargetSwitch = null;
+    raidListUpdateCounter = 25;
+    currentRaidListUpdateInterval = raidListUpdateInterval;
+    hasInvalidatedRaidListAfterCombat = false;
+    cancelTouch = false;
+    updatePanels = false;
+    isAttackingLastUpdate = false;
+    currentPointStandings = null;
+    areBuffTimersInvalid = true;
+    focusedCharacterIndex = null;
+    lastEnhancementMaterials = {};
+    if (buffTimerElements)
+        for (var i = 0, l = buffTimerElements.length | 0; i < l; i++)
+            buffTimerElements[i].parentNode.removeChild(buffTimerElements[i]);
+    if (enemyGauges)
+        for (var i = 0, l = enemyGauges.length | 0; i < l; i++)
+            enemyGauges[i].parentNode.removeChild(enemyGauges[i]);
+    buffTimerElements = null;
+    enemyGauges = null;
+    resetCachedElements();
+    // Cancel any active element watches
+    for (var i = 0, l = activeWatches.length | 0; i < l; i++)
+        activeWatches[i]();
+    activeWatches.length = 0;
+    if (recheckTimeout) {
+        window.clearTimeout(recheckTimeout);
+        recheckTimeout = null;
+    }
+    if (resultCheckTimeout) {
+        // HACK: Don't kill this timer on results pages
+        if (window.location.href.indexOf("result") < 0) {
+            window.clearTimeout(resultCheckTimeout);
+            resultCheckTimeout = null;
+        }
+    }
+    if (pollingInterval) {
+        window.clearInterval(pollingInterval);
+        pollingInterval = null;
+    }
+    if (debuffTimerElement)
+        debuffTimerElement.style.display = "none";
+    if (fieldEffectsPanel)
+        fieldEffectsPanel.style.display = "none";
+    if (actionTimerElement)
+        actionTimerElement.style.opacity = 0.0;
+}
+;
+function resetCachedElements() {
+    partyIcons = skillContainers =
+        partyContainer = lisAbility =
+        quickPanels = commandTop =
+        skipButton = enemyGauges =
+        quickSummonPanel = summonDetailModal =
+        skillMap = null;
+}
+;
+
+function doInitialize() {
+    sendExtensionMessage({ type: "pleaseInjectStylesheets" }, function (tabId) {
+        myTabId = tabId;
+    });
+    var hasUpdatedSettings = false;
+    var hasContentLoaded = false;
+    var hasInitializedSandbox = false;
+    window.addEventListener("hashchange", onHashChange, false);
+    window.addEventListener("keydown", onKeyDown, false);
+    var tick = function () {
+        if (!hasUpdatedSettings)
+            return;
+        if (!hasContentLoaded && !document.querySelector("div.contents"))
+            return;
+        if (!hasInitializedSandbox)
+            return;
+        doInitialSetup();
+    };
+    document.addEventListener("DOMContentLoaded", function () {
+        hasContentLoaded = true;
+        tick();
+    }, false);
+    updateSettings(function () {
+        hasUpdatedSettings = true;
+        tick();
+    });
+    initExternalSandbox(function () {
+        initMessageChannel();
+        i18n.setLanguageGetter(function () {
+            return currentSettings.language;
+        });
+        sendExtensionMessage({ type: "heartbeat" });
+        hasInitializedSandbox = true;
+        tick();
+    });
+}
+;
+var mobileViewportScale = 1.0, mobileElementScale = 1.0;
+var scrollbarWidth;
+var isCenterPending = false, centerHook = null;
+function isMobileSite() {
+    return (location.host === "gbf.game.mbga.jp") ||
+        (document.body.className.indexOf("android4") >= 0);
+}
+;
+function queueCenterPopups() {
+    if (isCenterPending)
+        return;
+    isCenterPending = true;
+    // window.requestAnimationFrame(centerMobilePopups);
+}
+;
+function centerMobilePopups() {
+    isCenterPending = false;
+    // HACK
+    if (isCombatPage(window.location.hash) ||
+        (window.location.hash.indexOf("quest/scene") >= 0))
+        return;
+}
+;
+function registerMobileHooks() {
+    waitForElementToExist(document, "div#pop", function (popContainer) {
+        var observer = AbstractMutationObserver.forElement(popContainer, {
+            childList: true, subtree: true, attributes: true
+        });
+        observer.register(queueCenterPopups);
+    }, true);
+}
+;
+function handleMobileSizeChange() {
+    mobileViewportScale = parseFloat(document.documentElement.style.zoom);
+    var gameContainer = getGameContainer();
+    document.documentElement.style.marginLeft = Math.ceil(64 / mobileViewportScale).toFixed(0) + "px";
+    var targetWidth = measureElementWidth(document.body) - 64;
+    var extraZoomRatio = targetWidth / (320 * mobileViewportScale);
+    gameContainer.style.transform = "scale(" + extraZoomRatio.toFixed(3) + ")";
+    mobileElementScale = mobileViewportScale * extraZoomRatio;
+    queueCenterPopups();
+}
+;
+function isQuestMapPage() {
+    return (location.hash === "#quest/island") ||
+        (location.hash === "#quest/index");
+}
+;
+function measureElementWidth(element) {
+    var elt = document.createElement("div");
+    elt.style = "position: fixed; left: 0px; right: 0px; top: 0px; bottom: 1px; margin: 0px; padding: 0px; display: block; zoom: reset;";
+    element.appendChild(elt);
+    var result = elt.clientWidth;
+    element.removeChild(elt);
+    return result;
+}
+;
+function setupMobileGameContainer() {
+    var scrollableElement = document.documentElement;
+    // Force the scrollbars off, measure
+    scrollableElement.style.overflowY = "hidden";
+    var fullWidth = measureElementWidth(scrollableElement);
+    // Force the scrollbars to appear, measure
+    scrollableElement.style.overflowY = "scroll";
+    var innerWidth = measureElementWidth(scrollableElement);
+    // Hide the scrollbars again
+    scrollableElement.style.overflowY = "";
+    scrollbarWidth = (window.outerWidth - window.innerWidth) + (fullWidth - innerWidth);
+    window.addEventListener("resize", handleMobileSizeChange, false);
+    window.addEventListener("scroll", queueCenterPopups, false);
+    handleMobileSizeChange();
+    registerMobileHooks();
+    // UGH
+    window.setTimeout(handleMobileSizeChange, 1000);
+    window.setTimeout(handleMobileSizeChange, 2000);
+}
+;
+var hasDoneInitialSetup = false;
+var hasDoneEarlySetup = false;
+function doEarlyCssSetup() {
+    if (hasDoneEarlySetup)
+        return;
+    hasDoneEarlySetup = true;
+}
+;
+function injectStylesheetsIntoContainer(container) {
+    if (isChromeHackNeeded)
+        injectStylesheet("chrome-53-shadow.css", container);
+    injectStylesheet("viramate.css", container);
+    injectStylesheet("viramate-shadow.css", container);
+    if (currentSettings.betterEnglishFont)
+        injectStylesheet("lato-woff.css", container);
+    if (currentSettings.showGaugeOverlays)
+        injectStylesheet("gauge-overlays.css", container);
+    if (isMobileSite())
+        injectStylesheet("mobile.css", container);
+}
+;
+var isChromeHackNeeded = false;
+function doInitialSetup() {
+    if (hasDoneInitialSetup)
+        return;
+    hasDoneInitialSetup = true;
+    if (!isMobileSite() &&
+        ((navigator.userAgent.indexOf("Chrome/53.0") >= 0) ||
+            (navigator.userAgent.indexOf("Chrome/54.0") >= 0) ||
+            (navigator.userAgent.indexOf("Chrome/55.0") >= 0) ||
+            (navigator.userAgent.indexOf("Chrome/56.0") >= 0) ||
+            (navigator.userAgent.indexOf("Chrome/57.0") >= 0) ||
+            (navigator.userAgent.indexOf("Chrome/58.0") >= 0)))
+        isChromeHackNeeded = true;
+    injectStylesheetsIntoContainer(getUiContainer());
+    if (currentSettings.fixJPFontRendering) {
+        // fix the lang element since it's originally set to jp
+        if (document.documentElement.lang === "jp") {
+            document.documentElement.lang = "ja";
+        }
+        // no point doing this if lato is enabled since it's handled by the css
+        if (!currentSettings.betterEnglishFont) {
+            // fix fonts for <select> elements
+            var fonts = window.getComputedStyle(document.body)["font-family"].split(", ");
+            fonts.splice(-1, 0, '"Yu Gothic"', '"Meiryo"');
+            document.body.style.fontFamily = fonts.join(", ");
+        }
+    }
+    if (currentSettings.disableMiddleRightClick) {
+        document.addEventListener("mousedown", suppressMouse, true);
+        document.addEventListener("mouseup", suppressMouse, true);
+    }
+    if (currentSettings.keepSoundOnBlur) {
+        window.addEventListener("blur", function (e) {
+            e.stopImmediatePropagation();
+        }, false);
+    }
+    // console.log("お姉さま。。。");
+    if ((document.readyState === "complete") ||
+        (document.readyState === "interactive")) {
+        onPageReady();
+    }
+    else {
+        document.addEventListener("readystatechange", function () {
+            if (document.readyState === "complete")
+                onPageReady();
+        }, false);
+    }
+}
+;
+function showGamePopup(options) {
+    if (typeof (options) !== "object")
+        throw new Error("Expected options dictionary");
+    var template = document.querySelector("script#popup");
+    if (!template) {
+        log("Could not find popup template");
+        return;
+    }
+    var templateText = escape(template.textContent);
+    var popupData = {
+        "element_name": "pop",
+        "title": options.title,
+        "body": options.body,
+        "className": null,
+        "okCallBackName": "popRemove",
+        "cancelCallBackName": null,
+        "exceptionFlag": false,
+        "url": null,
+        "tpl": templateText
+    };
+    sendExternalMessage({ type: "doPopup", data: popupData });
+}
+;
+function waitForElementToExist(container, selectors, callback,
+    // If false, watch terminates after a match is found
+    ongoing,
+    // If true, the 'id' and 'class' attributes are watched in order to find a match
+    //  that only appears after an element is added to the DOM
+    watchAttributes) {
+    if (!container)
+        throw new Error("No container element");
+    else if (!selectors)
+        throw new Error("No selector");
+    else if (!callback || !callback.call)
+        throw new Error("No callback provided");
+    if (container === document)
+        container = document.body;
+    var _container = container;
+    if (typeof (selectors) === "string")
+        selectors = [selectors];
+    var trace = false;
+    var hasCleanedUp = false, hasFired = false, checkPending = false;
+    var observer = null, unregister = null;
+    var seenElements = new WeakMap();
+    var cleanup = function () {
+        if (hasCleanedUp)
+            return;
+        if (trace)
+            log("Cancelled element watch:", selectors);
+        hasCleanedUp = true;
+        if (unregister)
+            unregister();
+        unregister = observer = null;
+        seenElements = null;
+    };
+    var matches = [];
+    var checkForElement = function () {
+        var result = false;
+        var queue = [];
+        checkPending = false;
+        if (matches.length !== 0)
+            throw new Error("Re-entrant element watch check");
+        for (var j = 0, l2 = selectors.length; j < l2; j++) {
+            var selector = selectors[j];
+            var elts = _container.querySelectorAll(selector);
+            for (var i = 0, l = elts.length; i < l; i++)
+                matches.push(elts[i]);
+        }
+        for (var i = 0, l = matches.length; i < l; i++) {
+            var elt = matches[i];
+            if (!seenElements)
+                continue;
+            if (seenElements.get(elt) === 1)
+                continue;
+            if (trace)
+                log("Found element", elt);
+            seenElements.set(elt, 1);
+            var cbresult = callback(elt);
+            if (cbresult)
+                queue.push(cbresult);
+            result = true;
+            if (!ongoing) {
+                cleanup();
+                matches.length = 0;
+                return result;
+            }
+        }
+        matches.length = 0;
+        for (var i = 0, l = queue.length; i < l; i++)
+            queue[i]();
+        return result;
+    };
+    if (checkForElement() && !ongoing)
+        return null;
+    activeWatches.push(cleanup);
+    var observerOptions = {
+        childList: true, subtree: true,
+        attributes: !!watchAttributes, characterData: false
+    };
+    if (observerOptions.attributes)
+        observerOptions.attributeFilter = ["class", "id"];
+    observer = AbstractMutationObserver.forElement(_container, observerOptions);
+    if (trace)
+        log("Started watching for selectors", selectors);
+    unregister = observer.register(checkForElement);
+    return cleanup;
+}
+;
+function onKeyDown(evt) {
+    if (isShutdown)
+        return;
+    if (!currentSettings.keyboardShortcuts2)
+        return;
+    if (evt.ctrlKey || evt.altKey)
+        return;
+    var keyText = evt.code.toUpperCase();
+    var focused = document.activeElement;
+    var isSpecialCased = false;
+    // HACK: Sticker UI stuff
+    if (focused && (focused.className === "stamp-filter")) {
+        if (keyText === "ENTER") {
+            var autoSelected = document.querySelector("div.lis-stamp.auto-selected");
+            if (autoSelected) {
+                pulseElement(autoSelected);
+                generateClick(autoSelected);
+            }
+            return;
+        }
+        isSpecialCased = (keyText === "ESCAPE") || (keyText === "BACKQUOTE");
+    }
+    if (!isSpecialCased &&
+        focused && ((focused.nodeName.toLowerCase() === "input") ||
+            (focused.nodeName.toLowerCase() === "textarea"))) {
+        return;
+    }
+    var okButton = findOkButton();
+    var cancelButton = findCancelButton();
+    var textButton = findActiveUsualTextButton();
+    if (keyText === "SPACE") {
+        if (okButton) {
+            pulseElement(okButton);
+            generateClick(okButton);
+            evt.preventDefault();
+            evt.stopPropagation();
+            return;
+        }
+        else if (cancelButton && !textButton) {
+            // HACK: If they hit space while a modal is open that only has a cancel button,
+            //  it's unlikely they meant to do anything other than click 'OK'
+            // If there is a "usual text" button, then this is probably something different
+            return;
+        }
+    }
+    else if ((keyText === "ESCAPE") ||
+        (keyText === "BACKQUOTE")) {
+        if (cancelButton) {
+            // FIXME: Why doesn't this work?
+            pulseElement(cancelButton);
+            generateClick(cancelButton);
+            evt.preventDefault();
+            evt.stopPropagation();
+            // HACK: Ugh, what is wrong with this modal?
+            var summonModal = document.querySelector("div.pop-summon-detail");
+            if (summonModal)
+                summonModal.style.display = "none";
+            return;
+        }
+    }
+    else if (keyText === "KEYL") {
+        var btn = document.querySelector("div.btn-repeat-last");
+        if (btn) {
+            pulseElement(btn);
+            generateClick(btn, true);
+            evt.preventDefault();
+            evt.stopPropagation();
+            return;
+        }
+    }
+    else if (keyText === "KEYA") {
+        var btn = document.querySelector("div.prt-recommend-buttons div.btn-recommend");
+        if (btn) {
+            pulseElement(btn);
+            generateClick(btn, false);
+            evt.preventDefault();
+            evt.stopPropagation();
+            return;
+        }
+    }
+    else if (keyText === "KEYR") {
+        var btn = document.querySelector("div.prt-bonus-reset div.btn-bonus-reset") ||
+            document.querySelector("div.pop-confirm-decompose.pop-show div.btn-decompose") ||
+            document.querySelector("div.prt-button-decompose div.btn-decompose-confirm") ||
+            document.querySelector("div.prt-decompose-button div.btn-decompose");
+        if (btn) {
+            pulseElement(btn);
+            generateClick(btn, false);
+            evt.preventDefault();
+            evt.stopPropagation();
+            return;
+        }
+    }
+    if (combatState) {
+        if (processSkillHotkey(evt)) {
+            evt.preventDefault();
+            evt.stopPropagation();
+            return;
+        }
+    }
+    else if (window.location.hash.indexOf("/opening/scene") >= 0 ||
+        window.location.hash.indexOf("/scene/") >= 0 ||
+        window.location.hash.indexOf("/scene_epilogue/") >= 0 ||
+        window.location.hash.indexOf("archive/story/play_view") >= 0 ||
+        window.location.hash.indexOf("archive/detail_npc") >= 0) {
+        var choiceNumber = parseInt(keyText.replace("DIGIT", "").replace("NUMPAD", ""));
+        var choiceElement;
+        if (keyText === "SPACE") {
+            // don't do anything if there's a choice available
+            var selectionArea = document.querySelector("div.prt-sel-area");
+            if (selectionArea && selectionArea.style.display === "block") {
+                return;
+            }
+            var cursorTalk = document.querySelector("div.ico-cursor-talk");
+            if (!cursorTalk) {
+                return;
+            }
+            pulseElement(cursorTalk);
+            generateClick(cursorTalk);
+            evt.preventDefault();
+            evt.stopPropagation();
+        }
+        else if (keyText === "KEYS") {
+            var skipButton = document.querySelector("div.btn-skip");
+            if (!skipButton) {
+                return;
+            }
+            pulseElement(skipButton);
+            generateClick(skipButton);
+            evt.preventDefault();
+            evt.stopPropagation();
+        }
+        else if (choiceElement = document.querySelector("div.txt-sel" + choiceNumber)) {
+            pulseElement(choiceElement);
+            generateClick(choiceElement);
+            evt.preventDefault();
+            evt.stopPropagation();
+        }
+    }
+    else if (window.location.hash.indexOf("/stage") >= 0) {
+        if (keyText === "SPACE") {
+            var forwardButton = document.querySelector("div.btn-command-forward");
+            pulseElement(forwardButton);
+            generateClick(forwardButton);
+            evt.preventDefault();
+            evt.stopPropagation();
+        }
+    }
+    else if (window.location.hash.indexOf("comic/") >= 0) {
+        if (keyText === "ARROWLEFT" || keyText === "ARROWRIGHT") {
+            var btn = document.querySelector("li.btn-" + ((keyText === "ARROWLEFT") ? "new" : "old"));
+            if (btn) {
+                pulseElement(btn);
+                generateClick(btn);
+                evt.preventDefault();
+                evt.stopPropagation();
+            }
+        }
+    }
+}
+;
+function findOkButton() {
+    if (
+        // HACK: The stamina pop-up sometimes appears on top of an existing modal with an OK button.
+        findVisibleElementWithSelector("div.pop-stamina") ||
+        // The quest start button has special anticheat treatment like Attack
+        findVisibleElementWithSelector("div.se-quest-start"))
+        return null;
+    var result = findVisibleElementWithSelector("div.btn-usual-ok") ||
+        // Confirm join button when joining a public raid
+        findVisibleElementWithSelector("div.btn-usual-join") ||
+        // OK buttons on raid/quest results pages
+        findVisibleElementWithSelector('div.btn-control[data-status="ok"]') ||
+        findVisibleElementWithSelector('a.btn-control.location-href[data-location-href="quest"]') ||
+        // Quest retreat 'Quests' button
+        findVisibleElementWithSelector('div.btn-usual-questlist') ||
+        // Co-op room 'leave' confirmation button
+        findVisibleElementWithSelector('div.btn-leave') ||
+        // Co-op room 'close room' confirmation button
+        findVisibleElementWithSelector('div.btn-close') ||
+        // Healing 'use' confirmation button
+        findVisibleElementWithSelector('div.btn-usual-use') ||
+        // Twitter reset tweet confirmation
+        findVisibleElementWithSelector('div.btn-tweet-post') ||
+        // Setting/removing wonders
+        findVisibleElementWithSelector('div.btn-usual-set') ||
+        findVisibleElementWithSelector('div.btn-usual-remove') ||
+        // Upgrade page
+        findVisibleElementWithSelector('div.btn-synthesis') ||
+        findVisibleElementWithSelector('div.btn-settle') ||
+        findVisibleElementWithSelector('div.prt-follow-button-enhance div.btn-follow-again') ||
+        findVisibleElementWithSelector('div.cnt-confirm-material.prt-module-evolution div.btn-evolution.active') ||
+        // DO
+        findVisibleElementWithSelector('btn-location-island') ||
+        findVisibleElementWithSelector('div.btn-start-battle') ||
+        // Event new quest notification
+        findVisibleElementWithSelector('div.btn-usual-close') ||
+        // Casino/shop exchange
+        findVisibleElementWithSelector('div.btn-usual-text.exchange') ||
+        findVisibleElementWithSelector('div.btn-usual-text.buy') ||
+        // Bonus reset
+        findVisibleElementWithSelector('div.pop-bonus-reset div.btn-usual-exchange');
+    return result;
+}
+;
+function findCancelButton() {
+    return findVisibleElementWithSelector("div.btn-usual-cancel") ||
+        findVisibleElementWithSelector('div.btn-usual-close');
+}
+;
+function findActiveUsualTextButton() {
+    // to account for the assassin anki div having its own class name for some reason
+    return findVisibleElementWithSelector("div[class*='btn-usual-']:not(.btn-usual-cancel):not(.disable)");
+}
+function onHashChange(evt) {
+    if (isShutdown)
+        return;
+    handleNewPage();
+}
+;
+var nextAjaxToken = 0;
+var ajaxCallbacks = {};
+var nextUidToken = 0;
+var uidCallbacks = {};
+function doClientAjax(...args) {
+    if (isShutdown)
+        return;
+    var url, data, callback;
+    if (args.length === 2) {
+        url = args[0];
+        data = undefined;
+        callback = args[1];
+    }
+    else if (args.length === 3) {
+        url = args[0];
+        data = args[1];
+        callback = args[2];
+    }
+    else
+        throw new Error("Expected [url, callback] or [url, data, callback]");
+    var token = ++nextAjaxToken;
+    ajaxCallbacks[token] = callback;
+    // console.log("ajax ", url, window.location.hash);
+    sendExternalMessage({
+        type: "doAjax",
+        token: token,
+        data: data,
+        url: url
+    });
+}
+;
+function onWindowMessage(evt) {
+    if (!evt.data.type)
+        return;
+    if (evt.data.type === "shutdownOk") {
+        finishCompatibilityShutdown();
+        return;
+    }
+    if (isShutdown)
+        return;
+    switch (evt.data.type) {
+        case "vmHello":
+            finishChannelSetup(evt.data.secretToken);
+            return;
+        case "externalLog":
+            var args = evt.data.args;
+            args.unshift("vms>");
+            console.log.apply(console, args);
+            return;
+        case "moduleLoaded":
+            validateModule(evt.data.id, evt.data.hash);
+            return;
+        case "ajaxBegin":
+            onAjaxBegin(evt.data.url, evt.data.requestData, evt.data.uid);
+            return;
+        case "ajaxComplete":
+            onAjaxComplete(evt.data);
+            return;
+        case "stageTick":
+            // prevent finished combat state from being set back to unfinished in a raid
+            if (combatState &&
+                combatState.is_multi &&
+                combatState.finish &&
+                !evt.data.state.finish &&
+                (combatState.raid_id == evt.data.state.raid_id)) {
+                evt.data.state.finish = true;
+            }
+            combatState = evt.data.state;
+            processCombatPage();
+            return;
+        case "doAjaxResult":
+            var token = evt.data.token;
+            var callback = ajaxCallbacks[token];
+            delete ajaxCallbacks[token];
+            callback(evt.data.result, evt.data.error, evt.data.url);
+            return;
+        case "webSocketCreated":
+            return;
+        case "webSocketMessageReceived":
+            onWebSocketMessage(evt.data.data);
+            return;
+        case "gotUserId":
+            var token = evt.data.token;
+            var callback = uidCallbacks[token];
+            delete uidCallbacks[token];
+            callback(evt.data.uid);
+            return;
+        case "doAjax":
+        case "doPopup":
+        case "click":
+        case "dispatchMouseEvent":
+        case "getUserIdAndTabId":
+            return;
+        case "getSkillState":
+            var skillState = getSkillState();
+            sendExternalMessage({
+                type: "socketResult",
+                id: evt.data.id,
+                result: skillState
+            });
+            return;
+        case "getExtensionVersion":
+            sendExtensionMessage({ type: "getVersion" }, function (version) {
+                sendExternalMessage({
+                    type: "socketResult",
+                    id: evt.data.id,
+                    result: version
+                });
+            });
+            return;
+        case "getBookmarks":
+            var keys = Object.keys(allBookmarks);
+            sendExternalMessage({
+                type: "socketResult",
+                id: evt.data.id,
+                result: keys
+            });
+            return;
+        case "visitBookmark":
+            var handler = allBookmarks[evt.data.key];
+            sendExternalMessage({
+                type: "socketResult",
+                id: evt.data.id,
+                result: !!handler
+            });
+            handler();
+            return;
+        case "tryStartGuildWarRaid":
+            var bookmarkFn = makeGuildWarRaidBookmark(evt.data.chapterId, evt.data.questSuffix, evt.data.checkItem);
+            bookmarkFn(null, function (ok) {
+                sendExternalMessage({
+                    type: "socketResult",
+                    id: evt.data.id,
+                    result: ok
+                });
+            });
+            return;
+        case "tryUseSummon":
+            var elements = document.querySelectorAll("div.lis-summon[summon-name=\"" + evt.data.name + "\"]");
+            if (!elements || elements.length == 0) {
+                sendExternalMessage({
+                    type: "socketResult",
+                    id: evt.data.id,
+                    result: "not found"
+                });
+                return;
+            }
+            for (var i = 0, l = elements.length; i < l; i++) {
+                var element = elements[i];
+                if (element.className.indexOf("btn-summon-available") >= 0) {
+                    pendingOneClickSummonId = evt.data.id;
+                    var scheduleResult = scheduleOneClickSummon(element, null);
+                    if (scheduleResult !== "ok")
+                        sendExternalMessage({
+                            type: "socketResult",
+                            id: evt.data.id,
+                            result: scheduleResult
+                        });
+                    return;
+                }
+            }
+            sendExternalMessage({
+                type: "socketResult",
+                id: evt.data.id,
+                result: "on cooldown"
+            });
+            return;
+        case "connectionStatusChanged":
+            isRemoteConnected = evt.data.connected;
+            var uic = getUiContainer();
+            var icon = uic.querySelector("img.connection-status");
+            if (!icon) {
+                if (!evt.data.connected)
+                    return;
+                icon = document.createElement("img");
+                icon.className = "connection-status";
+                icon.style.opacity = 0.0;
+                icon.addEventListener("click", function () { sendExternalMessage({ type: "tryConnect" }); }, false);
+                injectElement(uic, icon);
+            }
+            var newSrc = getResourceUrl(evt.data.connected ? "connected.png" : "disconnected.png");
+            icon.title = evt.data.connected ? "Connected." : "Disconnected. Click to connect.";
+            if (currentSettings.hideMobageSidebar)
+                icon.style.right = "0px";
+            else
+                icon.style.left = "0px";
+            if (newSrc != icon.src) {
+                icon.src = newSrc;
+                window.setTimeout(function () { icon.style.opacity = 0.8; }, 25);
+                window.setTimeout(function () { icon.style.opacity = 0.33; }, 2500);
+            }
+            return;
+        case "error":
+            log(evt.data.stack);
+            return;
+        case "frameStats":
+            updatePerformanceHud(evt.data);
+            return;
+        case "tryRepeatLastQuest":
+            repeatLastQuest(null, function (result, reason) {
+                sendExternalMessage({
+                    type: "socketResult",
+                    id: evt.data.id,
+                    result: result ? "ok" : reason
+                });
+            });
+            return;
+        case "tryJoinRaid":
+            tryJoinRaid(evt.data.code, function (ok) {
+                sendExternalMessage({
+                    type: "socketResult",
+                    id: evt.data.id,
+                    result: ok
+                });
+            });
+            return;
+        case "tryJoinCoOpRoom":
+            tryJoinCoOpRoom(evt.data.code, function (ok) {
+                sendExternalMessage({
+                    type: "socketResult",
+                    id: evt.data.id,
+                    result: ok
+                });
+            });
+            return;
+        default:
+            log("Unknown window message " + evt.data.type);
+            return;
+    }
+}
+;
+// FIXME: Duplicated from popup.js
+function tryJoinRaid(raidId, onComplete) {
+    var oc = function (x) {
+        if (onComplete)
+            onComplete(x);
+        return x;
+    };
+    if (!raidId || (raidId.length !== 8))
+        return oc("invalid id");
+    if (combatState && combatState.raidCode == raidId) {
+        return oc("already in this raid");
+    }
+    try {
+        var payload = { special_token: null, battle_key: raidId };
+        doClientAjax("/quest/battle_key_check", JSON.stringify(payload), function (result, error) {
+            console.log("Battle key check returned", result, error);
+            if (result) {
+                if (typeof (result) === "string")
+                    result = JSON.parse(result);
+                if (result.popup && result.popup.body) {
+                    showGamePopup(result.popup);
+                    return oc("popup: " + result.popup.body);
+                }
+                else if (result.redirect) {
+                    if (window.location.href != result.redirect) {
+                        doNavigate(result.redirect);
+                        window.setTimeout(function () {
+                            // Work around stuck summon lists (pretty rare)
+                            if (!document.querySelector("div.btn-supporter")) {
+                                sendExternalMessage({ type: "navigating" });
+                                window.location.reload();
+                            }
+                        }, 3000);
+                    }
+                    return oc("ok");
+                }
+                else if ((typeof (result.current_battle_point) === "number") &&
+                    !result.battle_point_check) {
+                    console.log("Refill required, need " + result.used_battle_point + "bp");
+                    return oc("refill required");
+                    /*
+                    var useCount = Math.min(result.used_battle_point, result.used_battle_point - status.bp);
+                    useNormalItemCallback(5, useCount, function () {
+                        // always use the current raid id in case it changes due to the focus changing
+                        doJoinRaid(raidId);
+                    });
+                    */
+                }
+                else if (result.idleTimeout) {
+                    return oc("idle timeout");
+                }
+                else {
+                    return oc("unknown response: " + JSON.stringify(result));
+                }
+            }
+            else {
+                return oc("no response from server");
+            }
+        });
+    }
+    catch (exc) {
+        oc("unknown error: " + String(exc));
+    }
+}
+;
+function tryJoinCoOpRoom(roomId, onComplete) {
+    var oc = function (x) {
+        if (onComplete)
+            onComplete(x);
+        return x;
+    };
+    if (!roomId || (roomId.length < 5) || (roomId.length > 6))
+        return oc("invalid id");
+    try {
+        var payload = { special_token: null, room_key: roomId };
+        doClientAjax("/coopraid/room_key", JSON.stringify(payload), function (result, error) {
+            console.log("Room key check returned", result, error);
+            if (result) {
+                if (typeof (result) === "string")
+                    result = JSON.parse(result);
+                if (result.popup && result.popup.body) {
+                    showGamePopup(result.popup);
+                    return oc("popup: " + result.popup.body);
+                }
+                else if (result.redirect) {
+                    if (window.location.href != result.redirect)
+                        doNavigate(result.redirect);
+                    return oc("ok");
+                }
+                else if (result.idleTimeout) {
+                    return oc("idle timeout");
+                }
+                else {
+                    return oc("unknown response: " + JSON.stringify(result));
+                }
+            }
+            else {
+                return oc("no response from server");
+            }
+        });
+    }
+    catch (exc) {
+        oc("unknown error: " + String(exc));
+    }
+}
+;
+function isCoOpRaid() {
+    return combatState && combatState.is_coopraid;
+}
+;
+function autoReloadIfResultsHung() {
+    var elt = findVisibleElementWithSelector("div.prt-result-head");
+    if (!elt && !hasLoadedQuestResults) {
+        log("Raid results still haven't loaded. Force-reloading.");
+        sendExternalMessage({ type: "navigating" });
+        window.location.reload();
+    }
+}
+;
+function checkForBattleResults(raidId, nextDelay, retryCount, originalUrl) {
+    if (suppressAutoSkip)
+        return;
+    trySuppressAutoSkip();
+    if (retryCount >= 4) {
+        log("Retried results check 4 times, stopping");
+        return;
+    }
+    // HACK: Co-op raids never show up in unclaimed rewards under normal circumstances
+    if (isCoOpRaid() && !suppressAutoSkip) {
+        trySuppressAutoSkip();
+        log("Co-op raid; reloading quickly");
+        window.setTimeout(function () {
+            if (window.location.href.indexOf("result") < 0) {
+                sendExternalMessage({ type: "navigating" });
+                if (!suppressAutoSkip)
+                    window.location.reload();
+            }
+        }, 1100);
+        return;
+    }
+    var scheduleRetry = function (offset) {
+        window.setTimeout(function () { checkForBattleResults(raidId, nextDelay + 750 + offset, retryCount + 1, originalUrl); }, nextDelay + offset);
+    };
+    var url = "/quest/unclaimed_reward/1";
+    doClientAjax(url, function (result, error) {
+        if ((window.location.href !== originalUrl) ||
+            (window.location.href.indexOf("#raid") < 0))
+            return;
+        if (error) {
+            log("Failure checking unclaimed rewards", error);
+            if (error.indexOf("abort") < 0) {
+                scheduleRetry(1700);
+            }
+            return;
+        }
+        else if (!result ||
+            (typeof (result) !== "object") ||
+            (result.count < 0)) {
+            // log("No unclaimed rewards yet");
+            scheduleRetry(200);
+            return;
+        }
+        var matchingResults = result.list.filter(function (e) {
+            if (e.raid_id.trim() === String(raidId))
+                return true;
+            else
+                return false;
+        });
+        if (!matchingResults.length) {
+            log("This raid not in results list yet");
+            scheduleRetry(200);
+            return;
+        }
+        if ((window.location.href.indexOf("raid") < 0) ||
+            (window.location.href.indexOf("" + combatState.raid_id) < 0)) {
+            log("Got victory notification while not on raid page; ignoring");
+            return;
+        }
+        hasLoadedQuestResults = false;
+        var unclaimedResult = matchingResults[0];
+        log("Found results for this raid", unclaimedResult);
+        var url = "/#" + unclaimedResult.href;
+        if (window.location.href.indexOf("result") < 0) {
+            trySuppressAutoSkip();
+            if (!suppressAutoSkip)
+                doNavigate(url);
+        }
+        // HACK: We need to wait a bit to start this timer, otherwise handleNewPage clears it
+        window.setTimeout(function () {
+            // HACK: If the results dialog doesn't appear within 5 seconds, force reload
+            resultCheckTimeout = window.setTimeout(autoReloadIfResultsHung, 5000);
+        }, 600);
+        autoSkipInProgress = false;
+    });
+}
+;
+var showButtonInterval = -1;
+var hasFiredOnPageReady = false;
+function onPageReady() {
+    if (isShutdown)
+        return;
+    if (hasFiredOnPageReady)
+        return;
+    hasFiredOnPageReady = true;
+    log("onPageReady");
+    if (!maybeShowViraButton())
+        showButtonInterval = window.setInterval(maybeShowViraButton, 50);
+    handleNewPage();
+}
+;
+function getGameContainer() {
+    return document.getElementById("mobage-game-container") || document.getElementById("gree-game-container");
+}
+;
+function maybeShowViraButton() {
+    if (!currentSettings.showBookmarks)
+        return true;
+    var gameContainer = getGameContainer();
+    if (!gameContainer) {
+        log("Not showing vira because no game container");
+        return false;
+    }
+    // don't show the sidebar stuff if we're on the top page and there is no sidebar yet
+    if (isMobileSite() ||
+        (gameContainer.parentNode !== document.body)) {
+        log("Not showing vira because we're on the top page");
+        window.clearInterval(showButtonInterval);
+        showButtonInterval = -1;
+        showViraButton();
+        return true;
+    }
+    return false;
+}
+;
+function parseItemList(itemList, uid) {
+    // console.log("Item list updated:", itemList);
+    sendExtensionMessage({ type: "updateItemCounters", counters: itemList, uid: uid });
+}
+;
+function parseUserStatus(status, uid) {
+    console.log("Captured status update from network");
+    sendExtensionMessage({ type: "updateStatus", status: status, uid: uid });
+    // We want to fetch the updated data from the background script since it annotates it
+    if (updateStatusPanel)
+        updateStatusPanel(false, true);
+}
+;
+function parseProfile(data, uid) {
+    if (!data)
+        return;
+    sendExtensionMessage({ type: "updateNextRankRp", data: data, uid: uid });
+}
+;
+function resetRaidCode() {
+    sendExtensionMessage({ type: "updateRaidCode", raidCode: null });
+}
+;
+function resizeSubmenu() {
+    var size = currentSettings.submenuSize;
+    if (typeof (size) !== "number")
+        return;
+    var elt = document.querySelector("div#submenu");
+    if (!elt)
+        return;
+    elt.style.transformOrigin = "0 0";
+    elt.style.transform = "scale(" + size.toFixed(2) + ")";
+}
+;
+function updateSettings(callback) {
+    sendExtensionMessage({ type: "getSettings" }, function (settings) {
+        if (!settings) {
+            settings = {};
+            throw new Error("No settings?");
+        }
+        else {
+            currentSettings = settings;
+        }
+        if (settings.isShutdown) {
+            log("Extension currently in shutdown state (remotely?)");
+            if (!isShutdown)
+                compatibilityShutdown();
+            return;
+        }
+        if (applyPassword)
+            applyPassword(settings.password);
+        if (callback)
+            callback(settings);
+        sendExternalMessage({
+            type: "settingsChanged",
+            settings: JSON.stringify(currentSettings)
+        });
+    });
+}
+;
+function maybeInstallDropdownHack() {
+    if (!currentSettings.dropdownFix)
+        return;
+    // console.log("Dropdown fix enabled");
+    var eventCanceller = function (evt) {
+        // HACK: We stop propagation of the event without preventing the default
+        //  action, so that the browser will properly open dropdowns or assign input
+        //  focus without being hindered by granblue's event handlers
+        evt.stopImmediatePropagation();
+    };
+    waitForElementToExist(document, ["select", "textarea"], function (element) {
+        // HACK: Granblue installs a broken mousedown handler on the entire document that
+        //  cancels events and breaks input controls
+        // We register in capturing mode to run before bubbling event handlers
+        // Luckily they don't use a capturing top-level handler - that would be harder to
+        //  intercept.
+        element.addEventListener("mousedown", eventCanceller, true);
+        // We also cancel mouseup events so that their input handler library doesn't have
+        //  a chance to be confused by unbalanced down/up events
+        element.addEventListener("mouseup", eventCanceller, true);
+    }, true);
+}
+;
+function getUserIdAndTabIdAsync(callback) {
+    var result = {
+        userId: null,
+        tabId: myTabId
+    };
+    var maybeInvokeCallback = function () {
+        if (result.userId !== null)
+            callback(result.userId, result.tabId);
+    };
+    var token = ++nextUidToken;
+    uidCallbacks[token] = function (userId) {
+        result.userId = userId;
+        maybeInvokeCallback();
+    };
+    sendExternalMessage({
+        type: "getUserId",
+        token: token
+    });
+}
+;
+chrome.runtime.onMessage.addListener(function onBackgroundMessage(msg, sender, _sendResponse) {
+    var sentResponse = false, sentValue = null;
+    var sendResponse = function (value) {
+        if (sentResponse)
+            log("Already sent response", sentValue, "dropping second response", value);
+        else {
+            sentResponse = true;
+            sentValue = value;
+            _sendResponse(value);
+        }
+    };
+    if (isShutdown) {
+        if (msg.type === "doGameAjax")
+            sendResponse([null, "compatibility shutdown", msg.url]);
+        return;
+    }
+    var key = msg.type;
+    switch (key) {
+        case "myTabId":
+            myTabId = msg.id;
+            break;
+        case "doGamePopup":
+            sendExternalMessage({
+                type: "doPopup",
+                data: msg.data
+            });
+            break;
+        case "doGameRedirect":
+            window.location.href = msg.url;
+            break;
+        case "doGameAjax":
+            // retain sendResponse
+            doClientAjax(msg.url, msg.data, function (response, error, url) {
+                sendResponse([response, error, url]);
+            });
+            return true;
+        case "getUserId":
+        case "getUserIdAndTabId":
+            getUserIdAndTabIdAsync(sendResponse);
+            return true;
+        case "actionTimestampsChanged":
+            if (!currentBattleUid)
+                return;
+            if (msg.uid !== currentBattleUid)
+                return;
+            lastActionTimestamps = msg.data;
+            return;
+        case "apiRequest":
+            return handleApiRequest(msg.request, sendResponse);
+        case "tryJoinRaid":
+            tryJoinRaid(msg.code, function (ok) {
+                sendResponse(ok);
+            });
+            return true;
+        case "tryJoinCoOpRoom":
+            tryJoinCoOpRoom(msg.code, function (ok) {
+                sendResponse(ok);
+            });
+            return true;
+        default:
+            console.log("Unknown message " + key);
+            break;
+    }
+});
+function handleApiRequest(request, sendResponse) {
+    console.log("Handling API request", request.type);
+    switch (request.type) {
+        case "tryJoinRaid":
+            tryJoinRaid(request.raidCode, function (ok) {
+                sendResponse(ok);
+            });
+            return true;
+        case "tryCoOpRoom":
+            tryJoinCoOpRoom(request.roomCode, function (ok) {
+                sendResponse(ok);
+            });
+            return true;
+        case "getCombatState":
+            sendResponse(combatState);
+            return;
+        default:
+            sendResponse("unknown request");
+            return;
+    }
+}
+;
+function pulseElement(evt) {
+    var pulse = document.createElement("div");
+    var boundingBox = evt.getBoundingClientRect();
+    var container = document.querySelector("div.contents");
+    var containerBox = container.getBoundingClientRect();
+    var padding = 1;
+    pulse.style.left = (boundingBox.left - containerBox.left + padding) + "px";
+    pulse.style.top = (boundingBox.top - containerBox.top + padding) + "px";
+    pulse.style.width = (boundingBox.width - (padding * 2)) + "px";
+    pulse.style.height = (boundingBox.height - (padding * 2)) + "px";
+    pulse.className = "button-pulse pulse-animation";
+    injectElement(container, pulse);
+    window.setTimeout(function () {
+        uninjectElement(container, pulse);
+    }, 300);
+}
+;
+var nextClickToken = 1;
+var tokenAttribute;
+function generateClick(target, asClick) {
+    if (!tokenAttribute)
+        tokenAttribute = generateRandomText();
+    var token;
+    if (!target.hasAttribute(tokenAttribute)) {
+        token = String(nextClickToken++);
+        target.setAttribute(tokenAttribute, token);
+    }
+    else {
+        token = target.getAttribute(tokenAttribute);
+    }
+    sendExternalMessage({
+        type: "click",
+        name: target.nodeName,
+        token: token,
+        tokenAttribute: tokenAttribute,
+        asClick: !!asClick
+    });
+}
+;
+function suppressMouse(evt) {
+    // HACK: Viramate UI still wants to handle middle/right clicks
+    if (evt.target === getOverlayContainer())
+        return;
+    if (evt.which !== 1)
+        suppressEvent(evt);
+}
+function suppressEvent(evt) {
+    // If the event is synthesized we don't want to mess with it
+    if (!evt.isTrusted)
+        return;
+    evt.stopImmediatePropagation();
+}
+;
+function shouldHandleTouchInput() {
+    return currentSettings.touchInputSupport || isMobileSite();
+}
+;
+var performanceHistory = [];
+var needToShowPerformanceHud = true;
+var hideHudTimeoutHandle = null;
+var lastPerformanceHudUpdateWhen = null;
+var performanceHudElement = null;
+function updatePerformanceHud(frameStats) {
+    if (!currentSettings.showPerformanceHud) {
+        performanceHistory.length = 0;
+        return;
+    }
+    var now = performance.now();
+    performanceHistory.push(frameStats);
+    if (performanceHistory.length > 75)
+        performanceHistory.shift();
+    // Wait for a few samples before showing the hud
+    if (performanceHistory.length < 6)
+        return;
+    if ((lastPerformanceHudUpdateWhen !== null) &&
+        (now - lastPerformanceHudUpdateWhen) <= 500)
+        return;
+    lastPerformanceHudUpdateWhen = now;
+    var uic = getUiContainer();
+    if (!performanceHudElement) {
+        performanceHudElement = document.createElement("div");
+        performanceHudElement.className = "performance-hud";
+        injectElement(uic, performanceHudElement);
+    }
+    else if (needToShowPerformanceHud) {
+        performanceHudElement.style.opacity = 1.0;
+        needToShowPerformanceHud = false;
+    }
+    var minDelay = 999999, maxDelay = 0, delaySum = 0;
+    for (var i = 0, l = performanceHistory.length; i < l; i++) {
+        var fs = performanceHistory[i];
+        minDelay = Math.min(minDelay, fs.realTimeSinceLastFrame);
+        maxDelay = Math.max(maxDelay, fs.realTimeSinceLastFrame);
+        delaySum += fs.realTimeSinceLastFrame;
+    }
+    var avgDelay = delaySum / performanceHistory.length;
+    var estimatedFps = 1000 / avgDelay;
+    performanceHudElement.textContent = estimatedFps.toFixed(0) + "fps " +
+        "[" + minDelay.toFixed(1) + ", " + maxDelay.toFixed(1) + "] ms";
+    if (hideHudTimeoutHandle)
+        clearTimeout(hideHudTimeoutHandle);
+    hideHudTimeoutHandle = setTimeout(hidePerformanceHud, 3000);
+}
+;
+function hidePerformanceHud() {
+    if (!performanceHudElement)
+        return;
+    performanceHistory.length = 0;
+    performanceHudElement.style.opacity = 0.0;
+    needToShowPerformanceHud = true;
+}
+;
+function doNavigate(url) {
+    sendExternalMessage({ type: "navigating", url: url });
+    window.location.href = url;
+}
+;
+var hideTransientMessageTimeoutHandle = null;
+var transientMessageElement = null;
+function showTransientMessage(text) {
+    if (!currentSettings.showTransientMessages)
+        return;
+    var now = performance.now();
+    var uic = getUiContainer();
+    if (!transientMessageElement) {
+        transientMessageElement = document.createElement("div");
+        transientMessageElement.className = "transient-message";
+        transientMessageElement.style.opacity = 0.0;
+        transientMessageElement.style.top = isHorizontalLayout() ? "50px" : "2px";
+        injectElement(uic, transientMessageElement);
+        setTimeout(function () {
+            transientMessageElement.style.opacity = 1.0;
+        }, 5);
+    }
+    else {
+        transientMessageElement.style.opacity = 1.0;
+    }
+    transientMessageElement.textContent = text;
+    if (hideTransientMessageTimeoutHandle)
+        clearTimeout(hideTransientMessageTimeoutHandle);
+    hideTransientMessageTimeoutHandle = setTimeout(hideTransientMessage, 4000 + (text.length * 100));
+}
+;
+function hideTransientMessage() {
+    if (!transientMessageElement)
+        return;
+    transientMessageElement.style.opacity = 0.0;
+}
+
+doInitialize();
