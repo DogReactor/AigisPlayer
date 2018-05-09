@@ -73,7 +73,7 @@ try {
     }
     const virapath = path.join(modPath, 'viramate');
     if (fs.existsSync(virapath)) {
-      const extensionName = BrowserWindow.addExtension(path.join(__dirname, './assets/viramate'));
+      const extensionName = BrowserWindow.addExtension(virapath);
       console.log(extensionName);
     }
     createWindow();
