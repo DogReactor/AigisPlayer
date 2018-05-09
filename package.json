@@ -1,6 +1,6 @@
 {
   "name": "aigisplayer",
-  "version": "2.0.6-alpha3",
+  "version": "2.0.6-alpha4",
   "description": "Toolkit for Aigis",
   "homepage": "https://github.com/huazhu111/AigisPlayer",
   "author": {
@@ -66,8 +66,8 @@
     "css-loader": "0.28.7",
     "cssnano": "3.10.0",
     "cz-conventional-changelog": "^2.1.0",
-    "electron": "1.8.2",
-    "electron-builder": "19.45.4",
+    "electron": "^2.0.0",
+    "electron-builder": "^20.13.3",
     "electron-reload": "1.2.1",
     "enhanced-resolve": "3.3.0",
     "exports-loader": "0.6.4",
