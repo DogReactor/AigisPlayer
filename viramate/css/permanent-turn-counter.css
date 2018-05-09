@@ -1,0 +1,33 @@
+div.prt-turn-info.anim-on {
+    -webkit-animation:"vm-anim-turn" !important;
+    -webkit-animation-fill-mode: forwards !important;
+    -webkit-animation-iteration-count: 1 !important;
+    -webkit-animation-timing-function: ease-in-out !important;
+    -webkit-animation-duration: 1.33s !important;
+}
+
+div.prt-turn {
+    zoom: 0.75;
+}
+
+div.prt-turn-info {
+    display:-webkit-box !important;
+    display:box !important;
+    -webkit-box-pack:start;
+    box-pack:start;
+    -webkit-box-align:center;
+    box-align:center;
+    left: 1px !important;
+    top: 63px !important;
+    transform-origin: 0% 50%;
+    transform: scale(0.5);
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+@-webkit-keyframes vm-anim-turn {
+    0%{-webkit-transform: scale(0.5);transform: scale(0.5); opacity: 0.8;}
+    15%{-webkit-transform: scale(1);transform: scale(1); opacity: 1;}
+    85%{-webkit-transform: scale(1);transform: scale(1): opacity: 1;}
+    99.9%,100%{-webkit-transform: scale(0.5);transform: scale(0.5); opacity: 0.8;}
+}

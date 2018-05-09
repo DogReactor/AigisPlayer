@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>API Example</title>
+        <style>
+            body {
+                font-size: 14pt;
+            }
+
+            span#api_status, span#current_raid_code {
+                font-family: Consolas, Courier New, monospace;
+                font-weight: bold;
+            }
+        </style>
+        <script src="api_test.js"></script>
+    </head>
+    <body>    
+        <h2>API example</h2>
+
+        <iframe id="api_host" style="display: none"></iframe>
+
+        API status: <span id="api_status">Not connected</span><br>
+        Current raid code: <span id="current_raid_code">?</span><br>
+
+        <input id="raid_code_to_join"> <button id="join_raid">Join Raid</button>
+    </body>
+</html>

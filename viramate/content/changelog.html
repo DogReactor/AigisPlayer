@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Update Notes</title>
+        <style>
+            body {
+                font-family: Tahoma, Verdana, sans-serif;
+                font-size: 13pt;
+                margin-left: 1em;
+                margin-right: 2em;
+            }
+
+            ul {
+                max-width: 700px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Update Notes</h1>
+        <hr>
+
+        <h3>Known Issues</h3>
+        <ul>
+            <li>Skill cooldowns don't reset properly when using a character with abilities or passives that reset cooldowns</li>
+            <li>The AP and BP meters in the popup are incorrect if you very recently spent AP or BP (to start a quest or join a raid)</li>
+            <li>The popup's item buttons get stuck if a network error occurs</li>
+            <li>Mobile site support is buggy</li>
+            <li>The sidebar does not work if you are using a DMM account</li>
+            <li>Normal attacks don't update the number on the OD gauge</li>
+            <li>The debuff timers flicker briefly when updated</li>
+            <li>The HL raids menu is visible even if your rank is too low to start a HL raid</li>
+            <li>The '<b>Lite</b>' and '<b>Standard</b>' resolutions run an older version of the game code. Please either play with '<b>Animation Settings</b>' set to '<b>Lite</b>', or with '<b>Resolution Settings</b>' set to '<b>High</b>'.</li>
+        </ul>
+        <br>
+
+        <h3>2018.4.28.1</h3>
+        <ul>
+            <li>Fixed guild war menu not showing the 95 and 100</li>
+        </ul>
+
+        <h3>2018.4.24.3</h3>
+        <ul>
+            <li>Fixed bug that caused gw hell bookmark to cause network errors sometimes</li>
+        </ul>
+
+        <h3>2018.4.24.2</h3>
+        <ul>
+            <li>Fixed action timer disappearing in multiple-stage quests</li>
+            <li>Raid bookmarks in guild war menu now update automatically</li>
+        </ul>
+
+        <h3>2018.4.6.1</h3>
+        <ul>
+            <li>Fixed magna 2 raids being invisible in the raids panel</li>
+        </ul>
+
+        <h3>2018.3.28.1</h3>
+        <ul>
+            <li>Adjusted auto-end raids timeout to reduce number of processing errors</li>
+        </ul>
+
+        <h3>2018.3.27.2</h3>
+        <ul>
+            <li>Added global extension disable toggle in the popup and on the settings page (takes effect after reloading the game)</li>
+            <li>Added option to disable the RP until next rank display</li>
+        </ul>
+
+        <h3>2018.3.27.1</h3>
+        <ul>
+            <li>Added support for popup messages at the top of the page (currently only used in combat)</li>
+        </ul>
+
+        <h3>2018.3.24.1</h3>
+        <ul>
+            <li>Added support for quick joining co-op rooms from popup and web API</li>
+        </ul>
+
+        <h3>2018.3.23.4</h3>
+        <ul>
+            <li>Made some changes to maybe support ancient winxp versions of chrome</li>
+        </ul>
+
+        <h3>2018.3.23.3</h3>
+        <ul>
+            <li>Fixed missing mistake guard checkbox</li>
+        </ul>
+
+        <h3>2018.3.23.2</h3>
+        <ul>
+            <li>Mistake Guard™ makes the 'sell multiple' buttons red and slightly smaller</li>
+            <li>Removed no-longer-needed webRequest and tabs permissions from manifest</li>
+        </ul>
+
+        <h3>2018.3.22.1</h3>
+        <ul>
+            <li>Switched from http to https for version information updates</li>
+        </ul>
+
+        <h3>2018.3.19.3</h3>
+        <ul>
+            <li>Fixed popups being shifted too far to the left and appearing under the sidebar</li>
+        </ul>
+
+        <h3>2018.3.19.1</h3>
+        <ul>
+            <li>Fixed some bugs in the popup</li>
+            <li>Added experimental option to remove the mobage sidebar</li>
+        </ul>
+
+        <h3>2018.3.18.4</h3>
+        <ul>
+            <li>Changed to use basic HTTP to communicate with the installer instead of WebSockets, for Windows 7 compatibility. If you're running an old version of the installer you'll need to update it manually.</li>
+        </ul>
+
+        <h3>2018.3.7.2</h3>
+        <ul>
+            <li>Sidebar goes away if extension reloads or is disabled (because Chrome is terrible)</li>
+            <li>Fix sidebar randomly taking a while to load due to twitter and/or mobage servers being slow</li>
+        </ul>
+
+        <h3>2018.3.7.1</h3>
+        <ul>
+            <li>Chrome Canary compatibility fix</li>
+        </ul>
+
+        <h3>2018.3.6.1</h3>
+        <ul>
+            <li>First Viramate Installer release.</li>
+            <li>You can manually check for updates from the options page.</li>
+            <li>Updates will automatically be installed (if available) every hour.</li>
+        </ul>
+
+        <h3>2018.2.15.2</h3>
+        <ul>
+            <li>Added safety feature for disabling features quickly without an extension update, if cygames makes changes or a bug is found. This feature downloads safety data from my web server once per hour and cannot be used to do anything other than disable features.</li>
+        </ul>
+
+        <h3>2018.2.15.1</h3>
+        <ul>
+            <li>Favorite summons tab is suppressed if there's a captcha waiting for you</li>
+        </ul>
+
+        <h3>2018.1.25.1</h3>
+        <ul>
+            <li>Button swipe fix updated again so that it's less likely clicking skills will fail to use them</li>
+            <li>Button swipe fix now stops skill buttons from moving out from under the mouse when clicked</li>
+        </ul>
+
+        <h3>2018.1.21.2</h3>
+        <ul>
+            <li>Raid sync now synchronizes hp and ougi gauge</li>
+            <li>Fixed raid sync re-enabling buttons on cooldown even though they are not usable until you reload</li>
+            <li>If multiple tabs are viewing a raid, only one of them will auto-navigate to the results screen</li>
+        </ul>
+
+        <h3>2018.1.19.1</h3>
+        <ul>
+            <li>Added option to disable skill state sync between raid windows</li>
+            <li>Bug fixes and improvements to quick skill buttons, state tracking</li>
+        </ul>
+
+        <h3>2018.1.18.1</h3>
+        <ul>
+            <li>Guild war menu</li>
+        </ul>
+        
+        <h3>2018.1.16.1</h3>
+        <ul>
+            <li>Added workaround for change in Chrome Canary that broke (oddly enough, Google fixing a bug in Chrome broke this)</li>
+        </ul>
+
+        <h3>2017.12.25.1</h3>
+        <ul>
+            <li>Added 'arcarum mouse fix' enabled by default that works around game bug that breaks mouse clicks until you reload</li>
+        </ul>
+
+        <h3>2017.11.26.1</h3>
+        <ul>
+            <li>Added 'disable image smoothing' to reduce lag in fights like Xeno Cocytus (and make them ugly)</li>
+        </ul>
+
+        <h3>2017.11.22.3</h3>
+        <ul>
+            <li>Fixed field effect timers</li>
+        </ul>
+
+        <h3>2017.11.22.2</h3>
+        <ul>
+            <li>Fixed condition parser for network messages</li>
+        </ul>
+
+        <h3>2017.11.22.1</h3>
+        <ul>
+            <li>Partial fix for bugs introduced by cocytus update</li>
+        </ul>
+
+        <h3>2017.11.20.1</h3>
+        <ul>
+            <li>Fixed sidebar raids panel</li>
+        </ul>
+
+        <h3>2017.11.16.1</h3>
+        <ul>
+            <li>Fixed buff/debuff timers</li>
+        </ul>
+
+        <h3>2017.11.14.1</h3>
+        <ul>
+            <li>Added Blizzard calculation to field effect indicator</li>
+        </ul>
+
+        <h3>2017.11.10.1</h3>
+        <ul>
+            <li>Fix attachShadow bug in old Chrome</li>
+        </ul>
+
+        <h3>2017.11.9.1</h3>
+        <ul>
+            <li>Guild war menu</li>
+        </ul>
+
+        <h3>2017.10.22.1</h3>
+        <ul>
+            <li>Made room comments and chat log text drag-selectable</li>
+            <li>Improved action timer support for multiple windows</li>
+        </ul>
+
+        <h3>2017.10.17.1</h3>
+        <ul>
+            <li>Fix popup position fix not applying to event popups</li>
+            <li>Fix layout of party selection popup</li>
+        </ul>
+
+        <h3>2017.10.12.1</h3>
+        <ul>
+            <li>Fix compatibility issue with incredibly old versions of Chrome introduced by tab sync</li>
+        </ul>
+
+        <h3>2017.10.9.1</h3>
+        <ul>
+            <li>If new skill system is enabled, lock-out state for quick skill buttons will sync between tabs</li>
+        </ul>
+
+        <h3>2017.10.3.1</h3>
+        <ul>
+            <li>New skill system turned on by default</li>
+            <li>Removed DM refills</li>
+        </ul>
+
+        <h3>2017.10.2.1</h3>
+        <ul>
+            <li>Clicking raid ID in call-for-backup popup selects it</li>
+            <li>Fix keyboard shortcuts eating ctrl+ hotkeys</li>
+        </ul>
+
+        <h3>2017.9.27.1</h3>
+        <ul>
+            <li>Update guild war menu to work with new version</li>
+        </ul>
+
+        <h3>2017.9.22.2</h3>
+        <ul>
+            <li>Bug fixes to experimental skill system (should handle character swaps and deaths)</li>
+        </ul>
+
+        <h3>2017.9.22.1</h3>
+        <ul>
+            <li>Guild war menu</li>
+        </ul>
+
+        <h3>2017.9.21.2</h3>
+        <ul>
+            <li>Exempted the stickers window from the popup fix</li>
+            <li>Removed the last hosted button since it's included in the game now 👌</li>
+        </ul>
+
+        <h3>2017.9.21.1</h3>
+        <ul>
+            <li>Added an option to stop the game from showing popups all the way at the bottom of the page</li>
+        </ul>
+
+        <h3>2017.9.9.1</h3>
+        <ul>
+            <li>Work around new bugs Google added in Chrome 61.0.3163</li>
+        </ul>
+
+        <h3>2017.9.8.1</h3>
+        <ul>
+            <li>Added partial raid room support to co-op enhancements</li>
+            <small>Contributed by Menma</small>
+            <li>Fixed ESC not clearing the skill queue correctly in combat</li>
+        </ul>
+
+        <h3>2017.9.3.1</h3>
+        <ul>
+            <li>Co-op room ID can be auto-selected by clicking it (if enhancements are turned on)</li>
+        </ul>
+
+        <h3>2017.9.1.2</h3>
+        <ul>
+            <li>Added option to always show skill levels on upgrade page</li>
+        </ul>
+
+        <h3>2017.9.1.1</h3>
+        <ul>
+            <li>Fixed AP and BP meters</li>
+        </ul>
+
+        <h3>2017.8.27.1</h3>
+        <ul>
+            <small>Contributed by Menma</small>
+            <li>Fixed HP being misaligned when number of health bars changes</li>
+        </ul>
+
+        <h3>2017.8.17.1</h3>
+        <ul>
+            <li>Fixed compact summons issue in co-op</li>
+        </ul>
+
+        <h3>2017.8.16.1</h3>
+        <ul>
+            <li>Guild War menu</li>
+        </ul>
+
+        <h3>2017.8.15.1</h3>
+        <ul>
+            <li>Fixed compact summons layout breaking display of summon in party selection window</li>
+            <li>Added support for new quest loot format</li>
+        </ul>
+
+        <h3>2017.8.13.3</h3>
+        <ul>
+            <li>Restored lag workaround option</li>
+            <li>Added option for compact support summons list</li>
+        </ul>
+
+        <h3>2017.8.13.2</h3>
+        <ul>
+            <li>Fixed 'automatically end raids'</li>
+        </ul>
+
+        <h3>2017.8.5.1</h3>
+        <ul>
+            <li>Another Chrome update, another button swipe fix change</li>
+        </ul>
+
+        <h3>2017.8.2.1</h3>
+        <ul>
+            <li>Updated the button swipe fix so it works again. Thanks Google</li>
+        </ul>
+
+        <h3>2017.7.23.1</h3>
+        <ul>
+            <li>Added preliminary support for Gree accounts</li>
+        </ul>
+
+        <h3>2017.7.3.1</h3>
+        <ul>
+            <li>Add sidebar zoom workaround for changes in Chrome 59</li>
+        </ul>
+
+        <h3>2017.6.21.1</h3>
+        <ul>
+            <li>Maybe fixed DMM/Gree</li>
+        </ul>
+
+        <h3>2017.6.19.1</h3>
+        <ul>
+            <li>Left-click tracked icons on the sidebar to set a target count of that item</li>
+            <li>Fixed tracked items not working if you disabled the new filtered items page</li>
+            <li>Fixed API bug related to game not being the first opened tab</li>
+        </ul>
+
+        <h3>2017.6.18.1</h3>
+        <ul>
+            <li>Added a <a href="api.html">Web API</a> for use by raidfinders and other websites</li>
+        </ul>
+
+        <h3>2017.6.13.2</h3>
+        <ul>
+            <li>Fixed item trackers not updating when upgrading archangel weapons</li>
+        </ul>
+
+        <h3>2017.6.12.3</h3>
+        <ul>
+            <li>Fixed auto-end raids feature sometimes pointlessly checking for results after the end of a raid</li>
+        </ul>
+
+        <h3>2017.6.12.2</h3>
+        <ul>
+            <li>Updated network code to pick up ap/bp status from co-op pages</li>
+        </ul>
+
+        <h3>2017.6.12.1</h3>
+        <ul>
+            <li>Updated the stuck skill fix since Google broke it for no reason</li>
+        </ul>
+
+        <h3>2017.6.9.1</h3>
+        <ul>
+            <li>Updated for new raids list URL</li>
+        </ul>
+
+        <h3>2017.6.7.4</h3>
+        <ul>
+            <li>Added option to make tracked item icons larger</li>
+        </ul>
+
+        <h3>2017.6.7.3</h3>
+        <ul>
+            <li>Updated for new items page UI</li>
+        </ul>
+
+        <h3>2017.6.7.2</h3>
+        <ul>
+            <li>Fixed the new skill system getting extremely confused when the party got shuffled or you had corpses on the front row</li>
+        </ul>
+
+        <h3>2017.6.7.1</h3>
+        <ul>
+            <li>Fixed quick skills breaking when one or more front line characters are dead</li>
+            <li>Changed regular summon list sorting back to how it was, and limited the non-friend priority option to the favorites list</li>
+        </ul>
+
+        <h3>2017.6.4.1</h3>
+        <ul>
+            <li>Non-friend summons are now prioritized instead of friend summons (I'm told this is better). You can disable this in the options.</li>
+        </ul>
+
+        <h3>2017.5.31.2</h3>
+        <ul>
+            <li>Rescued item watch buttons from the cold embrace of death</li>
+        </ul>
+
+        <h3>2017.5.31.1</h3>
+        <ul>
+            <li>Added an option to disable clicks on characters toggling charge attack skip</li>
+        </ul>
+
+        <h3>2017.5.29.2</h3>
+        <ul>
+            <li>Fix combat UI breaking in some cases</li>
+        </ul>
+
+        <h3>2017.5.29.1</h3>
+        <ul>
+            <li>Fixed the popup and sidebar item counters getting stuck after a server error</li>
+            <li>Added a workaround for skill buttons breaking if you move the mouse (currently off by default)</li>
+            <li>Fixed quick skills not updating after you revive character(s)</li>
+        </ul>
+
+        <h3>2017.5.28.1</h3>
+        <ul>
+            <li>Fixed the paralyze/skill lock indicator on quick skill buttons getting stuck</li>
+        </ul>
+
+        <h3>2017.5.27.3</h3>
+        <ul>
+            <li>Fixed a bunch of quick skill bugs :(</li>
+        </ul>
+
+        <h3>2017.5.27.2</h3>
+        <ul>
+            <li>Fixed skill hotkey bug</li>
+        </ul>
+
+        <h3>2017.5.27.1</h3>
+        <ul>
+            <li>Added new experimental skill state tracker (off by default) that should fix bugs related to Quatre passive and other cooldown resets</li>
+            <li>Show skill cooldown counters on quick skill buttons</li>
+            <li>Show skill lock/para indicator on quick skill buttons</li>
+
+            <small>Contributed by Menma</small>
+            <li>Fixed quick skill buttons for classes below level 20</li>
+        </ul>
+
+        <h3>2017.5.20.2</h3>
+        <ul>
+            <li>Fixed health bars and quick skills breaking in solo content</li>
+        </ul>
+
+        <h3>2017.5.20.1</h3>
+        <ul>
+            <li>Fixed duplicate Faves button appearing on the summons list</li>
+            <li>Replaced Very Hard Eye item on guild war menu with 95 Nightmare</li>
+        </ul>
+
+        <h3>2017.5.18.2</h3>
+        <ul>
+            <li>Fixed quick summons not going into the queue</li>
+        </ul>
+
+        <h3>2017.5.18.1</h3>
+        <ul>
+            <li>Overhauled quick summons for better anticheat compatibility</li>
+        </ul>
+
+        <h3>2017.5.17.1</h3>
+        <ul>
+            <li>Enabled guild war menu</li>
+            <li>Chinese translation updates</li>
+            <li>Fixed GW 5* ults showing a huge number in the cooldown counter after being used</li>
+        </ul>
+
+        <h3>2017.5.13.1</h3>
+        <ul>
+            <li>Removed unmaintained Korean translation</li>
+            <li>Added Simplified Chinese translation by XinoAssassin</li>
+        </ul>
+
+        <h3>2017.5.12.1</h3>
+        <ul>
+            <li>Fixed stuck button fix option blocking attempts to queue ayer's first skill multiple times</li>
+            <li>Fixed skill buttons briefly turning back on after use when they temporarily had no cooldown (this resulted in a network error if you clicked them)</li>
+        </ul>
+
+        <h3>2017.5.10.1</h3>
+        <ul>
+            <li>Don't auto-close quest info popups</li>
+            <li>Workaround for quest info popups having misaligned text</li>
+            <li>Added separate option for watched items panel so it no longer requires the status panel</li>
+        </ul>
+
+        <h3>2017.5.8.1</h3>
+        <ul>
+            <li>Added 'R' hotkey for item reduce popups</li>
+        </ul>
+
+        <h3>2017.5.6.1</h3>
+        <ul>
+            <li>Fixed auto-reload for end of raids sometimes triggering after you left the raid page</li>
+        </ul>
+
+        <h3>2017.5.3.1</h3>
+        <ul>
+            <li>Added more space bar/escape hotkeys for the uncap and upgrade screens</li>
+        </ul>
+
+        <h3>2017.5.1.3</h3>
+        <ul>
+            <li>Reduced the chance that auto-end raids will cause a network error in co-op</li>
+        </ul>
+
+        <h3>2017.5.1.1</h3>
+        <ul>
+            <li>Fixed popup getting confused when using berries at full BP</li>
+        </ul>
+
+        <h3>2017.4.30.3</h3>
+        <ul>
+            <li>Fixed popup defaulting to using a very large number of berries</li>
+        </ul>
+
+        <h3>2017.4.30.2</h3>
+        <ul>
+            <li>Middle-click on raids panel opens new tab</li>
+            <li>Fixed BP values on sidebar being too large (due to 20minute -> 10minute BP regen change, oops)</li>
+        </ul>
+
+        <h3>2017.4.30.1</h3>
+        <ul>
+            <li>Updated to handle new BP limit</li>
+        </ul>
+
+        <h3>2017.4.26.1</h3>
+        <ul>
+            <li>Minor bug fixes</li>
+        </ul>
+
+        <h3>2017.4.22.1</h3>
+        <ul>
+            <li>Enabled guild war sidebar menu</li>
+        </ul>
+
+        <h3>2017.4.9.2</h3>
+        <ul>
+            <li>Fixed compatibility shutdown breaking canvases in some cases</li>
+        </ul>
+
+        <h3>2017.4.9.1</h3>
+        <ul>
+            <li>Updated anticheat compatibility</li>
+        </ul>
+
+        <h3>2017.4.1.1</h3>
+        <ul>
+            <li>Fixed spacebar not working on some event scenes</li>
+        </ul>
+
+        <h3>2017.3.23.1</h3>
+        <ul>
+            <li>Added 'A' hotkey for auto select on the upgrade page</li>
+        </ul>
+
+        <h3>2017.3.22.1</h3>
+        <ul>
+            <li>Fix quick skills desyncing on party change</li>
+        </ul>
+
+        <h3>2017.3.20.1</h3>
+        <ul>
+            <li>Compatibility fixes</li>
+        </ul>
+
+        <h3>2017.3.18.2</h3>
+        <ul>
+            <li>Added 'R' hotkey for Reset Bonus in item screen and made Space work on the Reset button</li>
+        </ul>
+
+        <h3>2017.3.18.1</h3>
+        <ul>
+            <li>Updated guild war menu</li>            
+        </ul>
+
+        <h3>2017.3.13.1</h3>
+        <ul>
+            <li>Sticker popups in raids no longer block mouse input</li>
+            <li>Added option to always show the current turn number in combat</li>
+        </ul>
+
+        <h3>2017.3.11.1</h3>
+        <ul>
+            <li>Fixed health numbers becoming misaligned when scrolling the combat page</li>
+            <li>Replaced defend order shop shortcut with weapon series shop</li>
+            <li>Enhanced Sticker UI option adds improved layout and search</li>
+        </ul>
+
+        <h3>2017.2.23.1</h3>
+        <ul>
+            <li>Setting clock brightness to 0 disables the clock entirely</li>
+        </ul>
+
+        <h3>2017.2.22.1</h3>
+        <ul>
+            <li>Autofill backup requests disabled because Cygames broke it</li>
+            <li>Popup auto-close excludes lyria popups</li>
+            <li>Updated party buff tracker for new phalanx icon</li>
+            <li>Fixed Repeat Quest producing a black screen sometimes</li>
+        </ul>
+
+        <h3>2017.2.11.1</h3>
+        <ul>
+            <li>Fixed quick summons remaining visible while character panels were open</li>
+        </ul>
+
+        <h3>2017.2.3.1</h3>
+        <ul>
+            <small>Contributed by Menma</small>
+            <li>Restored quick summon icons and one-click summons</li>
+            <li>Restored auto advance quest, one-click co-op join, and preferred 
+            summon features</li>
+            <li>OK and cancel shortcuts added for shop exchange dialogs</li>
+        </ul>
+
+        <h3>2017.2.1.3</h3>
+        <ul>
+            <li>Character selection hotkeys now select quick panels by default if possible</li>
+        </ul>
+
+        <h3>2017.2.1.2</h3>
+        <ul>
+            <li>Fixed skill hotkeys not working sometimes</li>
+        </ul>
+
+        <h3>2017.2.1.1</h3>
+        <ul>
+            <li>Fixed quick skill buttons not disabling regular skill buttons</li>
+            <li>Fixed ESC no longer clearing the skill queue</li>
+        </ul>
+
+        <h3>2017.1.31.1</h3>
+        <ul>
+            <li>Fixed issues with skill buttons and quick skills after latest game update</li>
+            <li>Added partially restored keyboard shortcuts (still buggy, off by default)</li>
+        </ul>
+
+        <h3>2017.1.26.1</h3>
+        <ul>
+            <li>Made item upgrade screen more compact</li>
+            <li>Bug fixes to party buff tracker</li>
+            <li>Auto-close popups can close the trial battle popup</li>
+            <li>Fixed a networking error that could cause things to go haywire</li>
+        </ul>
+
+        <h3>2017.1.23.2</h3>
+        <ul>
+            <li>Added 90 hell back to the guild war menu</li>
+        </ul>
+
+        <h3>2017.1.23.1</h3>
+        <ul>
+            <li>It's guild war time again</li>
+        </ul>
+
+        <h3>2017.1.22.1</h3>
+        <ul>
+            <li>Fixed party condition tracker breaking when party contained fewer than 4 characters</li>
+            <li>Fixed health numbers being misaligned when sidebar was in horizontal mode</li>
+        </ul>
+
+        <h3>2017.1.17.1</h3>
+        <ul>
+            <li>Added clickable refresh button to the left of party buff trackers</li>
+        </ul>
+
+        <h3>2017.1.16.1</h3>
+        <ul>
+            <li>Fixed party buff tracker breaking when front row changed</li>
+            <li>Disabled quick class and weapon change buttons</li>
+            <li>Added option to display all stickers on a single page</li>
+        </ul>
+
+        <h3>2017.1.14.2</h3>
+        <ul>
+            <li>Fixed field effect icons being enormous. SORRY</li>
+        </ul>
+
+        <h3>2017.1.14.1</h3>
+        <ul>
+            <li>Various changes to stop party buff indicators and enemy health numbers from overlapping pop-ups</li>
+            <li>Fixed health numbers being misaligned in some multi-target raids</li>
+        </ul>
+
+        <h3>2017.1.11.1</h3>
+        <ul>
+            <li>Fixed more quick panel flickering issues</li>
+            <li>Backup tweet pre-fill uses the English text if you are playing in Japanese</li>
+            <li>Implemented experimental party buff summaries</li>
+        </ul>
+
+        <h3>2017.1.8.1</h3>
+        <ul>
+            <li>When auto-hide popups is enabled you can click an auto-hidden popup to dismiss it instantly</li>
+            <li>Adjusted minimum and maximum amount of time before popups auto-close</li>
+            <li>Made minimum and maximum amount of time before popups auto-close adjustable in settings</li>
+        </ul>
+
+        <h3>2017.1.7.2</h3>
+        <ul>
+            <li>Fixed quick panels becoming stuck when opening a single character's panel</li>
+        </ul>
+
+        <h3>2017.1.7.1</h3>
+        <ul>
+            <li>🤔</li>
+        </ul>
+
+        <h3>2017.1.6.2</h3>
+        <ul>
+            <li>Added experimental 'auto-hide popups' option</li>
+            <li>Fixed skill cooldown display breaking if quick panels were disabled</li>
+            <li>Reduced skill button flicker when stuck button fix is enabled</li>
+        </ul>
+
+        <h3>2017.1.6.1</h3>
+        <ul>
+            <li>Added summon battles to sidebar</li>
+            <li>You can switch the catalyst you are using to start a raid by clicking the icon</li>
+            <li>Fix quick panels briefly disappearing after using a skill</li>
+        </ul>
+
+        <h3>2016.12.26.1</h3>
+        <ul>
+            <li>Updated sidebar</li>
+            <li>Added workaround for first item in lists being overly large</li>
+        </ul>
+
+        <h3>2016.12.18.3</h3>
+        <ul>
+            <li>Disabled part of stuck skill button fix for compatibility with ayer and romeo</li>
+        </ul>
+
+        <h3>2016.12.18.2</h3>
+        <ul>
+            <li>Moved 'reset bonus' button to the top of the item info page so you don't have to scroll</li>
+            <li>Added bookmark for Lv90 Nightmare</li>
+        </ul>
+
+        <h3>2016.12.18.1</h3>
+        <ul>
+            <li>Added partial sidebar menu for new guild war</li>
+        </ul>
+
+        <h3>2016.12.16.2</h3>
+        <ul>
+            <li>Use an approximation to update sidebar item counts after quests to avoid asking the server every time</li>
+        </ul>
+
+        <h3>2016.12.16.1</h3>
+        <ul>
+            <li>Summons are closer together in supports list if condensed UI is on</li>
+            <li>Added arrow buttons for rearranging summons on the faves list</li>
+        </ul>
+
+        <h3>2016.12.15.2</h3>
+        <ul>
+            <li>Added quick language change buttons to sidebar menu</li>
+        </ul>
+
+        <h3>2016.12.15.1</h3>
+        <ul>
+            <li>CSS updates</li>
+        </ul>
+
+        <h3>2016.12.09.1</h3>
+        <ul>
+            <li>Moved grid exporter button out of the way on party screen</li>
+        </ul>
+
+        <h3>2016.12.07.2</h3>
+        <ul>
+            <li>Updated bubble on support selection screen</li>
+        </ul>
+
+        <h3>2016.12.07.1</h3>
+        <ul>
+            <li>Sidebar menu updates</li>
+        </ul>
+
+        <h3>2016.12.06.1</h3>
+        <ul>
+            <li>Enabled stuck button fix by default. Please report an issue if you notice any problems.</li>
+            <li>Added (on by default) option to disable the 'phalanx' sticker if you don't have phalanx available (-:</li>
+            <li>Updates for compatibility with latest game version</li>
+        </ul>
+
+        <h3>2016.11.26.1</h3>
+        <ul>
+            <li>Improved action timer so it goes away when an action's animation completes</li>
+        </ul>
+
+        <h3>2016.11.25.1</h3>
+        <ul>
+            <li>Fixed bug where favorite summons tab was missing sometimes</li>
+        </ul>
+
+        <h3>2016.11.24.3</h3>
+        <ul>
+            <li>Last Hosted is back... with a thirst for vengeance</li>
+        </ul>
+
+        <h3>2016.11.24.2</h3>
+        <ul>
+            <li>Disabled prime halo timer</li>
+            <li>Added experimental 'favorite summons' tab to quest start page. It can be disabled or made the default in Settings.</li>
+        </ul>
+
+        <h3>2016.11.24.1</h3>
+        <ul>
+            <li>Added Kaguya to rabbit boost list</li>
+            <li>Fix 0-turn cooldown skills being disabled by the stuck button fix</li>
+            <li>Fix debuff list not being auto-filtered when only one living enemy remains in a multi-target raid</li>
+        </ul>
+
+        <h3>2016.11.22.1</h3>
+        <ul>
+            <li>Updated action timer to work with multiple game windows</li>
+        </ul>
+
+        <h3>2016.11.21.3</h3>
+        <ul>
+            <li>Action timer bug fixes</li>
+            <li>Field effect timer bug fixes</li>
+        </ul>
+
+        <h3>2016.11.21.2</h3>
+        <ul>
+            <li>Fixes to stuck button workaround</li>
+            <li>Added optional action timer that appears when you reload after attacking</li>
+        </ul>
+
+        <h3>2016.11.21.1</h3>
+        <ul>
+            <li>Minor fixes to stuck button workaround</li>
+            <li>Added experimental field effect timer display</li>
+        </ul>
+
+        <h3>2016.11.20.1</h3>
+        <ul>
+            <li>The stuck button workaround is now an option (off by default) because of some annoying corner cases :-( Please report any issues you encounter</li>
+        </ul>
+
+        <h3>2016.11.19.1</h3>
+        <ul>
+            <li>Workaround for skill buttons being permanently grayed out when the skill was not used</li>
+            <li>Fix everything getting totally hosed if you swiped left or right on a quick skill button</li>
+            <li>Quick panel tooltips list skill cooldown</li>
+
+            <small>Contributed by Menma</small>
+            <li>Fix alignment of high precision hp</li>
+            <li>Fix more skill queue compatibility issues</li>
+        </ul>
+
+        <h3>2016.11.17.1</h3>
+        <ul>
+            <li>Compatibility fixes for skill queue update</li>
+        </ul>
+
+        <h3>2016.11.16.1</h3>
+        <ul>
+            <li>Fix sidebar and popup not updating in some cases when navigating between pages</li>
+            <li>Improved readability of debuff timer icons</li>
+        </ul>
+
+        <h3>2016.11.12.1</h3>
+        <ul>
+            <small>Contributed by Menma</small>
+            <li>Fix "refill with berries" button using 1 berry more than necessary if BP was close to being regenerated</li>
+            <li>Fix AP bar fill overflow if AP was overcharged
+            <li>Fix AP/BP being rounded up incorrectly in some cases</li>
+            <li>Fix the following case: raid code A was pasted and the "x BP is needed" modal is shown, the focus changes and raid code B is copied to clipboard, focus returns, the "refill" button is clicked, and raid B is joined instead of raid A</li>
+        </ul>
+
+        <h3>2016.10.28.1</h3>
+        <ul>
+            <small>Contributed by Menma</small>
+            <li>You can press ESC in combat to clear the skill queue</li>
+            <li>Added support for cosmos weapons to grid exporter</li>
+            <li>Fixed effect of some baha weapon types in grid exporter</li>
+        </ul>
+
+        <h3>2016.10.26.2</h3>
+        <ul>
+            <li>Fixed 'don't show raids panel unless you have 3 BP' option not working when you first load a page</li>
+            <li>Removed Grande from the Bahamut/Lucifer boost list</li>
+            <br>
+            <small>Contributed by Menma</small>
+            <li>Made grid exporter compatible with Japanese</li>
+            <li>Added Japanese localization for new text</li>
+            <li>Added option to continue playing sound/music when game loses focus</li>
+        </ul>
+
+        <h3>2016.10.26.1</h3>
+        <ul>
+            <li>Added experimental grid exporter that *actually works* and exports your weapon/summon grid to a calculator</li>            
+        </ul>
+
+        <h3>2016.10.24.1</h3>
+        <ul>
+            <li>Updated guild war menu</li>
+        </ul>
+
+        <h3>2016.10.21.1</h3>
+        <ul>
+            <li>Updated zoom workaround for Chrome 54</li>
+        </ul>
+
+        <h3>2016.10.18.1</h3>
+        <ul>
+            <li>Fixed network hud covering raids panel</li>
+        </ul>
+
+        <h3>2016.10.15.1</h3>
+        <ul>
+            <li>Added full elixirs to popup</li>
+        </ul>
+
+        <h3>2016.10.11.1</h3>
+        <ul>
+            <li>Player names in the supports list can be clicked in order to visit their profile</li>
+            <li>Moved the 'repeat quest' bookmark out of the quest submenu</li>
+        </ul>
+
+        <h3>2016.9.27.2</h3>
+        <ul>
+            <li>Fix debuff timers</li>
+        </ul>
+
+        <h3>2016.9.27.1</h3>
+        <ul>
+            <li>Improved loading speed of alternate english font</li>
+        </ul>
+
+        <h3>2016.9.25.1</h3>
+        <ul>
+            <li>Fixed enemy buffs blocking enemy debuffs from showing up in the debuff timers panel</li>
+        </ul>
+
+        <h3>2016.9.22.1</h3>
+        <ul>
+            <li>Fix infinite redirect loop when following bad link</li>
+            <li>Updated guild war bookmarks</li>
+        </ul>
+
+        <h3>2016.9.19.4</h3>
+        <ul>
+            <li>Fixed combat buttons being unclickable in some cases when using large quick skills</li>
+            <li>Fixed co-op room buffs covering the footer</li>
+        </ul>
+
+        <h3>2016.9.19.2</h3>
+        <ul>
+            <li>Added option for a larger, two-row quick skill button layout</li>
+            <li>Health number performance bug fix</li>
+            <li>Improvements to appearance and alignment of health numbers</li>
+            <li>Fixed health numbers being visible in some inappropriate scenarios</li>
+        </ul>
+
+        <h3>2016.9.18.3</h3>
+        <ul>
+            <li>Added option to disable autofill for backup requests</li>
+            <li>Added option to move the co-op room footer to the top of the window</li>
+        </ul>
+
+        <h3>2016.9.18.2</h3>
+        <ul>
+            <li>Quick skill buttons are back</li>
+            <br>
+            <small>Contributed by Menma</small>
+            <li>Quick skill button compatibility fixes for cygames skill queue</li>
+        </ul>
+
+        <h3>2016.9.18.1</h3>
+        <ul>
+            <li>Minor bug fixes</li>
+            <li>Tweet call for backup is automatically filled with boss's japanese name</li>
+        </ul>
+
+        <h3>2016.9.16.1</h3>
+        <ul>
+            <li>Bug fixes to health meter placement</li>
+            <li>Made it possible to click through the skill name popup during battles</li>
+        </ul>
+
+        <h3>2016.9.7.1</h3>
+        <ul>
+            <li>Improved compatibility with the game's new built-in HP display (turn off overlays in combat settings if you're using it)</li>
+        </ul>
+
+        <h3>2016.9.6.2</h3>
+        <ul>
+            <li>Added black rabbit to summon sort list</li>
+            <li>Added option to disable the skill cast indicator</li>
+        </ul>
+
+        <h3>2016.9.6.1</h3>
+        <ul>
+            <li>Popup shows precise estimated AP/BP</li>
+            <li>Added option to only update raids panel if you have 3 BP or more</li>
+            <li>Animated indicator appears on skill buttons while they are being cast</li>
+        </ul>
+
+        <h3>2016.9.5.1</h3>
+        <ul>
+            <li>Various compatibility and performance improvements</li>
+            <li>Popup raid code box auto-refreshes if you click away and click back</li>
+        </ul>
+
+        <h3>2016.9.3.2</h3>
+        <ul>
+            <li>Fixed some cases where the extension would load slowly</li>
+            <li>Fixed bug where auto-end raid would erroneously reload the results page, making it blank</li>
+            <li>Adjusted display logic and history length for network HUD</li>
+        </ul>
+
+        <h3>2016.9.3.1</h3>
+        <ul>
+            <li>Added network HUD</li>
+            <li>Made 'show party names' work in party edit screen</li>
+            <li>Added option to show weapon attack when viewing weapon skill levels</li>
+        </ul>
+
+        <h3>2016.9.2.2</h3>
+        <ul>
+            <li>Fixed right/middle click actions not working on the sidebar and bookmarks menu</li>
+        </ul>
+
+        <h3>2016.9.2.1</h3>
+        <ul>
+            <li>Game compatibility update</li>
+        </ul>
+
+        <h3>2016.9.1.3</h3>
+        <ul>
+            <li>Fixed another bug where would not load on certain page loads</li>
+        </ul>
+
+        <h3>2016.9.1.2</h3>
+        <ul>
+            <li>Added workaround for zooming bug in Chrome 53.x</li>
+        </ul>
+
+        <h3>2016.9.1.1</h3>
+        <ul>
+            <li>Added workaround for incompatibility with '<b>Lite</b>' and '<b>Standard</b>' game resolution options</li>
+        </ul>
+
+        <h3>2016.8.30.3</h3>
+        <ul>
+            <li>Addressed multiple issues causing extension to silently fail sometimes when loading a page</li>
+            <li>Fix debuff skills triggering duplicate condition updates</li>
+        </ul>
+
+        <h3>2016.8.29.1</h3>
+        <ul>
+            <li>Debuffing enemies triggers debuff timer updates more consistently</li>
+        </ul>
+
+        <h3>2016.8.28.1</h3>
+        <ul>
+            <li>Fixed invisible bookmarks icon on mobile site</li>
+            <li>Fixed misaligned health bars on mobile site</li>
+        </ul>
+
+        <h3>2016.8.27.1</h3>
+        <ul>
+            <li>Fixed bookmark error popup being mangled garbage sometimes during Guild War</li>
+        </ul>
+
+        <h3>2016.8.26.3</h3>
+        <ul>
+            <li>Changed script loading to fix bug in some versions of Chrome that broke debuff timers</li>
+        </ul>
+
+        <h3>2016.8.26.2</h3>
+        <ul>
+            <li>Improved lag compensation</li>
+        </ul>
+
+        <h3>2016.8.26.1</h3>
+        <ul>
+            <li>Added estimated RP to next rank on quest results screen</li>
+        </ul>
+
+        <h3>2016.8.25.4</h3>
+        <ul>
+            <li>Fixed 'automatically end raids' still activating even when turned off</li>
+        </ul>
+
+        <h3>2016.8.25.3</h3>
+        <ul>
+            <li>Fixed debuff timers and enemy health not appearing in some cases</li>
+            <li>Reduced overhead of performance hud</li>
+            <li>New improved raid message handling</li>
+            <li>Players list displays real-time honors and death status</li>
+            <li>More fixes for HL chevalier buffs (sigh)</li>
+        </ul>
+
+        <h3>2016.8.25.2</h3>
+        <ul>
+            <li>Fixed buff/debuff tracker becoming empty erroneously on fights like HL Chevalier</li>
+            <li>Fix a case where lag compensation would cause the framerate to tank for a long period of time</li>
+        </ul>
+
+        <h3>2016.8.25.1</h3>
+        <ul>
+            <li>Changed combat integration for improved performance</li>
+            <li>Added optional 'performance hud' that shows the game's current framerate</li>
+            <li>Added experimental workaround for Chrome bug that causes lag in battles, crew pages, and co-op rooms</li>            
+        </ul>
+
+        <h3>2016.8.24.1</h3>
+        <ul>
+            <li>Fix arcana event breaking the guild war bookmarks</li>
+            <li>Fix event bookmark not working during a guild war</li>
+        </ul>
+
+        <h3>2016.8.23.2</h3>
+        <ul>
+            <li>Added updated guild war bookmarks</li>
+        </ul>
+
+        <h3>2016.8.23.1</h3>
+        <ul>
+            <li>Fix enemy buff/debuff tracker getting out of sync in some cases</li>
+            <li>Fixes for some stalled network requests (outdated status/raid panels, etc)</li>
+        </ul>
+
+        <h3>2016.8.21.1</h3>
+        <ul>
+            <li>Various bug fixes</li>
+        </ul>
+
+        <h3>2016.8.19.2</h3>
+        <ul>
+            <li>Better message in popup that explains how to update</li>
+        </ul>
+
+        <h3>2016.8.19.1</h3>
+        <ul>
+            <li>Settings page bug fixes</li>
+            <br>
+            <small>Contributed by Menma</small>
+            <li>Debuff timer UI bug fixes</li>
+        </ul>
+
+        <h3>2016.8.18.1</h3>
+        <ul>
+            <li>Debuff timers rewritten and probably completely broken</li>
+            <li>Enemy buffs that can expire now (optionally) appear in the debuff timer panel</li>
+            <li>Enemy buff/debuff timers are now (by default) filtered based on your current target</li>
+            <li>Adjusted status panel so the clock and meters are more visible</li>
+            <li>Fixed some bad behavior caused by game server issues</li>
+            <li>Eliminated some unnecessary item list requests</li>
+            <li>Fixed bug where the watch buttons on the items page were silently broken</li>
+            <li>Added logic to disable duplicate server requests in some rare cases</li>
+        </ul>
+
+        <h3>2016.8.14.1</h3>
+        <ul>
+            <li>Fixed bug causing JST clock to be covered by bookmarks icon</li>
+        </ul>
+
+        <h3>2016.8.12.1</h3>
+        <ul>
+            <li>Added quick weapon change button on support summon page</li>
+            <li>Quick class change button works better</li>
+            <li>Bookmarks icon covers the mobage toolbar buttons better</li>
+        </ul>
+
+        <h3>2016.8.11.1</h3>
+        <ul>
+            <li>Added quick class change button on support summon page</li>
+        </ul>
+
+        <h3>2016.8.9.1</h3>
+        <ul>
+            <li>Added Star Halo reminder below JST clock</li>
+        </ul>
+
+        <h3>2016.7.26.7</h3>
+        <ul>
+            <li>Forcibly disabled keyboard hotkeys and related features</li>
+        </ul>
+
+        <h3>2016.7.26.4</h3>
+        <ul>
+            <li>Fixed bookmarks menu click target covering skill queue in some cases</li>
+        </ul>
+
+        <h3>2016.7.26.1</h3>
+        <ul>
+            <li>Changed how sidebar and bookmarks menu are displayed</li>
+            <li>Fixed skill queue covering bookmarks menu</li>
+        </ul>
+
+        <h3>2016.7.25.3</h3>
+        <ul>
+            <li>Added option to turn off party selector names</li>
+        </ul>
+
+        <h3>2016.7.25.1</h3>
+        <ul>
+            <small>Contributed by Menma</small>
+            <li>Multiple items can be used at once from the popup</li>
+        </ul>
+
+        <h3>2016.7.24.2</h3>
+        <ul>
+            <li>Added text labels to party selector</li>
+        </ul>
+
+        <h3>2016.7.24.1</h3>
+        <ul>
+            <li>Fixed item watch buttons not always appearing on uncap pages</li>
+
+            <small>Contributed by Menma</small>
+            <li>Fix level sorting of summons when in Japanese mode</li>
+            <li>Add option to prioritize White Rabbit summons</li>
+        </ul>
+
+        <h3>2016.7.23.2</h3>
+        <ul>
+            <small>Contributed by Menma</small>
+            <li>Japanese localization updates</li>
+            <li>Added 'Misc' option for default support element</li>
+        </ul>
+
+        <h3>2016.7.23.1</h3>
+        <ul>
+            <li>Added Guild War submenu to bookmarks</li>
+        </ul>
+
+        <h3>2016.7.22.2</h3>
+        <ul>
+            <li>Fix raid quick join issue</li>
+            <li>Fix raids list auto refresh</li>
+        </ul>
+
+        <h3>2016.7.22.1</h3>
+        <ul>
+            <li>Compatibility fixes</li>
+        </ul>
+
+        <h3>2016.7.21.2</h3>
+        <ul>
+            <li>Bug fix for stuck skill queue</li>
+            <li>Error message fixes</li>
+        </ul>
+
+        <h3>2016.7.21.1</h3>
+        <ul>
+            <li>'L' last hosted hotkey added to co-op</li>
+            <li>Updated for compatibility with recent game changes</li>
+        </ul>
+
+        <h3>2016.7.20.1</h3>
+        <ul>
+            <li>Add support for the defend order timer on quest pages</li>
+            <li>Stability updates</li>
+        </ul>
+
+        <h3>2016.7.18.1</h3>
+        <ul>
+            <li>Watch buttons now use an image because unicode is worthless</li>
+            <li>Minimize unnecessary status and raid list updates when in co-op rooms</li>
+        </ul>
+
+        <h3>2016.7.17.1</h3>
+        <ul>
+            <li>Suspend background updates after an idle timeout or during maintenance downtime</li>
+            <li>Raids panel hidden in co-op rooms and on results pages</li>
+        </ul>
+
+        <h3>2016.7.16.2</h3>
+        <ul>
+            <li>Fix items sidebar not updating after uncapping a party member</li>
+        </ul>
+
+        <h3>2016.7.16.1</h3>
+        <ul>
+            <li>Fix html garbage appearing in some quick summon tooltips</li>
+            <li>Minor font fixes</li>
+            <li>Added item watch buttons to some shop pages</li>
+            <li>Added item watch buttons to character uncap page</li>
+            <li>Watched items can be removed from the sidebar by right-clicking</li>
+            <li>Fixed items sidebar not updating after regular quests</li>
+        </ul>
+
+        <h3>2016.7.14.4</h3>
+        <ul>
+            <small>Contributed by Menma</small>
+            <li>Font fixes for Japanese localization</li>
+            <li>Localized text updates</li>
+            <li>Fixed quick skill/summon buttons not updating in some cases</li>
+        </ul>
+
+        <h3>2016.7.14.3</h3>
+        <ul>
+            <li>Removed Calibri from default font list</li>
+        </ul>
+
+        <h3>2016.7.14.2</h3>
+        <ul>
+            <li>Added alternate English font option for better text</li>
+        </ul>
+
+        <h3>2016.7.14.1</h3>
+        <ul>
+            <li>Updates to idle timeout &amp; maintenance handling</li>
+            <li>Fix expiring-only buff display updating too frequently/infrequently</li>
+            <li>You can 'watch' items from the Supplies page to make them appear in the sidebar</li>
+        </ul>
+
+        <h3>2016.7.13.4</h3>
+        <ul>
+            <li>Buffs panel defaults to showing buffs that will expire soon</li>
+        </ul>
+
+        <h3>2016.7.13.2</h3>
+        <ul>
+            <li>Minor bug fixes</li>
+        </ul>
+
+        <h3>2016.7.13.1</h3>
+        <ul>
+            <li>More idle timeout handler fixes</li>
+            <li>Add optional support buff timers to status panel</li>
+            <li>Update raids panel more quickly after a battle</li>
+        </ul>
+
+        <h3>2016.7.12.1</h3>
+        <ul>
+            <li>Fix raids panel being outdated after joining a raid</li>
+            <li>Raids panel shows number of players in each raid</li>
+            <li>Updated idle timeout handler based on cygames' changes</li>
+            <br>
+            <small>Contributed by Menma</small>
+            <li>Enable drag select on airship enhancement page</li>
+            <li>Mobile site fixes
+            <ul>
+                <li>Fix co-op quests not being recorded for last hosted functionality</li>
+                <li>Fix being unable to remove from skill queue</li>
+                <li>Fix horizontal sidebar being hidden by modal popups and their masks</li>
+                <li>Fix skills getting unintentionally clicked when selecting a party member</li>
+                <li>Fix skill buttons getting stuck in a pressed state when the skill is about to be queued or when pressed during a normal attack</li>
+                <li>If a touch moves, it is treated as a cancel instead of a click</li>
+                <li>Enable drag select on mobile</li>
+            </ul></li>
+        </ul>
+
+        <h3>2016.7.10.1</h3>
+        <ul>
+            <li>Quick summon buttons have tooltips</li>
+            <li>Fixed intermittent error message when using items from the popup</li>
+        </ul>
+
+        <h3>2016.7.9.1</h3>
+        <ul>
+            <small>Contributed by Menma</small>
+            <li>Translation updates</li>
+            <li>Added summary counter to event drawbox content page</li>
+        </ul>
+
+        <h3>2016.7.8.3</h3>
+        <ul>
+            <li>Made status panel meters 'lazy' so they don't trigger server requests, but may become inaccurate in some cases</li>
+        </ul>
+
+        <h3>2016.7.8.2</h3>
+        <ul>
+            <li>Added experimental horizontal sidebar (???) layout option</li>
+            <li>Sidebar menu has a short delay before opening to avoid accidentally opening it</li>
+            <li>Partial support for using user-agent switchers on browser version of the game</li>
+            <li>Bookmarks re-enabled on mobile site (but locked to horizontal layout)</li>
+        </ul>
+
+        <h3>2016.7.8.1</h3>
+        <ul>
+            <li>Bookmark updates</li>
+            <li>Fixed raid sidebar bug related to end of combat</li>
+            <li>Retries after failed server requests are delayed in more cases</li>
+        </ul>
+
+        <h3>2016.7.6.1</h3>
+        <ul>
+            <li>Raised custom icon size limit to 96kb</li>
+            <li>Add tooltip and overlay icon to skill queue entries so it is clearer that you can remove them</li>
+            <li>Removed background from status panel so that it is less annoying if you have the game's sidebar hidden</li>
+        </ul>
+
+        <h3>2016.7.4.4</h3>
+        <ul>
+            <small>Contributed by Menma</small>
+            <li>Skills can be removed from the queue by clicking their icons</li>
+            <li>Sidebar and quest memory bug fixes</li>
+        </ul>
+
+        <h3>2016.7.4.3</h3>
+        <ul>
+            <li>Lower sidebar status panel update interval</li>
+        </ul>
+
+        <h3>2016.7.4.2</h3>
+        <ul>
+            <li>AP and BP meters on status panel update in real-time</li>
+            <li>Fixed some quest scenes and other bits of UI being cut off at the bottom</li>
+        </ul>
+
+        <h3>2016.7.3.2</h3>
+        <ul>
+            <li>A significant portion of the extension is currently disabled on the mobile site due to bugs</li>
+            <li>Fix quick raid panel icons sometimes not working when viewing the raids page</li>
+        </ul>
+
+        <h3>2016.7.3.1</h3>
+        <ul>
+            <li>Fix quest scene backgrounds being invisible on mobile site</li>
+            <li>Fix scene skip textbox being cut off in some cases on mobile site</li>
+        </ul>
+
+        <h3>2016.7.2.1</h3>
+        <ul>
+            <li>Fix game being too large when using user-agent switcher extensions like ソーシャルゲームビューア</li>
+            <li>Handle window resizing on mobile site</li>
+            <li>Fix menu and status panel scrolling off screen on mobile site</li>
+            <li>Overhauled how mobile site view resizing is implemented</li>
+            <li>Auto-center popups on mobile site when scrolling/resizing</li>
+            <li>Fix skill queue being nonfunctional on mobile site in some cases</li>
+        </ul>
+
+        <h3>2016.7.1.2</h3>
+        <ul>
+            <li>Added customizable bookmarks icon</li>
+            <li>Added adjustable padding below bookmarks icon</li>
+        </ul>
+
+        <h3>2016.7.1.1</h3>
+        <ul>
+            <li>Raid list improvements and bug fixes</li>
+            <li>Adjustable brightness for JST clock</li>
+        </ul>
+
+        <h3>2016.6.30.5</h3>
+        <ul>
+            <li>Fixed raid refresh timer appearing in combat</li>
+            <li>Fixed raid panel using english images when in Japanese mode</li>
+            <li>Click the RP bar in the popup to show the exact amount of RP needed for your next rank</li>
+        </ul>
+
+        <h3>2016.6.30.4</h3>
+        <ul>
+            <li>A refresh timer appears above the raids list</li>
+            <li>Page navigations no longer reset the raid refresh timer</li>
+        </ul>
+
+        <h3>2016.6.30.3</h3>
+        <ul>
+            <li>Raids panel improvements</li>
+        </ul>
+
+        <h3>2016.6.30.2</h3>
+        <ul>
+            <li>Raids panel improvements</li>
+        </ul>
+
+        <h3>2016.6.30.1</h3>
+        <ul>
+            <li>Added sidebar raids panel</li>
+        </ul>
+
+        <h3>2016.6.29.3</h3>
+        <ul>
+            <li>Fixed quick raid join bug</li>
+        </ul>
+
+        <h3>2016.6.29.2</h3>
+        <ul>
+            <li>Fixed rare bug where combat UI would break when moving between raids</li>
+            <li>Error handling improvements</li>
+        </ul>
+
+        <h3>2016.6.29.1</h3>
+        <ul>
+            <li>Fix to popup counters/meters getting stuck if the idle timeout happened before they were refreshed</li>
+        </ul>
+
+        <h3>2016.6.26.1</h3>
+        <ul>
+            <li>Made clock visible when status panel is disabled</li>
+            <li>Added option to refresh the raids list automatically. (Please note that leaving this on for too long could trigger a captcha)</li>
+        </ul>
+
+        <h3>2016.6.24.3</h3>
+        <ul>
+            <li>Better approach to locating raid results</li>
+        </ul>
+
+        <h3>2016.6.24.2</h3>
+        <ul>
+            <li>Status panel shows current time in Japan</li>
+        </ul>
+
+        <h3>2016.6.24.1</h3>
+        <ul>
+            <li>Auto-load the newest raid results page instead of the oldest</li>
+            <br>
+            <small>Contributed by Menma</small>
+            <li>Keyboard hotkeys for fate episodes from journal</li>
+            <li>Fix invalid raid code appearing in popup in some cases</li>
+        </ul>
+
+        <h3>2016.6.23.1</h3>
+        <ul>
+            <li>Performance improvements</li>
+            <li>Fix popup counters/meter values getting stuck after game idle timeout</li>
+            <li>Fix skill queue getting stuck when one ability locks out another (i.e. Narumeia)</li>
+        </ul>
+
+        <h3>2016.6.22.1</h3>
+        <ul>
+            <li>Menu closes slower on mouse-out if it is in click to open mode</li>
+            <li>Added [ / ] and F / G hotkeys for changing targets</li>
+        </ul>
+
+        <h3>2016.6.21.2</h3>
+        <ul>
+            <li>'Repeat last quest' bug fixes</li>
+            <li>Display detailed quest info on support summon selection page</li>
+        </ul>
+
+        <h3>2016.6.21.1</h3>
+        <ul>
+            <li>Partial support for defend order notifications</li>
+            <li>Arrow keys work when reading Grand Blues</li>
+            <li>Press 'S' to skip story sections</li>
+            <li>Updates to Japanese localization</li>
+            <li>Improvements to skill queue retry option</li>
+        </ul>
+
+        <h3>2016.6.20.3</h3>
+        <ul>
+            <li>Handle failed skill activations</li>
+            <li>Darken quick summon buttons when summons are locked out</li>
+        </ul>
+
+        <h3>2016.6.20.2</h3>
+        <ul>
+            <li>Number keys can be used to select items in the Heal window</li>
+            <li>Number keys can be used to select a target character for green healing potions</li>
+            <li>Middle-click or shift-click on bookmarks opens them in a new tab</li>
+        </ul>
+
+        <h3>2016.6.20.1</h3>
+        <ul>
+            <li>Revised bookmarks menu</li>
+            <li>Added japanese text for some bookmarks menu items</li>
+            <li>Added localization support for the popup</li>
+            <li>Fixed popup 'please reload' message no longer appearing after an extension update</li>
+        </ul>
+
+        <h3>2016.6.19.2</h3>
+        <ul>
+            <li>Force bookmarks menu to 'click to open' mode on mobile site</li>
+            <li>Fix status panel being too large on mobile site</li>
+            <li>Disable bookmark menu animations on mobile site</li>
+            <br>
+            <small>Contributed by Menma</small>
+            <li>Defend order bug fixes</li>
+            <li>Partial support for the mobile site, <tt>gbf.game.mbga.jp</tt></li>
+            <li>Handle the error popup that appears if you attack or use an ability too quickly after reloading</li>
+        </ul>
+
+        <h3>2016.6.19.1</h3>
+        <ul>
+            <li>Skip server check for enemies with no visible debuff icons</li>
+            <li>Fix manually activating 'next' button in quests with spacebar</li>
+            <li>Repeat Last Quest checks to see whether you are able to repeat the quest</li>
+        </ul>
+
+        <h3>2016.6.18.3</h3>
+        <ul>
+            <li>One-click summon activation waits if something is currently happening</li>
+            <li>Overhauled enemy debuff updates</li>
+        </ul>
+
+        <h3>2016.6.18.2</h3>
+        <ul>
+            <li>Added RP/AP/BP status bars to the left panel</li>
+            <li>Fixed defend order health gauges</li>
+        </ul>
+
+        <h3>2016.6.18.1</h3>
+        <ul>
+            <li>Added a hack to suppress browser default spacebar scrolling in combat</li>
+            <li>Fixed bug that sometimes made auto-advance break for regular quests</li>
+            <li>Added bookmarks for Defend Order and the current event</li>
+            <li>More aggressive fix for spacebar while popups are open</li>
+            <li>Added spacebar support for more popups</li>
+        </ul>
+
+        <h3>2016.6.17.5</h3>
+        <ul>
+            <li>Fixed auto-advance not working on retreated quests</li>
+            <li>Fix corner case where spacebar would sometimes attack instead of interacting with a popup</li>
+            <br>
+            <small>Contributed by Menma</small>
+            <li>Defend order bug fixes</li>
+        </ul>
+
+        <h3>2016.6.17.4</h3>
+        <ul>
+            <li>Fixed quick raid join error message broken by defend order update</li>
+        </ul>
+
+        <h3>2016.6.17.3</h3>
+        <ul>
+            <li>Added one-click quick summon option</li>
+            <li>Fix corner case where sometimes quick buttons/summons would disappear</li>
+            <li>Optimized gauge updates</li>
+        </ul>
+
+        <h3>2016.6.17.2</h3>
+        <ul>
+            <small>Contributed by Menma</small>
+            <li>Added option to stop middle/right mouse buttons from clicking buttons in-game</li>
+            <li>Enabled keyboard shortcuts on journal story replays</li>
+            <li>Enabled numpad keys for story choices</li>
+            <li>Defend order bug fixes</li>
+        </ul>
+
+        <h3>2016.6.17.1</h3>
+        <ul>
+            <li>Changed raid bookmarks to check whether you are eligible to attempt the raid</li>
+            <li>Primal raid bookmarks removed because they were of questionable reliability <small>(if you want these back, let me know and maybe I can figure something out)</small></li>
+            <li>Adjusted raid results hang detection timer</li>
+            <li>Added space hotkey for 'start' button in co-op rooms</li>
+            <li>Fixed space misbehaving inside the stamina refill pop-up in co-op rooms</li>
+        </ul>
+
+        <h3>2016.6.16.1</h3>
+        <ul>
+            <li>Fixed issue where targeted skills like Revive could not be activated in some cases</li>
+        </ul>
+
+        <h3>2016.6.15.4</h3>
+        <ul>
+            <li>Fixed interaction between ability queueing and skill description popups</li>
+        </ul>
+
+        <h3>2016.6.15.3</h3>
+        <ul>
+            <li>Fixed quick buttons not activating skills if queueing was disabled</li>
+        </ul>
+
+        <h3>2016.6.15.2</h3>
+        <ul>
+            <li>Added an option to disable co-op UI enhancements</li>
+            <li>Add workaround for game mouse input bug that breaks dropdown lists</li>
+            <li>Adjustments to input handling for skill queue and quick panels</li>
+            <li>Disabled registration of skill mouse input handlers when skill queueing is turned off</li>
+        </ul>
+
+        <h3>2016.6.15.1</h3>
+        <ul>
+            <li>Enabled drag-select on sell page</li>
+            <li>Space bar selects the 'Ready' button in co-op rooms</li>
+            <li>Fixed UI hooks for features like drag-select breaking in some cases</li>
+        </ul>
+
+        <h3>2016.6.13.3</h3>
+        <ul>
+            <li>Added button that selects the last co-op stage you hosted</li>
+            <li>Changed co-op bookmark so that it takes you to your current room if you're in one</li>
+            <li>Fixed AP/BP values and item counts not updating in popup after using an item</li>
+        </ul>
+
+        <h3>2016.6.13.2</h3>
+        <ul>
+            <li>Added one-click join for co-op rooms</li>
+            <li>Added partial Korean translation</li>
+            <br>
+            <small>Contributed by Menma</small>
+            <li>Japanese text rendering improvements</li>
+            <li>Fix button clipping in raids</li>
+            <li>Refresh item counts in popup after using them</li>
+            <li>Fix popup buttons when you have 0 of an item</li>
+            <li>Minor japanese translation fixes</li>
+            <li>Fix debuff &amp; skill queue panels sticking on results screen</li>
+            <li>Fix skill tooltips sometimes showing HTML garbage</li>
+            <li>Handle multiple game tabs and/or game sessions in one browser instance</li>
+        </ul>
+
+        <h3>2016.6.13.1</h3>
+        <ul>
+            <li>Fix background errors while battle is loading</li>
+        </ul>
+
+        <h3>2016.6.12.4</h3>
+        <ul>
+            <li>Fixed issue with popup breaking when multiple windows are open</li>
+            <li>Added option to make twitter refills default to being sent as invisible direct messages instead of showing up on your public twitter feed</li>
+            <li>Improved CPU usage and latency when waiting for pages to load</li>
+            <li>Reduced CPU usage when not on combat pages</li>
+            <li>Small corrections and updates to Japanese translation</li>
+            <li>Added translation support for bookmarks menu</li>
+            <li>Fixed some blurry text in bookmarks menu</li>
+        </ul>
+
+        <h3>2016.6.12.3</h3>
+        <ul>
+            <li>Added option to only open the bookmarks menu on click (instead of hover)</li>
+        </ul>
+
+        <h3>2016.6.12.2</h3>
+        <ul>
+            <li>Added size slider for the bookmarks menu itself</li>
+        </ul>
+
+        <h3>2016.6.12.1</h3>
+        <ul>
+            <li>Added tooltips to skill buttons</li>
+            <li>Added Japanese translation by Ornstein</li>
+        </ul>
+
+        <h3>2016.6.11.4</h3>
+        <ul>
+            <li>Touch input support is now forced off by default due to bug reports. If you are playing on a tablet, you can re-enable it in the User Interface settings</li>
+            <li>Fixed the 'skill' header on quick panels eating mouse input</li>
+        </ul>
+
+        <h3>2016.6.11.3</h3>
+        <ul>
+            <li>Added update notes menu item</li>
+            <li>Changed the text of the party copy dialog box again. How does this dialog even work</li>
+            <li>Added more bugs</li>
+        </ul>
+
+        <h3>2016.6.11.1</h3>
+        <ul>
+            <li>Quick-joining raids from the popup doesn't show a browser alert anymore</li>
+            <li>Experimental drag-select enabled for the 'move to stash' page</li>
+            <li>Check for raid results less aggressively to reduce the odds of visiting the results page too early</li>
+            <li>Detect when the raid results page hangs forever on 'Loading' and attempt to unhang it</li>
+            <li>Fix idle log-out detection not returning you to where you were</li>
+        </ul>
+
+        <h3>2016.6.10.3</h3>
+        <ul>
+            <li>Adjusted margins when quick skill/summon buttons are enabled</li>
+            <br>
+            <small>Contributed by Menma</small>
+            <li>Added partial hotkey support for ninja and assassin</li>
+            <li>Added auto-advance option for pre-quest walking sequences</li>
+            <li>Fixed bug where you could activate skills during auto-attack, causing network errors and glitches</li>
+            <li>Fixed messages going to the wrong tab when you have multiple game tabs open</li>
+        </ul>
+
+        <h3>2016.6.10.2</h3>
+        <ul>
+            <li>Quick skill appearance changes</li>
+            <li>Added quick summon buttons</li>
+        </ul>
+
+        <h3>2016.6.9.9</h3>
+        <ul>
+            <li>Fix some keyboard shortcut labels appearing even if shortcuts were turned off</li>        
+            <li>Fix quick buttons blocking the ougi and heal buttons while skills are being used</li>        
+        </ul>
+
+        <h3>2016.6.9.6</h3>
+        <ul>
+            <li>Fixed most of the lag issues caused by skill queues, debuff timers and quick buttons</li>
+        </ul>
+    </body>
+</html>

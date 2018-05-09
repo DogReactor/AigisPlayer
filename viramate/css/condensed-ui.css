@@ -1,0 +1,44 @@
+div.prt-ui-list div.btn-ability {
+    margin: 1px auto 0 auto;
+    zoom: 0.85 !important;
+}
+
+div#prt-job-list div.btn-class {
+    margin-left: 27px;
+    margin-top: 1px;
+    zoom: 0.85 !important;
+}
+
+div.lis-job div.prt-chara-type {
+    right: 62px !important;
+}
+
+/*
+div.lis-treasure.btn-treasure-item {
+    zoom: 0.7 !important;
+}
+*/
+
+div.prt-normal div.lis-item.se,
+div.prt-evolution-items div.lis-item,
+div.prt-treasure div.lis-item.se,
+div.prt-tickets div.lis-item.se,
+div.prt-others-list div.lis-item.se {
+    zoom: 0.5 !important;
+    margin-right: 3px !important;
+}
+
+div.prt-normal div.prt-having-num,
+div.prt-evolution-items div.prt-having-num,
+div.prt-treasure div.prt-having-num,
+div.prt-tickets div.prt-tickets-num,
+div.prt-others-list div.prt-having-num {
+    font-size: 18px !important;
+    padding-top: 0.5px !important;
+    padding-right: 2px !important;
+}
+
+div.prt-supporter-attribute div.btn-supporter {
+    margin-top: -2px !important;
+    margin-bottom: -4px !important;
+}

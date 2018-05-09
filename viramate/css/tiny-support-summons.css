@@ -1,0 +1,25 @@
+div.prt-supporter-list div.prt-supporter-name span.txt-supporter-level,
+div.prt-supporter-list div.prt-supporter-thumb {
+    display: none;
+}
+
+div.prt-supporter-list div.prt-supporter-name {
+    padding-left: 71px !important;
+}
+
+div.prt-supporter-list div.prt-supporter-detail div.prt-summon-skill:not(.prt-supporter-summon) {
+    font-size: 0px !important;
+}
+
+div.prt-supporter-list div.btn-supporter div.prt-summon-image {
+    margin-top: -25px !important;
+    margin-left: -4px !important;
+}
+
+div.prt-supporter-list div.btn-supporter {
+    background: url('chrome-extension://__MSG_@@extension_id__/content/summon-background.png')
+        no-repeat 0px 0px
+        !important;
+    background-size: 307px 83.5px !important;
+    height: 53px !important;
+}

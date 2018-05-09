@@ -1,0 +1,412 @@
+div.debuff-timer,
+div.buff-timer,
+div.number-container,
+div.field-effect:after {
+    text-shadow: 0px 0px 1px #000000, 
+        0px 0px 1px #000000, 
+        0px 0px 1px #000000, 
+        0px 0px 2px #000000, 
+        0px 0px 3px #000000
+        ;
+}
+
+div.buff-timer:after {
+    text-shadow: 0px 0px 1px #000000, 
+        0px 0px 1px #000000, 
+        0px 0px 1px #000000, 
+        0px 0px 2px #000000, 
+        0px 0px 3px #000000
+        ;
+}
+
+div.debuff-timers,
+div.buff-timers,
+div.number-container {
+    font-family: Tahoma, Verdana, sans-serif;
+}
+
+div.debuff-timers {
+    box-sizing: border-box;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: 11px;
+    display: block;
+    width: 40px;
+    height: 200px;
+    position: absolute;
+    top: 50px;
+    right: -6px;
+    opacity: 0.0;
+
+    transition: opacity 0.25s;
+
+    z-index: 10002;
+
+    margin: 0px;
+    padding-top: 6px;
+    padding-left: 17.5px;
+    overflow-x: visible;
+    overflow-y: hidden;
+}
+
+img.enemy-portrait {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 4.5px;
+    left: 0.25px;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+div.debuff-timers > div.debuff-timer {
+    pointer-events: auto;
+    background-size: contain;
+    background-position-y: 3px;
+    background-repeat: no-repeat;
+
+    box-sizing: border-box;
+    width: 18px;
+    height: 20.5px;
+    padding: 0px;
+    padding-right: 1px;
+    margin: 0px;
+    margin-top: 0px;
+    margin-bottom: -3px;
+
+    font-size: 4.85pt;
+    font-weight: bold;
+    color: white;
+    text-align: left;
+}
+
+img.refresh-buffs {
+    box-sizing: border-box;
+    position: absolute;
+    left: 218px;
+    top: 292px;
+    opacity: 0.66;
+    transition: opacity 0.1s, border-color 0.1s;
+    background-color: rgba(0, 0, 0, 0.25);
+    border-color: transparent;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 7px;
+    max-height: 13px;
+    z-index: 13;
+    pointer-events: auto;
+}
+
+img.refresh-buffs.hidden {
+    opacity: 0.0;
+    pointer-events: none;
+}
+
+img.refresh-buffs:hover {
+    opacity: 0.8;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+img.refresh-buffs:active {
+    opacity: 1.0;
+    border-color: rgba(255, 255, 255, 0.66);
+}
+
+img.refresh-buffs.spinning {
+    animation-name: spin;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-duration: 0.8s;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+div.buff-timers {
+    box-sizing: border-box;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: block;
+    position: absolute;
+
+    background-color: rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+
+    transition: opacity 0.1s;
+
+    z-index: 11;
+    width: 53px;
+    top: 292px;
+    height: 13px;
+
+    margin: 0px;
+    padding-left: 1.5px;
+    padding-top: 2px;
+    overflow: visible;
+}
+
+div.buff-timers[index="0"] {
+    left: 6px;
+}
+
+div.buff-timers[index="1"] {
+    left: 60px;
+}
+
+div.buff-timers[index="2"] {
+    left: 114px;
+}
+
+div.buff-timers[index="3"] {
+    left: 168px;
+}
+
+div.buff-timers > div.buff-timer {
+    pointer-events: auto;
+    background-size: 13.5px 13.5px;
+    background-repeat: no-repeat;
+
+    position: relative;
+    box-sizing: border-box;
+    width: 15.5px;
+    height: 14.5px;
+    padding: 0px;
+    padding-right: 1px;
+    margin: 0px;
+    margin-top: -1px;
+    margin-bottom: -3px;
+    margin-right: -3.5px;
+
+    display: inline-block;
+
+    vertical-align: top;
+}
+
+div.buff-timers > div.buff-timer.stacked {
+    margin-left: 0px;
+    margin-right: -15px;
+    opacity: 0.66;
+}
+
+div.buff-timers > div.buff-timer.special-buff {
+    background-size: 16.5px 16.5px;
+    width: 16.5px;
+    height: 16.5px;
+    margin-top: -2.5px;
+    margin-left: -1.5px;
+    margin-right: -2px;
+}
+
+div.buff-timers > div.buff-timer.phalanx {
+    background-size: 17px 17px;
+    width: 15px;
+    height: 15px;
+    margin-top: -2.5px;
+    margin-left: -2px;
+    margin-right: 0.5px;
+}
+
+div.buff-timers > div.buff-timer:not(.special-buff):not(.phalanx)::after {
+    position: absolute;
+    top: -1.5px;
+    left: 0px;
+    right: 3.5px;
+    text-align: right;
+    font-size: 6px;
+    font-weight: bold;
+    content: attr(remain);
+    color: white;
+    z-index: 10005;
+}
+
+div.performance-hud,
+div.network-hud {
+    box-sizing: border-box;
+    font-family: Consolas, Courier New, monospace;
+    font-size: 11px;
+    line-height: 11px;
+    zoom: reset;
+    position: absolute;
+    transition: opacity 1s;
+    z-index: 9999999;
+    margin: 0px;
+    pointer-events: none;
+}
+
+div.performance-hud {
+    top: 3px;
+    right: 3px;
+    padding: 4px;
+    max-width: 300px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: rgb(240, 240, 240);
+}
+
+div.network-hud {
+    top: 700px;
+    width: 64px;
+    text-align: center;
+    background-color: rgb(31, 31, 31);
+    color: rgb(220, 220, 220);
+}
+
+div.transient-message {
+    position: absolute;
+    margin: 0px;
+    padding: 6px;
+    left: 136px;
+    width: 368px;
+    text-align: center;
+    background-color: rgb(31, 31, 31);
+    color: rgb(220, 220, 220);
+    font-size: 13pt;
+    font-family: vmLato, Tahoma, Verdana, sans-serif;
+    font-weight: bold;
+    transition: opacity 0.6s;
+    z-index: 9999999;
+    pointer-events: none;
+    zoom: reset;
+    box-sizing: border-box;
+}
+
+div.field-effects {
+    position: absolute;
+    left: 1px;
+    top: 43px;
+    width: 38px;
+    min-height: 16px;
+    box-sizing: border-box;
+    zoom: 1;
+}
+
+div.field-effect {
+    position: relative;
+
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    margin-top: 2px;
+    height: 16px;
+    box-sizing: border-box;
+
+    border-radius: 6px;
+    background-color: rgba(15, 15, 15, 0.7);
+
+    overflow: hidden;
+
+    font-family: vmLato, Tahoma, Verdana, sans-serif !important;    
+    z-index: 9001;
+}
+
+div.field-effect:after {
+    position: absolute;
+    text-align: right;
+    content: attr(readout);
+    padding: 0px;
+    margin: 0px;
+    padding-left: 16px;
+    padding-right: 2px;
+    padding-top: 4px;
+    font-size: 8px;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 9003;
+    color: white;
+}
+
+div.field-effect img.icon {
+    position: absolute;
+    left: 1px;
+    top: 1.5px;
+    max-width: 15px;
+    max-height: 15px;
+    z-index: 9003;
+}
+
+div.field-effect div.fill {
+    position: absolute;
+    box-sizing: border-box;
+    border-radius: 6px;
+    border-width: 0px;
+    border-style: solid;
+    border-color: rgb(86, 126, 136);
+    border-right-width: 1.5px;
+    background-color: rgba(46, 86, 96, 0.9);
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    z-index: 9002;
+    /* transition: width 0.1s; */
+}
+
+div.action-timer {
+    box-sizing: border-box;
+    font-family: Consolas, Courier New, monospace;
+    font-size: 11px;
+    line-height: 11px;
+    position: absolute;
+    transition: opacity 1s;
+    z-index: 16;
+    margin: 0px;
+    pointer-events: none;
+    top: 222px;
+    right: 24px;
+    padding: 3px;
+    max-width: 300px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: rgb(240, 240, 240);
+    font-size: 9px !important;
+    transition: opacity 0.3s;
+}
+
+img.connection-status {
+    position: absolute;
+    z-index: 40000;
+    top: 760px;
+    transition: opacity 0.75s;
+    pointer-events: none;
+}
+
+div.buff-message {
+    position: absolute;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.8) 25%,
+        rgba(0,0,0,0.8) 50%,
+        rgba(0,0,0,0.8) 75%,
+        rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    display: block;
+    width: 320px;
+    font-size: 16px;    
+}
+
+div.buff-message div.portraits {
+    position: absolute;
+    left: 20px;
+}
+
+div.buff-message img {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    padding: 0px;
+    margin: 0px;
+    margin-right: 8px;
+}
+
+div.buff-message span {
+    position: absolute;
+    right: 20px;
+    display: inline-block:
+    margin: 0px;
+    margin-left: -4px;
+}

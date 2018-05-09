@@ -1,0 +1,4 @@
+div.cnt-arcarum-stage div#btn-skip-effect,
+div.cnt-arcarum-stage div.prt-cjs-mask {
+    pointer-events: none;
+}

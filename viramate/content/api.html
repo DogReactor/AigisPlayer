@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>DMCAmate API</title>
+        <style>
+            body {
+                font-size: 14pt;
+            }
+
+            i {
+                background-color: rgb(230, 230, 230);
+                color: rgb(32, 32, 32);
+            }
+        </style>
+        <script src="api.js"></script>
+    </head>
+    <body>    
+        <p>Embed this page in your website using an <tt>iframe</tt>, then communicate with it via <tt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage" target="_blank">postMessage</a></tt>.</p>
+        <p>For this to work you need to turn on 'Web API' in the general extension settings and then reload your game tab to apply the setting.</p>
+        <p>See <a href="api_test.html">api_test.html</a> for an example.</p>
+        <h2>Supported messages</h2>
+        <ul>
+            <li>Attempt to join a raid given a twitter share code. Redirects to the summon selection page on success.
+<pre>
+{
+    <b>type</b>: "tryJoinRaid",
+    <b>id</b>: <i>int msgId</i>,
+    <b>raidCode</b>: "<i>8-character raid code</i>"
+}</pre>
+Response:
+<pre>{
+    <b>type</b>: "result",
+    <b>id</b>: <i>int msgId</i>,
+    <b>result</b>: "ok" or "<i>failure reason</i>"
+}</pre>
+</li>            
+        </ul>
+        <ul>
+            <li>Attempt to join a co-op room given a twitter share code. Redirects to the room on success.
+<pre>
+{
+    <b>type</b>: "tryJoinCoOpRoom",
+    <b>id</b>: <i>int msgId</i>,
+    <b>roomCode</b>: "<i>room code (5-6 characters)</i>"
+}</pre>
+Response:
+<pre>{
+    <b>type</b>: "result",
+    <b>id</b>: <i>int msgId</i>,
+    <b>result</b>: "ok" or "<i>failure reason</i>"
+}</pre>
+</li>            
+        </ul>
+        <ul>
+            <li>Get info on the current battle.
+<pre>
+{
+    <b>type</b>: "getCombatState",
+    <b>id</b>: <i>int msgId</i>,
+}</pre>
+Response:
+<pre>{
+    <b>type</b>: "result",
+    <b>id</b>: <i>int msgId</i>,
+    <b>result</b>: {<i>a bunch of shit</i>}
+}</pre>
+</li>            
+        </ul>
+        <ul>
+            <li>Get the player's user IDs.
+<pre>
+{
+    <b>type</b>: "getUserIds",
+    <b>id</b>: <i>int msgId</i>,
+}</pre>
+Response:
+<pre>{
+    <b>type</b>: "result",
+    <b>id</b>: <i>int msgId</i>,
+    <b>result</b>: [<i>userID</i>, ...]
+}</pre>
+</li>            
+        </ul>
+        <ul>
+            <li>Get the version of the extension currently installed.
+<pre>
+{
+    <b>type</b>: "getVersion",
+    <b>id</b>: <i>int msgId</i>,
+}</pre>
+Response:
+<pre>{
+    <b>type</b>: "result",
+    <b>id</b>: <i>int msgId</i>,
+    <b>result</b>: "<i>version number</i>"
+}</pre>
+</li>            
+        </ul>
+    </body>
+</html>

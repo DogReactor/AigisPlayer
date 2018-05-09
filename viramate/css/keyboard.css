@@ -1,0 +1,19 @@
+div.btn-lock:before {
+    content: "C";
+}
+
+div.btn-command-back.display-on:before {
+    content: "`";
+}
+
+div.btn-command-summon:after {
+    top: 2.5px;
+    left: 2.5px;
+    font-size: 6pt;
+    content: "5";
+    position: absolute;
+}
+
+div.prt-sub-command > div.btn-temporary:before {
+    content: "H";
+}

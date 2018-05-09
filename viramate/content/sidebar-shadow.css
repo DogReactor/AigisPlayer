@@ -1,0 +1,631 @@
+div.raid.joined:after,
+div.raid > span.member-count,
+div.viramate-status-panel div.meter:after,
+div.buffs > div.viramate-buff:after,
+div.items > div.viramate-item:after {
+    text-shadow: 
+        -0.66px 0px 0 rgba(0, 0, 0, 0.95),
+        0.66px 0px 0 rgba(0, 0, 0, 0.95),
+        0px -0.66px 0 rgba(0, 0, 0, 0.95),
+        0px 0.66px 0 rgba(0, 0, 0, 0.95),
+        0.5px 0.5px 1px rgba(0, 0, 0, 0.8)
+    ;
+}
+
+div.raid.joined:after {
+    font-family: Tahoma, Verdana, sans-serif;
+}
+
+div.viramate-menu {
+    font-family: vmLato, Tahoma, Verdana, sans-serif !important;
+}
+
+div.viramate-menu-icon {
+    position: fixed;
+    pointer-events: auto;
+    top: 0px;
+    padding-right: 0px;
+    transform-origin: 0 0;
+
+    z-index: 40001;
+
+    transition-timing-function: linear;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+div.viramate-menu-icon:after {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    /* hack to dim the background image since we can't use opacity */
+    background-color: rgba(31, 31, 31, 0.5);
+    transition: opacity 0.3s;
+    content: "";
+}
+
+div.viramate-menu-icon.open:after {
+    background-color: rgba(31, 31, 31, 0.0) !important;
+}
+
+div.viramate-menu-icon.open {
+    background-color: rgba(31, 31, 31, 0.0) !important;
+    pointer-events: none;
+}
+
+div.viramate-menu-icon:not(.horizontal) {
+    left: -64px;
+    transition: left 0.5s, background-color 0.2s;
+    background-color: rgba(31, 31, 31, 1.0);
+}
+
+div.viramate-menu-icon.horizontal {
+    transition: clip 0.2s;
+    max-height: 80px;
+}
+
+div.viramate-menu-icon.horizontal:not(.open) {
+    clip: rect(0px, 999px, 48px, 0px);
+}
+
+div.viramate-menu-icon.horizontal.open {
+    clip: rect(0px, 999px, 84px, 0px);
+}
+
+div.viramate-status-panel {
+    box-sizing: border-box;
+    position: fixed;
+    left: 0px;
+    z-index: 39999;
+    padding: 0px;
+    margin: 0px;
+    pointer-events: auto;
+    cursor: default;
+}
+
+div.viramate-status-panel > span.time {
+    width: 64px;
+    text-align: center;
+    display: block;
+    margin: 0px;
+    min-height: 13px;
+    margin-bottom: 10px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-size: 11px;
+    line-height: 11px;
+    border-radius: 2px;
+    background-color: #1f1f1f;
+}
+
+span.halo-timer {
+    font-size: 10px;
+    line-height: 11px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+span.halo-timer:hover {
+    color: white !important;
+}
+
+div.viramate-status-panel:not(.horizontal) {
+    width: 64px;
+}
+
+div.viramate-status-panel.horizontal {
+    height: 48px;
+    background-color: #1f1f1f;
+    right: 0px;
+    top: 0px;
+}
+
+span.time,
+span.halo-timer,
+div.meter,
+div.buffs > div.viramate-buff,
+div.items > div.viramate-item,
+span.member-count {
+    font-family: Consolas, Courier New, monospace;
+}
+
+div.viramate-status-panel.horizontal > span.time {
+    height: 48px;
+    line-height: 48px;
+    float: left;
+    position: relative;
+}
+
+div.viramate-status-panel.horizontal > span.time > span.halo-timer {
+    position: absolute;
+    left: 0px;
+    top: 5px;    
+    width: 100%;
+    text-align: center;
+}
+
+div.viramate-status-panel > div.meters {
+    width: 64px;
+}
+
+div.viramate-status-panel.horizontal > div.meters {
+    position: absolute;
+    padding-top: 4px;
+}
+
+div.viramate-status-panel:not(.horizontal) > div.buffs,
+div.viramate-status-panel:not(.horizontal) > div.items {
+    width: 64px;
+    position: relative;
+}
+
+div.viramate-status-panel.horizontal > div.buffs,
+div.viramate-status-panel.horizontal > div.items {
+    height: 48px;
+    position: absolute;
+}
+
+div.buffs > div.viramate-buff,
+div.items > div.viramate-item {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    vertical-align: top;
+    margin: 0px;
+    padding: 0px;
+    background-size: contain;
+    pointer-events: auto;
+}
+
+div.viramate-item[target-count]:after {
+    color: rgb(245, 210, 210) !important;
+}
+
+div.items.large-items > div.viramate-item {
+    width: 64px;
+    height: 64px;
+}
+
+div.viramate-status-panel.horizontal > div.buffs > div.viramate-buff,
+div.viramate-status-panel.horizontal > div.items > div.viramate-item {
+    width: 24px;
+    height: 24px;
+}
+
+div.viramate-status-panel.horizontal > div.items.large-items > div.viramate-item {
+    width: 48px;
+    height: 48px;
+}
+
+div.viramate-status-panel.horizontal > div.buffs > div.viramate-buff:after,
+div.viramate-status-panel.horizontal > div.items > div.viramate-item:after {
+    font-size: 9px;
+    line-height: 9px;
+    padding-right: 3px;
+    padding-top: 13px;
+}
+
+div.viramate-status-panel.horizontal > div.items.large-items > div.viramate-item:after {
+    font-size: 20px;
+    line-height: 20px;
+    padding-top: 26px;
+    color: rgb(240, 240, 240);
+}
+
+div.buffs > div.viramate-buff:after,
+div.items > div.viramate-item:after {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    text-align: right;
+    padding-right: 3px;
+    padding-top: 17px;
+    /* hack to dim the background image since we can't use opacity */
+    background-color: rgba(31, 31, 31, 0.3);
+    color: rgb(210, 210, 210);
+    font-size: 12px;
+    line-height: 12px;
+}
+
+div.items.large-items > div.viramate-item:after {
+    font-size: 26px;
+    line-height: 26px;
+    padding-top: 36px;
+    color: rgb(240, 240, 240);
+}
+
+div.buffs > div.viramate-buff:after {
+    content: attr(remaining);
+}
+
+div.items > div.viramate-item:after {
+    content: attr(count);
+}
+
+div.viramate-status-panel:not(.horizontal) > div.items {
+    margin-top: 4px;
+}
+
+div.meters > div.meter {
+    background-color: #1f1f1f;
+    position: relative;
+    box-sizing: border-box;
+    width: 60px;
+    height: 12px;
+    text-align: right;
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #161616;
+    padding: 0px;
+    padding-right: 3px;
+    margin: 2px;
+    margin-top: 0px;
+    margin-bottom: 2px;
+    line-height: 0px;
+}
+
+div.meters > div.meter:after {
+    content: attr(text);
+    z-index: 10;
+    color: rgb(200, 200, 200);
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 12px;
+    position: relative;
+}
+
+div.meter > div.fill {
+    border-radius: 3px;
+    box-sizing: border-box;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    transition: width 2s;
+}
+
+div.meter > div.fill {
+    z-index: 2;
+}
+
+div.meter > div.fill.shadow {
+    z-index: 1;
+    opacity: 0.4;
+}
+
+div.rp-meter > div.fill {
+    background-image: linear-gradient(
+        #a6a58c,
+        #a69045,
+        #a6660e
+    );    
+}
+
+div.ap-meter > div.fill {
+    background-image: linear-gradient(
+        #979a8e,
+        #2c7f29,
+        #1d2a19
+    );
+}
+
+div.bp-meter > div.fill {
+    background-image: linear-gradient(
+        #9a8e96,
+        #7f2929,
+        #2a191c
+    );
+}
+
+div.viramate-raids-panel {
+    pointer-events: auto;
+    background-color: #1f1f1f;
+    box-sizing: border-box;
+    padding: 0px;
+    display: inline-block;
+    color: white;
+    overflow: hidden;
+    position: fixed;
+    z-index: 39999;
+}
+
+div.viramate-raids-panel:not(.horizontal) {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    width: 64px;
+}
+
+div.viramate-raids-panel.horizontal {
+    padding-top: 2px;
+    padding-left: 4px;
+    right: 0px;
+    height: 48px;
+    top: 0px;
+}
+
+div.viramate-raids-panel > div.countdown-timer {
+    position: relative;
+    border-radius: 2px;
+    background-color: #404040;
+}
+
+div.viramate-raids-panel:not(.horizontal) > div.countdown-timer {
+    max-width: 60px;
+    width: 0px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-left: 2px;
+    height: 3px;
+    transition: width 0.33s;
+}
+
+div.viramate-raids-panel.horizontal > div.countdown-timer {
+    position: absolute;
+    left: 0px;
+    top: 2px;
+    height: 0px;
+    width: 3px;
+    transition: height 0.33s;
+    float: left;
+}
+
+div.viramate-raids-panel > div.raid {
+    box-sizing: border-box;
+    margin-bottom: 3px;
+    margin-left: 2px;
+    width: 60px;
+    height: 44px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: relative;
+    float: left;
+    cursor: pointer;
+}
+
+div.raid > div.gauge {
+    display: block;
+    background: url('http://game-a1.granbluefantasy.jp/assets_en/img/sp/quest/assist/parts-s578923740e.png') no-repeat 0 -1116px;
+    background-size: 320px 1353px;
+    width: 91px;
+    height: 8px;
+    box-sizing: border-box;
+    padding: 2px 6px 2px 2px;
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    transform: scaleX(0.659) scaleY(0.8);
+    transform-origin: 0% 0%;
+}
+
+div.raid > div.gauge > div.fill {
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    left: 1px;
+    background-image: linear-gradient(#ffa47e 0%,#f6bbbb 20%,#d74034 50%,#661515 55%,#d74034 100%);
+    border-radius: 2px;
+    top: 2px;
+    bottom: 2px;
+    max-width: 88px;
+}
+
+div.raid.joined:after {
+    display: block;
+    position: absolute;
+    right: 3px;
+    top: 6px;
+    content: "Joined";
+    text-align: right;
+    font-size: 12px;
+    line-height: 12px;
+}
+
+div.raid > span.member-count {
+    display: block;
+    font-size: 11px;
+    line-height: 11px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    text-align: right;
+    padding-top: 29px;
+    padding-right: 4px;
+    color: rgb(220, 220, 220);
+    background-color: rgba(31, 31, 31, 0.3);
+    transition: background-color 0.25s, color 0.25s;
+}
+
+div.raid:hover > span.member-count {
+    color: white;
+    background-color: rgba(31, 31, 31, 0);
+}
+
+span.viramate-version {
+    box-sizing: border-box;
+    padding-top: 6px;
+    padding-left: 22px;
+    padding-right: 2px;
+    padding-bottom: 3px;
+    text-align: center;
+    display: block;
+    width: 100%;
+    color: #4f4f4f;
+    font-size: 8pt;
+    pointer-events: none;
+    background-color: #101010;
+}
+
+div.viramate-menu {
+    box-sizing: border-box;
+    color: #e0e0e0;
+    background-color: #101010;
+    position: fixed;
+
+    top: 0px;
+    min-width: 200px;
+    min-height: 128px;
+    max-height: calc(100% - 200px);
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 4px;
+
+    z-index: 40000;
+
+    overflow: visible;
+
+    font-size: 13pt;
+
+    transition: left 0.2s, opacity 0.2s;
+    -webkit-user-drag: none;
+
+    left: -32px;
+    opacity: 0.0;
+    pointer-events: none;
+
+    cursor: auto;
+
+    transform-origin: 0% 0%;
+}
+
+div.viramate-menu li[key="home"] {
+    font-weight: bold;
+    height: 40px;
+    padding-top: 6px;
+    padding-bottom: 8px;
+    font-size: 16pt;
+    line-height: 1.45em;
+}
+
+li.language-menu-item, 
+li.viramate-menu-item {
+    /* this makes text blurry in chrome and is seemingly not necessary? */
+    /* position: relative; */
+    box-sizing: border-box;
+
+    overflow: visible;
+    text-align: center;
+    margin: 0px;
+    cursor: pointer;
+
+    border-bottom: 1px solid #242424;
+
+    background-color: #181818;
+
+    transition: background-color 0.2s, color 0.1s;
+
+    word-wrap: normal;
+    overflow-wrap: normal;
+    word-break: keep-all;
+
+    /* without this, text is blurry in chrome */
+    line-height: 1.1em;
+
+    -webkit-column-break-inside: avoid;
+}
+
+li.language-menu-item {
+    padding-top: 6px;
+    padding-bottom: 3px;
+    font-size: 8pt;
+    display: inline-block;
+}
+
+li.language-menu-item.en {
+    width: 60%;
+    text-align: left;
+    padding-left: 54px;
+    padding-right: 2px;
+}
+
+li.language-menu-item.jp {
+    width: 40%;
+    text-align: right;
+    padding-left: 2px;
+    padding-right: 6px;
+}
+
+li.viramate-menu-item {
+    min-height: 32px;
+    padding-left: 24px;
+    padding-right: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 100%;
+}
+
+li.viramate-menu-item.has-submenu:after {
+    position: absolute;
+    right: 2px;
+    display: inline-block;
+    content: "\25BA";
+    font-weight: bold;
+    text-align: right;
+}
+
+li.language-menu-item:hover,
+li.viramate-menu-item:hover {
+    color: white;
+    background-color: #383838;
+}
+
+li.viramate-menu-item.open {
+    color: white;
+    background-color: #383838;
+}
+
+li.language-menu-item:active,
+li.viramate-menu-item:active {
+    color: white;
+    background-color: #5f5f5f;
+}
+
+li.viramate-menu-item.small {
+    font-size: 9pt;
+    min-height: 21px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    color: #a0a0a0;
+}
+
+ul.viramate-submenu li {
+    min-width: 146px;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+}
+
+ul.viramate-submenu {
+    box-sizing: border-box;
+    transition: left 0.1s, opacity 0.1s;
+    display: block;
+    border-left: 2px solid #5f5f5f;
+    background-color: #101010;
+    position: absolute;
+    margin: 0px !important;
+    padding: 0px !important;
+    padding-bottom: 4px !important;
+    margin-left: 100% !important;
+    margin-top: -32px !important;
+    z-index: 40001;
+
+    column-count: 1;
+    column-gap: 2px;
+
+    overflow-y: wrap;
+}
+
+div.viramate-menu ul,
+ul.viramate-submenu {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+    list-style: none outside none;    
+}

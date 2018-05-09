@@ -1,0 +1,98 @@
+.lis-stamp-slider {
+    clear: left;
+    float: left;
+}
+
+.prt-stamp-image .flex-control-nav.flex-control-paging,
+.prt-stamp-image .flex-direction-nav {
+    display: none;
+}
+
+.lis-stamp-row {
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+}
+
+div.pop-usual.pop-ready-stamp div.prt-popup-body div.txt-notice {
+    background-image: url("http://game-a1.granbluefantasy.jp/assets_en/img/sp/assets/item/temporary/m/2.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding: 0px;    
+    margin: 0px;
+    box-sizing: border-box;
+    position: absolute;
+    font-size: 0px;
+    top: 12px;
+    left: 32px;
+    width: 24px;
+    height: 24px;
+}
+
+div.pop-usual.pop-ready-stamp div.btn-usual-close.ev-back {
+    position: absolute;
+    top: 7px;
+    transform: scale(0.85);
+    right: 0px;
+}
+
+div.pop-usual.pop-ready-stamp div.prt-popup-header {
+    padding-right: 100px;
+    padding-left: 20px;
+    margin-bottom: -8px;
+}
+
+div.pop-usual.pop-ready-stamp div.prt-popup-footer {
+    height: 10px;
+}
+
+div.pop-usual.pop-ready-stamp div.recent-stamps {
+    height: 68px !important;
+}
+
+div.pop-usual.pop-ready-stamp div.recent-stamps div.txt-heading {
+    display: none;
+}
+
+input.stamp-filter {
+    background: transparent;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.2);
+    border-width: 1.25px;
+    border-radius: 2px;
+    color: white;
+}
+
+div.lis-stamp {
+    position: relative;
+    box-sizing: border-box;
+}
+
+div.lis-stamp.show-number::after {
+    content: attr(chatid);
+    color: white;
+    font-size: 9px;
+    display: block;
+    position: absolute;
+    text-align: right;
+    left: 2px;
+    right: 2px;
+    bottom: 0px;
+    height: 11px;
+    pointer-events: none;
+}
+
+div.lis-stamp.filtered {
+    display: none !important;
+}
+
+div.lis-stamp.auto-selected {
+    border-color: white;
+    background: rgba(50,38,38,0.75);
+    box-shadow: inset 0 0 6px 1px rgba(99,159,168,0.9),
+        0 0 3px 1px rgba(255, 255, 255, 0.75);
+}
+
+div.prt-history div.lis-stamp {
+    pointer-events: none;
+    opacity: 0.9;
+}

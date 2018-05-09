@@ -1,0 +1,228 @@
+<!doctype html>
+<html>
+    <meta charset="utf-8">
+    <head>
+        <style type="text/css">
+            #mainPopup {
+                padding: 4px;
+                margin: 0px;
+                height: 10em;
+                min-width: 144px;
+            }
+
+            body {
+                white-space: nowrap;
+                margin: 0px;
+                padding: 0px;
+            }
+
+            span {
+                white-space: normal;
+            }
+
+            body, div, input, button, span {
+                box-sizing: border-box;
+            }
+
+            body, input, button {
+                font-family: Calibri, Tahoma, Verdana, Helvetica, Ubuntu, Arial, sans-serif;
+                font-size: 12pt;
+            }
+
+            input, button {
+                min-height: 1.5em;
+                box-sizing: border-box;
+            }
+
+            input#raidCode, input#currentRaidCode {
+                width: 5em;
+            }
+
+            button {
+                font-weight: bold;
+                margin-bottom: 0.5em;
+            }
+
+            input:invalid {
+                border-color: red;
+                border-style: solid;
+                border-width: 2px;
+            }
+
+            button.item {
+                background-size: cover;
+                background-repeat: no-repeat;
+                margin-right: 4px;
+                margin-bottom: 4px;
+                border-width: 0px;
+                width: 64px;
+                height: 64px;
+                font-size: 18pt;
+            }
+
+            button.item:disabled {
+                opacity: 0.6;
+            }
+
+            #fullElixir {
+                background-image: url("http://game-a.granbluefantasy.jp/assets_en/img/sp/assets/item/normal/s/1.jpg");
+            }
+
+            #halfElixir {
+                background-image: url("http://game-a.granbluefantasy.jp/assets_en/img/sp/assets/item/normal/s/2.jpg");
+            }
+
+            #soulBalm {
+                background-image: url("http://game-a.granbluefantasy.jp/assets_en/img/sp/assets/item/normal/s/3.jpg");
+            }
+
+            #soulBerry {
+                background-image: url("http://game-a.granbluefantasy.jp/assets_en/img/sp/assets/item/normal/s/5.jpg");
+            }
+
+            div.meter {
+                height: 1.5em;
+                width: 100%;
+                border-style: solid;
+                border-color: rgba(0, 0, 0, 0.5);
+                border-width: 1.25px;
+                border-radius: 4px;
+                padding: 0px;
+                margin-bottom: 4px;
+                position: relative;
+                font-size: 14pt;
+            }
+
+            div.fill {
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                bottom: 0px;
+                margin: 0px;
+                padding: 0px;
+                border-radius: 3px;
+            }
+
+            div#xp {
+                height: 1em;
+                width: 100%;
+                background-color: rgb(60, 50, 10);
+            }
+
+            div#xp div.fill {
+                background-color: rgb(240, 200, 50);
+            }
+
+            div#xp > span.value {
+                display: none;
+            }
+
+            div#ap {
+                background-color: rgb(16, 60, 16);
+            }
+
+            div#ap div.fill {
+                background-color: rgb(32, 220, 32);
+            }
+
+            div#bp {
+                background-color: rgb(60, 16, 16);
+            }
+
+            div#bp div.fill {
+                background-color: rgb(220, 32, 32);
+            }
+
+            span.label {
+                position: absolute;
+                left: 2px;
+            }
+
+            span.value {
+                position: absolute;
+                font-weight: bold;
+                right: 2px;
+            }
+
+            span.label, span.value, button.item, #confirmPrompt, #pleaseReload {
+                color: white;
+                font-family: Calibri, Tahoma, Verdana, sans-serif;
+                font-weight: bold;
+                text-shadow: 
+                    -1px -1px 2px rgba(0, 0, 0, 0.75),
+                    1px -1px 2px rgba(0, 0, 0, 0.75),
+                    -1px 1px 2px rgba(0, 0, 0, 0.75),
+                    1px 1px 2px rgba(0, 0, 0, 0.75)
+                ;
+            }
+
+            span.small {
+                font-size: 0.7em;
+                font-weight: normal;
+            }
+
+            #modal {
+                position: absolute;
+                background-color: rgba(0, 0, 0, 0.9);
+                left: 0px;
+                top: 0px;
+                right: 0px;
+                bottom: 0px;
+                color: white;
+                text-align: center;
+                display: none;
+                font-size: 14pt;
+                padding: 5px;
+            }
+
+            #modal button {
+                font-size: 14pt;
+                min-width: 3.2em;
+                min-height: 2.1em;
+                margin-top: 0.5em;
+            }
+
+            button#disableExtension {
+                float: right;
+                padding-left: 2px;
+                padding-right: 2px;
+            }
+        </style>
+
+        <script type="text/javascript" src="../../js/MooTools-Core-1.6.0.js" charset="UTF-8"></script>
+        <script src="../../loc/text.js" charset="UTF-8"></script>
+        <script src="../../loc/i18n.js" charset="UTF-8"></script>
+    </head>
+    <body>
+        <div id="mainPopup">
+            <button id="disableExtension" title="Disable Extension">⌀</button>
+
+            <div id="joinRaidPanel">
+                <input type="text" id="raidCode" value="" minlength="5" maxlength="16" required autofocus> 
+                <button id="join" class="localized"></button><br>
+            </div>
+
+            <div id="raidCodePanel" style="display: none">
+                <input type="text" id="currentRaidCode" readonly maxlength="8" minlength="8">
+                <button id="copyRaidCode" class="localized"></button>
+            </div>
+
+            <div class="meter localized tooltip" id="xp"><div class="fill"></div><span class="value small">Next: <span id="expValue">?</span></span></div>
+            <div class="meter" id="ap" title="AP"><div class="fill"></div><span class="label">AP</span><span class="value">?</span></div>
+            <div class="meter" id="bp" title="BP"><div class="fill"></div><span class="label">BP</span><span class="value">?</span></div>
+            <button class="item" id="fullElixir" index="1" disabled>?</button>
+            <button class="item" id="halfElixir" index="2" disabled>?</button>
+            <button class="item" id="soulBalm" index="3" disabled>?</button>
+            <button class="item" id="soulBerry" index="5" disabled>?</button>
+
+            <div id="modal">
+                <div id="modalContent">
+                    <span id="modalText"></span><br>
+                    <button id="confirm"></button> <button id="cancel" class="localized"></button>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="/build/popup.js"></script>
+    </body>
+</html>

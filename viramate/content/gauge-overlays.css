@@ -1,0 +1,85 @@
+
+div.btn-enemy-gauge:not(.prt-enemy-percent) {
+    box-sizing: border-box;
+}
+
+div.number-container {
+    font-weight: 900;
+    color: white;
+    text-align: left;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    pointer-events: none;
+    z-index: 9999 !important;
+    opacity: 0.8;
+    font-size: 7px;
+}
+
+div.number-container > span.numeric {
+    position: absolute;
+    left: 0px;
+    pointer-events: none;
+}
+
+div.number-container > span.percentage {
+    position: absolute;
+    right: 0px;
+    pointer-events: none;
+}
+
+div.number-container > span.mode {
+    position: absolute;
+    right: 8px;
+    pointer-events: none;
+    top: 9px;
+}
+
+div.prt-targeting-area[type*="1"] ~ div.number-container > span.mode {
+    right: 10.5px;
+    top: 10.55px;
+}
+
+div.prt-targeting-area[type*="3"] div.btn-enemy-gauge:not(.prt-enemy-percent)[target="1"] {
+    padding-left: 38px;
+    padding-right: 0px;
+}
+
+div.prt-targeting-area[type*="3"] div.btn-enemy-gauge:not(.prt-enemy-percent) {
+    padding-top: 14.5px;
+    padding-left: 34px;
+    padding-right: 4px;
+}
+
+div.prt-targeting-area[type="s2"] div.btn-enemy-gauge:not(.prt-enemy-percent)[target="1"], 
+div.prt-targeting-area[type="m2"] div.btn-enemy-gauge:not(.prt-enemy-percent)[target="1"],
+div.prt-targeting-area[type="l2"] div.btn-enemy-gauge:not(.prt-enemy-percent)[target="1"] {
+    padding-left: 35px;
+    padding-right: 7px;
+}
+
+div.prt-targeting-area[type="s2"] div.btn-enemy-gauge:not(.prt-enemy-percent), 
+div.prt-targeting-area[type="l2"] div.btn-enemy-gauge:not(.prt-enemy-percent), 
+div.prt-targeting-area[type="m2"] div.btn-enemy-gauge:not(.prt-enemy-percent) {    
+    padding-top: 14.5px;
+    padding-left: 36px;
+    padding-right: 6px;
+}
+
+div.prt-targeting-area[type="m1"] div.btn-enemy-gauge:not(.prt-enemy-percent) {
+    padding-top: 15.25px !important;
+    padding-left: 113px;
+    padding-right: 79px;
+}
+
+div.prt-targeting-area[type="s1"] div.btn-enemy-gauge:not(.prt-enemy-percent), 
+div.prt-targeting-area[type="l1"] div.btn-enemy-gauge:not(.prt-enemy-percent),
+div.prt-targeting-area div.btn-enemy-gauge.gauge-mode-override.gauge-mode-l1-1:not(.prt-enemy-percent) {
+    padding-top: 10.25px !important; 
+    padding-left: 40px;
+    padding-right: 10px;
+}
+
+div.number-container span.numeric[type="high-prec-high"] {
+    top: -7px;
+}

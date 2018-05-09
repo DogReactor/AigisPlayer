@@ -1,0 +1,7 @@
+div#mobage-game-container div#wrapper div#pop > div:not(.pop-ready-stamp),
+div#mobage-game-container div#wrapper div#pop-event > div:not(.pop-ready-stamp),
+div#mobage-game-container div#wrapper div#pop-help > div:not(.pop-ready-stamp) {
+    position: fixed !important;
+    top: 32px !important;
+    left: 32px;
+}

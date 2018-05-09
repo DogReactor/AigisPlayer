@@ -1,0 +1,16 @@
+div.viramate-menu-icon.horizontal {
+    z-index: 150003;
+}
+
+div.viramate-menu.horizontal {
+    z-index: 150002;
+}
+
+div.viramate-status-panel.horizontal {
+    z-index: 150001;
+}
+
+div.viramate-menu,
+ul.viramate-submenu {
+    transition: left 0s, opacity 0.2s !important;
+}

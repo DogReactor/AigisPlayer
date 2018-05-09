@@ -1,0 +1,147 @@
+/*
+// Copyright (c) 2011 Frank Kohlhepp
+// https://github.com/frankkohlhepp/fancy-settings
+// License: LGPL v2.1
+*/
+.tab-content h2 {
+    margin: 0;
+    padding-bottom: 5px;
+    font-size: 26px;
+    color: #707070;
+    line-height: 1;
+}
+
+.setting.group {
+    border-top: 1px solid #EEEEEE;
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-left: 2px;
+}
+
+.setting.group-name {
+    width: 140px;
+    padding: 0;
+    font-size: 14px;
+    font-weight: bold;
+    vertical-align: top;
+}
+
+.setting.bundle {
+    max-width: 600px;
+    margin-bottom: 5px;
+}
+
+.setting.bundle.list-box {
+    margin-bottom: 10px;
+}
+
+.setting.label.radio-buttons + .setting.container.radio-buttons {
+    margin-top: 3px;
+}
+
+.setting.label, .setting.element-label {
+    margin-right: 15px;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+.setting.label.checkbox, .setting.element-label {
+    margin-left: 5px;
+    margin-right: 0;
+}
+
+.setting.label.checkbox {
+    /* position: relative; */
+    top: 1px;
+}
+
+.setting.element.slider {
+    position: relative;
+    width: 150px;
+    top: 4px;
+}
+
+.setting.element.list-box {
+    display: block;
+    height: 100px;
+    width: 100%;
+}
+
+.setting.display.slider {
+    margin-left: 5px;
+    color: #666666;
+}
+
+#nothing-found {
+    display: none;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: lighter;
+    color: #999999;
+}
+
+.setting.preview.imageFile {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border-width: 1px;
+    border-radius: 1px;
+    border-color: silver;
+    border-style: solid;
+    max-height: 128px;
+}
+
+.setting.bundle.keyBindingList {
+    display: block;
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    height: 400px;
+}
+
+.setting.listBox.keyBindingList {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+    font-size: 15px;
+}
+
+.setting.listBox.keyBindingList option {
+    font-weight: bold;
+}
+
+.setting.listBox.keyBindingList option::after {
+    font-family: Consolas, Courier New, monospace;
+    position: absolute;
+    content: attr(binding);
+    font-weight: normal;
+    text-align: right;
+    right: 4px;
+    left: 200px;
+}
+
+.setting.listBox.keyBindingList option:checked::before {
+    position: absolute;
+    left: 0px;
+    right: 4px;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    content: "Double-click to change";
+    font-weight: normal;
+    font-size: 13px;
+}
+
+.updateWidget {
+    margin-bottom: -10px;
+}
+
+option.groupHeader {
+    background-color: rgb(220, 220, 220);
+    color: rgb(64, 64, 64);
+    text-align: center;
+    padding-top: 2px;
+    pointer-events: none;
+}

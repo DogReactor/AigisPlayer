@@ -1,0 +1,3 @@
+body > div:first-of-type {
+    zoom: normal !important;
+}

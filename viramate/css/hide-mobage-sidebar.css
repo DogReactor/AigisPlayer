@@ -1,0 +1,13 @@
+div[data-menubar-container="MenuBarContainer"] {
+    display: none !important;
+}
+
+body > div > div:nth-child(2) {
+    margin-left: 0px !important;
+}
+
+div#mobage-game-container div#wrapper div#pop > div:not(.pop-ready-stamp),
+div#mobage-game-container div#wrapper div#pop-event > div:not(.pop-ready-stamp),
+div#mobage-game-container div#wrapper div#pop-help > div:not(.pop-ready-stamp) {
+    left: 0px !important;
+}

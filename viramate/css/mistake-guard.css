@@ -1,0 +1,12 @@
+div.cnt-list div.prt-sell {
+    transform-origin: 50% 50%;
+    transform: scale(0.85, 0.85);
+    filter: hue-rotate(-45deg);
+}
+
+div.cnt-container-list div.prt-sell,
+div.cnt-list div.btn-order-sell {
+    transform-origin: 50% 50%;
+    transform: scale(0.85, 0.85);
+    filter: hue-rotate(160deg);
+}

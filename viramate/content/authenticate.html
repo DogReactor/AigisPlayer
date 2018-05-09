@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Authentication Required</title>
+        <style>
+            body {
+                font-family: Consolas, Courier New, monospace;
+                margin: 0px;
+                padding: 0px;
+                background-color: black;
+                color: white;
+                overflow: hidden;
+            }
+
+            div#ui, div#confirmation, div#password {
+                position: absolute;
+                top: 0px;
+                width: 960px;
+                height: 540px;
+                margin-left: auto;
+                margin-right: auto;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+            div#ui {
+                background-image: url('entry.jpeg');
+                opacity: 1.0;
+                transform: scale(1, 1);
+                transition: opacity 0.3s, transform 0.3s;
+            }
+
+            div#confirmation {
+                background-image: url('resign.png');
+                opacity: 0.0;
+                transform: scale(0, 1);
+                transition: opacity 0.5s, transform 0.5s;
+                pointer-events: none;
+            }
+
+            div#password {
+                opacity: 0.0;
+                transform: scale(1, 1);
+                transition: opacity 0.5s, transform 0.5s;
+                pointer-events: none;
+            }
+
+            div#yes, div#no {
+                width: 237px;
+                height: 73px;
+                top: 420px;
+                border-width: 2px;
+                border-radius: 1px;
+                border-style: solid;
+                border-color: rgba(255, 255, 255, 0);
+                position: absolute;
+                transition: border-color 0.2s;
+                box-sizing: border-box;
+            }
+
+            div#yes:hover, div#no:hover {
+                border-color: rgba(255, 255, 255, 0.5);
+            }
+
+            div#yes:active, div#no:active {
+                border-color: rgba(255, 255, 255, 1);
+            }
+
+            div#yes {
+                left: 204px;
+            }
+
+            div#no {
+                left: 520px;
+            }
+
+            div#enteredText {
+                position: absolute;
+                display: inline-block;
+                left: 12px;
+                top: 222px;
+                font-size: 82px;
+                letter-spacing: -5px;
+                border-style: solid;
+                border-width: 0px;
+                border-right-width: 3px;
+                border-color: rgba(255, 255, 255, 0.6);
+                padding-right: 0px;
+                outline: none !important;
+                max-height: 96px;
+                max-width: 930px;
+                overflow: hidden;
+            }
+
+            div#hash {
+                position: absolute;
+                left: 10px;
+                right: 10px;
+                top: 340px;
+                text-align: center;
+                font-size: 28px;
+                transition: color 0.4s;
+            }
+
+            .valid {
+                color: white;
+            }
+
+            .invalid {
+                color: #007ca2;        
+            }
+        </style>
+    </head>
+    <body>
+        <div id="ui">
+        </div>
+        <div id="confirmation">
+            <div id="yes" title="Yes"></div>
+            <div id="no" title="No"></div>
+        </div>
+        <div id="password">
+            <div id="enteredText" contenteditable="true"></div>
+            <div id="hash" class="invalid"></div>
+        </div>
+
+        <script src="sha_dev.js"></script>
+        <script src="authentication.js"></script>
+        <script src="authenticate.js"></script>
+    </body>
+</html>

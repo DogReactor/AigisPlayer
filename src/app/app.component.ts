@@ -32,6 +32,7 @@ export class AppComponent {
       console.log('electron is correctly injected?', electronService.ipcRenderer);
       // Check if nodeJs childProcess is correctly injected (see externals in webpack.config.js)
       console.log('nodeJs childProcess is correctly injected?', electronService.childProcess);
+      console.log(electronService.electron.remote.BrowserWindow.getExtensions());
     } else {
       console.log('Mode web');
     }
