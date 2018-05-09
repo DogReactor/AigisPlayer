@@ -48,9 +48,10 @@ export class GameComponent implements AfterViewInit, OnDestroy {
         webview.addEventListener('dom-ready', () => {
             webContent = webview.getWebContents();
             this.gameView.setZoomFactor(this.zoom / 100);
-            // webview.openDevTools();
+            webview.openDevTools();
             if (this.gameService.CurrentGame.Spec === 'granblue') {
-                webview.insertCSS('::-webkit-scrollbar{display:none!important}')
+                webview.send('catch', this.gameService.CurrentGame.Spec);
+                webview.insertCSS('::-webkit-scrollbar{display:none!important}');
             }
             if ((webview.getURL().indexOf('app_id') !== -1) || webview.getURL().indexOf('/play/') !== -1) {
                 // 通知页面进行调整
