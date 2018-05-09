@@ -1,4 +1,3 @@
-"use strict";
 var storedSupportsPage = null;
 var lastDecksInfoUrl = null;
 var mostRecentDeck = null;
@@ -1555,5 +1554,3 @@ function processUpgradeData(list, statusFilter) {
         window.setTimeout(refreshItemStatuses, 25);
     }
 }
-;
-//# sourceMappingURL=pages.js.map

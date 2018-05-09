@@ -1,4 +1,3 @@
-"use strict";
 var abilityHotkeys = ["Q", "W", "E", "R", "T", "Y"];
 var altAbilityHotkeys = [null, null, "A", "S"];
 var focusedCharacterIndex = null;
@@ -1079,5 +1078,3 @@ function isSkillAvailable(parsedSkill) {
         return false;
     return true;
 }
-;
-//# sourceMappingURL=skills.js.map

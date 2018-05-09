@@ -1,4 +1,3 @@
-"use strict";
 var isShutdown = false;
 var externalChannel = null, isChannelReady = false;
 var scriptSandbox = null, overlayContainer = null, raidOverlayContainer = null;
@@ -507,5 +506,3 @@ function areYouFeelingLucky() {
         sendExternalMessage({ type: "it's my lucky day" });
     }
 }
-;
-//# sourceMappingURL=util.js.map

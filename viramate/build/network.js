@@ -1,4 +1,3 @@
-"use strict";
 var chatStampTable = null;
 var isActionInProgress = false;
 var isActionAnimating = false;
@@ -864,5 +863,3 @@ function schedulePartyBuffCheck(reason) {
     if (reason)
         log("Scheduled party buff check because of " + reason);
 }
-;
-//# sourceMappingURL=network.js.map

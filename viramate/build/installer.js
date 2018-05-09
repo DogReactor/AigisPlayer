@@ -1,4 +1,3 @@
-"use strict";
 var nextInstallerMessageId = 1;
 function sendInstallerNativeMessage(message, onResult) {
     var ple = chrome.runtime.lastError;
@@ -60,5 +59,3 @@ function sendInstallerCommand(name, onComplete) {
     };
     attemptSend();
 }
-;
-//# sourceMappingURL=installer.js.map

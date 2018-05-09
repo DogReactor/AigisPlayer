@@ -1,4 +1,3 @@
-"use strict";
 window.addEventListener("load", onLoad, false);
 var lastStatus, lastCounters, lastRaidCode;
 var activatorTab;
@@ -496,5 +495,3 @@ function doJoinRaid_popup(raidId) {
         }
     });
 }
-;
-//# sourceMappingURL=popup.js.map

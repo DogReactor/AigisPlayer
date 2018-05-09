@@ -1,4 +1,3 @@
-"use strict";
 var raidListUpdateInterval = 30000;
 var raidListUpdateBackoff = 1350;
 var raidListUpdateCounter = 25;
@@ -1575,5 +1574,3 @@ function makeLanguageSetter(languageId) {
         });
     };
 }
-;
-//# sourceMappingURL=sidebar.js.map

@@ -1,4 +1,3 @@
-"use strict";
 var _loadExternalScript = function (window) {
     "use strict";
     var context = window.parent;
@@ -2130,4 +2129,3 @@ var _loadExternalScript = function (window) {
             startRaidLoadTimer();
     });
 };
-//# sourceMappingURL=external.js.map

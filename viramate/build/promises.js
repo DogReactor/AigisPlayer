@@ -1,4 +1,3 @@
-"use strict";
 function PromiseResolver() {
     var self = this;
     this.startedWhen = null;
@@ -9,5 +8,3 @@ function PromiseResolver() {
         self.reject = reject;
     });
 }
-;
-//# sourceMappingURL=promises.js.map
