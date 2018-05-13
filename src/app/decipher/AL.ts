@@ -227,7 +227,7 @@ class ALTB implements AL {
             br.Seek(this.TabelEntry + this.Size * i, Origin.Begin);
             const row = {};
             for (let j = 0; j < alrd.Headers.length; j++) {
-                const header = this.Headers[i];
+                const header = this.Headers[j];
                 const offset = br.Position;
                 let v = null;
                 switch (header.Type) {
