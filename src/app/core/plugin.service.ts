@@ -88,8 +88,18 @@ export class PluginService {
             this.loadBackgroundScript();
 
             this.electronService.ipcMain.on('require-plugins', (event, msg) => {
+                const pluginList = this.PluginList.map(v => {
+                    const r = {};
+                    for (const key in v) {
+                        if (key !== 'activedWindow') {
+                            r[key] = v[key];
+                        }
+                    }
+                    return r;
+                })
+
                 event.returnValue = {
-                    pluginList: this.PluginList,
+                    pluginList: pluginList,
                     game: this.gameService.CurrentGame
                 }
             });
