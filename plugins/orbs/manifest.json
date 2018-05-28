@@ -5,6 +5,7 @@
     "description":"识字",
     "entry":"index.html",
     "enable":false,
+    "background":"",
     "windowOption":{
         "width":491,
         "height":410,

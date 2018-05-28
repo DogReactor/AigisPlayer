@@ -156,7 +156,7 @@ class ALRD {
         }
     }
 }
-module ALRD {
+namespace ALRD {
     export class Header {
         Offset = 0;
         Type = 0;
@@ -342,7 +342,7 @@ class ALAR implements AL {
 
     }
 }
-module ALAR {
+namespace ALAR {
     export class Entry {
         Index = 0;
         Unknown1 = 0;

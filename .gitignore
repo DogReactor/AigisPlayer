@@ -14,5 +14,5 @@ config.conf
 dist-green
 app-builds
 mod
-./plugins/
+/plugins
 extensions
