@@ -49,8 +49,10 @@ export class PluginHelper {
             this.gameSerivce.WebView.send(channel, obj);
         }
     }
-    insertCssFileToGame(path, dirname) {
-        dirname = dirname.replace(/\\/g, '/');
+    insertCssFileToGame(path, dirname?) {
+        if (dirname) {
+            dirname = dirname.replace(/\\/g, '/');
+        } else { dirname = '' }
         let css = fs.readFileSync(path, 'utf8');
         css = css.replace(/\s{2,10}/g, ' ').trim()
         css = css.replace(/chrome-extension:\/\/__MSG_@@extension_id__/g, dirname);
