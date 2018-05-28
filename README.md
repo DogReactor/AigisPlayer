@@ -97,10 +97,10 @@ PluginHelper分为两个版本
 ※你应该在dom-ready之后执行此方法
 
 ##### electronService: ElectronService/gameService: GameService
-参考electron.service.ts/game.service.ts
+参考app/core/electron.service.ts | app/core/game.service.ts
 
 ##### plugin:Plugin
-参考plugin.service.ts::Plugin
+参考app/core/plugin.service.ts::Plugin
 
 
 #### 注入/独立窗口用PluginHelper
@@ -154,3 +154,19 @@ file为绝对路径，option为窗口选项，参考https://electronjs.org/docs/
     })
 
     console.log(pluginHelper.sendMessageSync('ping from inject/popup')) // print: pong from back sync
+
+### 游戏数据
+目前暂时只支持 千年战争aigis
+
+后台脚本通过实现newGameResponse方法来获取游戏数据
+
+    #background.js
+
+    module.exports={
+        run:run,
+        newGameResponse:function(event, data) {
+            console.log(event,data);
+        }
+    }
+
+其中event参考app/core/pluginEventList.ts

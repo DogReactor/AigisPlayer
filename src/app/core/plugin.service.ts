@@ -24,6 +24,7 @@ export class Plugin {
     public windowOption = {};
     public id = '';
     public activedWindow: ActivePlugin = null;
+    public backgroundObject = null;
     public game = [];
 }
 class ActivePlugin {
@@ -45,7 +46,6 @@ class ResponseData {
 export class PluginService {
     private responseDataList = {};
     public PluginList: Plugin[] = [];
-    private activePluginList: ActivePlugin[] = [];
     public ListUpdate = new Rx.Subject();
     public NewEmbedPlugin = new Rx.Subject();
     public SwitchEmbedPlugin = new Rx.Subject<string>();
@@ -91,7 +91,7 @@ export class PluginService {
                 const pluginList = this.PluginList.map(v => {
                     const r = {};
                     for (const key in v) {
-                        if (key !== 'activedWindow') {
+                        if (key !== 'activedWindow' && key !== 'backgroundObject') {
                             r[key] = v[key];
                         }
                     }
@@ -109,7 +109,7 @@ export class PluginService {
     loadBackgroundScript() {
         this.PluginList.forEach((v) => {
             if (v.background === '') { return; }
-            const script = global['require'](`${v.background}`);
+            const script = v.backgroundObject = global['require'](`${v.background}`);
             if (!script || !script.run) { return; }
             script.run(new PluginHelper(this.electronService, this.gameService, v));
         });
@@ -123,9 +123,14 @@ export class PluginService {
         if (channel) {
             this.responseDataList[channel] = this.responseDataList[channel] || [];
             this.responseDataList[channel].push(data);
-            for (let i = 0; i < this.activePluginList.length; i++) {
-                this.activePluginList[i] && this.activePluginList[i].WebContent.send(channel, data)
-            }
+            this.PluginList.forEach((v) => {
+                if (v.activedWindow) {
+                    v.activedWindow.WebContent.send(channel, data);
+                }
+                if (v.backgroundObject) {
+                    v.backgroundObject['newGameResponse'](channel, data);
+                }
+            })
         }
     }
     ClearResponseList() {
@@ -167,10 +172,8 @@ export class PluginService {
         plugin.activedWindow.WebContent.on('dom-ready', (event) => {
             event.sender.send('plugin-info', plugin);
         });
-        const index = this.activePluginList.push(plugin.activedWindow) - 1;
         plugin.activedWindow.BrowserWindow.on('close', () => {
             // 释放灵魂
-            delete this.activePluginList[index];
             this.electronService.ipcMain.removeListener('response-packages', listener);
             this.electronService.ipcMain.removeListener('response-packages-sync', listenerSync);
             plugin.activedWindow = null;
