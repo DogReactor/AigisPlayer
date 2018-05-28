@@ -12,12 +12,12 @@ export class PluginHelper {
     onMessage(callback: (msg: any, sendResponse?: any) => void) {
         const asyncChannel = `${this.plugin.id}`
         this.electronService.ipcMain.on(asyncChannel, (event, msg) => {
-            console.log('get Message From Guest', msg.type, msg);
             const salt = msg.salt;
             const message = msg.message;
             const sendResponse = (message) => {
-                message = JSON.parse(JSON.stringify(message));
-                console.log('Reply Message To Guest', message);
+                if (typeof message === 'object') {
+                    message = JSON.parse(JSON.stringify(message));
+                }
                 const channel = `${this.plugin.id}-${salt}`;
                 event.sender.send(channel, message);
             }
@@ -38,7 +38,11 @@ export class PluginHelper {
         }
         const replyChannel = `${this.plugin.id}-${salt}`;
         this.electronService.ipcMain.once(replyChannel, (event, message) => {
-            if (callback) { callback(message); }
+            if (typeof callback === 'function') {
+                callback(message);
+            } else {
+                console.log(callback)
+            }
         });
         this.gameSerivce.WebView
         if (this.gameSerivce.WebView) {

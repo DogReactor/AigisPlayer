@@ -59,7 +59,7 @@ const gameInfo = [
     ),
     new GameModel(
         'グランブルーファンタジー',
-        new Size(770, 544),
+        new Size(820, 544),
         'http://game.granbluefantasy.jp',
         'granblue'
     )
