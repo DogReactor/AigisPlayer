@@ -16,3 +16,5 @@ app-builds
 mod
 /plugins
 extensions
+yarn.lock
+test/
