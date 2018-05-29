@@ -7,6 +7,8 @@ const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
 import * as url from 'url';
 
+app.commandLine.appendSwitch('--enable-npapi');
+
 let fileList = [];
 if (serve) {
   require('electron-reload')(__dirname, {
@@ -35,7 +37,8 @@ function createWindow() {
     resizable: false,
     transparent: true,
     webPreferences: {
-      webSecurity: false
+      webSecurity: false,
+      plugins: true
     }
   });
 

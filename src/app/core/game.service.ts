@@ -62,6 +62,12 @@ const gameInfo = [
         new Size(820, 544),
         'http://game.granbluefantasy.jp',
         'granblue'
+    ),
+    new GameModel(
+        'ブレイヴガールＲ',
+        new Size(576, 1024),
+        `http://bg-r.mimolette.co.jp/selectsvr.html`,
+        'bravegirl'
     )
 ]
 
@@ -82,7 +88,7 @@ export class GameService {
     set WebView(webView) {
         this.webView = webView;
     }
-    get WebView(){
+    get WebView() {
         return this.webView;
     }
     Reload() {
