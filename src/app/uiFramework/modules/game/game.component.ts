@@ -48,7 +48,7 @@ export class GameComponent implements AfterViewInit, OnDestroy {
         webview.addEventListener('dom-ready', () => {
             webContent = webview.getWebContents();
             this.gameView.setZoomFactor(this.zoom / 100);
-            webview.openDevTools();
+            // webview.openDevTools();
             // 碧蓝删去滑动条
             if (this.gameService.CurrentGame.Spec === 'granblue') {
                 webview.send('catch', this.gameService.CurrentGame.Spec);
