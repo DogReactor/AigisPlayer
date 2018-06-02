@@ -23,7 +23,8 @@
 
 ### manifest.json 范例
 
-    #plugins/dropshow/manifest.json
+```json
+    // plugins/dropshow/manifest.json
 
     {
     "pluginName":"dropShow",
@@ -43,21 +44,22 @@
         "transparent":true
         }
     }
-
+```
 ### 脚本要求
 后台脚本和注入脚本都必须使用module.exports的方式导出一个包含run(pluginHelper:PluginHelper)的对象，例如
-
-    #background.js
+```javascript
+    // background.js
 
     module.exports = {
         run: function(pluginHelper){
             console.log(pluginHelper)
         }
     }
-
+```
 独立窗口必须提供一个run()函数作为入口点，比如
+```html
+    // index.html
 
-    #index.html
     <html>
         <body>
             <script>
@@ -67,7 +69,7 @@
             </script>
         </body>
     </html>
-
+```
 ### PluginHelper
 PluginHelper分为两个版本
 
@@ -129,8 +131,8 @@ file为绝对路径，option为窗口选项，参考https://electronjs.org/docs/
 因为electron本身的缺陷，在dom-ready事件之前，有概率会无法接收到异步的message。所以在dom-ready事件之前请尽量用sendMessageSync来进行通信。
 
 ### 通信示例
-    
-    #background.js
+```javascript  
+    // background.js
 
     pluginHelper.onMessage((msg,sendResponse)=>{
         console.log(msg); // print: ping from inject/popup
@@ -142,7 +144,7 @@ file为绝对路径，option为窗口选项，参考https://electronjs.org/docs/
     });
 
 
-    #inject.js / index.html
+    // inject.js / index.html
 
     pluginHelper.onMessage((msg,sendResponse)=>{
         console.log(msg); // print: ping from back
@@ -154,13 +156,14 @@ file为绝对路径，option为窗口选项，参考https://electronjs.org/docs/
     })
 
     console.log(pluginHelper.sendMessageSync('ping from inject/popup')) // print: pong from back sync
-
+```
 ### 游戏数据
 目前暂时只支持 千年战争aigis
 
 后台脚本通过实现newGameResponse方法来获取游戏数据
 
-    #background.js
+```javascript
+    // background.js
 
     module.exports={
         run:run,
@@ -168,5 +171,5 @@ file为绝对路径，option为窗口选项，参考https://electronjs.org/docs/
             console.log(event,data);
         }
     }
-
+```
 其中event参考app/core/pluginEventList.ts
