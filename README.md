@@ -23,7 +23,7 @@
 
 ### manifest.json 范例
 
-```json
+```typescript
     // plugins/dropshow/manifest.json
 
     {
