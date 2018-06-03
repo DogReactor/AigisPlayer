@@ -26,7 +26,7 @@ ipcrender.on('catch', (event, message) => {
             gameFrame.style.left = '-150px';
             gameFrame.style.zIndex = '25';
         }
-        if (message === "aigis") {
+        if (message === "aigis" || message === "oshiro") {
             gameFrame.style.top = '0';
             gameFrame.style.left = '0';
             gameFrame.style.zIndex = '25';
