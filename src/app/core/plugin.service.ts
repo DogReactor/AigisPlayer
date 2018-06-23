@@ -69,7 +69,7 @@ export class PluginService {
                 try {
                     const obj = JSON.parse(data);
                     obj.path = value;
-                    obj.id = crypto.createHash('md5').update((new Date).toString()).digest('hex')
+                    obj.id = crypto.createHash('md5').update(Math.random().toString()).digest('hex')
                     // obj.id = value;
                     const dirname = this.protoablePath ? this.protoablePath : fs.realpathSync('.');
                     if (obj.background) {

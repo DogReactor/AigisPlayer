@@ -74,11 +74,6 @@ try {
     if (!fs.existsSync(modPath)) {
       fs.mkdirSync(modPath);
     }
-    const virapath = path.join(modPath, 'viramate');
-    if (fs.existsSync(virapath)) {
-      const extensionName = BrowserWindow.addExtension(virapath);
-      console.log(extensionName);
-    }
     createWindow();
     const filter = {
       urls: ['http://assets.millennium-war.net/*']

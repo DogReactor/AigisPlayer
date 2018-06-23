@@ -53,7 +53,6 @@ export class ProxyServer {
         })
         app.use((req, res) => {
             const headers = req.headers;
-            console.log(req.url);
             headers.host = 'assets.millennium-war.net';
             // 设置代理
             const options: any = {
