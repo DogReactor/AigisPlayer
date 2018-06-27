@@ -4,12 +4,18 @@
     "app": "dist",
     "output": "app-builds"
   },
+  "publish": [
+    {
+      "provider": "generic",
+      "url": "http://player.aigis.me/assets/aigisplayer"
+    }
+  ],
   "win": {
     "icon": "dist/favicon",
     "target": [
       {
-        "target":"portable",
-        "arch":[
+        "target": "nsis",
+        "arch": [
           "x64",
           "ia32"
         ]

@@ -7,10 +7,11 @@ import * as fs from 'fs';
 import * as path from 'path';
 const md5 = crypto.createHash('md5');
 export class PluginHelper {
-    constructor(private electronService: ElectronService, private gameSerivce: GameService, private plugin: Plugin) {
+    constructor(private electronService: ElectronService, private gameService: GameService, private plugin: Plugin) {
     }
     onMessage(callback: (msg: any, sendResponse?: any) => void) {
         const asyncChannel = `${this.plugin.id}`
+        console.log('reg on', asyncChannel);
         this.electronService.ipcMain.on(asyncChannel, (event, msg) => {
             const salt = msg.salt;
             const message = msg.message;
@@ -44,9 +45,11 @@ export class PluginHelper {
                 console.log(callback)
             }
         });
-        this.gameSerivce.WebView
-        if (this.gameSerivce.WebView) {
-            this.gameSerivce.WebView.send(channel, obj);
+        if (this.plugin.activedWindow) {
+            this.plugin.activedWindow.WebContent.send(channel, obj);
+        }
+        if (this.gameService.WebView) {
+            this.gameService.WebView.send(channel, obj);
         }
     }
     insertCssFileToGame(path, dirname?) {
@@ -56,10 +59,10 @@ export class PluginHelper {
         let css = fs.readFileSync(path, 'utf8');
         css = css.replace(/\s{2,10}/g, ' ').trim()
         css = css.replace(/chrome-extension:\/\/__MSG_@@extension_id__/g, dirname);
-        this.gameSerivce.WebView.insertCSS(css);
+        this.gameService.WebView.insertCSS(css);
     }
     insertCssToGame(css) {
-        this.gameSerivce.WebView.insertCSS(css);
+        this.gameService.WebView.insertCSS(css);
     }
 }
 

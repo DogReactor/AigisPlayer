@@ -19,6 +19,11 @@
                     <el-button type="danger" (click)="clearCache()">{{'UTIL.CLEAR' | translate}}</el-button>
                 </div>
             </el-form-item>
+            <el-form-item [label]="'SETTING.UTIL.UPDATE' | translate">
+                <div class="checkbox">
+                    <el-button type="primary" (click)="startUpdate()" [elDisabled]="!updateReady">{{'UTIL.UPDATE' | translate}}</el-button>
+                </div>
+            </el-form-item>
             <el-form-item [label]="'SETTING.UTIL.LANGUAGE' | translate">
                 <div class="checkbox">
                     <el-select [model]="translateService.currentLang" [placeholder]="'UTIL.PLEASESELECT' | translate" (modelChange)="changeLanguage($event)">

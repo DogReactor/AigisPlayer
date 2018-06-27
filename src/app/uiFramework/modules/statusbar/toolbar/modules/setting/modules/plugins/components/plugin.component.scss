@@ -1,0 +1,100 @@
+.container{
+    padding:10px 20px 10px 20px;
+    transition: all 0.5s;
+    display:flex;
+    justify-content: space-between;
+}
+.title{
+    font-size:17px;
+    font-weight:bold;
+}
+.version{
+    font-size:10px;
+    margin-left:10px;
+    color:#8492A6;
+}
+.description{
+    font-size:15px;
+}
+.author{
+    font-size:11px;
+    font-weight:bold;
+    color:#8492A6;
+}
+.btn-container{
+    display:flex;
+    flex-direction: column;
+}
+.btn-container button{
+    margin-bottom: 3px;
+}
+.btn-restart{
+    background-color: #F7BA2A;
+    border: none;
+    color: white;
+    padding: 3px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-restart:hover{
+    background-color: rgb(245, 202, 101);
+}
+
+.btn-install{
+    background-color: #13CE66;
+    border: none;
+    color: white;
+    padding: 3px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-install:hover{
+    background-color: rgb(84, 209, 140);
+}
+.btn-install:disabled{
+    background-color: #E5E9F2;
+    border: none;
+    color: white;
+    padding: 3px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-update{
+    background-color: #20A0FF;
+    border: none;
+    color: white;
+    padding: 3px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-update:hover{
+    background-color:#58B7FF;
+}
+
+.btn-update:disabled{
+    background-color: #E5E9F2;
+    border: none;
+    color: white;
+    padding: 3px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-remove{
+    background-color: #FF4949;
+    border: none;
+    color: white;
+    padding: 3px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-remove:hover{
+    background-color: rgb(250, 112, 112);
+}

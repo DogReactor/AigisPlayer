@@ -178,7 +178,6 @@ export class GameService {
                         this.electronService.electron.screen.getPrimaryDisplay().scaleFactor *
                         (this.zoom / 100))
                 };
-                console.log(captureRect);
                 this.webView.capturePage(captureRect, (image: NativeImage) => {
                     this.electronService.clipboard.writeImage(image);
                 });

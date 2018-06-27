@@ -2,12 +2,47 @@ import { app, BrowserWindow, screen, session, ipcMain } from 'electron';
 import * as path from 'path';
 import { ProxyServer } from './src/backend/proxyServer'
 import * as fs from 'fs';
-let win, serve;
+let win: BrowserWindow, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
 import * as url from 'url';
+const autoUpdater = require('electron-updater').autoUpdater;
+import * as log from 'electron-log'
+import * as unzip from 'unzipper'
+import * as request from 'request'
 
 app.commandLine.appendSwitch('--enable-npapi');
+
+autoUpdater.logger = log;
+log.transports.file.level = 'info';
+log.info('App starting...');
+
+function sendStatusToWindow(text, obj?) {
+  log.info(text);
+  win.webContents.send('update-message', text, obj);
+}
+
+autoUpdater.on('checking-for-update', () => {
+  sendStatusToWindow('UPDATE.CHECK');
+})
+autoUpdater.on('update-available', (ev, info) => {
+  sendStatusToWindow('UPDATE.AVB');
+})
+autoUpdater.on('update-not-available', (ev, info) => {
+  sendStatusToWindow('UPDATE.NOTAVB');
+})
+autoUpdater.on('error', (ev, err) => {
+  sendStatusToWindow('UPDATE.ERROR');
+})
+autoUpdater.on('download-progress', (ev, progressObj) => {
+  sendStatusToWindow('UPDATE.PROGRESS', progressObj);
+})
+autoUpdater.on('update-downloaded', (ev, info) => {
+  sendStatusToWindow('UPDATE.DOWNLOADED');
+  ipcMain.once('updateNow', (e, arg) => {
+    autoUpdater.quitAndInstall();
+  });
+});
 
 let fileList = [];
 if (serve) {
@@ -68,17 +103,6 @@ try {
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
   app.on('ready', () => {
-    // weila
-    const protoablePath = process.env.PORTABLE_EXECUTABLE_DIR;
-    const modPath = protoablePath ? protoablePath + '/extensions' : './extensions';
-    if (!fs.existsSync(modPath)) {
-      fs.mkdirSync(modPath);
-    }
-    const virapath = path.join(modPath, 'viramate');
-    if (fs.existsSync(virapath)) {
-      const extensionName = BrowserWindow.addExtension(virapath);
-      console.log(extensionName);
-    }
     createWindow();
     const filter = {
       urls: ['http://assets.millennium-war.net/*']
@@ -104,6 +128,22 @@ try {
     ipcMain.on('proxyStatusUpdate', (Event, arg) => {
       proxyServer.setProxy(arg.Enabled, arg.Socks5, arg.Host, arg.Port);
     });
+    ipcMain.on('checkForUpdates', () => {
+      autoUpdater.setFeedURL('http://player.aigis.me/assets/aigisplayer')
+      autoUpdater.checkForUpdates();
+    })
+    ipcMain.on('installPlugin', (event, arg) => {
+      const url = arg.url;
+      const pluginPath = arg.pluginPath;
+      const salt = arg.salt;
+      request.get(url).on('error', (e) => {
+        win.webContents.send(`plugin-install-error-${salt}`, e)
+      }).pipe(unzip.Extract({ path: pluginPath })).on('close', () => {
+        win.webContents.send(`plugin-install-success-${salt}`)
+      }).on('error', (e) => {
+        win.webContents.send(`plugin-install-error-${salt}`, e)
+      })
+    })
   });
 
   // Quit when all windows are closed.

@@ -13,7 +13,8 @@ export class GlobalStatusService {
         SelectedAccount: '',
         AccountListPassword: '',
         AccountListPasswordError: false,
-        Zoom: 100
+        Zoom: 100,
+        NewVersionAVB: false
     })
     constructor(
         private electronService: ElectronService,
