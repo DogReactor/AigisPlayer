@@ -6,6 +6,7 @@ import { SettingProxyComponent } from './components/proxy/proxy.component';
 import { SettingUtilComponent } from './components/util/util.component';
 import { SettingAccountComponent } from './components/account/account.component'
 import { SettingMapComponent } from './components/map/map.component'
+import { SettingPluginsModule } from './modules/plugins/plugins.modules'
 
 @NgModule({
     declarations: [
@@ -14,7 +15,7 @@ import { SettingMapComponent } from './components/map/map.component'
         SettingUtilComponent,
         SettingAccountComponent,
         SettingMapComponent],
-    imports: [SharedModule, ReactiveFormsModule],
+    imports: [SharedModule, ReactiveFormsModule, SettingPluginsModule],
     exports: [UIFrameStatusBarToolBarSettingComponent]
 })
 export class UIFrameStatusBarToolBarSettingModule {

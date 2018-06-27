@@ -23,7 +23,8 @@ export class ElectronService {
   electron: typeof Electron;
   clipboard: Clipboard;
   Tray: typeof Tray;
-  ipcMain: typeof Electron.ipcMain
+  ipcMain: typeof Electron.ipcMain;
+  require;
   constructor(
     private message: ElMessageService,
     private translateService: TranslateService
@@ -31,6 +32,7 @@ export class ElectronService {
     // Conditional imports
     if (this.isElectron()) {
       this.electron = window.require('electron');
+      this.require = this.electron.remote.require;
       this.ipcRenderer = this.electron.ipcRenderer;
       this.childProcess = window.require('child_process');
       this.currentWindow = this.electron.remote.getCurrentWindow();
@@ -76,4 +78,36 @@ export class ElectronService {
     win.loadURL(url);
     return win;
   }
+  Restart() {
+    this.APP.relaunch();
+    this.APP.exit(0);
+  }
+  CheckForUpdate(callback) {
+    ipcRenderer.on('update-message', (sender, text, obj) => {
+      switch (text) {
+        case 'UPDATE.CHECK':
+          this.message['warning']('检查新版本中');
+          break;
+        case 'UPDATE.AVB':
+          this.message['warning']('检查到新版本，下载中...');
+          break;
+        case 'UPDATE.NOTAVB':
+          this.message['success']('现在是最新版本');
+          break;
+        case 'UPDATE.ERROR':
+          this.message['error']('检查更新时发生错误');
+          break;
+        case 'UPDATE.PROGRESS':
+          break;
+        case 'UPDATE.DOWNLOADED':
+          callback(true)
+          break;
+      }
+    })
+    ipcRenderer.send('checkForUpdates');
+  }
+  UpdateNow() {
+    ipcRenderer.send('updateNow');
+  }
 }
+

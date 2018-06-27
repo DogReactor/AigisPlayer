@@ -13,7 +13,8 @@
             "MUTE": "静音",
             "ZOOM": "缩放",
             "LANGUAGE": "语言/Language",
-            "CACHE": "清理缓存"
+            "CACHE": "清理缓存",
+            "UPDATE": "安装更新"
         },
         "ACCOUNT": {
             "ACCOUNT": "账户管理",
@@ -40,7 +41,8 @@
         "PLEASESELECT": "请选择",
         "ADD": "添加",
         "DELETE": "删除",
-        "CLEAR": "清除"
+        "CLEAR": "清除",
+        "UPDATE": "更新"
     },
     "MESSAGE": {
         "PAGE-DIDNOT-LOAD": "页面加载失败，请确认代理是否正确配置。",

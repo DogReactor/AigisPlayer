@@ -1,0 +1,20 @@
+<div class="container">
+    <div>
+        <div>
+            <span class="title">{{plugin.pluginName}}</span>
+            <span class="version">{{plugin.version}}</span>
+        </div>
+        <div>
+            <span class="description">{{plugin.description}}</span>
+        </div>
+        <div>
+            <span class="author">{{plugin.author}}</span>
+        </div>
+    </div>
+    <div class="btn-container">
+        <button *ngIf="needRestart" (click)="restart()" class="btn-restart">重启</button>
+        <button *ngIf="!needRestart && !isInstalled" class="btn-install" (click)="install()" [attr.disabled]="isInstalling ? '' : null">{{isInstalling?"安装中":"安装"}}</button>
+        <button *ngIf="!needRestart && isInstalled" class="btn-remove" (click)="remove()">卸载</button>
+        <button *ngIf="!needRestart && needUpdate" class="btn-update" (click)="update()" [attr.disabled]="isInstalling ? '' : null">{{isInstalling?"更新中":"更新"}}</button>
+    </div>
+</div>

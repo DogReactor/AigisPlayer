@@ -17,6 +17,7 @@ export class SettingUtilComponent implements OnDestroy {
     utilForm: FormGroup;
     private subscriptions: Subscription[] = [];
     private languageList = LanguageList;
+    private updateReady = false;
     constructor(
         private gameService: GameService,
         private globalSettingService: GlobalSettingService,
@@ -29,6 +30,9 @@ export class SettingUtilComponent implements OnDestroy {
         this.regProp('Mute');
         this.regProp('Lock');
         this.regProp('Zoom');
+        this.globalStatusService.GlobalStatusStore.Get('NewVersionAVB').Subscribe((v) => {
+            this.updateReady = v;
+        })
     }
     changeLanguage(value) {
         this.globalSettingService.GlobalSetting.Language = value;
@@ -58,5 +62,8 @@ export class SettingUtilComponent implements OnDestroy {
         this.subscriptions.push(
             state.Subscribe(v => this[k] = v)
         )
+    }
+    startUpdate() {
+        this.electronService.UpdateNow();
     }
 }
