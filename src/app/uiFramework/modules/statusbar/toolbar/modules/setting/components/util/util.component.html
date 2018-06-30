@@ -31,6 +31,14 @@
                     </el-select>
                 </div>
             </el-form-item>
+            <el-form-item [label]="'SETTING.UTIL.DEFAULTGAME' | translate">
+                <div class="checkbox">
+                    <el-select [model]="globalSettingService.GlobalSetting.CurrentGame.Name" [placeholder]="'UTIL.PLEASESELECT' | translate" (modelChange)="changeDefaultGame($event)">
+                        <el-option label="None" value="None"></el-option>
+                        <el-option *ngFor="let game of gameService.GameInfo" [label]="game.Name" [value]="game.Name"></el-option>
+                    </el-select>
+                </div>
+            </el-form-item>
         </el-form>
     </div>
 </div>

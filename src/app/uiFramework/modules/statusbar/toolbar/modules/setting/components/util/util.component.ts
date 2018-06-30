@@ -7,6 +7,8 @@ import { Subscription } from 'rxjs/Subscription'
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageList } from '../../../../../../../../core/languageList'
 import { ElectronService } from '../../../../../../../../core/electron.service'
+import { GameModel } from '../../../../../../../../core/game.model'
+import { Size } from '../../../../../../../../core/util'
 
 @Component({
     selector: 'app-setting-util',
@@ -37,6 +39,14 @@ export class SettingUtilComponent implements OnDestroy {
     changeLanguage(value) {
         this.globalSettingService.GlobalSetting.Language = value;
         this.translateService.use(value);
+    }
+    changeDefaultGame(value) {
+        if (value == 'None') {
+            this.globalSettingService.GlobalSetting.CurrentGame = new GameModel('None', new Size(640, 960), 'about:blank');
+        }
+        else {
+            this.globalSettingService.GlobalSetting.CurrentGame = this.gameService.GameInfo.find((game) => { return game.Name == value });
+        }  
     }
     selectSwitch(key) {
         const state = this.globalStatusService.GlobalStatusStore.Get(key);

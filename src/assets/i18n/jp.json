@@ -12,7 +12,8 @@
             "LOCK": "常に手前に",
             "MUTE": "ミュート",
             "ZOOM": "サイズ",
-            "LANGUAGE": "言語/Language"
+            "LANGUAGE": "言語/Language",
+            "DEFAULTGAME": "既定のゲーム"
         },
         "ACCOUNT": {
             "ACCOUNT": "アカウント管理",
