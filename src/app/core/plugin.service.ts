@@ -14,6 +14,7 @@ import { GlobalConfig } from '../global/config'
 import * as rimraf from 'rimraf'
 import * as request from 'request'
 import { ElMessageService } from 'element-angular';
+import { GlobalStatusService } from '../global/globalStatus.service';
 
 export class Plugin {
     public path = '';
@@ -62,7 +63,8 @@ export class PluginService {
         private electronService: ElectronService,
         private gameService: GameService,
         private http: HttpClient,
-        private message: ElMessageService
+        private message: ElMessageService,
+        private globalStatusService: GlobalStatusService
     ) {
         // const fs = electronService.fs;
         this.protoablePath = window.require('electron').remote.process.env.PORTABLE_EXECUTABLE_DIR;
@@ -109,7 +111,7 @@ export class PluginService {
 
                 event.returnValue = {
                     pluginList: pluginList,
-                    game: this.gameService.CurrentGame
+                    game: this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Value
                 }
             });
         });
