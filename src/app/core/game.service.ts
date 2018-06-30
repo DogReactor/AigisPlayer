@@ -106,9 +106,8 @@ export class GameService {
             this.webView.setAudioMuted(enable)
         }
     }
-    LoadGame(index) {
-        if (this.webView && index < gameInfo.length) {
-            const game = gameInfo[index];
+    LoadGame(game: GameModel) {
+        if (this.webView && game.Name !== 'None') {
             this.CurrentGame = game;
             // 通知webView跳转页面
             this.webView.loadURL(game.URL);

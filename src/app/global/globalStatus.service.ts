@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import * as Rx from 'rxjs/Rx'
 import { ElectronService } from '../core/electron.service'
 import { GameService } from '../core/game.service'
+import { GameModel } from '../core/game.model'
 import { Store } from '../core/store'
+import { Size } from '../core/util';
+
 
 
 @Injectable()
@@ -14,7 +17,8 @@ export class GlobalStatusService {
         AccountListPassword: '',
         AccountListPasswordError: false,
         Zoom: 100,
-        NewVersionAVB: false
+        NewVersionAVB: false,
+        CurrentGame: new GameModel('None', new Size(640, 960), 'about:blank')
     })
     constructor(
         private electronService: ElectronService,
@@ -31,6 +35,9 @@ export class GlobalStatusService {
         })
         this.GlobalStatusStore.Get('Zoom').Subscribe((v) => {
             gameService.SetZoom(v);
+        })
+        this.GlobalStatusStore.Get('CurrentGame').Subscribe((v) => {
+            gameService.LoadGame(v);
         })
     }
 }

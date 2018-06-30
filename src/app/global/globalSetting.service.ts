@@ -31,9 +31,11 @@ export class GlobalSetting {
     public ScreenShotKey = '';
     public Language = 'cn';
     public Zoom = 100;
+    public Mute = false;
+    public Lock = false;
 }
 
-const needDispatch = ['Zoom'];
+const needDispatch = ['Zoom', 'Mute', 'Lock'];
 
 @Injectable()
 export class GlobalSettingService {
@@ -81,8 +83,13 @@ export class GlobalSettingService {
             }
         })
 
-        // 订阅缩放
-        this.globalStatusService.GlobalStatusStore.Get('Zoom').Subscribe(v => { this.GlobalSetting.Zoom = v; })
+        // 订阅
+        for (let i = 0; i < needDispatch.length; i++) {
+            const key = needDispatch[i];
+            this.globalStatusService.GlobalStatusStore.Get(key).Subscribe(v => {
+                this.GlobalSetting[key] = v;
+            })
+        }
 
         // 给globalSetting的所有成员加上getter和setter，方便调取saveConfigure
         AddSetterToObject(this.GlobalSetting, (v) => {

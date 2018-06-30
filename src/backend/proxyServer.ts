@@ -74,7 +74,10 @@ export class ProxyServer {
             if (req.path.indexOf('595d57bf1216f3887cb69205494eb744') !== -1) {
                 requestFileName = 'MainFont.aft';
             }
-            const modifyFileName = TranslateFileList[requestFileName]
+            let modifyFileName = TranslateFileList[requestFileName]
+            if (requestFileName.indexOf('.png') !== -1) {
+                modifyFileName = requestFileName;
+            }
             // 文件热封装
             const protoablePath = process.env.PORTABLE_EXECUTABLE_DIR;
             const modPath = protoablePath ? protoablePath + '/mods' : './mods';
@@ -86,6 +89,9 @@ export class ProxyServer {
                 console.log(requestFileName, 'modify by Server');
                 // Font文件直接回传
                 if (requestFileName === 'MainFont.aft') {
+                    res.send(fs.readFileSync(modifyFilePath))
+                    return;
+                } else {
                     res.send(fs.readFileSync(modifyFilePath))
                     return;
                 }

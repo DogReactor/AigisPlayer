@@ -9,6 +9,7 @@ import { WebviewTag, WebContents } from 'electron';
 import { ElectronService } from '../../../core/electron.service'
 import { DecipherService } from '../../../decipher/decipher.service'
 import { PluginService } from '../../../core/plugin.service'
+import { GameModel } from '../../../core/game.model';
 
 @Component({
     selector: 'app-game',
@@ -45,13 +46,20 @@ export class GameComponent implements AfterViewInit, OnDestroy {
         this.gameService.WebView = this.gameView;
         let webContent: WebContents = null;
         const webview = this.gameView;
+
+        const CurrentGame = <GameModel>this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Value;
+        if (CurrentGame.Name !== 'None') {
+            this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Dispatch(CurrentGame);
+        }
+
         webview.addEventListener('dom-ready', () => {
             webContent = webview.getWebContents();
+            const CurrentGame = <GameModel>this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Value;
             this.gameView.setZoomFactor(this.zoom / 100);
             // webview.openDevTools();
             // 碧蓝删去滑动条
-            if (this.gameService.CurrentGame.Spec === 'granblue') {
-                webview.send('catch', this.gameService.CurrentGame.Spec);
+            if (CurrentGame.Spec === 'granblue') {
+                webview.send('catch', CurrentGame.Spec);
                 webview.insertCSS('::-webkit-scrollbar{display:none!important}');
             }
 
@@ -60,7 +68,7 @@ export class GameComponent implements AfterViewInit, OnDestroy {
                 webview.getURL().indexOf('/play/') !== -1 ||
                 webview.getURL().indexOf('game_dmm.php') !== -1) {
 
-                webview.send('catch', this.gameService.CurrentGame.Spec);
+                webview.send('catch', CurrentGame.Spec);
                 this.pluginService.ClearResponseList();
                 this.decipherService.Attach(webview.getWebContents()); // 注入debuger
             }
