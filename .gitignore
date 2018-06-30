@@ -17,3 +17,5 @@ mod
 /plugins
 extensions
 /mods
+yarn.lock
+test/
