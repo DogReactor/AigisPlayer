@@ -47,14 +47,15 @@ export class GameComponent implements AfterViewInit, OnDestroy {
         let webContent: WebContents = null;
         const webview = this.gameView;
 
-        const CurrentGame = <GameModel>this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Value;
-        if (CurrentGame.Name !== 'None') {
-            this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Dispatch(CurrentGame);
-        }
-
         webview.addEventListener('dom-ready', () => {
             webContent = webview.getWebContents();
             const CurrentGame = <GameModel>this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Value;
+
+            // 无游戏运行时设为默认游戏
+            if (CurrentGame.Name == 'None' && this.globalSettingService.GlobalSetting.CurrentGame.Name !='None') {
+                this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Dispatch(this.globalSettingService.GlobalSetting.CurrentGame);
+            }
+
             this.gameView.setZoomFactor(this.zoom / 100);
             // webview.openDevTools();
             // 碧蓝删去滑动条

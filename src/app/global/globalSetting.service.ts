@@ -5,6 +5,8 @@ import * as crypto from 'crypto'
 import { GlobalStatusService } from './globalStatus.service'
 import { ElMessageService } from 'element-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { GameModel } from '../core/game.model';
+import { Size } from '../core/util';
 
 export class Proxy {
     Host: String = '';
@@ -33,6 +35,7 @@ export class GlobalSetting {
     public Zoom = 100;
     public Mute = false;
     public Lock = false;
+    public CurrentGame = new GameModel('None', new Size(640, 960), 'about:blank');
 }
 
 const needDispatch = ['Zoom', 'Mute', 'Lock'];

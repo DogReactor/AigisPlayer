@@ -13,6 +13,7 @@
             "MUTE": "静音",
             "ZOOM": "缩放",
             "LANGUAGE": "语言/Language",
+            "DEFAULTGAME": "默认游戏",
             "CACHE": "清理缓存",
             "UPDATE": "安装更新"
         },
