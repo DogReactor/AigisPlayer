@@ -19,6 +19,3 @@ extensions
 /mods
 yarn.lock
 test/
-package-lock.json
-package-lock.json
-package.json
