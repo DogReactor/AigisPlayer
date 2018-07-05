@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen, session, ipcMain } from 'electron';
+import { app, BrowserWindow, screen, session, ipcMain, Menu } from 'electron';
 import * as path from 'path';
 import { ProxyServer } from './src/backend/proxyServer'
 import * as fs from 'fs';
@@ -104,6 +104,26 @@ try {
   // Some APIs can only be used after this event occurs.
   app.on('ready', () => {
     createWindow();
+    // menu
+    if (process.platform === 'darwin') {
+      // Create our menu entries so that we can use MAC shortcuts
+      Menu.setApplicationMenu(Menu.buildFromTemplate([
+        {
+          label: 'Edit',
+          submenu: [
+            { role: 'undo' },
+            { role: 'redo' },
+            { type: 'separator' },
+            { role: 'cut' },
+            { role: 'copy' },
+            { role: 'paste' },
+            { role: 'pasteandmatchstyle' },
+            { role: 'delete' },
+            { role: 'selectall' }
+          ]
+        }
+      ]));
+    }
     const filter = {
       urls: ['http://assets.millennium-war.net/*']
     };
