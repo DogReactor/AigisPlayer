@@ -127,12 +127,6 @@ export class GameService {
         if (this.webView) {
             const webContents = this.webView.getWebContents();
             if (webContents) {
-                webContents.sendInputEvent({
-                    type: 'mouseMove',
-                    x: x,
-                    y: y,
-                    button: 'left',
-                });
                 setTimeout(() => {
                     webContents.sendInputEvent({
                         type: 'mouseDown',
@@ -149,8 +143,8 @@ export class GameService {
                             button: 'left',
                             clickCount: 1
                         });
-                    }, 20);
-                }, 20);
+                    }, 50 + (Math.random() > 0.5 ? -1 : 1) * Math.random() * 10);
+                }, 1);
             }
         }
     }

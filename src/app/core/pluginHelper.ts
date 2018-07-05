@@ -14,7 +14,6 @@ export class PluginHelper {
     }
     onMessage(callback: (msg: any, sendResponse?: any) => void) {
         const asyncChannel = `${this.plugin.id}`
-        console.log('reg on', asyncChannel);
         this.electronService.ipcMain.on(asyncChannel, (event, msg) => {
             const salt = msg.salt;
             const message = msg.message;
