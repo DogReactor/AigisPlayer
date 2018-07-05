@@ -68,7 +68,8 @@ export class PluginService {
     ) {
         // const fs = electronService.fs;
         this.protoablePath = window.require('electron').remote.process.env.PORTABLE_EXECUTABLE_DIR;
-        this.pluginsPath = this.protoablePath ? this.protoablePath + '/plugins' : './plugins';
+        this.pluginsPath = this.protoablePath ?
+            this.protoablePath + '/plugins' : path.join(this.electronService.APP.getPath('userData'), 'plugins');
         fs.readdir(this.pluginsPath, (err, files) => {
             if (err) {
                 fs.mkdirSync(this.pluginsPath);

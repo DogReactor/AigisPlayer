@@ -57,7 +57,7 @@ app.commandLine.appendSwitch('enable-experimental-web-platform-features ');
 app.commandLine.appendSwitch('flag-switches-end');
 */
 const proxyServer = new ProxyServer();
-proxyServer.createServer();
+proxyServer.createServer(app.getPath('userData'));
 
 function createWindow() {
 
