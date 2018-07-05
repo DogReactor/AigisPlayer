@@ -34,9 +34,9 @@ export class DecipherService {
             webContents.debugger.on('detach', (event, reason) => {
                 console.log('Debugger detached due to : ', reason);
             });
-            webContents.debugger.sendCommand('Emulation.setTouchEmulationEnabled', {
+            /*webContents.debugger.sendCommand('Emulation.setTouchEmulationEnabled', {
                 enabled: true
-            });
+            });*/
             webContents.debugger.on('message', (event, method, params) => {
                 switch (method) {
                     case 'Network.requestWillBeSent':
