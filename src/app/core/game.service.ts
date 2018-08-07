@@ -68,6 +68,13 @@ const gameInfo = [
         new Size(576, 1024),
         `http://bg-r.mimolette.co.jp/selectsvr.html`,
         'bravegirl'
+    ),
+    new GameModel(
+        'UNITIA X',
+        new Size(640, 1136),
+        `https://www.dmm.co.jp/my/-/login/logout/=/path=
+        DRVESVwZTlVZCFRLHVILWk8GWRhaSUtdBxZWD15KQl4MFVlYHhkIXEsRUFRfCQtOABVGCwEfClYWC1EPUQRDWQoPDQg_`,
+        'unitia'
     )
 ]
 

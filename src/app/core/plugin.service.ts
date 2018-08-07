@@ -33,6 +33,7 @@ export class Plugin {
     public game = [];
     public needRestart = false;
     public installing = false;
+    public realPath = '';
 }
 class ActivePlugin {
     public WebContent: WebContents;
@@ -82,6 +83,7 @@ export class PluginService {
                     const obj = JSON.parse(data);
                     obj.path = value;
                     obj.id = crypto.createHash('md5').update(Math.random().toString()).digest('hex')
+                    obj.realPath = `${this.pluginsPath}/${value}`;
                     // obj.id = value;
                     if (obj.background) {
                         obj.background = path.join(this.pluginsPath, obj.path, obj.background).replace(/\\/g, '/');
@@ -205,7 +207,12 @@ export class PluginService {
             if (fs.existsSync(v.background)) {
                 const script = v.backgroundObject = global['require'](`${v.background}`);
                 if (!script || !script.run) { return; }
-                script.run(new PluginHelper(this.electronService, this.gameService, v));
+                try {
+                    script.run(new PluginHelper(this.electronService, this.gameService, v));
+                } catch (e) {
+                    console.log(e);
+                }
+
             }
         });
     }

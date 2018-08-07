@@ -77,7 +77,7 @@ export class ProxyServer {
                 options.proxy = `http://${this.ProxyHost}:${this.ProxyPort}`
             }
             let requestFileName = this.FileList[req.path];
-            if (req.path.indexOf('595d57bf1216f3887cb69205494eb744') !== -1) {
+            if (req.path.indexOf('1fd726969acf636b52a911152c088f8d') !== -1) {
                 requestFileName = 'MainFont.aft';
             }
             let modifyFileName = TranslateFileList[requestFileName]

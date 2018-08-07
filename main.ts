@@ -12,6 +12,7 @@ import * as unzip from 'unzipper'
 import * as request from 'request'
 
 app.commandLine.appendSwitch('--enable-npapi');
+app.commandLine.appendSwitch('js-flags', '--max-old-space-size=4096');
 
 autoUpdater.logger = log;
 log.transports.file.level = 'info';
@@ -84,6 +85,7 @@ function createWindow() {
     slashes: true
   }));
   // Open the DevTools.
+  // win.webContents.openDevTools();
   if (serve) {
     win.webContents.openDevTools();
   }
@@ -131,7 +133,7 @@ try {
       let url = details.url;
       const urlpath = url.replace('http://assets.millennium-war.net', '')
       let fileName = fileList[urlpath];
-      if (urlpath.indexOf('595d57bf1216f3887cb69205494eb744') !== -1) {
+      if (urlpath.indexOf('1fd726969acf636b52a911152c088f8d') !== -1) {
         fileName = 'MainFont.aft';
       }
       if (fileName === undefined) {
