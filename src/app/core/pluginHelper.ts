@@ -66,6 +66,26 @@ export class PluginHelper {
     insertCssToGame(css) {
         this.gameService.WebView.insertCSS(css);
     }
+    createWindow(file, option) {
+        const remote = require('electron').remote;
+        const BrowserWindow = remote.BrowserWindow;
+        const currentWindow = require('electron').remote.getCurrentWindow();
+        const path = require('path');
+        const url = require('url').format({
+            protocol: 'file',
+            slashes: true,
+            pathname: file
+        });
+        if (!option['webPreferences']) { option['webPreferences'] = {} }
+        option['webPreferences']['preload'] = path.join(__dirname, './assets/js/pluginWindowPreload.js');
+        option.parent = currentWindow;
+        const win = new BrowserWindow(option);
+        win.loadURL(url);
+        win.webContents.on('dom-ready', (event) => {
+            event.sender.send('plugin-info', this.plugin);
+        });
+        return win;
+    }
 }
 
 export class PluginHelperForRender {

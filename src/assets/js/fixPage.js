@@ -6,6 +6,7 @@ ipcrender.on('catch', (event, message) => {
     return;
   }
   if (message === "bravegirl") {
+    global.ArrayBuffer = Buffer;
     var bottomFrame = document.getElementById('bottomFrame');
     if (bottomFrame) {
       bottomFrame.style.position = 'fixed';
@@ -22,17 +23,20 @@ ipcrender.on('catch', (event, message) => {
     gameFrame.style.position = 'fixed';
     document.body.style.overflow = "hidden";
     if (message === "kamihime") {
+      global.ArrayBuffer = Buffer;
       gameFrame.style.top = '-28px';
       gameFrame.style.left = '-150px';
       gameFrame.style.zIndex = '25';
     }
     if (message === "aigis" || message === "oshiro") {
+      global.ArrayBuffer = Buffer;
       gameFrame.style.top = '0';
       gameFrame.style.left = '0';
       gameFrame.style.zIndex = '25';
       gameFrame.style.marginLeft = '-5px';
     }
     if (message === "unitia") {
+      global.ArrayBuffer = Buffer;
       gameFrame.style.top = '-52px';
       gameFrame.style.left = '0';
       gameFrame.style.zIndex = '5000';
