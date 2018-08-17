@@ -35,6 +35,12 @@ ipcrender.on('catch', (event, message) => {
       gameFrame.style.zIndex = '25';
       gameFrame.style.marginLeft = '-5px';
     }
+    if (message === "kankore") {
+      global.ArrayBuffer = Buffer;
+      gameFrame.style.top = '-16px';
+      gameFrame.style.left = '0';
+      gameFrame.style.zIndex = '1000';
+    }
     if (message === "unitia") {
       global.ArrayBuffer = Buffer;
       gameFrame.style.top = '-52px';

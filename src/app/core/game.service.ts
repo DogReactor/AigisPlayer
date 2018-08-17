@@ -9,6 +9,13 @@ import { TranslateService } from '@ngx-translate/core';
 
 const gameInfo = [
     new GameModel(
+        '艦これ',
+        new Size(720, 1200),
+        `https://www.dmm.com/my/-/login/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWVsfXQFNAwtbSVkEWVMK
+        DVxcSV8PQUwEXVQMWx9WERULBxZXC00LBF4FUxFeXwtcAQ__`,
+        'kankore'
+    ),
+    new GameModel(
         '千年戦争アイギス',
         new Size(640, 960),
         `https://www.dmm.com/my/-/login/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRl
