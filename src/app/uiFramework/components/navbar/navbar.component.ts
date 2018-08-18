@@ -7,8 +7,8 @@ import { ElectronService } from '../../../core/electron.service'
     styleUrls: ['./navbar.component.scss']
 })
 export class UIFrameNavbarComponent {
+    toggle = false;
     constructor(private electronService: ElectronService) {
-
     }
     minimize() {
         this.electronService.currentWindow.minimize();
