@@ -59,7 +59,7 @@ export class GameComponent implements AfterViewInit, OnDestroy {
             }
 
             this.gameView.setZoomFactor(this.zoom / 100);
-            webview.openDevTools();
+            // webview.openDevTools();
             // 碧蓝删去滑动条
             if (CurrentGame.Spec === 'granblue') {
                 webview.send('catch', CurrentGame.Spec);
