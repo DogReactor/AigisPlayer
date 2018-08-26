@@ -17,6 +17,7 @@ export class GlobalStatusService {
         AccountListPassword: '',
         AccountListPasswordError: false,
         Zoom: 100,
+        Opacity: 100,
         NewVersionAVB: false,
         CurrentGame: new GameModel('None', new Size(640, 960), 'about:blank')
     })

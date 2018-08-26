@@ -32,6 +32,7 @@ export class SettingUtilComponent implements OnDestroy {
         this.regProp('Mute');
         this.regProp('Lock');
         this.regProp('Zoom');
+        this.regProp('Opacity');
         this.globalStatusService.GlobalStatusStore.Get('NewVersionAVB').Subscribe((v) => {
             this.updateReady = v;
         })
@@ -41,12 +42,11 @@ export class SettingUtilComponent implements OnDestroy {
         this.translateService.use(value);
     }
     changeDefaultGame(value) {
-        if (value == 'None') {
+        if (value === 'None') {
             this.globalSettingService.GlobalSetting.CurrentGame = new GameModel('None', new Size(640, 960), 'about:blank');
+        } else {
+            this.globalSettingService.GlobalSetting.CurrentGame = this.gameService.GameInfo.find((game) => { return game.Name === value });
         }
-        else {
-            this.globalSettingService.GlobalSetting.CurrentGame = this.gameService.GameInfo.find((game) => { return game.Name == value });
-        }  
     }
     selectSwitch(key) {
         const state = this.globalStatusService.GlobalStatusStore.Get(key);

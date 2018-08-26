@@ -19,5 +19,6 @@ export class HotkeyService {
         if (this.globalSettingService.GlobalSetting.SpeedUpKey === code) { this.gameService.KeyMapperTrigger('SpeedUpKey') }
         if (this.globalSettingService.GlobalSetting.UseSkillKey === code) { this.gameService.KeyMapperTrigger('UseSkillKey') }
         if (this.globalSettingService.GlobalSetting.ScreenShotKey === code) { this.gameService.ScreenShot() }
+        if (this.globalSettingService.GlobalSetting.ReloadKey === code) { this.gameService.Reload() }
     }
 }

@@ -31,14 +31,16 @@ export class GlobalSetting {
     public SpeedUpKey = '';
     public UseSkillKey = '';
     public ScreenShotKey = '';
+    public ReloadKey = '';
     public Language = 'cn';
     public Zoom = 100;
+    public Opacity = 100;
     public Mute = false;
     public Lock = false;
     public CurrentGame = new GameModel('None', new Size(640, 960), 'about:blank');
 }
 
-const needDispatch = ['Zoom', 'Mute', 'Lock'];
+const needDispatch = ['Zoom', 'Mute', 'Lock', 'Opacity'];
 
 @Injectable()
 export class GlobalSettingService {

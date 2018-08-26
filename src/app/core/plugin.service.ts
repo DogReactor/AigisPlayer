@@ -229,7 +229,7 @@ export class PluginService {
                 if (v.activedWindow) {
                     v.activedWindow.WebContent.send(channel, data);
                 }
-                if (v.backgroundObject) {
+                if (v.backgroundObject && v.backgroundObject['newGameResponse']) {
                     v.backgroundObject['newGameResponse'](channel, data);
                 }
             })

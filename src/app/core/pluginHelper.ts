@@ -48,7 +48,11 @@ export class PluginHelper {
             }
         });
         if (this.plugin.activedWindow) {
-            this.plugin.activedWindow.WebContent.send(channel, obj);
+            try {
+                this.plugin.activedWindow.WebContent.send(channel, obj);
+            } catch {
+
+            }
         }
         if (this.gameService.WebView) {
             this.gameService.WebView.send(channel, obj);
