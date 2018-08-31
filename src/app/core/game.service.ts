@@ -9,6 +9,13 @@ import { TranslateService } from '@ngx-translate/core';
 
 const gameInfo = [
     new GameModel(
+        '艦これ',
+        new Size(720, 1200),
+        `https://www.dmm.com/my/-/login/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWVsfXQFNAwtbSVkEWVMK
+        DVxcSV8PQUwEXVQMWx9WERULBxZXC00LBF4FUxFeXwtcAQ__`,
+        'kankore'
+    ),
+    new GameModel(
         '千年戦争アイギス',
         new Size(640, 960),
         `https://www.dmm.com/my/-/login/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRl
@@ -68,6 +75,13 @@ const gameInfo = [
         new Size(576, 1024),
         `http://bg-r.mimolette.co.jp/selectsvr.html`,
         'bravegirl'
+    ),
+    new GameModel(
+        'UNITIA X',
+        new Size(640, 1136),
+        `https://www.dmm.co.jp/my/-/login/logout/=/path=
+        DRVESVwZTlVZCFRLHVILWk8GWRhaSUtdBxZWD15KQl4MFVlYHhkIXEsRUFRfCQtOABVGCwEfClYWC1EPUQRDWQoPDQg_`,
+        'unitia'
     )
 ]
 
@@ -127,12 +141,6 @@ export class GameService {
         if (this.webView) {
             const webContents = this.webView.getWebContents();
             if (webContents) {
-                webContents.sendInputEvent({
-                    type: 'mouseMove',
-                    x: x,
-                    y: y,
-                    button: 'left',
-                });
                 setTimeout(() => {
                     webContents.sendInputEvent({
                         type: 'mouseDown',
@@ -149,8 +157,8 @@ export class GameService {
                             button: 'left',
                             clickCount: 1
                         });
-                    }, 20);
-                }, 20);
+                    }, 50 + (Math.random() > 0.5 ? -1 : 1) * Math.random() * 10);
+                }, 1);
             }
         }
     }

@@ -1,37 +1,46 @@
-.container{
-    height:24px;
-    background:white;
-    display:flex;
-    flex-flow:row;
-    justify-content: space-between;
-    align-content:center;
-    -webkit-app-region:drag;
+.container {
+  height: 24px;
+  background: white;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-content: center;
+  -webkit-app-region: drag;
 }
-.title{
-    margin:0;
-    font-size:12px;
-    line-height:24px;
-    padding-left:7px;
-    // font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+.title {
+  margin: 0;
+  font-size: 12px;
+  line-height: 24px;
+  padding-left: 7px; // font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-.controller{
-    display:flex;
-    flex-flow:row;
-    align-items:center;
+
+.controller {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
 }
-.btn{
-    padding-left:7px;
-    padding-right:7px;
-    padding-top:3px;
-    padding-bottom:3px;
-    -webkit-app-region : no-drag;
-    transition: all 0.2s;
+
+.btn {
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  -webkit-app-region: no-drag;
+  transition: all 0.2s;
 }
-.btn:hover{
-    background:#D3DCE6;
-    color:white;
+
+.btn:hover {
+  background: #D3DCE6;
+  color: white;
 }
-.close:hover{
-    background:#FF4949;
-    color:white;
+
+.close:hover {
+  background: #FF4949;
+  color: white;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-around;
 }

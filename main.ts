@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen, session, ipcMain } from 'electron';
+import { app, BrowserWindow, screen, session, ipcMain, Menu } from 'electron';
 import * as path from 'path';
 import { ProxyServer } from './src/backend/proxyServer'
 import * as fs from 'fs';
@@ -12,6 +12,7 @@ import * as unzip from 'unzipper'
 import * as request from 'request'
 
 app.commandLine.appendSwitch('--enable-npapi');
+app.commandLine.appendSwitch('js-flags', '--max-old-space-size=4096');
 
 autoUpdater.logger = log;
 log.transports.file.level = 'info';
@@ -57,7 +58,7 @@ app.commandLine.appendSwitch('enable-experimental-web-platform-features ');
 app.commandLine.appendSwitch('flag-switches-end');
 */
 const proxyServer = new ProxyServer();
-proxyServer.createServer();
+proxyServer.createServer(app.getPath('userData'));
 
 function createWindow() {
 
@@ -84,6 +85,7 @@ function createWindow() {
     slashes: true
   }));
   // Open the DevTools.
+  // win.webContents.openDevTools();
   if (serve) {
     win.webContents.openDevTools();
   }
@@ -104,6 +106,26 @@ try {
   // Some APIs can only be used after this event occurs.
   app.on('ready', () => {
     createWindow();
+    // menu
+    if (process.platform === 'darwin') {
+      // Create our menu entries so that we can use MAC shortcuts
+      Menu.setApplicationMenu(Menu.buildFromTemplate([
+        {
+          label: 'Edit',
+          submenu: [
+            { role: 'undo' },
+            { role: 'redo' },
+            { type: 'separator' },
+            { role: 'cut' },
+            { role: 'copy' },
+            { role: 'paste' },
+            { role: 'pasteandmatchstyle' },
+            { role: 'delete' },
+            { role: 'selectall' }
+          ]
+        }
+      ]));
+    }
     const filter = {
       urls: ['http://assets.millennium-war.net/*']
     };
@@ -111,7 +133,7 @@ try {
       let url = details.url;
       const urlpath = url.replace('http://assets.millennium-war.net', '')
       let fileName = fileList[urlpath];
-      if (urlpath.indexOf('595d57bf1216f3887cb69205494eb744') !== -1) {
+      if (urlpath.indexOf('1fd726969acf636b52a911152c088f8d') !== -1) {
         fileName = 'MainFont.aft';
       }
       if (fileName === undefined) {

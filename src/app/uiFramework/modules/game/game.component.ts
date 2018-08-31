@@ -49,10 +49,12 @@ export class GameComponent implements AfterViewInit, OnDestroy {
 
         webview.addEventListener('dom-ready', () => {
             webContent = webview.getWebContents();
+            const mute = this.globalStatusService.GlobalStatusStore.Get('Mute').Value;
+            webview.setAudioMuted(mute);
             const CurrentGame = <GameModel>this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Value;
 
             // 无游戏运行时设为默认游戏
-            if (CurrentGame.Name == 'None' && this.globalSettingService.GlobalSetting.CurrentGame.Name !='None') {
+            if (CurrentGame.Name === 'None' && this.globalSettingService.GlobalSetting.CurrentGame.Name !== 'None') {
                 this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Dispatch(this.globalSettingService.GlobalSetting.CurrentGame);
             }
 

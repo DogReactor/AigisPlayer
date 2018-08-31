@@ -1,5 +1,6 @@
-<div class="left-box">
-    <app-game class="game-main" [ngStyle]="{'height':(gameService.CurrentGame.Size.Height * (zoom / 100)).toString() + 'px','width':(gameService.CurrentGame.Size.Width * (zoom / 100)).toString() + 'px'}"></app-game>
+<div class="top-box">
+  <div class="left-plugin"></div>
+  <app-game class="game-main" [ngStyle]="{'height':(gameService.CurrentGame.Size.Height * (zoom / 100)).toString() + 'px','width':(gameService.CurrentGame.Size.Width * (zoom / 100)).toString() + 'px'}"></app-game>
+  <div class="right-plugin"></div>
 </div>
-<div class='right-plugin'>
-</div>
+<div class="bottom-box"></div>

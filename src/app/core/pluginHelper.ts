@@ -14,7 +14,6 @@ export class PluginHelper {
     }
     onMessage(callback: (msg: any, sendResponse?: any) => void) {
         const asyncChannel = `${this.plugin.id}`
-        console.log('reg on', asyncChannel);
         this.electronService.ipcMain.on(asyncChannel, (event, msg) => {
             const salt = msg.salt;
             const message = msg.message;
@@ -49,7 +48,11 @@ export class PluginHelper {
             }
         });
         if (this.plugin.activedWindow) {
-            this.plugin.activedWindow.WebContent.send(channel, obj);
+            try {
+                this.plugin.activedWindow.WebContent.send(channel, obj);
+            } catch {
+
+            }
         }
         if (this.gameService.WebView) {
             this.gameService.WebView.send(channel, obj);
@@ -66,6 +69,26 @@ export class PluginHelper {
     }
     insertCssToGame(css) {
         this.gameService.WebView.insertCSS(css);
+    }
+    createWindow(file, option) {
+        const remote = require('electron').remote;
+        const BrowserWindow = remote.BrowserWindow;
+        const currentWindow = require('electron').remote.getCurrentWindow();
+        const path = require('path');
+        const url = require('url').format({
+            protocol: 'file',
+            slashes: true,
+            pathname: file
+        });
+        if (!option['webPreferences']) { option['webPreferences'] = {} }
+        option['webPreferences']['preload'] = path.join(__dirname, './assets/js/pluginWindowPreload.js');
+        option.parent = currentWindow;
+        const win = new BrowserWindow(option);
+        win.loadURL(url);
+        win.webContents.on('dom-ready', (event) => {
+            event.sender.send('plugin-info', this.plugin);
+        });
+        return win;
     }
 }
 

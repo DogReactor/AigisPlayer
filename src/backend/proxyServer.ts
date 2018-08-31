@@ -5,6 +5,7 @@ import * as Agent from 'socks5-http-client/lib/Agent'
 import * as fs from 'fs'
 import * as zlib from 'zlib'
 import { parseAL } from '../app/decipher/AL'
+import * as path from 'path'
 const TranslateFileList = {
     'StatusText.atb': 'StatusText.txt',
     'MainFont.aft': 'MainFont.aft',
@@ -29,13 +30,18 @@ function mkdir(dirArray, max) {
     if (max === undefined) {
         max = dirArray.length;
     }
-    let nowDir = '.';
-    for (let i = 0; i < max; i++) {
-        nowDir += '/' + dirArray[i];
-        if (!fs.existsSync(nowDir)) {
-            fs.mkdirSync(nowDir);
+    if (typeof dirArray === 'string') {
+        fs.mkdirSync(dirArray);
+    } else {
+        let nowDir = '.';
+        for (let i = 0; i < max; i++) {
+            nowDir += '/' + dirArray[i];
+            if (!fs.existsSync(nowDir)) {
+                fs.mkdirSync(nowDir);
+            }
         }
     }
+
 }
 
 export class ProxyServer {
@@ -44,7 +50,7 @@ export class ProxyServer {
     ProxyPort = 1080;
     ProxyEnable = false;
     ProxyIsSocks5 = false;
-    createServer() {
+    createServer(userDataPath: string) {
         const app = express();
         app.use(function (req, res, next) {
             // res.setHeader('Access-Control-Allow-Origin', '*');
@@ -71,7 +77,7 @@ export class ProxyServer {
                 options.proxy = `http://${this.ProxyHost}:${this.ProxyPort}`
             }
             let requestFileName = this.FileList[req.path];
-            if (req.path.indexOf('595d57bf1216f3887cb69205494eb744') !== -1) {
+            if (req.path.indexOf('1fd726969acf636b52a911152c088f8d') !== -1) {
                 requestFileName = 'MainFont.aft';
             }
             let modifyFileName = TranslateFileList[requestFileName]
@@ -80,7 +86,7 @@ export class ProxyServer {
             }
             // 文件热封装
             const protoablePath = process.env.PORTABLE_EXECUTABLE_DIR;
-            const modPath = protoablePath ? protoablePath + '/mods' : './mods';
+            const modPath = protoablePath ? protoablePath + '/mods' : path.join(userDataPath, 'mods');
             if (!fs.existsSync(modPath)) {
                 fs.mkdirSync(modPath);
             }
