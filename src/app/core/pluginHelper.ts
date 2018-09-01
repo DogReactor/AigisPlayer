@@ -9,8 +9,9 @@ const md5 = crypto.createHash('md5');
 export class PluginHelper {
     constructor(private electronService: ElectronService, private gameService: GameService, private plugin: Plugin) {
     }
-    on(event, callback: (msg?: any) => void) {
+    on(event: string, callback: (event?: any) => void) {
         // EventList
+        this.plugin.backGroundObverser[event] = callback;
     }
     onMessage(callback: (msg: any, sendResponse?: any) => void) {
         const asyncChannel = `${this.plugin.id}`

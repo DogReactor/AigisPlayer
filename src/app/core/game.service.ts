@@ -6,6 +6,9 @@ import { KeyMapperList } from './keyMapper'
 import { Rectangle, NativeImage, WebviewTag } from 'electron';
 import { ElMessageService } from 'element-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { PluginService } from './plugin.service';
+import { GlobalStatusService } from '../global/globalStatus.service';
+import { GlobalSettingService } from '../global/globalSetting.service';
 
 const gameInfo = [
     new GameModel(
@@ -92,12 +95,27 @@ export class GameService {
     public GameInfo = gameInfo;
     public CurrentGame: GameModel;
     private zoom = 100;
+    private pluginService: PluginService;
     constructor(
         private electronService: ElectronService,
         private translateService: TranslateService,
-        private message: ElMessageService
+        private message: ElMessageService,
+        private globalStatus: GlobalStatusService,
+        private globalSetting: GlobalSettingService
     ) {
         this.CurrentGame = new GameModel('None', new Size(640, 960), 'about:blank');
+        globalStatus.GlobalStatusStore.Get('SelectedAccount').Subscribe((v) => {
+            this.ReloadGame()
+        })
+        globalStatus.GlobalStatusStore.Get('Mute').Subscribe((v) => {
+            this.setAudioMuted(v);
+        })
+        globalStatus.GlobalStatusStore.Get('Zoom').Subscribe((v) => {
+            this.SetZoom(v);
+        })
+        globalStatus.GlobalStatusStore.Get('CurrentGame').Subscribe((v) => {
+            this.LoadGame(v);
+        })
     }
     set WebView(webView) {
         this.webView = webView;
@@ -109,6 +127,9 @@ export class GameService {
         if (this.webView) {
             this.webView.reload();
         }
+    }
+    SetPluginService(pluginService: PluginService) {
+        this.pluginService = pluginService;
     }
     ReloadGame() {
         if (this.webView) {
@@ -122,7 +143,6 @@ export class GameService {
     }
     LoadGame(game: GameModel) {
         if (this.webView && game.Name !== 'None') {
-            this.CurrentGame = game;
             // 通知webView跳转页面
             this.webView.loadURL(game.URL);
             // 修改Electron的窗口大小
@@ -130,6 +150,10 @@ export class GameService {
                 Math.floor(this.CurrentGame.Size.Height * (this.zoom / 100)),
                 Math.floor(this.CurrentGame.Size.Width * (this.zoom / 100))
             ));
+            if (game.Spec !== this.CurrentGame.Spec) {
+                this.pluginService.emitEvent('load-game', game);
+            }
+            this.CurrentGame = game;
             document.title = <string>game.Name;
         }
     }

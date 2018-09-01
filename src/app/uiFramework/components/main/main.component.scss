@@ -4,13 +4,12 @@
     height:100%;
 }
 .game-main{
-    height:640px;
-    width:960px;
     display:block;
 }
 .top-box{
     display:flex;
     flex-direction:column;
+    width:100%;
 }
 .right-plugin{
     flex:1;

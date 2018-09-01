@@ -72,9 +72,10 @@ function createWindow() {
     frame: false,
     resizable: false,
     transparent: true,
+    useContentSize: true,
     webPreferences: {
       webSecurity: false,
-      plugins: true
+      plugins: true,
     }
   });
 

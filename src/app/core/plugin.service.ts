@@ -34,6 +34,7 @@ export class Plugin {
     public needRestart = false;
     public installing = false;
     public realPath = '';
+    public backGroundObverser = {};
 }
 class ActivePlugin {
     public WebContent: WebContents;
@@ -68,6 +69,7 @@ export class PluginService {
         private globalStatusService: GlobalStatusService
     ) {
         // const fs = electronService.fs;
+        this.gameService.SetPluginService(this);
         this.protoablePath = window.require('electron').remote.process.env.PORTABLE_EXECUTABLE_DIR;
         this.pluginsPath = this.protoablePath ?
             this.protoablePath + '/plugins' : path.join(this.electronService.APP.getPath('userData'), 'plugins');
@@ -118,7 +120,13 @@ export class PluginService {
             });
         });
     }
-
+    emitEvent(event: string, msg?: any) {
+        this.PluginList.forEach((v) => {
+            if (v.backGroundObverser[event]) {
+                v.backGroundObverser[event](msg);
+            }
+        })
+    }
 
     async getPluginListFromRemote() {
         if (this.RemotePluginList) {

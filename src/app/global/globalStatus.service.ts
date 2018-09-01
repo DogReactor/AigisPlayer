@@ -22,23 +22,13 @@ export class GlobalStatusService {
         CurrentGame: new GameModel('None', new Size(640, 960), 'about:blank')
     })
     constructor(
-        private electronService: ElectronService,
-        private gameService: GameService
+        private electronService: ElectronService
     ) {
-        this.GlobalStatusStore.Get('SelectedAccount').Subscribe((v) => {
-            this.gameService.ReloadGame()
-        })
-        this.GlobalStatusStore.Get('Mute').Subscribe((v) => {
-            gameService.setAudioMuted(v);
+        this.GlobalStatusStore.Get('Opacity').Subscribe((v) => {
+            document.body.style.opacity = `${v / 100}`;
         })
         this.GlobalStatusStore.Get('Lock').Subscribe((v) => {
             electronService.currentWindow.setAlwaysOnTop(v);
-        })
-        this.GlobalStatusStore.Get('Zoom').Subscribe((v) => {
-            gameService.SetZoom(v);
-        })
-        this.GlobalStatusStore.Get('CurrentGame').Subscribe((v) => {
-            gameService.LoadGame(v);
         })
     }
 }

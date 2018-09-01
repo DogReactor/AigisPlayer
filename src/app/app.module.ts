@@ -21,6 +21,7 @@ import { AppComponent } from './app.component';
 
 import { SharedModule } from './shared.module';
 import { ElModule } from 'element-angular';
+import { WebviewDirective } from './webview.directive';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -29,7 +30,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    WebviewDirective
   ],
   imports: [
     BrowserModule,
@@ -49,6 +51,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     GlobalModule,
     UiFrameModule
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [WebviewDirective]
 })
 export class AppModule { }

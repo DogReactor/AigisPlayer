@@ -10,16 +10,10 @@ import { ElMessageService } from 'element-angular';
     styleUrls: ['./uiframework.component.scss']
 })
 export class UIFrameComponent implements OnInit {
-    private opacity = 1;
     constructor(
         private globalStatusService: GlobalStatusService,
         private electronService: ElectronService,
         private message: ElMessageService) {
-
-        globalStatusService.GlobalStatusStore.Get('Opacity').Subscribe((v) => {
-            this.opacity = v / 100;
-        });
-
     }
     ngOnInit() {
         this.electronService.CheckForUpdate(() => {
