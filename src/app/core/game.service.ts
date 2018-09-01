@@ -69,7 +69,7 @@ const gameInfo = [
     ),
     new GameModel(
         'グランブルーファンタジー',
-        new Size(820, 544),
+        new Size(820, 480),
         'http://game.granbluefantasy.jp',
         'granblue'
     ),
@@ -147,12 +147,10 @@ export class GameService {
             this.webView.loadURL(game.URL);
             // 修改Electron的窗口大小
             this.electronService.ReSize(new Size(
-                Math.floor(this.CurrentGame.Size.Height * (this.zoom / 100)),
-                Math.floor(this.CurrentGame.Size.Width * (this.zoom / 100))
+                Math.floor(game.Size.Height * (this.zoom / 100)),
+                Math.floor(game.Size.Width * (this.zoom / 100))
             ));
-            if (game.Spec !== this.CurrentGame.Spec) {
-                this.pluginService.emitEvent('load-game', game);
-            }
+            this.pluginService.emitEvent('load-game', game);
             this.CurrentGame = game;
             document.title = <string>game.Name;
         }
@@ -219,11 +217,6 @@ export class GameService {
         }
     }
     SetZoom(zoom) {
-        // 通知electronService修改窗口大小
         this.zoom = zoom;
-        this.electronService.ReSize(new Size(
-            Math.floor(this.CurrentGame.Size.Height * (zoom / 100)),
-            Math.floor(this.CurrentGame.Size.Width * (zoom / 100))
-        ));
     }
 }

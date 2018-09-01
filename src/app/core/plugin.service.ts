@@ -61,6 +61,7 @@ export class PluginService {
     public SwitchEmbedPlugin = new Rx.Subject<string>();
     private protoablePath: string;
     private pluginsPath: string;
+    private embedWebviews = new Map<string, WebviewTag>();
     constructor(
         private electronService: ElectronService,
         private gameService: GameService,
@@ -128,6 +129,30 @@ export class PluginService {
         })
     }
 
+    regEmbedWebview(type: string, webview: WebviewTag) {
+        this.embedWebviews.set(type, webview);
+    }
+    activeEmbedPlugin(type: string, path: string, options: any, plugin: Plugin) {
+        const webview = this.embedWebviews.get(type);
+        if (webview) {
+            if (type === 'left') {
+                this.globalStatusService.GlobalStatusStore.Get('LeftPluginWidth').Dispatch(options.width);
+            }
+            if (type === 'right') {
+                this.globalStatusService.GlobalStatusStore.Get('RightPluginWidth').Dispatch(options.width);
+            }
+            webview.loadURL(path);
+        }
+    }
+    DeactiveEmbedPlugin(type) {
+        if (type === 'left') {
+            this.globalStatusService.GlobalStatusStore.Get('LeftPluginWidth').Dispatch(0);
+        }
+        if (type === 'right') {
+            this.globalStatusService.GlobalStatusStore.Get('RightPluginWidth').Dispatch(0);
+        }
+        this.embedWebviews.get(type).loadURL('about:blank');
+    }
     async getPluginListFromRemote() {
         if (this.RemotePluginList) {
             return this.RemotePluginList;
@@ -216,7 +241,7 @@ export class PluginService {
                 const script = v.backgroundObject = global['require'](`${v.background}`);
                 if (!script || !script.run) { return; }
                 try {
-                    script.run(new PluginHelper(this.electronService, this.gameService, v));
+                    script.run(new PluginHelper(this.electronService, this.gameService, v, this.globalStatusService, this));
                 } catch (e) {
                     console.log(e);
                 }
@@ -249,18 +274,10 @@ export class PluginService {
     ActivePlugin(plugin: Plugin) {
         if (plugin.entry !== '') {
             if (plugin.embed) {
-                this.activeEmbedPlugin(plugin);
             } else {
                 this.activeStandAlonePlugin(plugin);
             }
         }
-    }
-
-    private activeEmbedPlugin(plugin: Plugin) {
-
-    }
-    DeactiveEmbedPlugin(id: string) {
-
     }
     private activeStandAlonePlugin(plugin: Plugin) {
         if (plugin.activedWindow) {

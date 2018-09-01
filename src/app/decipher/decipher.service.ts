@@ -47,7 +47,6 @@ export class DecipherService {
                             this.reqMaps.set(params.requestId, params.request.url);
                         }
                         if (params.request.url.indexOf(aigisFileListPath) !== -1 || params.request.url.indexOf(aigisRFileListPath) !== -1) {
-                            console.log('FileList: ' + params.request.url);
                             this.fileListReq = params.requestId;
                         }
                         if ((params.request.url.startsWith('http://assets.millennium-war.net/') && params.request.method === 'GET')) {

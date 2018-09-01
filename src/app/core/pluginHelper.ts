@@ -1,13 +1,29 @@
 import { ElectronService } from './electron.service'
-import { Plugin } from './plugin.service'
+import { Plugin, PluginService } from './plugin.service'
 import { WebContents, webContents } from 'electron';
 import { GameService } from './game.service';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
+import { GlobalStatusService } from '../global/globalStatus.service';
 const md5 = crypto.createHash('md5');
 export class PluginHelper {
-    constructor(private electronService: ElectronService, private gameService: GameService, private plugin: Plugin) {
+    constructor(
+        private electronService: ElectronService,
+        private gameService: GameService,
+        private plugin: Plugin,
+        private globalStatusService: GlobalStatusService,
+        private pluginService: PluginService
+    ) {
+    }
+    loadEmbedPage(type: string, path: string, width: number) {
+        this.pluginService.activeEmbedPlugin(type, path, { width: width }, this.plugin);
+    }
+    setExtraHeight(height: number) {
+        this.globalStatusService.GlobalStatusStore.Get('ExtraHeight').Dispatch(height);
+    }
+    setExtraWidth(width: number) {
+        this.globalStatusService.GlobalStatusStore.Get('ExtraWidth').Dispatch(width);
     }
     on(event: string, callback: (event?: any) => void) {
         // EventList

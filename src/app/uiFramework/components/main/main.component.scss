@@ -1,29 +1,38 @@
-.box{
-    display:flex;
-    flex-direction:row;
-    height:100%;
+.box {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
 }
-.game-main{
-    display:block;
+
+.game-main {
+  display: block;
 }
-.top-box{
-    display:flex;
-    flex-direction:column;
-    width:100%;
+
+.top-box {
+  display: flex;
+  width: 100%;
 }
-.right-plugin{
-    flex:1;
+
+.right-plugin {
+  flex: 1;
 }
-.bottom-plugin{
-    background:grey;
-    flex:1;
+
+.bottom-plugin {
+  background: grey;
+  flex: 1;
 }
-:host{
-    flex:1 1 auto;
-    flex-wrap:nowrap;
-    display:flex;
-    background:white;
+
+:host {
+  flex: 1 1 auto;
+  flex-wrap: nowrap;
+  display: flex;
+  background: white;
 }
-.obs{
-    background:black;
+
+.obs {
+  background: black;
+}
+
+webview {
+  height: 100%;
 }

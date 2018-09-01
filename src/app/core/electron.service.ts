@@ -43,7 +43,6 @@ export class ElectronService {
       this.clipboard = this.electron.remote.clipboard;
       this.Tray = this.electron.remote.Tray;
       this.ipcMain = this.electron.remote.ipcMain;
-      console.log('serve', this.serve);
       global['currentWindow'] = this.currentWindow;
       this.ipcRenderer.send('Hello', 'Hello');
     }
