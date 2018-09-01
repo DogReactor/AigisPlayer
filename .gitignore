@@ -19,3 +19,5 @@ extensions
 /mods
 yarn.lock
 test/
+/tools/AigisRevealTools/Utilities
+/tools/AigisRevealTools/Working

@@ -9,24 +9,48 @@ import { Base64 } from './base64'
 import { WebContents } from 'electron';
 import { PluginService } from '../core/plugin.service'
 import { parseAL } from './AL'
+import * as fs from 'fs';
 import { ElectronService } from '../core/electron.service';
 
 const aigisURL = 'https://millennium-war.net/';
 const aigisRURL = 'https://all.millennium-war.net/';
 const aigisFileListPath = '2iofz514jeks1y44k7al2ostm43xj085';
 const aigisRFileListPath = '1fp32igvpoxnb521p9dqypak5cal0xv0';
+const ALCacheDir = './tools/AigisRevealTools/Cache';
 
+class FileListItem {
+    public Type:string;
+    public Name:string;
+    public Path:string;
+    public PathInServer:string;
+    constructor(name:string, pathInServer:string) {
+        this.Name = name;
+        this.PathInServer = pathInServer;
+    }
+    Reveal = () =>{
+        console.log(this.Name)
+    }
+    Update = (pathInServer:string) =>{
+        this.PathInServer = pathInServer;
+        this.Path = ''
+    }
+};
 
 @Injectable()
 export class DecipherService {
     private reqMaps: Map<string, string> = null;
     private assetMaps: Map<string, string> = null;
     private fileListReq = null;
-    private fileList = {};
+    private fileList = [];
     constructor(
         private pluginService: PluginService,
         private electronService: ElectronService
     ) {
+        if (window.localStorage.getItem('fileList')) {
+            try {
+                this.fileList = JSON.parse(window.localStorage.getItem('fileList'));
+            } catch { }
+        }
     }
     Attach = (webContents: WebContents) => {
         try {
@@ -75,7 +99,7 @@ export class DecipherService {
                         }
                         // 处理assets
                         if (this.assetMaps.has(params.requestId)) {
-                            /* webContents.debugger.sendCommand('Network.getResponseBody', {
+                            webContents.debugger.sendCommand('Network.getResponseBody', {
                                 'requestId': params.requestId
                             }, (err, response) => {
                                 let buffer = response.body;
@@ -83,17 +107,33 @@ export class DecipherService {
                                     buffer = Base64.Decode(buffer);
                                 }
                                 if (buffer[0] === 'A' && buffer[1] === 'L') {
-                                    // console.log(parseAL(buffer));
+                                    let ALCachePath = ALCacheDir + this.assetMaps.get(params.requestId);
+                                    fs.writeFile(ALCachePath, buffer, (err) => {
+                                        if (err) throw err;
+                                    });
                                 }
-                            });*/
+                            });
                         }
                         if (params.requestId === this.fileListReq) {
                             webContents.debugger.sendCommand('Network.getResponseBody', {
                                 'requestId': params.requestId
                             }, (err, response) => {
-                                this.fileList = Decoder.DecodeList(response.body);
+                                let rawFileList = Decoder.DecodeList(response.body);
+                                for(let id in rawFileList){
+                                    let k = this.fileList.findIndex((e)=>{
+                                        return e.Name === rawFileList[id]
+                                    })
+                                    if (k != -1) {
+                                        if (this.fileList[k].PathInServer != id) {
+                                            this.fileList[k].Update(id);
+                                        }
+                                    }
+                                    else {
+                                        this.fileList.push(new FileListItem(rawFileList[id], id));
+                                    }
+                                }
+                                this.pluginService.AddResponse(this.fileList, 'fileList');
                                 this.electronService.ipcRenderer.send('fileList', this.fileList);
-                                console.log(this.fileList);
                             });
                         }
                         break;
@@ -111,5 +151,6 @@ export class DecipherService {
         webContents.debugger.detach();
         this.reqMaps = null;
         this.fileListReq = null;
+        window.localStorage.setItem('fileList', JSON.stringify(this.fileList));
     }
 }
