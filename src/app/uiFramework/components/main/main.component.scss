@@ -6,15 +6,12 @@
 
 .game-main {
   display: block;
+  flex: 1;
 }
 
 .top-box {
   display: flex;
   width: 100%;
-}
-
-.right-plugin {
-  flex: 1;
 }
 
 .bottom-plugin {

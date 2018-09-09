@@ -90,6 +90,11 @@ function createWindow() {
   if (serve) {
     win.webContents.openDevTools();
   }
+  /*win.webContents.debugger.attach('1.1');
+  win.webContents.debugger.sendCommand('Emulation.setTouchEmulationEnabled', {
+    enabled: true,
+    configuration: 'desktop',
+  });*/
 
   // Emitted when the window is closed.
   win.on('closed', () => {

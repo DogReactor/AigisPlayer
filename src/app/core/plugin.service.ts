@@ -142,6 +142,10 @@ export class PluginService {
                 this.globalStatusService.GlobalStatusStore.Get('RightPluginWidth').Dispatch(options.width);
             }
             webview.loadURL(path);
+            webview.openDevTools();
+            webview.addEventListener('dom-ready', (event) => {
+                webview.send('plugin-info', plugin);
+            });
         }
     }
     DeactiveEmbedPlugin(type) {

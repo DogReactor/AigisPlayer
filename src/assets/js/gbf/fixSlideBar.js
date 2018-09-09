@@ -10,14 +10,16 @@ for (let platform of platformList) {
   }
 }
 
+window.addEventListener("blur", function (e) {
+  e.stopImmediatePropagation();
+}, false);
+
 if (!needAppend) {
   // 把侧边栏干掉
   document.body.children[0].removeChild(document.body.children[0].children[0]);
   return;
 }
-window.addEventListener("blur", function (e) {
-  e.stopImmediatePropagation();
-}, false);
+
 // // 暂时先return掉，等以后支持维拉了再说
 return;
 
