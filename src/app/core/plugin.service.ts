@@ -255,10 +255,15 @@ export class PluginService {
     }
 
     AddResponse(data: Object, path: string) {
-        path = path.slice(path.lastIndexOf('/') + 1);
-        data = Xml2json(data);
-        data = data['DA'] || data;
-        const channel = pluginEvent[path];
+        let channel;
+        if (path !== 'file-list') {
+            path = path.slice(path.lastIndexOf('/') + 1);
+            data = Xml2json(data);
+            data = data['DA'] || data;
+            channel = pluginEvent[path];
+        } else {
+            channel = path;
+        }
         if (channel) {
             this.responseDataList[channel] = this.responseDataList[channel] || [];
             this.responseDataList[channel].push(data);
@@ -272,6 +277,7 @@ export class PluginService {
             })
         }
     }
+
     ClearResponseList() {
         this.responseDataList = {};
     }

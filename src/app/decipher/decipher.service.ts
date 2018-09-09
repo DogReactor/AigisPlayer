@@ -92,7 +92,7 @@ export class DecipherService {
                             }, (err, response) => {
                                 this.fileList = Decoder.DecodeList(response.body);
                                 this.electronService.ipcRenderer.send('fileList', this.fileList);
-                                console.log(this.fileList);
+                                this.pluginService.AddResponse(this.fileList, 'file-list');
                             });
                         }
                         break;
