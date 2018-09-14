@@ -1,0 +1,7 @@
+Everything in the Scripts folder and the .bat files in the root directory are written by Lzlis.
+
+These files are hereby released to the public domain.
+
+Things in the Utilities folder are from various authors. Their license information is provided separately in their individual folders.
+
+The images in the Data\meta folder are owned by the Aigis developers or derived from images owned by the Aigis developers, but included here for the purpose of facilitating the creation of map images for documentation purposes. This is believed to be fair use.

@@ -14,6 +14,9 @@ export class BufferReader {
     public get Position() {
         return this.position;
     }
+    public set Position(pos:number) {
+        this.position = pos;
+    }
     public get Length() {
         return this.length;
     }

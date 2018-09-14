@@ -20,10 +20,10 @@ const TranslateFileList = {
     'BattleTalkEvent800001.aar': 'BattleTalkEvent800001'
 };
 
-function parse(buffer) {
-    const result = parseAL(buffer);
-    return result;
-}
+// function parse(filename, buffer) {
+//     const result = parseAL(filename, buffer);
+//     return result;
+// }
 
 
 function mkdir(dirArray, max) {
