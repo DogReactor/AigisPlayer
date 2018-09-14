@@ -6,6 +6,11 @@ import { KeyMapperList } from './keyMapper'
 import { Rectangle, NativeImage, WebviewTag } from 'electron';
 import { ElMessageService } from 'element-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { PluginService } from './plugin.service';
+import { GlobalStatusService } from '../global/globalStatus.service';
+import { GlobalSettingService } from '../global/globalSetting.service';
+import * as fs from 'fs';
+import * as path from 'path';
 
 const gameInfo = [
     new GameModel(
@@ -66,7 +71,7 @@ const gameInfo = [
     ),
     new GameModel(
         'グランブルーファンタジー',
-        new Size(820, 544),
+        new Size(820, 480),
         'http://game.granbluefantasy.jp',
         'granblue'
     ),
@@ -92,12 +97,27 @@ export class GameService {
     public GameInfo = gameInfo;
     public CurrentGame: GameModel;
     private zoom = 100;
+    private pluginService: PluginService;
     constructor(
         private electronService: ElectronService,
         private translateService: TranslateService,
-        private message: ElMessageService
+        private message: ElMessageService,
+        private globalStatus: GlobalStatusService,
+        private globalSetting: GlobalSettingService,
     ) {
         this.CurrentGame = new GameModel('None', new Size(640, 960), 'about:blank');
+        globalStatus.GlobalStatusStore.Get('SelectedAccount').Subscribe((v) => {
+            this.ReloadGame()
+        })
+        globalStatus.GlobalStatusStore.Get('Mute').Subscribe((v) => {
+            this.setAudioMuted(v);
+        })
+        globalStatus.GlobalStatusStore.Get('Zoom').Subscribe((v) => {
+            this.SetZoom(v);
+        })
+        globalStatus.GlobalStatusStore.Get('CurrentGame').Subscribe((v) => {
+            this.LoadGame(v);
+        })
     }
     set WebView(webView) {
         this.webView = webView;
@@ -109,6 +129,9 @@ export class GameService {
         if (this.webView) {
             this.webView.reload();
         }
+    }
+    SetPluginService(pluginService: PluginService) {
+        this.pluginService = pluginService;
     }
     ReloadGame() {
         if (this.webView) {
@@ -122,22 +145,19 @@ export class GameService {
     }
     LoadGame(game: GameModel) {
         if (this.webView && game.Name !== 'None') {
-            this.CurrentGame = game;
             // 通知webView跳转页面
             this.webView.loadURL(game.URL);
             // 修改Electron的窗口大小
             this.electronService.ReSize(new Size(
-                Math.floor(this.CurrentGame.Size.Height * (this.zoom / 100)),
-                Math.floor(this.CurrentGame.Size.Width * (this.zoom / 100))
+                Math.floor(game.Size.Height * (this.zoom / 100)),
+                Math.floor(game.Size.Width * (this.zoom / 100))
             ));
+            this.pluginService.emitEvent('load-game', game);
+            this.CurrentGame = game;
             document.title = <string>game.Name;
         }
     }
-    KeyMapperTrigger(keyName) {
-        const keyMapper = KeyMapperList.find(v => v.Name === keyName);
-        if (!keyMapper) { return; }
-        const x = Math.floor(keyMapper.X + (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Width);
-        const y = Math.floor(keyMapper.Y + (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Height);
+    submitClickEvent(x: number, y: number) {
         if (this.webView) {
             const webContents = this.webView.getWebContents();
             if (webContents) {
@@ -162,7 +182,14 @@ export class GameService {
             }
         }
     }
-    ScreenShot(callback?: Function) {
+    KeyMapperTrigger(keyName) {
+        const keyMapper = KeyMapperList.find(v => v.Name === keyName);
+        if (!keyMapper) { return; }
+        const x = Math.floor(keyMapper.X + (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Width);
+        const y = Math.floor(keyMapper.Y + (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Height);
+        this.submitClickEvent(x, y);
+    }
+    ScreenShot(save = false) {
         if (this.webView) {
             const code = `var r = {}; \
                 r.pageHeight = window.innerHeight; \
@@ -186,20 +213,30 @@ export class GameService {
                         (this.zoom / 100))
                 };
                 this.webView.capturePage(captureRect, (image: NativeImage) => {
-                    this.electronService.clipboard.writeImage(image);
-                });
-                this.translateService.get('MESSAGE.SCREENSHOT-SUCCESS').subscribe(res => {
-                    this.message['success'](res)
+                    if (save) {
+                        const p = path.join(this.electronService.APP.getPath('userData'), 'screenshots');
+                        if (!fs.existsSync(p)) {
+                            fs.mkdirSync(p);
+                        }
+                        const fileName = path.join(p, `${(new Date).getTime()}.png`);
+                        fs.writeFile(fileName, image.toPNG(), () => { });
+                    } else {
+                        this.electronService.clipboard.writeImage(image);
+                    }
                 });
             });
+            if (save) {
+                this.translateService.get('MESSAGE.SCREENSHOT-SAVE-SUCCESS').subscribe(res => {
+                    this.message['success'](res);
+                });
+            } else {
+                this.translateService.get('MESSAGE.SCREENSHOT-SUCCESS').subscribe(res => {
+                    this.message['success'](res);
+                });
+            }
         }
     }
     SetZoom(zoom) {
-        // 通知electronService修改窗口大小
         this.zoom = zoom;
-        this.electronService.ReSize(new Size(
-            Math.floor(this.CurrentGame.Size.Height * (zoom / 100)),
-            Math.floor(this.CurrentGame.Size.Width * (zoom / 100))
-        ));
     }
 }

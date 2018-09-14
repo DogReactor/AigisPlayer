@@ -72,23 +72,30 @@ function createWindow() {
     frame: false,
     resizable: false,
     transparent: true,
+    useContentSize: true,
     webPreferences: {
       webSecurity: false,
-      plugins: true
+      plugins: true,
     }
   });
 
   // and load the index.html of the app.
-  win.loadURL(url.format({
+  win.loadURL(path.join(__dirname, '/index.html'));
+  /*win.loadURL(url.format({
     protocol: 'file:',
     pathname: path.join(__dirname, '/index.html'),
     slashes: true
-  }));
+  }));*/
   // Open the DevTools.
   // win.webContents.openDevTools();
   if (serve) {
     win.webContents.openDevTools();
   }
+  /*win.webContents.debugger.attach('1.1');
+  win.webContents.debugger.sendCommand('Emulation.setTouchEmulationEnabled', {
+    enabled: true,
+    configuration: 'desktop',
+  });*/
 
   // Emitted when the window is closed.
   win.on('closed', () => {

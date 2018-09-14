@@ -68,6 +68,11 @@ export class GlobalSettingService {
                 this.AccountList = Object.assign(this.AccountList, JSON.parse(window.localStorage.getItem('accountList')));
                 // TODO:这里记得要加上默认账户的选择
                 if (!this.AccountList.Encrypted) {
+                    this.globalStatusService.GlobalStatusStore.Get('AccountList').Dispatch(
+                        this.AccountList.List.map((v) => {
+                            return v.Username;
+                        })
+                    )
                     const defaultAccount = this.AccountList.List.find(v => v.IsDefault);
                     if (defaultAccount) {
                         this.globalStatusService.GlobalStatusStore.Get('SelectedAccount').Dispatch(defaultAccount.Username);
@@ -167,6 +172,11 @@ export class GlobalSettingService {
                 decipher.on('end', () => {
                     try {
                         this.AccountList.List = JSON.parse(decrypted);
+                        this.globalStatusService.GlobalStatusStore.Get('AccountList').Dispatch(
+                            this.AccountList.List.map((v) => {
+                                return v.Username;
+                            })
+                        );
                         this.AccountList.Encrypted = false;
                         // 密码正确
                         this.globalStatusService.GlobalStatusStore.Get('AccountListPasswordError').Dispatch(false);

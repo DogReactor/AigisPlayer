@@ -1,47 +1,49 @@
 <div el-container>
-    <div el-main>
-        <el-form label-width="150px" size="small" label-position="left">
-            <el-form-item [label]="'SETTING.UTIL.MUTE' | translate">
-                <div class="checkbox">
-                    <el-switch [model]="Mute" (modelChange)="selectSwitch('Mute')"></el-switch>
-                </div>
-            </el-form-item>
-            <el-form-item [label]="'SETTING.UTIL.LOCK' | translate">
-                <div class="checkbox">
-                    <el-switch [model]="Lock" (modelChange)="selectSwitch('Lock')"></el-switch>
-                </div>
-            </el-form-item>
-            <el-form-item [label]="'SETTING.UTIL.ZOOM' | translate">
-                <el-slider [min]="80" [max]="200" [model]="Zoom" (modelChange)="changeSlider('Zoom',$event)"></el-slider>
-            </el-form-item>
-            <el-form-item [label]="'SETTING.UTIL.OPACITY' | translate">
-                <el-slider [min]="50" [max]="100" [model]="Opacity" (modelChange)="changeSlider('Opacity',$event)"></el-slider>
-            </el-form-item>
-            <el-form-item [label]="'SETTING.UTIL.CACHE' | translate">
-                <div class="checkbox">
-                    <el-button type="danger" (click)="clearCache()">{{'UTIL.CLEAR' | translate}}</el-button>
-                </div>
-            </el-form-item>
-            <el-form-item [label]="'SETTING.UTIL.UPDATE' | translate">
-                <div class="checkbox">
-                    <el-button type="primary" (click)="startUpdate()" [elDisabled]="!updateReady">{{'UTIL.UPDATE' | translate}}</el-button>
-                </div>
-            </el-form-item>
-            <el-form-item [label]="'SETTING.UTIL.LANGUAGE' | translate">
-                <div class="checkbox">
-                    <el-select [model]="translateService.currentLang" [placeholder]="'UTIL.PLEASESELECT' | translate" (modelChange)="changeLanguage($event)">
-                        <el-option *ngFor="let lang of translateService.getLangs()" [label]="languageList[lang]" [value]="lang"></el-option>
-                    </el-select>
-                </div>
-            </el-form-item>
-            <el-form-item [label]="'SETTING.UTIL.DEFAULTGAME' | translate">
-                <div class="checkbox">
-                    <el-select [model]="globalSettingService.GlobalSetting.CurrentGame.Name" [placeholder]="'UTIL.PLEASESELECT' | translate" (modelChange)="changeDefaultGame($event)">
-                        <el-option label="None" value="None"></el-option>
-                        <el-option *ngFor="let game of gameService.GameInfo" [label]="game.Name" [value]="game.Name"></el-option>
-                    </el-select>
-                </div>
-            </el-form-item>
-        </el-form>
-    </div>
+  <div el-main>
+    <el-form label-width="150px" size="small" label-position="left">
+      <el-form-item [label]="'SETTING.UTIL.MUTE' | translate">
+        <div class="checkbox">
+          <el-switch [model]="Mute" (modelChange)="selectSwitch('Mute')"></el-switch>
+        </div>
+      </el-form-item>
+      <el-form-item [label]="'SETTING.UTIL.LOCK' | translate">
+        <div class="checkbox">
+          <el-switch [model]="Lock" (modelChange)="selectSwitch('Lock')"></el-switch>
+        </div>
+      </el-form-item>
+      <el-form-item [label]="'SETTING.UTIL.ZOOM' | translate">
+        <el-slider [min]="80" [max]="200" [model]="Zoom" (modelChange)="changeSlider('Zoom',$event)"></el-slider>
+      </el-form-item>
+      <el-form-item [label]="'SETTING.UTIL.OPACITY' | translate">
+        <el-slider [min]="50" [max]="100" [model]="Opacity" (modelChange)="changeSlider('Opacity',$event)"></el-slider>
+      </el-form-item>
+      <el-form-item [label]="'SETTING.UTIL.CACHE' | translate">
+        <div class="checkbox">
+          <el-button type="danger" (click)="clearCache()">{{'UTIL.CLEAR' | translate}}</el-button>
+        </div>
+      </el-form-item>
+      <el-form-item [label]="'SETTING.UTIL.OPEN-SCREENSHOT-DIR' | translate">
+        <div class="checkbox">
+          <el-button type="primary" (click)="openScreenShotDir()">{{'UTIL.OPEN' | translate}}</el-button>
+        </div>
+      </el-form-item>
+      <el-form-item [label]="'SETTING.UTIL.LANGUAGE' | translate">
+        <div class="checkbox">
+          <el-select [model]="translateService.currentLang" [placeholder]="'UTIL.PLEASESELECT' | translate"
+            (modelChange)="changeLanguage($event)">
+            <el-option *ngFor="let lang of translateService.getLangs()" [label]="languageList[lang]" [value]="lang"></el-option>
+          </el-select>
+        </div>
+      </el-form-item>
+      <el-form-item [label]="'SETTING.UTIL.DEFAULTGAME' | translate">
+        <div class="checkbox">
+          <el-select [model]="globalSettingService.GlobalSetting.CurrentGame.Name" [placeholder]="'UTIL.PLEASESELECT' | translate"
+            (modelChange)="changeDefaultGame($event)">
+            <el-option label="None" value="None"></el-option>
+            <el-option *ngFor="let game of gameService.GameInfo" [label]="game.Name" [value]="game.Name"></el-option>
+          </el-select>
+        </div>
+      </el-form-item>
+    </el-form>
+  </div>
 </div>
