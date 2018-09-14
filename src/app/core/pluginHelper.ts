@@ -107,6 +107,9 @@ export class PluginHelper {
         });
         return win;
     }
+    loadURL(url) {
+        this.gameService.WebView.loadURL(url);
+    }
 }
 
 export class PluginHelperForRender {

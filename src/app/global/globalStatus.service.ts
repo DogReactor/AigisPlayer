@@ -23,7 +23,8 @@ export class GlobalStatusService {
         LeftPluginWidth: 0,
         RightPluginWidth: 0,
         NewVersionAVB: false,
-        CurrentGame: new GameModel('None', new Size(640, 960), 'about:blank')
+        CurrentGame: new GameModel('None', new Size(640, 960), 'about:blank'),
+        AccountList: new Array<string>()
     })
     constructor(
         private electronService: ElectronService

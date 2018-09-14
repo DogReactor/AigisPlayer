@@ -1,10 +1,10 @@
 <div class="top-box">
   <div class="left-plugin" [ngStyle]="{'width':leftWidth + 'px'}">
-    <webview class="webview" id="leftView" src="about:blank" preload="./assets/js/pluginWindowPreload.js"></webview>
+    <webview class="webview" id="leftView" src="about:blank" preload="./assets/js/pluginWindowPreload.js" nodeintegration></webview>
   </div>
   <app-game class="game-main"></app-game>
   <div class="right-plugin" [ngStyle]="{'width':rightWidth + 'px'}">
-    <webview class="webview" id="rightView" src="about:blank" preload="./assets/js/pluginWindowPreload.js"></webview>
+    <webview class="webview" id="rightView" src="about:blank" preload="./assets/js/pluginWindowPreload.js" nodeintegration></webview>
   </div>
 </div>
 <div class="bottom-box"></div>

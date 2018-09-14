@@ -13,7 +13,6 @@ class PluginHelper {
         if (typeof message === 'object') {
           message = JSON.parse(JSON.stringify(message));
         }
-        console.log('Reply Message To Guest', message);
         const channel = `${this.plugin.id}-${salt}`;
         event.sender.send(channel, message);
       }
@@ -31,7 +30,6 @@ class PluginHelper {
     const replyChannel = `${this.plugin.id}-${salt}`;
     if (callback) {
       this.ipcRenderer.once(replyChannel, (event, message) => {
-        console.log("Get Response from Background", message);
         callback(message);
       });
     }

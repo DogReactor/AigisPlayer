@@ -155,11 +155,7 @@ export class GameService {
             document.title = <string>game.Name;
         }
     }
-    KeyMapperTrigger(keyName) {
-        const keyMapper = KeyMapperList.find(v => v.Name === keyName);
-        if (!keyMapper) { return; }
-        const x = Math.floor(keyMapper.X + (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Width);
-        const y = Math.floor(keyMapper.Y + (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Height);
+    submitClickEvent(x: number, y: number) {
         if (this.webView) {
             const webContents = this.webView.getWebContents();
             if (webContents) {
@@ -183,6 +179,13 @@ export class GameService {
                 }, 1);
             }
         }
+    }
+    KeyMapperTrigger(keyName) {
+        const keyMapper = KeyMapperList.find(v => v.Name === keyName);
+        if (!keyMapper) { return; }
+        const x = Math.floor(keyMapper.X + (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Width);
+        const y = Math.floor(keyMapper.Y + (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Height);
+        this.submitClickEvent(x, y);
     }
     ScreenShot(callback?: Function) {
         if (this.webView) {

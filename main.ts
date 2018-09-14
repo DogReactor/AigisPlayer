@@ -80,11 +80,12 @@ function createWindow() {
   });
 
   // and load the index.html of the app.
-  win.loadURL(url.format({
+  win.loadURL(path.join(__dirname, '/index.html'));
+  /*win.loadURL(url.format({
     protocol: 'file:',
     pathname: path.join(__dirname, '/index.html'),
     slashes: true
-  }));
+  }));*/
   // Open the DevTools.
   // win.webContents.openDevTools();
   if (serve) {
