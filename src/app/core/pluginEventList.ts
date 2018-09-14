@@ -28,5 +28,13 @@ export const pluginEvent = {
     'zzdfsknw': 'present-info',
     'eZ5wrQTH': 'crystal-change',
     'kgiqvp4a': 'crystal-init',
-    'aB2hnQXL': 'new-gacha-result'
+    'aB2hnQXL': 'new-gacha-result',
+    'rEphfdmU': 'spirit-repo',
+    'c9LvZMPA': 'silver-repo',
+    'XL1FmueE': 'affection-up',
+    '7jzKZrvU': 'exp-up',
+    '89b8NiGE': 'cc',
+    'QGbFwDWV': 'aw1',
+    'E5bTYnSK': 'aw2',
+    'G4uBbPjZ': 'disband'
 }
