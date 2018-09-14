@@ -9,6 +9,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { PluginService } from './plugin.service';
 import { GlobalStatusService } from '../global/globalStatus.service';
 import { GlobalSettingService } from '../global/globalSetting.service';
+import * as fs from 'fs';
+import * as path from 'path';
 
 const gameInfo = [
     new GameModel(
@@ -101,7 +103,7 @@ export class GameService {
         private translateService: TranslateService,
         private message: ElMessageService,
         private globalStatus: GlobalStatusService,
-        private globalSetting: GlobalSettingService
+        private globalSetting: GlobalSettingService,
     ) {
         this.CurrentGame = new GameModel('None', new Size(640, 960), 'about:blank');
         globalStatus.GlobalStatusStore.Get('SelectedAccount').Subscribe((v) => {
@@ -187,7 +189,7 @@ export class GameService {
         const y = Math.floor(keyMapper.Y + (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Height);
         this.submitClickEvent(x, y);
     }
-    ScreenShot(callback?: Function) {
+    ScreenShot(save = false) {
         if (this.webView) {
             const code = `var r = {}; \
                 r.pageHeight = window.innerHeight; \
@@ -211,12 +213,27 @@ export class GameService {
                         (this.zoom / 100))
                 };
                 this.webView.capturePage(captureRect, (image: NativeImage) => {
-                    this.electronService.clipboard.writeImage(image);
-                });
-                this.translateService.get('MESSAGE.SCREENSHOT-SUCCESS').subscribe(res => {
-                    this.message['success'](res)
+                    if (save) {
+                        const p = path.join(this.electronService.APP.getPath('userData'), 'screenshots');
+                        if (!fs.existsSync(p)) {
+                            fs.mkdirSync(p);
+                        }
+                        const fileName = path.join(p, `${(new Date).getTime()}.png`);
+                        fs.writeFile(fileName, image.toPNG(), () => { });
+                    } else {
+                        this.electronService.clipboard.writeImage(image);
+                    }
                 });
             });
+            if (save) {
+                this.translateService.get('MESSAGE.SCREENSHOT-SAVE-SUCCESS').subscribe(res => {
+                    this.message['success'](res);
+                });
+            } else {
+                this.translateService.get('MESSAGE.SCREENSHOT-SUCCESS').subscribe(res => {
+                    this.message['success'](res);
+                });
+            }
         }
     }
     SetZoom(zoom) {

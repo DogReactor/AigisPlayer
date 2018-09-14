@@ -9,6 +9,8 @@ import { LanguageList } from '../../../../../../../../core/languageList'
 import { ElectronService } from '../../../../../../../../core/electron.service'
 import { GameModel } from '../../../../../../../../core/game.model'
 import { Size } from '../../../../../../../../core/util'
+import { shell } from 'electron'
+import * as path from 'path'
 
 @Component({
     selector: 'app-setting-util',
@@ -73,7 +75,7 @@ export class SettingUtilComponent implements OnDestroy {
             state.Subscribe(v => this[k] = v)
         )
     }
-    startUpdate() {
-        this.electronService.UpdateNow();
+    openScreenShotDir() {
+        shell.openItem(path.join(this.electronService.APP.getPath('userData'), 'screenshots'));
     }
 }

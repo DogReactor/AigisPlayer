@@ -17,10 +17,12 @@ export class UIFrameStatusBarComponent {
     reload() {
         this.gameService.Reload();
     }
-    screenshot() {
-        this.gameService.ScreenShot();
-        /*this.translateService.get('MESSAGE.SCREENSHOT-SUCCESS').subscribe(res => {
-            this.message['success'](res)
-        });*/
+    screenshot(event) {
+        if (event.button === 0) {
+            this.gameService.ScreenShot();
+        } else {
+            this.gameService.ScreenShot(true);
+        }
+
     }
 }

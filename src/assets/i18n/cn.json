@@ -12,11 +12,11 @@
       "LOCK": "保持在最前端",
       "MUTE": "静音",
       "ZOOM": "缩放",
-      "OPACITY":"透明度",
+      "OPACITY": "透明度",
       "LANGUAGE": "语言/Language",
       "DEFAULTGAME": "默认游戏",
       "CACHE": "清理缓存",
-      "UPDATE": "安装更新"
+      "OPEN-SCREENSHOT-DIR": "打开截图文件夹"
     },
     "ACCOUNT": {
       "ACCOUNT": "账户管理",
@@ -38,18 +38,19 @@
     "ACCEPT": "确认",
     "CANCEL": "取消",
     "SAVE": "保存",
+    "OPEN": "打开",
     "PASSWORDERROR": "密码错误",
     "INPUTPASSWORD": "请输入密码",
     "FORCECLEARPASSWORD": "强制清除密码",
     "PLEASESELECT": "请选择",
     "ADD": "添加",
     "DELETE": "删除",
-    "CLEAR": "清除",
-    "UPDATE": "更新"
+    "CLEAR": "清除"
   },
   "MESSAGE": {
     "PAGE-DIDNOT-LOAD": "页面加载失败，请确认代理是否正确配置。",
     "SCREENSHOT-SUCCESS": "截图到剪贴板成功！请使用CTRL+V粘贴。",
+    "SCREENSHOT-SAVE-SUCCESS": "截图保存成功！",
     "SET-SUCCESS": "设置成功",
     "SAVE-SUCCESS": "保存成功",
     "LOAD-FINISH": "程序加载完毕",
