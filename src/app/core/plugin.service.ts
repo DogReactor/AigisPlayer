@@ -245,7 +245,7 @@ export class PluginService {
                 const script = v.backgroundObject = global['require'](`${v.background}`);
                 if (!script || !script.run) { return; }
                 try {
-                    script.run(new PluginHelper(this.electronService, this.gameService, v, this.globalStatusService, this));
+                    script.run(new PluginHelper(this.electronService, this.gameService, v, this.globalStatusService, this, this.message));
                 } catch (e) {
                     console.log(e);
                 }
