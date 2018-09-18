@@ -6,6 +6,7 @@ import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
 import { GlobalStatusService } from '../global/globalStatus.service';
+import { ElMessageService } from 'element-angular';
 const md5 = crypto.createHash('md5');
 export class PluginHelper {
     constructor(
@@ -13,7 +14,8 @@ export class PluginHelper {
         private gameService: GameService,
         private plugin: Plugin,
         private globalStatusService: GlobalStatusService,
-        private pluginService: PluginService
+        private pluginService: PluginService,
+        private message: ElMessageService,
     ) {
     }
     loadEmbedPage(type: string, path: string, width: number) {
@@ -24,6 +26,9 @@ export class PluginHelper {
     }
     setExtraWidth(width: number) {
         this.globalStatusService.GlobalStatusStore.Get('ExtraWidth').Dispatch(width);
+    }
+    sendNotification(msg:string, type:string) {
+        this.message[type](msg)
     }
     on(event: string, callback: (event?: any) => void) {
         // EventList
