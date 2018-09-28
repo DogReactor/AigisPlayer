@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WebviewTag, WebContents, BrowserWindow, ipcRenderer } from 'electron'
-import { Xml2json } from '../decipher/xml2json'
 import { ElectronService } from './electron.service'
-import { pluginEvent } from './pluginEventList'
 import * as fs from 'fs';
 import * as Rx from 'rxjs/Rx';
 import * as path from 'path';
@@ -15,6 +13,7 @@ import * as rimraf from 'rimraf'
 import * as request from 'request'
 import { ElMessageService } from 'element-angular';
 import { GlobalStatusService } from '../global/globalStatus.service';
+import { AigisGameDataService } from '../gameData/aigis/aigis.service';
 
 export class Plugin {
     public path = '';
@@ -53,7 +52,6 @@ class ResponseData {
 
 @Injectable()
 export class PluginService {
-    private responseDataList = {};
     public PluginList: Plugin[] = [];
     public RemotePluginList: Plugin[];
     public ListUpdate = new Rx.Subject();
@@ -67,7 +65,8 @@ export class PluginService {
         private gameService: GameService,
         private http: HttpClient,
         private message: ElMessageService,
-        private globalStatusService: GlobalStatusService
+        private globalStatusService: GlobalStatusService,
+        private aigisGameDataService: AigisGameDataService
     ) {
         // const fs = electronService.fs;
         this.gameService.SetPluginService(this);
@@ -240,12 +239,21 @@ export class PluginService {
     loadBackgroundScript() {
         this.PluginList.forEach((v) => {
             if (v.background === '') { return; }
-            console.log(v.background);
+            console.log('load: ' + v.background);
             if (fs.existsSync(v.background)) {
                 const script = v.backgroundObject = global['require'](`${v.background}`);
                 if (!script || !script.run) { return; }
                 try {
-                    script.run(new PluginHelper(this.electronService, this.gameService, v, this.globalStatusService, this));
+                    script.run(
+                        new PluginHelper(
+                            this.electronService,
+                            this.gameService,
+                            v,
+                            this.globalStatusService,
+                            this.aigisGameDataService,
+                            this
+                        )
+                    );
                 } catch (e) {
                     console.log(e);
                 }
@@ -254,33 +262,6 @@ export class PluginService {
         });
     }
 
-    AddResponse(data: Object, path: string) {
-        let channel;
-        if (path !== 'file-list') {
-            path = path.slice(path.lastIndexOf('/') + 1);
-            data = Xml2json(data);
-            data = data['DA'] || data;
-            channel = pluginEvent[path];
-        } else {
-            channel = path;
-        }
-        if (channel) {
-            this.responseDataList[channel] = this.responseDataList[channel] || [];
-            this.responseDataList[channel].push(data);
-            this.PluginList.forEach((v) => {
-                if (v.activedWindow) {
-                    v.activedWindow.WebContent.send(channel, data);
-                }
-                if (v.backgroundObject && v.backgroundObject['newGameResponse']) {
-                    v.backgroundObject['newGameResponse'](channel, data);
-                }
-            })
-        }
-    }
-
-    ClearResponseList() {
-        this.responseDataList = {};
-    }
     ActivePlugin(plugin: Plugin) {
         if (plugin.entry !== '') {
             if (plugin.embed) {
@@ -310,19 +291,7 @@ export class PluginService {
         });
         plugin.activedWindow.BrowserWindow.on('close', () => {
             // 释放灵魂
-            this.electronService.ipcMain.removeListener('response-packages', listener);
-            this.electronService.ipcMain.removeListener('response-packages-sync', listenerSync);
             plugin.activedWindow = null;
         });
-        const listener = (event, arg: string) => {
-            const packages = this.responseDataList[arg] || [];
-            event.sender.send('response-packages', packages);
-        };
-        const listenerSync = (event, arg: string) => {
-            const packages = this.responseDataList[arg] || [];
-            event.returnValue = packages;
-        }
-        this.electronService.ipcMain.on('response-packages', listener);
-        this.electronService.ipcMain.on('response-packages-sync', listenerSync);
     }
 }

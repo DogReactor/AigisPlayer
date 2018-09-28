@@ -1,4 +1,4 @@
-export const pluginEvent = {
+export const Event = {
     'EeLcL7hN': 'quest-success',  // statusUpdate
     'uD69xeaG': 'quest-start',    // statusUpdate
     'shxnpXtj': 'login-status',   // statusUpdate
