@@ -42,7 +42,7 @@ export class AigisGameDataService {
             }
         );
     }
-    subscribe(channel, callback) {
+    subscribe(channel, callback: (data: object, url: string) => void) {
         if (this.subscription.has(channel)) {
             this.subscription.get(channel).push(callback);
         } else {

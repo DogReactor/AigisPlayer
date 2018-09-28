@@ -61,10 +61,13 @@ export class DebuggerService {
                         const rule = this.subscription.find((value) => {
                             return value.match(params.request.url, params.request.method);
                         })
-                        this.reqMaps.set(params.requestId, {
-                            url: params.request.url,
-                            rule: rule
-                        });
+                        if (rule) {
+                            this.reqMaps.set(params.requestId, {
+                                url: params.request.url,
+                                rule: rule
+                            });
+                        }
+
                         break;
                     case 'Network.loadingFinished':
                         // 处理response
