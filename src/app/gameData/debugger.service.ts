@@ -16,10 +16,15 @@ const aigisRFileListPath = '1fp32igvpoxnb521p9dqypak5cal0xv0';
 class Rule {
     public Url: Array<string>;
     public Method: string;
-    public Callback: (url: string, response) => void;
-    constructor(url: Array<string>, method: string, callback: (url: string, response) => void) {
-        this.Url = url;
-        this.Method = method;
+    public Request: boolean;
+    public Callback: (url: string, response, request?: boolean) => void;
+    constructor(
+        options: { url: string[], method?: string, request?: boolean },
+        callback: (url: string, response, request?: boolean) => void
+    ) {
+        this.Url = options.url;
+        this.Method = options.method || 'ALL';
+        this.Request = options.request || false;
         this.Callback = callback;
     }
     match(url: string, method: string) {
@@ -42,9 +47,11 @@ export class DebuggerService {
         private electronService: ElectronService
     ) {
     }
-    Subscribe = (url: string | Array<string>, method, callback: (url: string, response) => void) => {
-        if (typeof url === 'string') { url = [url] }
-        this.subscription.push(new Rule(url, method, callback));
+    Subscribe(
+        options: { url: Array<string>, method?: string, request?: boolean },
+        callback: (url: string, response, request?: boolean) => void
+    ) {
+        this.subscription.push(new Rule(options, callback));
     }
     Attach = (webContents: WebContents) => {
         try {
@@ -62,6 +69,15 @@ export class DebuggerService {
                             return value.match(params.request.url, params.request.method);
                         })
                         if (rule) {
+                            if (rule.Request === true) {
+                                const raw = params.request.postData;
+                                const arr = [];
+                                for (let i = 0; i < raw.length; i++) {
+                                    arr.push(raw.charCodeAt(i));
+                                }
+                                const buffer = Buffer.from(arr);
+                                rule.Callback(params.request.url, buffer, true);
+                            }
                             this.reqMaps.set(params.requestId, {
                                 url: params.request.url,
                                 rule: rule
@@ -76,7 +92,7 @@ export class DebuggerService {
                                 'requestId': params.requestId
                             }, (err, response) => {
                                 const o = this.reqMaps.get(params.requestId);
-                                o.rule.Callback(o.url, response);
+                                o.rule.Callback(o.url, response, false);
                             });
                         }
                         break;

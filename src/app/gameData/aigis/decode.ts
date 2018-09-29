@@ -1,4 +1,4 @@
-import {Base64} from './base64'
+import { Base64 } from './util'
 
 const decode = (buffer, key) => {
     const decoded = new Uint8Array(buffer.byteLength);
