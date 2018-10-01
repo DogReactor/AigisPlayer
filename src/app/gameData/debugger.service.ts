@@ -57,12 +57,12 @@ export class DebuggerService {
                         if (rule) {
                             if (rule.Request === true) {
                                 const raw = params.request.postData;
-                                const arr = [];
-                                for (let i = 0; i < raw.length; i++) {
-                                    arr.push(raw.charCodeAt(i));
-                                }
-                                const buffer = Buffer.from(arr);
-                                rule.Callback(params.request.url, buffer, true);
+                                // const arr = [];
+                                // for (let i = 0; i < raw.length; i++) {
+                                //     arr.push(raw.charCodeAt(i));
+                                // }
+                                // const buffer = Buffer.from(arr);
+                                rule.Callback(params.request.url, raw, true);
                             }
                             this.reqMaps.set(params.requestId, {
                                 url: params.request.url,
@@ -78,7 +78,7 @@ export class DebuggerService {
                                 'requestId': params.requestId
                             }, (err, response) => {
                                 const o = this.reqMaps.get(params.requestId);
-                                o.rule.Callback(o.url, response, false);
+                                o.rule.Callback(o.url, response.body, false);
                             });
                         }
                         break;
