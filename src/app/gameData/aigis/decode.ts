@@ -1,4 +1,4 @@
-import {Base64} from './util'
+import { Base64 } from './util'
 
 const decode = (buffer, key) => {
     const decoded = new Uint8Array(buffer.byteLength);
@@ -22,7 +22,7 @@ export class Decoder {
         }
         const csvData = b.join('');
         const csvDatas = csvData.split('\n');
-        const datas = {};
+        const datas: Map<string, string> = new Map();
         for (let i = 0; i < csvDatas.length; i++) {
             const data = csvDatas[i].split(',');
             /*let obj = {
@@ -32,7 +32,7 @@ export class Decoder {
                 fileName : d[4]
             }
             datas.push(obj);*/
-            datas[aigisAssetsBegin + data[0] + '/' + data[1]] = data[4];
+            datas.set(data[4], aigisAssetsBegin + data[0] + '/' + data[1])
         }
 
         return datas;

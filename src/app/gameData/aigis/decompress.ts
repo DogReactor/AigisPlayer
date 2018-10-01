@@ -50,17 +50,17 @@ export function Decompress(buffer) {
             break;
         }
     }
-
     // parse content
     const decompressed = new Uint8Array(size);
     let ptr = 0;
+    let repair = 0;
     while (1) {
-        if (i > buffer.byteLength) { break; }
-        let b = buffer[i];
-        i++;
+        if (i >= buffer.byteLength) { break; }
+        let b = buffer[i]; i++;
         const low = b & 3;
         if (low > 0) {
             // dict
+            const temp = [];
             const lookupVal = lookup[b << 1] | (lookup[(b << 1) + 1] << 8)
             let len = lookupVal >> 11
             let lzOffset = 0;
@@ -72,12 +72,14 @@ export function Decompress(buffer) {
                 len--;
             }
             lzOffset = lzOffset + (lookupVal & 0x0700);
-            const lzLength = lookupVal & 0xff;
+            const lzLength = (lookupVal & 0xff) + repair;
+            if (repair !== 0) { repair = 0 };
             for (let j = 0; j < lzLength; j++) {
                 decompressed[ptr] = decompressed[ptr - lzOffset];
                 ptr++;
             }
         } else {
+            const position = i;
             // literal
             b = b >> 2;
             if (b >= 60) {
@@ -94,10 +96,14 @@ export function Decompress(buffer) {
             }
             b++;
             const literal = buffer.slice(i, i + b);
-            for (let j = 0; j < literal.length; j++) {
-                decompressed[ptr++] = literal[j];
+            let j = 0
+            for (j = 0; j < literal.length; j++) {
+                if (literal[j] < 32) { break; } // <32则说明这是一个压缩标识
+                decompressed[ptr] = literal[j];
+                ptr++;
             }
-            i += b;
+            i = i + j;
+            repair = b - j;
         }
     }
     return decompressed;
