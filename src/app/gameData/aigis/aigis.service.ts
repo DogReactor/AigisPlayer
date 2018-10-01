@@ -12,11 +12,40 @@ import { Xml2json } from './xml2json';
 import { Event } from './EventList';
 import { Base64 } from './util'
 
+class AssetsCollector {
+    private roster: Map<Array<string>, Array<(data, url) => void>> = new Map();
+    public eigenUrl = {}
+    constructor(){}
+    register(flag:Array<string>, callback:(data, url) => void){
+        this.roster.forEach((v,k)=>{
+            if(flag.every(e=>k.indexOf(e)!=-1)){
+                v.push(callback);
+                return;
+            }
+        })
+        this.roster.set(flag, [callback]);
+    }
+    checkUrl(label:string, url:string) {
+        this.roster.forEach((funcGroup,key)=>{
+            if(key.every(k=>label.includes(k))) {
+                if(this.eigenUrl.hasOwnProperty(url)) {
+                    Array.prototype.push.apply(this.eigenUrl[url].callbackPool, funcGroup);
+                    this.eigenUrl[url].files.push(label)
+                }
+                else {
+                    this.eigenUrl[url] = {callbackPool:[].concat(funcGroup), files:[label]};
+                }
+            }
+        })
+    }
+}
+
 @Injectable()
 export class AigisGameDataService {
     private subscription: Map<string, Array<(data, url) => void>> = new Map();
-    private assetsRoster: Map<string,string> = new Map();
     private requestSubscription: Map<string, Array<(data, url) => void>> = new Map();
+    private assetsRoster: Map<string,string> = new Map();
+    private assetsCollector: AssetsCollector = new AssetsCollector();
     constructor(
         private debuggerService: DebuggerService
     ) {
@@ -63,21 +92,34 @@ export class AigisGameDataService {
                 if(url.indexOf('/2iofz514jeks1y44k7al2ostm43xj085')!=-1||url.indexOf('/1fp32igvpoxnb521p9dqypak5cal0xv0')!=-1) {
                     let allFileList = Decoder.DecodeList(response);
                     allFileList.forEach((v,k)=>{
-                        if(this.subscription.has(k)) {
-                            this.assetsRoster.set(v,k);
-                        }
+                        // fileList里似乎有个无名key
+                        if(k) {
+                            if(this.subscription.has(k)) {
+                                this.assetsRoster.set(v,k);
+                            }
+                            this.assetsCollector.checkUrl(k,v);
+                        }  
                     });
                 }
-                else if(this.assetsRoster.has(url)) {
+                else if(this.assetsRoster.has(url)||this.assetsCollector.eigenUrl.hasOwnProperty(url)) {
                     let buffer = response;
                     if (/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/.test(buffer)) {
                         buffer = Base64.Decode(buffer);
                     }                
                     let data = parseAL(buffer)||buffer;
-                    let channel = this.assetsRoster.get(url)
-                    this.subscription.get(channel).forEach((v) => {
-                        v(data, url);
-                    })
+                    if(this.assetsRoster.has(url)) {
+                        let channel = this.assetsRoster.get(url)
+                        this.subscription.get(channel).forEach((v) => {
+                            v(data, url);
+                        })
+                    }
+                    if(this.assetsCollector.eigenUrl.hasOwnProperty(url)) {
+                        let obj = this.assetsCollector.eigenUrl[url]
+                        obj.callbackPool.forEach((v)=>{
+                            v({Files:obj.files,Data:data}, url);
+                        })
+                    }
+                    
                 }
 
             }
@@ -85,10 +127,16 @@ export class AigisGameDataService {
     }
     subscribe(channel, callback: (data: object, url: string) => void, request?: boolean) {
         const subscription = request ? this.requestSubscription : this.subscription
-        if (subscription.has(channel)) {
-            subscription.get(channel).push(callback);
-        } else {
-            subscription.set(channel, [callback]);
+        if(typeof(channel)==='string') {
+            if (subscription.has(channel)) {
+                subscription.get(channel).push(callback);
+            } else {
+                subscription.set(channel, [callback]);
+            }
         }
+        else if (typeof(channel)==='object') {
+            this.assetsCollector.register(channel, callback)
+        }
+        
     }
 }
