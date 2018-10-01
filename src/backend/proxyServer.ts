@@ -4,7 +4,7 @@ import * as express from 'express'
 import * as Agent from 'socks5-http-client/lib/Agent'
 import * as fs from 'fs'
 import * as zlib from 'zlib'
-import { parseAL } from '../app/decipher/AL'
+import { parseAL } from 'aigis-fuel'
 import * as path from 'path'
 const TranslateFileList = {
     'StatusText.atb': 'StatusText.txt',

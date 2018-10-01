@@ -10,6 +10,7 @@ const decode = (buffer, key) => {
 
 export class Decoder {
     static DecodeList = (buffer) => {
+        const aigisAssetsBegin = 'http://assets.millennium-war.net/'
         if (/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/.test(buffer)) {
             buffer = Base64.Decode(buffer);
         }
@@ -21,7 +22,7 @@ export class Decoder {
         }
         const csvData = b.join('');
         const csvDatas = csvData.split('\n');
-        const datas = {};
+        const datas: Map<string, string> = new Map();
         for (let i = 0; i < csvDatas.length; i++) {
             const data = csvDatas[i].split(',');
             /*let obj = {
@@ -31,7 +32,7 @@ export class Decoder {
                 fileName : d[4]
             }
             datas.push(obj);*/
-            datas['/' + data[0] + '/' + data[1]] = data[4];
+            datas.set(data[4], aigisAssetsBegin + data[0] + '/' + data[1])
         }
 
         return datas;
