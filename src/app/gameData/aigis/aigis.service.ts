@@ -14,8 +14,8 @@ import { Base64 } from './util'
 
 class AssetsCollector {
     private roster: Map<(file) => boolean, (data, url) => void> = new Map();
-    // eigenUrl以url作key，{Files=[...file], callbackPool:[...callback]}为元素
-    public eigenUrl = {}
+    // EigenUrls以url作key，{Files=[...file], callbackPool:[...callback]}为元素
+    public EigenUrls = {}
     constructor() { }
     register(filter: (file) => boolean, callback: (data, url) => void) {
         this.roster.set(filter, callback);
@@ -23,12 +23,12 @@ class AssetsCollector {
     checkUrl(label: string, url: string) {
         this.roster.forEach((callback, filter) => {
             if (filter(label)) {
-                if (this.eigenUrl.hasOwnProperty(url)) {
-                    this.eigenUrl[url].callbackPool.push(callback);
-                    this.eigenUrl[url].files.push(label)
+                if (this.EigenUrls.hasOwnProperty(url)) {
+                    this.EigenUrls[url].callbackPool.push(callback);
+                    this.EigenUrls[url].files.push(label)
                 }
                 else {
-                    this.eigenUrl[url] = { callbackPool: [].concat(callback), files: [label] };
+                    this.EigenUrls[url] = { callbackPool: [].concat(callback), files: [label] };
                 }
             }
         })
@@ -96,7 +96,7 @@ export class AigisGameDataService {
                         }
                     });
                 }
-                else if (this.assetsRoster.has(url) || this.assetsCollector.eigenUrl.hasOwnProperty(url)) {
+                else if (this.assetsRoster.has(url) || this.assetsCollector.EigenUrls.hasOwnProperty(url)) {
                     let buffer = response;
                     if (/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/.test(buffer)) {
                         buffer = Base64.Decode(buffer);
@@ -108,8 +108,8 @@ export class AigisGameDataService {
                             v(data, url);
                         })
                     }
-                    if (this.assetsCollector.eigenUrl.hasOwnProperty(url)) {
-                        let obj = this.assetsCollector.eigenUrl[url]
+                    if (this.assetsCollector.EigenUrls.hasOwnProperty(url)) {
+                        let obj = this.assetsCollector.EigenUrls[url]
                         obj.callbackPool.forEach((v) => {
                             v({ Files: obj.files, Data: data }, url);
                         })
