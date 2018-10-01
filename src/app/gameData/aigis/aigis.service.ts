@@ -14,8 +14,8 @@ import { Base64 } from './util'
 
 class AssetsCollector {
     private roster: Map<(file) => boolean, (data, url) => void> = new Map();
-    // EigenUrls以url作key，{Files=[...file], callbackPool:[...callback]}为元素
-    public EigenUrls = {}
+    // 一个url可能对应多个文件
+    public EigenUrls: Map<string, Array<string>> = new Map();
     constructor() { }
     register(filter: (file) => boolean, callback: (data, url) => void) {
         this.roster.set(filter, callback);
@@ -23,14 +23,22 @@ class AssetsCollector {
     checkUrl(label: string, url: string) {
         this.roster.forEach((callback, filter) => {
             if (filter(label)) {
-                if (this.EigenUrls.hasOwnProperty(url)) {
-                    this.EigenUrls[url].callbackPool.push(callback);
-                    this.EigenUrls[url].files.push(label)
+                if (this.EigenUrls.has(url)) {
+                    this.EigenUrls.get(url).push(label);
                 }
                 else {
-                    this.EigenUrls[url] = { callbackPool: [].concat(callback), files: [label] };
+                    this.EigenUrls.set(url, [label]);
                 }
             }
+        })
+    }
+    sendCollection(data: any, url: string) {
+        this.EigenUrls.get(url).forEach(key => {
+            this.roster.forEach((callback, filter) => {
+                if (filter(key)) {
+                    callback({ Label: key, Data: data }, url);
+                }
+            })
         })
     }
 }
@@ -96,7 +104,7 @@ export class AigisGameDataService {
                         }
                     });
                 }
-                else if (this.assetsRoster.has(url) || this.assetsCollector.EigenUrls.hasOwnProperty(url)) {
+                else if (this.assetsRoster.has(url) || this.assetsCollector.EigenUrls.has(url)) {
                     let buffer = response;
                     if (/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/.test(buffer)) {
                         buffer = Base64.Decode(buffer);
@@ -108,11 +116,8 @@ export class AigisGameDataService {
                             v(data, url);
                         })
                     }
-                    if (this.assetsCollector.EigenUrls.hasOwnProperty(url)) {
-                        let obj = this.assetsCollector.EigenUrls[url]
-                        obj.callbackPool.forEach((v) => {
-                            v({ Files: obj.files, Data: data }, url);
-                        })
+                    if (this.assetsCollector.EigenUrls.has(url)) {
+                        this.assetsCollector.sendCollection(data, url);
                     }
 
                 }
