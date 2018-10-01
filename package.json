@@ -31,6 +31,7 @@
     "e2e": "protractor ./protractor.conf.js"
   },
   "dependencies": {
+    "aigis-fuel": "^0.1.4",
     "electron-log": "^2.2.15",
     "electron-updater": "^2.22.1",
     "element-angular": "^0.6.0",

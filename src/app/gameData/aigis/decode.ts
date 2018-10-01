@@ -1,4 +1,4 @@
-import {Base64} from './base64'
+import {Base64} from './util'
 
 const decode = (buffer, key) => {
     const decoded = new Uint8Array(buffer.byteLength);
@@ -10,6 +10,7 @@ const decode = (buffer, key) => {
 
 export class Decoder {
     static DecodeList = (buffer) => {
+        const aigisAssetsBegin = 'http://assets.millennium-war.net/'
         if (/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/.test(buffer)) {
             buffer = Base64.Decode(buffer);
         }
@@ -31,7 +32,7 @@ export class Decoder {
                 fileName : d[4]
             }
             datas.push(obj);*/
-            datas['/' + data[0] + '/' + data[1]] = data[4];
+            datas[aigisAssetsBegin + data[0] + '/' + data[1]] = data[4];
         }
 
         return datas;

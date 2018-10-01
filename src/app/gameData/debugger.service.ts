@@ -1,17 +1,6 @@
-/**
- * Translated from http://millenniumwaraigis.wikia.com/wiki/User_blog:Lzlis/Interpreting_POST_responses
- */
-
 import { Injectable } from '@angular/core'
 import { WebContents } from 'electron';
-import { PluginService } from '../core/plugin.service'
-import { parseAL } from './AL'
 import { ElectronService } from '../core/electron.service';
-
-const aigisURL = 'https://millennium-war.net/';
-const aigisRURL = 'https://all.millennium-war.net/';
-const aigisFileListPath = '2iofz514jeks1y44k7al2ostm43xj085';
-const aigisRFileListPath = '1fp32igvpoxnb521p9dqypak5cal0xv0';
 
 class Rule {
     public Url: Array<string>;
@@ -35,10 +24,7 @@ class Rule {
 export class DebuggerService {
     private reqMaps: Map<string, { url: string, rule: Rule }> = null;
     private subscription: Array<Rule> = [];
-    private fileListReq = null;
-    private fileList = {};
     constructor(
-        private pluginService: PluginService,
         private electronService: ElectronService
     ) {
     }
@@ -92,6 +78,5 @@ export class DebuggerService {
     Detach = (webContents: WebContents) => {
         webContents.debugger.detach();
         this.reqMaps = null;
-        this.fileListReq = null;
     }
 }
