@@ -62,8 +62,13 @@ export class AigisGameDataService {
                 const path = u.pathname.replace('/', '');
                 const channel = Event[path];
                 const subscription = request ? this.requestSubscription : this.subscription;
+                const arr = [];
+                for (let i = 0; i < response.length; i++) {
+                    arr.push(response.charCodeAt(i));
+                }
+                const buffer = Buffer.from(arr);
                 if (channel && subscription.has(channel)) {
-                    const decoded = Decoder.DecodeXml(response);
+                    const decoded = Decoder.DecodeXml(buffer);
                     let data;
                     if (decoded) {
                         const decompressed = Decompress(decoded);
