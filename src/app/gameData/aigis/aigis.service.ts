@@ -12,11 +12,43 @@ import { Xml2json } from './xml2json';
 import { Event } from './EventList';
 import { Base64 } from './util'
 
+class AssetsCollector {
+    private roster: Map<(file) => boolean, (data, url) => void> = new Map();
+    // 一个url可能对应多个文件
+    public EigenUrls: Map<string, Array<string>> = new Map();
+    constructor() { }
+    register(filter: (file) => boolean, callback: (data, url) => void) {
+        this.roster.set(filter, callback);
+    }
+    checkUrl(label: string, url: string) {
+        this.roster.forEach((callback, filter) => {
+            if (filter(label)) {
+                if (this.EigenUrls.has(url)) {
+                    this.EigenUrls.get(url).push(label);
+                }
+                else {
+                    this.EigenUrls.set(url, [label]);
+                }
+            }
+        })
+    }
+    sendCollection(data: any, url: string) {
+        this.EigenUrls.get(url).forEach(key => {
+            this.roster.forEach((callback, filter) => {
+                if (filter(key)) {
+                    callback({ Label: key, Data: data }, url);
+                }
+            })
+        })
+    }
+}
+
 @Injectable()
 export class AigisGameDataService {
     private subscription: Map<string, Array<(data, url) => void>> = new Map();
-    private assetsRoster: Map<string, string> = new Map();
     private requestSubscription: Map<string, Array<(data, url) => void>> = new Map();
+    private assetsRoster: Map<string, string> = new Map();
+    private assetsCollector: AssetsCollector = new AssetsCollector();
     constructor(
         private debuggerService: DebuggerService
     ) {
@@ -61,33 +93,48 @@ export class AigisGameDataService {
             },
             (url, response) => {
                 if (url.indexOf('/2iofz514jeks1y44k7al2ostm43xj085') !== -1 || url.indexOf('/1fp32igvpoxnb521p9dqypak5cal0xv0') !== -1) {
-                    const allFileList = Decoder.DecodeList(response);
+                    let allFileList = Decoder.DecodeList(response);
                     allFileList.forEach((v, k) => {
-                        if (this.subscription.has(k)) {
-                            this.assetsRoster.set(v, k);
+                        // fileList里似乎有个无名key
+                        if (k) {
+                            if (this.subscription.has(k)) {
+                                this.assetsRoster.set(v, k);
+                            }
+                            this.assetsCollector.checkUrl(k, v);
                         }
                     });
-                } else if (this.assetsRoster.has(url)) {
+                }
+                else if (this.assetsRoster.has(url) || this.assetsCollector.EigenUrls.has(url)) {
                     let buffer = response;
                     if (/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/.test(buffer)) {
                         buffer = Base64.Decode(buffer);
                     }
-                    const data = parseAL(buffer) || buffer;
-                    const channel = this.assetsRoster.get(url)
-                    this.subscription.get(channel).forEach((v) => {
-                        v(data, url);
-                    })
+                    let data = parseAL(buffer) || buffer;
+                    if (this.assetsRoster.has(url)) {
+                        let channel = this.assetsRoster.get(url)
+                        this.subscription.get(channel).forEach((v) => {
+                            v(data, url);
+                        })
+                    }
+                    if (this.assetsCollector.EigenUrls.has(url)) {
+                        this.assetsCollector.sendCollection(data, url);
+                    }
                 }
-
             }
         );
     }
     subscribe(channel, callback: (data: object, url: string) => void, request?: boolean) {
         const subscription = request ? this.requestSubscription : this.subscription
-        if (subscription.has(channel)) {
-            subscription.get(channel).push(callback);
-        } else {
-            subscription.set(channel, [callback]);
+        if (typeof (channel) === 'string') {
+            if (subscription.has(channel)) {
+                subscription.get(channel).push(callback);
+            } else {
+                subscription.set(channel, [callback]);
+            }
         }
+        else if (typeof (channel) === 'function') {
+            this.assetsCollector.register(channel, callback)
+        }
+
     }
 }
