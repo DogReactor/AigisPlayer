@@ -15,7 +15,7 @@ import { Base64 } from './util'
 @Injectable()
 export class AigisGameDataService {
     private subscription: Map<string, Array<(data, url) => void>> = new Map();
-    private assetsRoster: Map<string,string> = new Map();
+    private assetsRoster: Map<string, string> = new Map();
     private requestSubscription: Map<string, Array<(data, url) => void>> = new Map();
     constructor(
         private debuggerService: DebuggerService
@@ -44,7 +44,7 @@ export class AigisGameDataService {
                     } else { data = response; }
                     data = Xml2json(data);
                     data = data['DA'] || data;
-                    
+
                     subscription.get(channel).forEach((v) => {
                         v(data, url);
                     })
@@ -52,7 +52,7 @@ export class AigisGameDataService {
             }
         );
 
-        
+
         debuggerService.Subscribe(
             {
                 url: ['://assets.millennium-war.net/'],
@@ -60,21 +60,20 @@ export class AigisGameDataService {
                 request: false
             },
             (url, response) => {
-                if(url.indexOf('/2iofz514jeks1y44k7al2ostm43xj085')!=-1||url.indexOf('/1fp32igvpoxnb521p9dqypak5cal0xv0')!=-1) {
-                    let allFileList = Decoder.DecodeList(response);
-                    allFileList.forEach((v,k)=>{
-                        if(this.subscription.has(k)) {
-                            this.assetsRoster.set(v,k);
+                if (url.indexOf('/2iofz514jeks1y44k7al2ostm43xj085') !== -1 || url.indexOf('/1fp32igvpoxnb521p9dqypak5cal0xv0') !== -1) {
+                    const allFileList = Decoder.DecodeList(response);
+                    allFileList.forEach((v, k) => {
+                        if (this.subscription.has(k)) {
+                            this.assetsRoster.set(v, k);
                         }
                     });
-                }
-                else if(this.assetsRoster.has(url)) {
+                } else if (this.assetsRoster.has(url)) {
                     let buffer = response;
                     if (/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/.test(buffer)) {
                         buffer = Base64.Decode(buffer);
-                    }                
-                    let data = parseAL(buffer)||buffer;
-                    let channel = this.assetsRoster.get(url)
+                    }
+                    const data = parseAL(buffer) || buffer;
+                    const channel = this.assetsRoster.get(url)
                     this.subscription.get(channel).forEach((v) => {
                         v(data, url);
                     })
