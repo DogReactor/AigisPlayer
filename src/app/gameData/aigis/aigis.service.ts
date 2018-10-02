@@ -25,8 +25,7 @@ class AssetsCollector {
             if (filter(label)) {
                 if (this.EigenUrls.has(url)) {
                     this.EigenUrls.get(url).push(label);
-                }
-                else {
+                } else {
                     this.EigenUrls.set(url, [label]);
                 }
             }
@@ -93,7 +92,7 @@ export class AigisGameDataService {
             },
             (url, response) => {
                 if (url.indexOf('/2iofz514jeks1y44k7al2ostm43xj085') !== -1 || url.indexOf('/1fp32igvpoxnb521p9dqypak5cal0xv0') !== -1) {
-                    let allFileList = Decoder.DecodeList(response);
+                    const allFileList = Decoder.DecodeList(response);
                     allFileList.forEach((v, k) => {
                         // fileList里似乎有个无名key
                         if (k) {
@@ -103,15 +102,14 @@ export class AigisGameDataService {
                             this.assetsCollector.checkUrl(k, v);
                         }
                     });
-                }
-                else if (this.assetsRoster.has(url) || this.assetsCollector.EigenUrls.has(url)) {
+                } else if (this.assetsRoster.has(url) || this.assetsCollector.EigenUrls.has(url)) {
                     let buffer = response;
                     if (/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/.test(buffer)) {
                         buffer = Base64.Decode(buffer);
                     }
-                    let data = parseAL(buffer) || buffer;
+                    const data = parseAL(buffer) || buffer;
                     if (this.assetsRoster.has(url)) {
-                        let channel = this.assetsRoster.get(url)
+                        const channel = this.assetsRoster.get(url)
                         this.subscription.get(channel).forEach((v) => {
                             v(data, url);
                         })
@@ -131,8 +129,7 @@ export class AigisGameDataService {
             } else {
                 subscription.set(channel, [callback]);
             }
-        }
-        else if (typeof (channel) === 'function') {
+        } else if (typeof (channel) === 'function') {
             this.assetsCollector.register(channel, callback)
         }
 
