@@ -92,7 +92,7 @@ export class AigisGameDataService {
                 request: false
             },
             (url, response) => {
-                if (url.indexOf('/2iofz514jeks1y44k7al2ostm43xj085') != -1 || url.indexOf('/1fp32igvpoxnb521p9dqypak5cal0xv0') != -1) {
+                if (url.indexOf('/2iofz514jeks1y44k7al2ostm43xj085') !== -1 || url.indexOf('/1fp32igvpoxnb521p9dqypak5cal0xv0') !== -1) {
                     let allFileList = Decoder.DecodeList(response);
                     allFileList.forEach((v, k) => {
                         // fileList里似乎有个无名key
@@ -119,9 +119,7 @@ export class AigisGameDataService {
                     if (this.assetsCollector.EigenUrls.has(url)) {
                         this.assetsCollector.sendCollection(data, url);
                     }
-
                 }
-
             }
         );
     }
