@@ -1,5 +1,4 @@
 import { AigisGameDataService } from '../aigis.service';
-import { AigisStatisticsService } from '../statistics.service'
 class ReferenceData {
     public QuestList = null;
     public UnitsList = null;
@@ -204,6 +203,7 @@ class DropInfo {
     public Prob = 100;
     public Num = 0;
     public DropOrder: number;
+    public IsFirst = false;
     constructor(treasure, enemyOrder) {
         this.Treasure = treasure;
         this.EnemyOrder = enemyOrder
@@ -234,24 +234,29 @@ export class SpoilsStatistics {
 
         this.buffCalculator.registerBuff(80, new SpoilsBuff(0, (obj) => obj >= 1000, true));
     }
-    async parseSpoils(data) {
-        const index = this.reference.QuestList.QuestID.findIndex(q => q === data.QR.QuestID);
-        const mapLabel = 'Map' + this.reference.QuestList.MapNo[index] + '.aar';
-        const entryLabel = 'Entry' + this.reference.QuestList.EntryNo[index].toString().padStart(2, '0') + '.atb';
-        const mapInfo = this.reference.MapsInfo[mapLabel][entryLabel];
-        const dropInfos = [];
-        mapInfo.forEach((e, i) => {
-            if (e.PrizeCardID > 0) {
-                dropInfos.push(new DropInfo(e.PrizeCardID, i + 1));
+    async parseSpoils(data, firstEncounter) {
+        try {
+            const index = this.reference.QuestList.QuestID.findIndex(q => q === data.QR.QuestID);
+            const mapLabel = 'Map' + this.reference.QuestList.MapNo[index] + '.aar';
+            const entryLabel = 'Entry' + this.reference.QuestList.EntryNo[index].toString().padStart(2, '0') + '.atb';
+            const mapInfo = this.reference.MapsInfo[mapLabel][entryLabel];
+            const dropInfos = [];
+            mapInfo.forEach((e, i) => {
+                if (e.PrizeCardID > 0) {
+                    dropInfos.push(new DropInfo(e.PrizeCardID, i + 1));
+                }
+            })
+            for (const i of Object.keys(dropInfos)) {
+                dropInfos[i].Num = data.LOTTERY.Result[i];
+                dropInfos[i].DropOrder = parseInt(i, 10);
+                const treasureLabel = 'Treasure' + dropInfos[i].Treasure;
+                dropInfos[i].Treasure = this.reference.QuestList[treasureLabel][index];
+                dropInfos[i].IsFirst = firstEncounter[i]
             }
-        })
-        for (const i of Object.keys(dropInfos)) {
-            dropInfos[i].Num = data.LOTTERY.Result[i];
-            dropInfos[i].DropOrder = parseInt(i, 10);
-            const treasureLabel = 'Treasure' + dropInfos[i].Treasure;
-            dropInfos[i].Treasure = this.reference.QuestList[treasureLabel][index];
+            return Promise.resolve(dropInfos);
+        } catch (err) {
+            return Promise.reject(err);
         }
-        return Promise.resolve(dropInfos);
     }
     fillReference(label, data) {
         this.reference.loadRawData(label, data);
@@ -264,26 +269,62 @@ export class SpoilsStatistics {
             .catch(err => { })
     }
     subscribData(gameDataService: AigisGameDataService) {
+
+        // deal with normal combat
         let batman = null;
+        let firstEncounter = null
         gameDataService.subscribe('quest-start', (data: any, url) => {
-            console.log('quest-req', data)
+            // console.log('quest-req', data)
             batman = data.BL
+            firstEncounter = data.RT.ATTR.map(e => e === 0)
         }, true)
         gameDataService.subscribe('quest-start', (data: any, url) => {
-            console.log('quest-response', data)
-            Promise.all([this.parseSpoils(data), this.buffCalculator.modTeamBuff(batman, this.reference)])
-                .then(([dropInfos, sucMsg]) => this.buffCalculator.RemarkProb(data.QR.QuestID, dropInfos, this.reference),
-                    rej => { throw rej })
+            // console.log('quest-response', data)
+            Promise.all([this.parseSpoils(data, firstEncounter), this.buffCalculator.modTeamBuff(batman, this.reference)])
+                .then(([dropInfos, sucMsg]) => {
+                    batman = null;
+                    firstEncounter = null;
+                    return this.buffCalculator.RemarkProb(data.QR.QuestID, dropInfos, this.reference);
+                }, rej => { throw rej })
                 .then(record => {
-                    this.mailBox.sendRecord({ type: 'spoils', record: record });
-                    this.History.push(record)
+                    if (record.DropInfos.length > 0) {
+                        this.mailBox.sendRecord({ type: 'spoils', record: record });
+                        this.History.push(record)
+                    }
                 }).catch(err => { throw err })
         });
+
+        // auto combat, only for story missions for the present
+        let qid = null;
+        let treasureSeq = null;
         gameDataService.subscribe('inin-result', (data: any, url) => {
-            console.log('autoreq', data)
+            qid = data.QI;
+            treasureSeq = data.RT.TYPE
         }, true);
         gameDataService.subscribe('inin-result', (data: any, url) => {
-            console.log('autores', data)
+            const index = this.reference.QuestList.QuestID.findIndex(q => q === qid);
+            const uarr = data.PPU[0] ? data.PPU.map(u => u.A1) : [data.PPU.A1];
+            let ptr = 0;
+            const result = uarr.map(u => 0);
+            try {
+                treasureSeq.forEach(tid => {
+                    if (this.reference.QuestList['Treasure' + tid][index] === uarr[ptr]) {
+                        result[tid] = 1;
+                        ++ptr;
+                    } else { result[tid] = 0 }
+                });
+                const dropInfos = treasureSeq.map(tid => {
+                    const drop = new DropInfo(this.reference.QuestList['Treasure' + tid][index], 0);
+                    drop.IsFirst = false;
+                    drop.Num = result[tid];
+                    drop.DropOrder = 0;
+                    if (this.buffCalculator.IsBredWeek) {
+                        drop.Prob = 150;
+                    }
+                    return drop
+                });
+                this.mailBox.sendRecord({ type: 'spoils', record: { QuestID: qid, DropInfos: dropInfos } });
+            } catch (err) { }
         });
 
         // collect all useful data
@@ -332,11 +373,14 @@ export class SpoilsStatistics {
 
         // update buff when units changed
         gameDataService.subscribe('quest-success', (data: any, url) => {
-            console.log('on-quest-fin', data)
             if (data.PPU) {
-                data.PPU.forEach(u => {
-                    this.buffCalculator.updateBuff('new-unit', this.reference, u);
-                })
+                if (data.PPU[0]) {
+                    data.PPU.forEach(u => {
+                        this.buffCalculator.updateBuff('new-unit', this.reference, u);
+                    })
+                } else {
+                    this.buffCalculator.updateBuff('new-unit', this.reference, data.PPU);
+                }
             }
         });
         gameDataService.subscribe('new-gacha-result', (data: any, url) => {

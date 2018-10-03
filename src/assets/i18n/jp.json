@@ -13,7 +13,8 @@
             "MUTE": "ミュート",
             "ZOOM": "サイズ",
             "LANGUAGE": "言語/Language",
-            "DEFAULTGAME": "既定のゲーム"
+            "DEFAULTGAME": "既定のゲーム",
+            "DATACOLLECT":"データ収集"
         },
         "ACCOUNT": {
             "ACCOUNT": "アカウント管理",

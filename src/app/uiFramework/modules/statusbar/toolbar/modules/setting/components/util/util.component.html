@@ -44,6 +44,9 @@
           </el-select>
         </div>
       </el-form-item>
+      <el-form-item [label]="'SETTING.UTIL.DATACOLLECT' | translate">
+          <el-switch  [model]="globalSettingService.GlobalSetting.DataCollectPermit"></el-switch>
+      </el-form-item>
     </el-form>
   </div>
 </div>

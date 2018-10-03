@@ -38,6 +38,7 @@ export class GlobalSetting {
     public Mute = false;
     public Lock = false;
     public CurrentGame = new GameModel('None', new Size(640, 960), 'about:blank');
+    public DataCollectPermit = true;
 }
 
 const needDispatch = ['Zoom', 'Mute', 'Lock', 'Opacity'];
