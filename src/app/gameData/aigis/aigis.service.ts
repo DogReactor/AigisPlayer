@@ -11,7 +11,6 @@ import { URL } from 'url';
 import { Xml2json } from './xml2json';
 import { Event } from './EventList';
 import { Base64 } from './util'
-import { request } from 'https';
 
 class AssetsCollector {
     private roster: Map<(file) => boolean, (url, response, request?) => void> = new Map();
