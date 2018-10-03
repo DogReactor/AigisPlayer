@@ -6,10 +6,10 @@ class Rule {
     public Url: Array<string>;
     public Method: string;
     public Request: boolean;
-    public Callback: (url: string, response, request?: boolean) => void;
+    public Callback: (url: string, response, request?: any) => void;
     constructor(
-        options: { url: string[], method?: string, request?: boolean },
-        callback: (url: string, response, request?: boolean) => void
+        options: { url: string[], method?: string, request?: any },
+        callback: (url: string, response, request?: any) => void
     ) {
         this.Url = options.url;
         this.Method = options.method || 'ALL';
@@ -27,7 +27,7 @@ class Rule {
 
 @Injectable()
 export class DebuggerService {
-    private reqMaps: Map<string, { url: string, rule: Rule }> = null;
+    private reqMaps: Map<string, { url: string, rule: Rule, request?: any }> = null;
     private subscription: Array<Rule> = [];
     constructor(
         private electronService: ElectronService
@@ -35,7 +35,7 @@ export class DebuggerService {
     }
     Subscribe(
         options: { url: Array<string>, method?: string, request?: boolean },
-        callback: (url: string, response, request?: boolean) => void
+        callback: (url: string, response, request?: any) => void
     ) {
         this.subscription.push(new Rule(options, callback));
     }
@@ -55,19 +55,15 @@ export class DebuggerService {
                             return value.match(params.request.url, params.request.method);
                         })
                         if (rule) {
-                            if (rule.Request === true) {
-                                const raw = params.request.postData;
-                                // const arr = [];
-                                // for (let i = 0; i < raw.length; i++) {
-                                //     arr.push(raw.charCodeAt(i));
-                                // }
-                                // const buffer = Buffer.from(arr);
-                                rule.Callback(params.request.url, raw, true);
-                            }
-                            this.reqMaps.set(params.requestId, {
+                            const temp = {
                                 url: params.request.url,
-                                rule: rule
-                            });
+                                rule: rule,
+                                request: undefined
+                            }
+                            if (rule.Request === true) {
+                                temp.request = params.request.postData;
+                            }
+                            this.reqMaps.set(params.requestId, temp);
                         }
 
                         break;
@@ -78,7 +74,7 @@ export class DebuggerService {
                                 'requestId': params.requestId
                             }, (err, response) => {
                                 const o = this.reqMaps.get(params.requestId);
-                                o.rule.Callback(o.url, response.body, false);
+                                o.rule.Callback(o.url, response.body, o.request);
                             });
                         }
                         break;
