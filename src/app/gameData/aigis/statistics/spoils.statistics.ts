@@ -241,9 +241,13 @@ export class SpoilsStatistics {
             const entryLabel = 'Entry' + this.reference.QuestList.EntryNo[index].toString().padStart(2, '0') + '.atb';
             const mapInfo = this.reference.MapsInfo[mapLabel][entryLabel];
             const dropInfos = [];
-            mapInfo.forEach((e, i) => {
+            let enemeyCount = 0;
+            mapInfo.forEach(e => {
+                if (e.EnemyID > 0 && e.EnemyID !== 2000) {
+                    enemeyCount += e.Loop;
+                }
                 if (e.PrizeCardID > 0) {
-                    dropInfos.push(new DropInfo(e.PrizeCardID, i + 1));
+                    dropInfos.push(new DropInfo(e.PrizeCardID, enemeyCount));
                 }
             })
             for (const i of Object.keys(dropInfos)) {
@@ -271,20 +275,12 @@ export class SpoilsStatistics {
     subscribData(gameDataService: AigisGameDataService) {
 
         // deal with normal combat
-        let batman = null;
-        let firstEncounter = null
-        gameDataService.subscribe('quest-start', (data: any, url) => {
-            // console.log('quest-req', data)
-            batman = data.BL
-            firstEncounter = data.RT.ATTR.map(e => e === 0)
-        }, true)
-        gameDataService.subscribe('quest-start', (data: any, url) => {
+        gameDataService.subscribe('quest-start', (url, response: any, request: any) => {
             // console.log('quest-response', data)
-            Promise.all([this.parseSpoils(data, firstEncounter), this.buffCalculator.modTeamBuff(batman, this.reference)])
+            const firstEncounter = request.RT.ATTR.map(e => e === 0);
+            Promise.all([this.parseSpoils(response, firstEncounter), this.buffCalculator.modTeamBuff(request.BL, this.reference)])
                 .then(([dropInfos, sucMsg]) => {
-                    batman = null;
-                    firstEncounter = null;
-                    return this.buffCalculator.RemarkProb(data.QR.QuestID, dropInfos, this.reference);
+                    return this.buffCalculator.RemarkProb(response.QR.QuestID, dropInfos, this.reference);
                 }, rej => { throw rej })
                 .then(record => {
                     if (record.DropInfos.length > 0) {
@@ -292,18 +288,14 @@ export class SpoilsStatistics {
                         this.History.push(record)
                     }
                 }).catch(err => { throw err })
-        });
+        }, true)
 
         // auto combat, only for story missions for the present
-        let qid = null;
-        let treasureSeq = null;
-        gameDataService.subscribe('inin-result', (data: any, url) => {
-            qid = data.QI;
-            treasureSeq = data.RT.TYPE
-        }, true);
-        gameDataService.subscribe('inin-result', (data: any, url) => {
-            const index = this.reference.QuestList.QuestID.findIndex(q => q === qid);
-            const uarr = data.PPU[0] ? data.PPU.map(u => u.A1) : [data.PPU.A1];
+        gameDataService.subscribe('inin-result', (url, response: any, request: any) => {
+            const questId = request.QI;
+            const treasureSeq = request.RT.TYPE;
+            const index = this.reference.QuestList.QuestID.findIndex(q => q === questId);
+            const uarr = response.PPU[0] ? response.PPU.map(u => u.A1) : [response.PPU.A1];
             let ptr = 0;
             const result = uarr.map(u => 0);
             try {
@@ -323,36 +315,36 @@ export class SpoilsStatistics {
                     }
                     return drop
                 });
-                this.mailBox.sendRecord({ type: 'spoils', record: { QuestID: qid, DropInfos: dropInfos } });
+                this.mailBox.sendRecord({ type: 'spoils', record: { QuestID: questId, DropInfos: dropInfos } });
             } catch (err) { }
-        });
+        }, true);
 
         // collect all useful data
-        gameDataService.subscribe('allcards-info', (data: any, url) => {
+        gameDataService.subscribe('allcards-info', (url, data: any) => {
             this.fillReference('UnitsList', data);
         });
-        gameDataService.subscribe('allunits-info', (data: any, url) => {
+        gameDataService.subscribe('allunits-info', (url, data: any) => {
             this.fillReference('BarrackInfo', data);
         });
-        gameDataService.subscribe('all-quest-info', (data: any, url) => {
+        gameDataService.subscribe('all-quest-info', (url, data: any) => {
             this.fillReference('QuestList', data);
         });
-        gameDataService.subscribe('AbilityConfig.atb', (data: any, url) => {
+        gameDataService.subscribe('AbilityConfig.atb', (url, data: any) => {
             this.fillReference('AbilityConfig', data.Contents);
         });
-        gameDataService.subscribe('AbilityList.atb', (data: any, url) => {
+        gameDataService.subscribe('AbilityList.atb', (url, data: any) => {
             this.fillReference('AbilityList', data.Contents);
         });
-        gameDataService.subscribe('PlayerUnitTable.aar', (data: any, url) => {
+        gameDataService.subscribe('PlayerUnitTable.aar', (url, data: any) => {
             this.fillReference('ClassInfo', data.Files[1].Content.Contents);
         });
-        gameDataService.subscribe('StoryMissionQuestList.atb', (data: any, url) => {
+        gameDataService.subscribe('StoryMissionQuestList.atb', (url, data: any) => {
             this.fillReference('StoryQuestList', data.Contents.map(e => e.QuestID));
         });
-        gameDataService.subscribe('DailyMissionQuestList.atb', (data: any, url) => {
+        gameDataService.subscribe('DailyMissionQuestList.atb', (url, data: any) => {
             this.fillReference('DailyQuestList', data.Contents.map(e => e.QuestID));
         });
-        gameDataService.subscribe('GloryConditionConfig.atb', (data: any, url) => {
+        gameDataService.subscribe('GloryConditionConfig.atb', (url, data: any) => {
             const weeklyMissions = data.Contents.filter(e => e.PeriodType === 3);
             if (weeklyMissions.some(e => e.ConditionText.includes('曜日ミッション'))) {
                 this.buffCalculator.IsBredWeek = true;
@@ -360,7 +352,7 @@ export class SpoilsStatistics {
         });
         gameDataService.subscribe(
             file => file.includes('Map') && file.includes('.aar'),
-            (data: any, url) => {
+            (url, data: any) => {
                 if (!this.reference.MapsInfo[data.Label]) {
                     this.reference.MapsInfo[data.Label] = {};
                 }
@@ -372,7 +364,7 @@ export class SpoilsStatistics {
             });
 
         // update buff when units changed
-        gameDataService.subscribe('quest-success', (data: any, url) => {
+        gameDataService.subscribe('quest-success', (url, data: any) => {
             if (data.PPU) {
                 if (data.PPU[0]) {
                     data.PPU.forEach(u => {
@@ -383,25 +375,25 @@ export class SpoilsStatistics {
                 }
             }
         });
-        gameDataService.subscribe('new-gacha-result', (data: any, url) => {
+        gameDataService.subscribe('new-gacha-result', (url, data: any) => {
             this.buffCalculator.updateBuff('new-unit', this.reference, data.PPU);
         });
-        gameDataService.subscribe('white-guarantee-gacha', (data: any, url) => {
+        gameDataService.subscribe('white-guarantee-gacha', (url, data: any) => {
             this.buffCalculator.updateBuff('new-unit', this.reference, data.PPU);
         });
-        gameDataService.subscribe('fame-gacha-result', (data: any, url) => {
+        gameDataService.subscribe('fame-gacha-result', (url, data: any) => {
             this.buffCalculator.updateBuff('new-unit', this.reference, data.PPU);
         });
-        gameDataService.subscribe('cc', (data: any, url) => {
+        gameDataService.subscribe('cc', (url, data: any) => {
             this.buffCalculator.updateBuff('unit-evo', this.reference, data.PPU);
         });
-        gameDataService.subscribe('aw1', (data: any, url) => {
+        gameDataService.subscribe('aw1', (url, data: any) => {
             this.buffCalculator.updateBuff('unit-evo', this.reference, data.PPU);
         });
-        gameDataService.subscribe('aw2', (data: any, url) => {
+        gameDataService.subscribe('aw2', (url, data: any) => {
             this.buffCalculator.updateBuff('unit-evo', this.reference, data.PPU);
         });
-        gameDataService.subscribe('unit-sell', (data: any, url) => {
+        gameDataService.subscribe('unit-sell', (url, data: any) => {
             this.buffCalculator.updateBuff('del-unit', this.reference, data.APPEND);
         }, true);
     }

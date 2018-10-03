@@ -15,7 +15,7 @@ export class AigisStatisticsService {
         private aigisGameDataService: AigisGameDataService,
         private http: HttpClient
     ) {
-        if (window.localStorage.getItem('AnnounceDataCollected')) {
+        if (window.localStorage.getItem('AnnouncedDataCollected')) {
             this.DataCollectNoted = JSON.parse(window.localStorage.getItem('AnnouncedDataCollected'))
         }
         this.DataCollectPermit = this.globalSettingService.GlobalSetting.DataCollectPermit;

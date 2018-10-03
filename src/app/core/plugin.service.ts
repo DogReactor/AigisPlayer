@@ -253,6 +253,7 @@ export class PluginService {
                             v,
                             this.globalStatusService,
                             this.aigisGameDataService,
+                            this.aigisStatisticsService,
                             this
                         )
                     );
