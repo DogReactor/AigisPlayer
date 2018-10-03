@@ -14,6 +14,7 @@ import * as request from 'request'
 import { ElMessageService } from 'element-angular';
 import { GlobalStatusService } from '../global/globalStatus.service';
 import { AigisGameDataService } from '../gameData/aigis/aigis.service';
+import { AigisStatisticsService } from '../gameData/aigis/statistics.service';
 
 export class Plugin {
     public path = '';
@@ -66,7 +67,8 @@ export class PluginService {
         private http: HttpClient,
         private message: ElMessageService,
         private globalStatusService: GlobalStatusService,
-        private aigisGameDataService: AigisGameDataService
+        private aigisGameDataService: AigisGameDataService,
+        private aigisStatisticsService: AigisStatisticsService
     ) {
         // const fs = electronService.fs;
         this.gameService.SetPluginService(this);
