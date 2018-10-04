@@ -13,11 +13,11 @@ import { Event } from './EventList';
 import { Base64 } from './util'
 
 class AssetsCollector {
-    private roster: Map<(file) => boolean, (data, url) => void> = new Map();
+    private roster: Map<(file) => boolean, (url, response, request?) => void> = new Map();
     // 一个url可能对应多个文件
     public EigenUrls: Map<string, Array<string>> = new Map();
     constructor() { }
-    register(filter: (file) => boolean, callback: (data, url) => void) {
+    register(filter: (file) => boolean, callback: (url, response, request?) => void) {
         this.roster.set(filter, callback);
     }
     checkUrl(label: string, url: string) {
@@ -31,11 +31,11 @@ class AssetsCollector {
             }
         })
     }
-    sendCollection(data: any, url: string) {
+    sendCollection(url: string, data: any) {
         this.EigenUrls.get(url).forEach(key => {
             this.roster.forEach((callback, filter) => {
                 if (filter(key)) {
-                    callback({ Label: key, Data: data }, url);
+                    callback(url, { Label: key, Data: data });
                 }
             })
         })
@@ -44,8 +44,7 @@ class AssetsCollector {
 
 @Injectable()
 export class AigisGameDataService {
-    private subscription: Map<string, Array<(data, url) => void>> = new Map();
-    private requestSubscription: Map<string, Array<(data, url) => void>> = new Map();
+    private subscription: Map<string, Array<(url, response, request?) => void>> = new Map();
     private assetsRoster: Map<string, string> = new Map();
     private assetsCollector: AssetsCollector = new AssetsCollector();
     constructor(
@@ -57,32 +56,18 @@ export class AigisGameDataService {
                 method: 'POST',
                 request: true
             },
-            (url, response, request) => {
+            (url, res, req) => {
                 const u = new URL(url);
                 const path = u.pathname.replace('/', '');
                 const channel = Event[path];
-                const subscription = request ? this.requestSubscription : this.subscription;
-                if (channel && subscription.has(channel)) {
-                    const decoded = Decoder.DecodeXml(response);
-                    let data;
-                    if (decoded) {
-                        const decompressed = Decompress(decoded);
-                        const body_str = [];
-                        for (let i = 0; i < decompressed.byteLength; i++) {
-                            body_str.push(String.fromCharCode(decompressed[i]));
-                        }
-                        data = body_str.join('');
-                    } else { data = response; }
-                    data = Xml2json(data);
-                    data = data['DA'] || data;
-
-                    subscription.get(channel).forEach((v) => {
-                        v(data, url);
-                    })
+                if (channel && this.subscription.has(channel)) {
+                    Promise.all([this.parseData(res), this.parseData(req)])
+                        .then(
+                            ([response, request]) => this.subscription.get(channel).forEach(v => v(url, response, request)),
+                            (err) => { throw err })
                 }
             }
         );
-
 
         debuggerService.Subscribe(
             {
@@ -111,27 +96,49 @@ export class AigisGameDataService {
                     if (this.assetsRoster.has(url)) {
                         const channel = this.assetsRoster.get(url)
                         this.subscription.get(channel).forEach((v) => {
-                            v(data, url);
+                            v(url, data);
                         })
                     }
                     if (this.assetsCollector.EigenUrls.has(url)) {
-                        this.assetsCollector.sendCollection(data, url);
+                        this.assetsCollector.sendCollection(url, data);
                     }
                 }
             }
         );
     }
-    subscribe(channel, callback: (data: object, url: string) => void, request?: boolean) {
-        const subscription = request ? this.requestSubscription : this.subscription
+
+    subscribe(channel, callback: (url: string, response: any, request?: any) => void, request?: boolean) {
         if (typeof (channel) === 'string') {
-            if (subscription.has(channel)) {
-                subscription.get(channel).push(callback);
+            if (this.subscription.has(channel)) {
+                this.subscription.get(channel).push(callback);
             } else {
-                subscription.set(channel, [callback]);
+                this.subscription.set(channel, [callback]);
             }
         } else if (typeof (channel) === 'function') {
             this.assetsCollector.register(channel, callback)
         }
+    }
 
+    async parseData(raw: any) {
+        try {
+            const arr = [];
+            for (let i = 0; i < raw.length; i++) {
+                arr.push(raw.charCodeAt(i));
+            }
+            const buffer = Buffer.from(arr);
+            const decoded = Decoder.DecodeXml(buffer);
+            let data;
+            if (decoded) {
+                const decompressed = Decompress(decoded);
+                const body_str = [];
+                for (let i = 0; i < decompressed.byteLength; i++) {
+                    body_str.push(String.fromCharCode(decompressed[i]));
+                }
+                data = body_str.join('');
+            } else { data = raw; }
+            data = Xml2json(data);
+            data = data['DA'] || data;
+            return Promise.resolve(data);
+        } catch (err) { return Promise.reject(err); }
     }
 }
