@@ -35,6 +35,7 @@ export class Plugin {
     public installing = false;
     public realPath = '';
     public backGroundObverser = {};
+    public developmode: false;
 }
 class ActivePlugin {
     public WebContent: WebContents;

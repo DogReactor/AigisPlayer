@@ -213,7 +213,6 @@ export class SpoilsStatistics {
     private reference: ReferenceData = new ReferenceData();
     private buffCalculator: BuffCalculator = new BuffCalculator();
     private mailBox = null;
-    public History = [];
     constructor(mailBox) {
         this.mailBox = mailBox
         this.buffCalculator.registerBuff(57, new SpoilsBuff(0, (obj) => obj >= 1001 && obj <= 1004));
@@ -224,8 +223,11 @@ export class SpoilsStatistics {
 
         this.buffCalculator.registerBuff(60, new SpoilsBuff(0, (obj) => obj === 77 || obj === 133 || obj === 250 || obj === 320));
 
-        this.buffCalculator.registerBuff(61, new SpoilsBuff(0, (obj) => [54, 55, 56, 57, 58, 59, 60, 136, 234, 290, 303,
-            333, 334, 335, 383, 384, 397, 433, 459, 491].indexOf(obj) !== -1));
+        this.buffCalculator.registerBuff(61, new SpoilsBuff(0, (obj) => {
+            const cl = this.reference.UnitsList.InitClassID[obj - 1];
+            const clName = this.reference.ClassInfo.find(c=>c.ClassID===cl).Name;
+            return clName.includes('聖霊')
+        }));
 
         this.buffCalculator.registerBuff(
             79, new SpoilsBuff(0, (obj) => this.reference.UnitsList.Rare[obj - 1] === 2 &&
@@ -285,7 +287,6 @@ export class SpoilsStatistics {
                 .then(record => {
                     if (record.DropInfos.length > 0) {
                         this.mailBox.sendRecord({ type: 'spoils', record: record });
-                        this.History.push(record)
                     }
                 }).catch(err => { throw err })
         }, true)
@@ -299,17 +300,17 @@ export class SpoilsStatistics {
             let ptr = 0;
             const result = uarr.map(u => 0);
             try {
-                treasureSeq.forEach(tid => {
+                treasureSeq.forEach((tid,ind) => {
                     if (this.reference.QuestList['Treasure' + tid][index] === uarr[ptr]) {
-                        result[tid] = 1;
+                        result[ind] = 1;
                         ++ptr;
-                    } else { result[tid] = 0 }
+                    } else { result[ind] = 0 }
                 });
-                const dropInfos = treasureSeq.map(tid => {
+                const dropInfos = treasureSeq.map((tid,tind) => {
                     const drop = new DropInfo(this.reference.QuestList['Treasure' + tid][index], 0);
                     drop.IsFirst = false;
-                    drop.Num = result[tid];
-                    drop.DropOrder = 0;
+                    drop.Num = result[tind];
+                    drop.DropOrder = tind;
                     if (this.buffCalculator.IsBredWeek) {
                         drop.Prob = 150;
                     }

@@ -8,6 +8,7 @@ import { GlobalSettingService } from '../../global/globalSetting.service'
 @Injectable()
 export class AigisStatisticsService {
     private spoilsReport: SpoilsStatistics;
+    private subscription:Map<string,Array<(rec) => void>> = new Map();
     public DataCollectPermit = true;
     public DataCollectNoted = false;
     constructor(
@@ -25,15 +26,19 @@ export class AigisStatisticsService {
         }
     }
     async sendRecord(record) {
+        this.subscription.get(record.type).forEach(func=>{
+            func(record.record);
+        })
         const url = `http://${GlobalConfig.Host}/statistics/aigis`;
-        return this.http.post(url, JSON.stringify(record)).subscribe(response => {
+        return this.http.post(url, record).subscribe(response => {
             console.log(response);
         });
     }
-    getStats(label) {
-        switch (label) {
-            case 'spoils':
-                return this.spoilsReport.History
+    subscribe(label, callback) {
+        if(this.subscription.has(label)) {
+            this.subscription.get(label).push(callback);
+        } else {
+            this.subscription.set(label,[callback]);
         }
     }
     confirmDataPermit() {
