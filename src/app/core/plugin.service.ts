@@ -137,7 +137,7 @@ export class PluginService {
     activeEmbedPlugin(type: string, path: string, options: any, plugin: Plugin) {
         const webview = this.embedWebviews.get(type);
         if (webview) {
-            if (type === 'left') {
+            if (type === 'left') { // test
                 this.globalStatusService.GlobalStatusStore.Get('LeftPluginWidth').Dispatch(options.width);
             }
             if (type === 'right') {
