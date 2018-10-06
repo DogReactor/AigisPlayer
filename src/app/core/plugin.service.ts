@@ -35,6 +35,7 @@ export class Plugin {
     public installing = false;
     public realPath = '';
     public backGroundObverser = {};
+    public developmode: false;
 }
 class ActivePlugin {
     public WebContent: WebContents;
@@ -143,7 +144,6 @@ export class PluginService {
                 this.globalStatusService.GlobalStatusStore.Get('RightPluginWidth').Dispatch(options.width);
             }
             webview.loadURL(path);
-            webview.openDevTools();
             webview.addEventListener('dom-ready', (event) => {
                 webview.send('plugin-info', plugin);
             });
@@ -232,6 +232,7 @@ export class PluginService {
         } else { return false; }
     }
     async updatePlugin(plugin: Plugin) {
+        this.message['success'](`更新插件：${plugin.pluginName}`)
         if (await this.removePlugin(plugin)) {
             this.installPluginFromRemote(plugin);
             return true;

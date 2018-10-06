@@ -29,6 +29,10 @@ export class PluginsPluginComponent implements OnInit {
             if (pluginInstalled) {
                 this.isInstalled = true;
                 this.needUpdate = pluginInstalled.version === this.plugin.version ? false : true;
+                if (this.needUpdate && !pluginInstalled.developmode) {
+                    this.isInstalling = true;
+                    this.pluginService.updatePlugin(this.plugin)
+                }
             }
             this.isInstalling = this.plugin.installing;
         }
