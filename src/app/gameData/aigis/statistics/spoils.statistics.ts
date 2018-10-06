@@ -134,17 +134,25 @@ class BuffCalculator {
                 this.checkIfBuff(unit, true, reference);
                 break;
             case 'del-unit':
-                const memberIndex = reference.BarrackInfo.findIndex(u => u.A7 === unit.A7);
-                const configId = this.checkIfBuff(reference.BarrackInfo[memberIndex], false, reference);
-                if (configId !== 0) {
-                    reference.AbilityConfig[configId].forEach(c => {
-                        if (c._InfluenceType !== 80
-                            && this.buffList.hasOwnProperty(c._InfluenceType)
-                            && c._Param1 === this.buffList[c._InfluenceType].ProbMod) {
-                            this.buffList[c._InfluenceType].ProbMod = 0;
-                        }
-                    })
-                    reference.BarrackInfo.splice(memberIndex, 1);
+                let needReCal = false;
+                const unitlist = unit.A7[0] ? unit.A7 : [unit.A7];
+                unitlist.forEach(per => {
+                    const memberIndex = reference.BarrackInfo.findIndex(u => u.A7 === per);
+                    const configId = this.checkIfBuff(reference.BarrackInfo[memberIndex], false, reference);
+                    if (configId !== 0) {
+                        needReCal = true
+                        reference.AbilityConfig[configId].forEach(c => {
+                            if (c._InfluenceType !== 80
+                                && this.buffList.hasOwnProperty(c._InfluenceType)
+                                && c._Param1 === this.buffList[c._InfluenceType].ProbMod) {
+                                this.buffList[c._InfluenceType].ProbMod = 0;
+                            }
+                        })
+                        reference.BarrackInfo.splice(memberIndex, 1);
+                    }
+
+                })
+                if (needReCal) {
                     this.calculateBuff(reference);
                 }
                 break;
@@ -213,7 +221,6 @@ export class SpoilsStatistics {
     private reference: ReferenceData = new ReferenceData();
     private buffCalculator: BuffCalculator = new BuffCalculator();
     private mailBox = null;
-    public History = [];
     constructor(mailBox) {
         this.mailBox = mailBox
         this.buffCalculator.registerBuff(57, new SpoilsBuff(0, (obj) => obj >= 1001 && obj <= 1004));
@@ -224,8 +231,15 @@ export class SpoilsStatistics {
 
         this.buffCalculator.registerBuff(60, new SpoilsBuff(0, (obj) => obj === 77 || obj === 133 || obj === 250 || obj === 320));
 
-        this.buffCalculator.registerBuff(61, new SpoilsBuff(0, (obj) => [54, 55, 56, 57, 58, 59, 60, 136, 234, 290, 303,
-            333, 334, 335, 383, 384, 397, 433, 459, 491].indexOf(obj) !== -1));
+        this.buffCalculator.registerBuff(61, new SpoilsBuff(0, (obj) => {
+            const cl = this.reference.UnitsList.InitClassID[obj - 1];
+            if (cl && cl < 100) {
+                const clName = this.reference.ClassInfo.find(c => c.ClassID === cl).Name;
+                return clName.includes('聖霊')
+            } else {
+                return false
+            }
+        }));
 
         this.buffCalculator.registerBuff(
             79, new SpoilsBuff(0, (obj) => this.reference.UnitsList.Rare[obj - 1] === 2 &&
@@ -266,7 +280,7 @@ export class SpoilsStatistics {
         this.reference.loadRawData(label, data);
         this.reference.checkFull()
             .then(msg => {
-                if (msg === 'Critical') {
+                if (msg === 'Critical' || label === 'allunits-info') {
                     this.buffCalculator.calculateBuff(this.reference)
                 }
             })
@@ -276,7 +290,7 @@ export class SpoilsStatistics {
 
         // deal with normal combat
         gameDataService.subscribe('quest-start', (url, response: any, request: any) => {
-            // console.log('quest-response', data)
+            // console.log('quest-response', response, request)
             const firstEncounter = request.RT.ATTR.map(e => e === 0);
             Promise.all([this.parseSpoils(response, firstEncounter), this.buffCalculator.modTeamBuff(request.BL, this.reference)])
                 .then(([dropInfos, sucMsg]) => {
@@ -285,7 +299,6 @@ export class SpoilsStatistics {
                 .then(record => {
                     if (record.DropInfos.length > 0) {
                         this.mailBox.sendRecord({ type: 'spoils', record: record });
-                        this.History.push(record)
                     }
                 }).catch(err => { throw err })
         }, true)
@@ -299,17 +312,17 @@ export class SpoilsStatistics {
             let ptr = 0;
             const result = uarr.map(u => 0);
             try {
-                treasureSeq.forEach(tid => {
+                treasureSeq.forEach((tid, ind) => {
                     if (this.reference.QuestList['Treasure' + tid][index] === uarr[ptr]) {
-                        result[tid] = 1;
+                        result[ind] = 1;
                         ++ptr;
-                    } else { result[tid] = 0 }
+                    } else { result[ind] = 0 }
                 });
-                const dropInfos = treasureSeq.map(tid => {
+                const dropInfos = treasureSeq.map((tid, tind) => {
                     const drop = new DropInfo(this.reference.QuestList['Treasure' + tid][index], 0);
                     drop.IsFirst = false;
-                    drop.Num = result[tid];
-                    drop.DropOrder = 0;
+                    drop.Num = result[tind];
+                    drop.DropOrder = tind;
                     if (this.buffCalculator.IsBredWeek) {
                         drop.Prob = 150;
                     }
@@ -393,7 +406,7 @@ export class SpoilsStatistics {
         gameDataService.subscribe('aw2', (url, data: any) => {
             this.buffCalculator.updateBuff('unit-evo', this.reference, data.PPU);
         });
-        gameDataService.subscribe('unit-sell', (url, data: any) => {
+        gameDataService.subscribe('unit-sell', (url, res: any, data) => {
             this.buffCalculator.updateBuff('del-unit', this.reference, data.APPEND);
         }, true);
     }

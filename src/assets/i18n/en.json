@@ -8,6 +8,7 @@
             "ENABLE": "启用"
         },
         "UTIL": {
+            "VER": "Version",
             "UTIL": "Util",
             "LOCK": "Lock",
             "MUTE": "Mute",
