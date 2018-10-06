@@ -28,18 +28,11 @@ export class PluginsPluginComponent implements OnInit {
             })
             if (pluginInstalled) {
                 this.isInstalled = true;
-                if(this.plugin.developmode) {
-                    this.needUpdate = pluginInstalled.version === this.plugin.version ? false : true;
-                } else {
+                this.needUpdate = pluginInstalled.version === this.plugin.version ? false : true;
+                if (this.needUpdate && !pluginInstalled.developmode) {
                     this.isInstalling = true;
-                    this.pluginService.installPluginFromRemote(this.plugin)
-                                        .then(e=>this.needRestart = true)
-                                        .catch(err=>{
-                                            this.isInstalling = false;
-                                            console.log(err)
-                                        })
+                    this.pluginService.updatePlugin(this.plugin)
                 }
-                
             }
             this.isInstalling = this.plugin.installing;
         }

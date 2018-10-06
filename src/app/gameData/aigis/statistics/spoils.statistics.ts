@@ -225,7 +225,7 @@ export class SpoilsStatistics {
 
         this.buffCalculator.registerBuff(61, new SpoilsBuff(0, (obj) => {
             const cl = this.reference.UnitsList.InitClassID[obj - 1];
-            const clName = this.reference.ClassInfo.find(c=>c.ClassID===cl).Name;
+            const clName = this.reference.ClassInfo.find(c => c.ClassID === cl).Name;
             return clName.includes('聖霊')
         }));
 
@@ -268,7 +268,7 @@ export class SpoilsStatistics {
         this.reference.loadRawData(label, data);
         this.reference.checkFull()
             .then(msg => {
-                if (msg === 'Critical') {
+                if (msg === 'Critical' || label === 'allunits-info') {
                     this.buffCalculator.calculateBuff(this.reference)
                 }
             })
@@ -300,13 +300,13 @@ export class SpoilsStatistics {
             let ptr = 0;
             const result = uarr.map(u => 0);
             try {
-                treasureSeq.forEach((tid,ind) => {
+                treasureSeq.forEach((tid, ind) => {
                     if (this.reference.QuestList['Treasure' + tid][index] === uarr[ptr]) {
                         result[ind] = 1;
                         ++ptr;
                     } else { result[ind] = 0 }
                 });
-                const dropInfos = treasureSeq.map((tid,tind) => {
+                const dropInfos = treasureSeq.map((tid, tind) => {
                     const drop = new DropInfo(this.reference.QuestList['Treasure' + tid][index], 0);
                     drop.IsFirst = false;
                     drop.Num = result[tind];

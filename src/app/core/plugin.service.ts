@@ -233,6 +233,7 @@ export class PluginService {
         } else { return false; }
     }
     async updatePlugin(plugin: Plugin) {
+        this.message['success'](`更新插件：${plugin.pluginName}`)
         if (await this.removePlugin(plugin)) {
             this.installPluginFromRemote(plugin);
             return true;
