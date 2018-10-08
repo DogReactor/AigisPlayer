@@ -59,7 +59,7 @@ export class ElectronService {
   SetProxy = (address: string) => {
     this.Session.setProxy({
       proxyRules: address,
-      proxyBypassRules: '127.0.0.1',
+      proxyBypassRules: '127.0.0.1, player.aigis.me',
       pacScript: ''
     }, () => {
       // console.log('success');
