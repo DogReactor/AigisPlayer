@@ -4,7 +4,7 @@ import * as express from 'express'
 import * as Agent from 'socks5-http-client/lib/Agent'
 import * as fs from 'fs'
 import * as zlib from 'zlib'
-import { parseAL } from 'aigis-fuel'
+import { parseAL, AL } from 'aigis-fuel'
 import * as path from 'path'
 
 function parse(buffer) {
@@ -67,9 +67,22 @@ export class ProxyServer {
             if (req.path.indexOf('1fd726969acf636b52a911152c088f8d') !== -1) {
                 requestFileName = 'MainFont.aft';
             }
-            let modifyFileName;
-            if (path.extname(requestFileName) === 'png') {
-                modifyFileName = requestFileName;
+            let modifyFileName = '';
+            if (requestFileName) {
+                switch (path.extname(requestFileName)) {
+                    case 'aft':
+                    case 'png':
+                        modifyFileName = requestFileName;
+                        break;
+                    case 'atb':
+                        modifyFileName = requestFileName.replace('.atb', '.txt');
+                        break;
+                    case 'aar':
+                        modifyFileName = requestFileName.replace('.aar', '');
+                        break;
+                    default:
+                        modifyFileName = '';
+                }
             }
             // 文件热封装
             const protoablePath = process.env.PORTABLE_EXECUTABLE_DIR;
@@ -77,16 +90,16 @@ export class ProxyServer {
             if (!fs.existsSync(modPath)) {
                 fs.mkdirSync(modPath);
             }
-            const modifyFilePath = `${modPath}/${modifyFileName}`;
-            if (fs.existsSync(modifyFilePath)) {
+            const modifyFilePath = path.join(modPath, modifyFileName);
+            if (modifyFileName !== '' && fs.existsSync(modifyFilePath)) {
                 console.log(requestFileName, 'modify by Server');
-                // Font文件直接回传
-                if (requestFileName === 'MainFont.aft' || path.extname(requestFileName) === 'png') {
+                // AFT和PNG文件直接回传
+                if (modifyFileName === 'MainFont.aft' || path.extname(modifyFileName) === 'png') {
                     fs.createReadStream(modifyFilePath).pipe(res);
                     return;
                 }
                 // 其他文件
-                let result;
+                let result: AL;
                 options.gzip = true;
                 request(options, (err, response, body) => {
                     result = parse(body);
