@@ -7,7 +7,6 @@ import { ElMessageService } from 'element-angular'
 import * as Rx from 'rxjs/Rx'
 import { WebviewTag, WebContents } from 'electron';
 import { ElectronService } from '../../../../../../core/electron.service'
-import { DecipherService } from '../../../../../../decipher/decipher.service'
 import { PluginService, Plugin } from '../../../../../../core/plugin.service'
 
 @Component({

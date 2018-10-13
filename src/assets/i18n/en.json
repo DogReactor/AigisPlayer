@@ -8,10 +8,12 @@
             "ENABLE": "启用"
         },
         "UTIL": {
+            "VER": "Version",
             "UTIL": "Util",
             "LOCK": "Lock",
             "MUTE": "Mute",
-            "ZOOM": "Zoom"
+            "ZOOM": "Zoom",
+            "DATACOLLECT":"Data Collection"
         },
         "ACCOUNT": {
             "ACCOUNT": "账户管理",

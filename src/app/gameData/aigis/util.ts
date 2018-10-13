@@ -11,7 +11,7 @@ export class Base64 {
     static Decode = (str) => {
         const binary_str = window.atob(str);
         const len = binary_str.length;
-        const bytes = new Uint8Array(len);
+        const bytes = new Buffer(len);
         for (let i = 0; i < len; i++) {
             bytes[i] = binary_str.charCodeAt(i);
         }

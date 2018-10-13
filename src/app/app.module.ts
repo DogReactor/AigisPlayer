@@ -22,6 +22,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared.module';
 import { ElModule } from 'element-angular';
 import { WebviewDirective } from './webview.directive';
+import { GameDataModule } from './gameData/gamedata.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -49,6 +50,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     CoreModule,
     GlobalModule,
+    GameDataModule,
     UiFrameModule
   ],
   bootstrap: [AppComponent],

@@ -7,15 +7,14 @@ import { ElMessageService } from 'element-angular'
 import * as Rx from 'rxjs/Rx'
 import { WebviewTag, WebContents } from 'electron';
 import { ElectronService } from '../../../core/electron.service'
-import { DecipherService } from '../../../decipher/decipher.service'
 import { PluginService } from '../../../core/plugin.service'
 import { GameModel } from '../../../core/game.model';
+import { DebuggerService } from '../../../gameData/debugger.service';
 
 @Component({
     selector: 'app-game',
     templateUrl: './game.component.html',
     styleUrls: ['./game.component.scss'],
-    providers: [DecipherService]
 })
 export class GameComponent implements AfterViewInit, OnDestroy {
     private gameView: WebviewTag = null;
@@ -28,7 +27,7 @@ export class GameComponent implements AfterViewInit, OnDestroy {
         private message: ElMessageService,
         private translateService: TranslateService,
         private electronService: ElectronService,
-        private decipherService: DecipherService,
+        private debuggerService: DebuggerService,
         private pluginService: PluginService
     ) {
         this.subscriptionList.push(
@@ -60,7 +59,7 @@ export class GameComponent implements AfterViewInit, OnDestroy {
             this.gameView.setZoomFactor(this.zoom / 100);
             if (this.electronService.serve) {
                 // 打开开发者工具
-                webview.openDevTools();
+                 webview.openDevTools();
             }
             // 碧蓝删去滑动条
             if (CurrentGame.Spec === 'granblue') {
@@ -74,8 +73,7 @@ export class GameComponent implements AfterViewInit, OnDestroy {
                 webview.getURL().indexOf('game_dmm.php') !== -1) {
 
                 webview.send('catch', CurrentGame.Spec);
-                this.pluginService.ClearResponseList();
-                this.decipherService.Attach(webview.getWebContents()); // 注入debuger
+                this.debuggerService.Attach(webview.getWebContents()); // 注入debuger
             }
 
             // 自动输入用户名密码

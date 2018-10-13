@@ -6,14 +6,19 @@ import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
 import { GlobalStatusService } from '../global/globalStatus.service';
+import { AigisGameDataService } from '../gameData/aigis/aigis.service';
+import { AigisStatisticsService } from '../gameData/aigis/statistics.service';
+
 const md5 = crypto.createHash('md5');
 export class PluginHelper {
     constructor(
-        private electronService: ElectronService,
-        private gameService: GameService,
-        private plugin: Plugin,
-        private globalStatusService: GlobalStatusService,
-        private pluginService: PluginService
+        public electronService: ElectronService,
+        public gameService: GameService,
+        public plugin: Plugin,
+        public globalStatusService: GlobalStatusService,
+        public aigisGameDataService: AigisGameDataService,
+        public aigisStatisticsService: AigisStatisticsService,
+        public pluginService: PluginService
     ) {
     }
     loadEmbedPage(type: string, path: string, width: number) {

@@ -8,6 +8,7 @@
       "ENABLE": "启用"
     },
     "UTIL": {
+      "VER": "版本",
       "UTIL": "通用",
       "LOCK": "保持在最前端",
       "MUTE": "静音",
@@ -16,7 +17,8 @@
       "LANGUAGE": "语言/Language",
       "DEFAULTGAME": "默认游戏",
       "CACHE": "清理缓存",
-      "OPEN-SCREENSHOT-DIR": "打开截图文件夹"
+      "OPEN-SCREENSHOT-DIR": "打开截图文件夹",
+      "DATACOLLECT": "数据收集"
     },
     "ACCOUNT": {
       "ACCOUNT": "账户管理",

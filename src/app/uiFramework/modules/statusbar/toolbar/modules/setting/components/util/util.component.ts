@@ -21,7 +21,8 @@ export class SettingUtilComponent implements OnDestroy {
     utilForm: FormGroup;
     private subscriptions: Subscription[] = [];
     private languageList = LanguageList;
-    private updateReady = false;
+    updateReady = false;
+    appVersion: string;
     constructor(
         private gameService: GameService,
         private globalSettingService: GlobalSettingService,
@@ -35,6 +36,7 @@ export class SettingUtilComponent implements OnDestroy {
         this.regProp('Lock');
         this.regProp('Zoom');
         this.regProp('Opacity');
+        this.appVersion = this.electronService.APP.getVersion();
         this.globalStatusService.GlobalStatusStore.Get('NewVersionAVB').Subscribe((v) => {
             this.updateReady = v;
         })
@@ -77,5 +79,8 @@ export class SettingUtilComponent implements OnDestroy {
     }
     openScreenShotDir() {
         shell.openItem(path.join(this.electronService.APP.getPath('userData'), 'screenshots'));
+    }
+    updateAP() {
+        this.electronService.UpdateNow();
     }
 }

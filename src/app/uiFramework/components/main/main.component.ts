@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { GameService } from '../../../core/game.service'
 import { GlobalStatusService } from '../../../global/globalStatus.service'
 import { PluginService } from '../../../core/plugin.service';
+import { AigisStatisticsService } from '../../../gameData/aigis/statistics.service';
 import { WebviewTag } from 'electron';
 
 @Component({
@@ -14,15 +15,18 @@ export class UIFrameMainComponent implements AfterViewInit {
     private zoom = 100;
     private leftWidth = 0;
     private rightWidth = 0;
+    DataCollectNote = false;
     constructor(
         private gameService: GameService,
         private globalStatusService: GlobalStatusService,
         private pluginService: PluginService,
-        private changeDetectorRef: ChangeDetectorRef
+        private changeDetectorRef: ChangeDetectorRef,
+        private aigisStatisticsService: AigisStatisticsService
     ) {
         const state = this.globalStatusService.GlobalStatusStore.Get('Zoom');
         this.zoom = state.Value;
         state.Subscribe(v => { this.zoom = v });
+        this.DataCollectNote = !this.aigisStatisticsService.DataCollectNoted;
     }
     ngAfterViewInit() {
         const left = <WebviewTag>document.getElementById('leftView');
@@ -37,5 +41,9 @@ export class UIFrameMainComponent implements AfterViewInit {
         })
         this.pluginService.regEmbedWebview('left', left);
         this.pluginService.regEmbedWebview('right', right);
+    }
+    confirmDataPermit() {
+        this.DataCollectNote = false;
+        this.aigisStatisticsService.confirmDataPermit();
     }
 }

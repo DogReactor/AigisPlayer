@@ -1,6 +1,11 @@
 <div el-container>
   <div el-main>
     <el-form label-width="150px" size="small" label-position="left">
+      <el-form-item [label]="'SETTING.UTIL.VER' | translate">
+        <div class="checkbox">
+          <el-button type="info" [elDisabled]="!updateReady" (click)="updateAP()">{{appVersion}} <div [hidden]="!updateReady" style="float:right"><i class="el-icon-arrow-up"></i></div></el-button>
+        </div>
+      </el-form-item>
       <el-form-item [label]="'SETTING.UTIL.MUTE' | translate">
         <div class="checkbox">
           <el-switch [model]="Mute" (modelChange)="selectSwitch('Mute')"></el-switch>
@@ -42,6 +47,11 @@
             <el-option label="None" value="None"></el-option>
             <el-option *ngFor="let game of gameService.GameInfo" [label]="game.Name" [value]="game.Name"></el-option>
           </el-select>
+        </div>
+      </el-form-item>
+      <el-form-item [label]="'SETTING.UTIL.DATACOLLECT' | translate">
+        <div class="checkbox">
+          <el-switch [model]="globalSettingService.GlobalSetting.DataCollectPermit"></el-switch>
         </div>
       </el-form-item>
     </el-form>
