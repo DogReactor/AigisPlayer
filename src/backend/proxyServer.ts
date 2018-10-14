@@ -70,18 +70,14 @@ export class ProxyServer {
             let modifyFileName = '';
             if (requestFileName) {
                 switch (path.extname(requestFileName)) {
-                    case 'aft':
-                    case 'png':
-                        modifyFileName = requestFileName;
-                        break;
-                    case 'atb':
+                    case '.atb':
                         modifyFileName = requestFileName.replace('.atb', '.txt');
                         break;
-                    case 'aar':
+                    case '.aar':
                         modifyFileName = requestFileName.replace('.aar', '');
                         break;
                     default:
-                        modifyFileName = '';
+                        modifyFileName = requestFileName;
                 }
             }
             // 文件热封装

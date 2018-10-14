@@ -45,7 +45,7 @@ autoUpdater.on('update-downloaded', (ev, info) => {
   });
 });
 
-let fileList = [];
+let fileList = {};
 if (serve) {
   require('electron-reload')(__dirname, {
   });
