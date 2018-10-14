@@ -4,21 +4,8 @@ import * as express from 'express'
 import * as Agent from 'socks5-http-client/lib/Agent'
 import * as fs from 'fs'
 import * as zlib from 'zlib'
-import { parseAL } from 'aigis-fuel'
+import { parseAL, AL } from 'aigis-fuel'
 import * as path from 'path'
-const TranslateFileList = {
-    'StatusText.atb': 'StatusText.txt',
-    'MainFont.aft': 'MainFont.aft',
-    'AbilityList.atb': 'AbilityList.txt',
-    'AbilityText.atb': 'AbilityText.txt',
-    'NameText.atb': 'NameText.txt',
-    'PlayerTitle.atb': 'PlayerTitle.txt',
-    'SkillList.atb': 'SkillList.txt',
-    'SkillText.atb': 'SkillText.txt',
-    'SystemText.atb': 'SystemText.txt',
-    'PlayerUnitTable.aar': 'PlayerUnitTable',
-    'BattleTalkEvent800001.aar': 'BattleTalkEvent800001'
-};
 
 function parse(buffer) {
     const result = parseAL(buffer);
@@ -80,9 +67,18 @@ export class ProxyServer {
             if (req.path.indexOf('1fd726969acf636b52a911152c088f8d') !== -1) {
                 requestFileName = 'MainFont.aft';
             }
-            let modifyFileName = TranslateFileList[requestFileName]
-            if (requestFileName.indexOf('.png') !== -1) {
-                modifyFileName = requestFileName;
+            let modifyFileName = '';
+            if (requestFileName) {
+                switch (path.extname(requestFileName)) {
+                    case '.atb':
+                        modifyFileName = requestFileName.replace('.atb', '.txt');
+                        break;
+                    case '.aar':
+                        modifyFileName = requestFileName.replace('.aar', '');
+                        break;
+                    default:
+                        modifyFileName = requestFileName;
+                }
             }
             // 文件热封装
             const protoablePath = process.env.PORTABLE_EXECUTABLE_DIR;
@@ -90,28 +86,23 @@ export class ProxyServer {
             if (!fs.existsSync(modPath)) {
                 fs.mkdirSync(modPath);
             }
-            const modifyFilePath = `${modPath}/${modifyFileName}`;
-            if (fs.existsSync(modifyFilePath)) {
+            const modifyFilePath = path.join(modPath, modifyFileName);
+            if (modifyFileName !== '' && fs.existsSync(modifyFilePath)) {
                 console.log(requestFileName, 'modify by Server');
-                // Font文件直接回传
-                if (requestFileName === 'MainFont.aft') {
-                    res.send(fs.readFileSync(modifyFilePath))
-                    return;
-                } else {
-                    res.send(fs.readFileSync(modifyFilePath))
+                // AFT和PNG文件直接回传
+                if (modifyFileName === 'MainFont.aft' || path.extname(modifyFileName) === 'png') {
+                    fs.createReadStream(modifyFilePath).pipe(res);
                     return;
                 }
-                /*
                 // 其他文件
-                let result;
+                let result: AL;
                 options.gzip = true;
                 request(options, (err, response, body) => {
                     result = parse(body);
                     // 这边也需要添加一个任务队列，不然会爆炸
-                    // res.send(result.Package(translateFilePath));
+                    res.send(result.Package(modifyFilePath));
                     // res.send(body);
                 })
-                */
             } else {
                 request(options, (err, res, body) => {
                     if (body === undefined) {
