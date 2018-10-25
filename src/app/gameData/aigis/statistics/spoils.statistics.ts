@@ -1,4 +1,5 @@
 import { AigisGameDataService } from '../aigis.service';
+import { AigisStatisticsService } from '../statistics.service';
 class ReferenceData {
     public QuestList = null;
     public UnitsList = null;
@@ -220,9 +221,7 @@ class DropInfo {
 export class SpoilsStatistics {
     private reference: ReferenceData = new ReferenceData();
     private buffCalculator: BuffCalculator = new BuffCalculator();
-    private mailBox = null;
-    constructor(mailBox) {
-        this.mailBox = mailBox
+    constructor(private mailBox: AigisStatisticsService) {
         this.buffCalculator.registerBuff(57, new SpoilsBuff(0, (obj) => obj >= 1001 && obj <= 1004));
 
         this.buffCalculator.registerBuff(58, new SpoilsBuff(0, (obj) => obj >= 1005 && obj <= 1008));

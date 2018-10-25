@@ -80,6 +80,7 @@ export class AigisGameDataService {
             (url, response) => {
                 if (url.indexOf('/2iofz514jeks1y44k7al2ostm43xj085') !== -1 || url.indexOf('/1fp32igvpoxnb521p9dqypak5cal0xv0') !== -1) {
                     const allFileList = Decoder.DecodeList(response);
+                    console.log(url);
                     const reverseList = {};
                     allFileList.forEach((v, k) => {
                         // fileList里似乎有个无名key
@@ -131,19 +132,20 @@ export class AigisGameDataService {
                 arr.push(raw.charCodeAt(i));
             }
             const buffer = Buffer.from(arr);
-            const decoded = Decoder.DecodeXml(buffer);
+            let decoded = Decoder.DecodeXml(buffer);
             let data;
             if (decoded) {
                 const decompressed = Decompress(decoded);
+                decoded = decompressed ? decompressed : decoded;
                 const body_str = [];
-                for (let i = 0; i < decompressed.byteLength; i++) {
-                    body_str.push(String.fromCharCode(decompressed[i]));
+                for (let i = 0; i < decoded.byteLength; i++) {
+                    body_str.push(String.fromCharCode(decoded[i]));
                 }
                 data = body_str.join('');
             } else { data = raw; }
             data = Xml2json(data);
             data = data['DA'] || data;
-            return Promise.resolve(data);
-        } catch (err) { return Promise.reject(err); }
+            return data;
+        } catch (err) { throw err; }
     }
 }
