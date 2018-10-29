@@ -6,6 +6,10 @@ import * as fs from 'fs'
 import * as zlib from 'zlib'
 import { parseAL, AL } from 'aigis-fuel'
 import * as path from 'path'
+import * as log from 'electron-log';
+
+log.transports.file.level = 'info';
+let mainFontPath = '';
 
 function parse(buffer) {
     const result = parseAL(buffer);
@@ -64,7 +68,7 @@ export class ProxyServer {
                 options.proxy = `http://${this.ProxyHost}:${this.ProxyPort}`
             }
             let requestFileName = this.FileList[req.path];
-            if (req.path.indexOf('1fd726969acf636b52a911152c088f8d') !== -1) {
+            if (req.path.indexOf(mainFontPath) !== -1) {
                 requestFileName = 'MainFont.aft';
             }
             let modifyFileName = '';
@@ -88,7 +92,7 @@ export class ProxyServer {
             }
             const modifyFilePath = path.join(modPath, modifyFileName);
             if (modifyFileName !== '' && fs.existsSync(modifyFilePath)) {
-                console.log(requestFileName, 'modify by Server');
+                log.info(requestFileName, 'modify by Server');
                 // AFT和PNG文件直接回传
                 if (modifyFileName === 'MainFont.aft' || path.extname(modifyFileName) === 'png') {
                     fs.createReadStream(modifyFilePath).pipe(res);
@@ -100,7 +104,9 @@ export class ProxyServer {
                 request(options, (err, response, body) => {
                     result = parse(body);
                     // 这边也需要添加一个任务队列，不然会爆炸
-                    res.send(result.Package(modifyFilePath));
+                    const packaged = result.Package(modifyFilePath);
+                    // fs.writeFile('./test/' + requestFileName, packaged);
+                    res.send(packaged);
                     // res.send(body);
                 })
             } else {
@@ -121,6 +127,9 @@ export class ProxyServer {
     }
     setFileList(fileList) {
         this.FileList = fileList;
+    }
+    setFontPath(path: string) {
+        mainFontPath = path;
     }
     setProxy(enable, isSocks5, host, port) {
         this.ProxyEnable = enable;

@@ -26,12 +26,14 @@ export class AigisStatisticsService {
         }
     }
     async sendRecord(record) {
-        this.subscription.get(record.type).forEach(func => {
-            func(record.record);
-        })
+        if (this.subscription.has(record.type)) {
+            this.subscription.get(record.type).forEach(func => {
+                func(record.record);
+            })
+        }
         const url = `http://${GlobalConfig.Host}/statistics/aigis`;
         return this.http.post(url, record).subscribe(response => {
-            console.log(response);
+            console.log(response, record);
         });
     }
     subscribe(label, callback) {

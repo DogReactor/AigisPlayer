@@ -47,6 +47,7 @@ export class GameComponent implements AfterViewInit, OnDestroy {
         const webview = this.gameView;
 
         webview.addEventListener('dom-ready', () => {
+            this.debuggerService.Detach(webview.getWebContents());
             webContent = webview.getWebContents();
             const mute = this.globalStatusService.GlobalStatusStore.Get('Mute').Value;
             webview.setAudioMuted(mute);

@@ -1,6 +1,6 @@
 {
   "name": "aigisplayer",
-  "version": "2.1.15",
+  "version": "2.1.17",
   "description": "Toolkit for Aigis",
   "productName": "AigisPlayer",
   "homepage": "https://github.com/huazhu111/AigisPlayer",
@@ -31,7 +31,8 @@
     "e2e": "protractor ./protractor.conf.js"
   },
   "dependencies": {
-    "aigis-fuel": "^0.1.4",
+    "aigis-fuel": "git+https://github.com/Yukimir/AigisFuel.git",
+    "electron-config": "^1.0.0",
     "electron-log": "^2.2.15",
     "electron-updater": "^2.22.1",
     "element-angular": "^0.6.0",
@@ -57,6 +58,7 @@
     "@ngx-translate/core": "9.0.1",
     "@ngx-translate/http-loader": "2.0.0",
     "@types/core-js": "0.9.36",
+    "@types/electron-config": "^0.2.1",
     "@types/express": "^4.11.1",
     "@types/jasmine": "2.5.54",
     "@types/jasminewd2": "2.0.2",
