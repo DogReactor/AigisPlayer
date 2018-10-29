@@ -10,6 +10,8 @@ const autoUpdater = require('electron-updater').autoUpdater;
 import * as log from 'electron-log'
 import * as unzip from 'unzipper'
 import * as request from 'request'
+import * as Config from 'electron-config'
+const config = new Config();
 
 app.commandLine.appendSwitch('--enable-npapi');
 app.commandLine.appendSwitch('js-flags', '--max-old-space-size=4096');
@@ -45,7 +47,7 @@ autoUpdater.on('update-downloaded', (ev, info) => {
   });
 });
 
-let fileList = [];
+let fileList = {};
 if (serve) {
   require('electron-reload')(__dirname, {
   });
@@ -59,6 +61,7 @@ app.commandLine.appendSwitch('flag-switches-end');
 */
 const proxyServer = new ProxyServer();
 proxyServer.createServer(app.getPath('userData'));
+proxyServer.setFontPath(config.get('fontPath'));
 
 function createWindow() {
 
@@ -140,7 +143,7 @@ try {
       let url = details.url;
       const urlpath = url.replace('http://assets.millennium-war.net', '')
       let fileName = fileList[urlpath];
-      if (urlpath.indexOf('1fd726969acf636b52a911152c088f8d') !== -1) {
+      if (urlpath.indexOf(config.get('fontPath')) !== -1) {
         fileName = 'MainFont.aft';
       }
       if (fileName === undefined) {
@@ -153,6 +156,16 @@ try {
     ipcMain.on('fileList', (event, arg) => {
       fileList = arg;
       proxyServer.setFileList(fileList);
+      let fontPath = Object.keys(fileList).find(v => {
+        return fileList[v] === 'MainFont.aft';
+      });
+      if (!fontPath) { return; }
+      fontPath = fontPath.split('/')[2];
+      if (config.get('fontPath') !== fontPath) {
+        config.set('fontPath', fontPath);
+        proxyServer.setFontPath(fontPath);
+        console.log('get new FontPath', fontPath)
+      }
     });
     ipcMain.on('proxyStatusUpdate', (Event, arg) => {
       proxyServer.setProxy(arg.Enabled, arg.Socks5, arg.Host, arg.Port);

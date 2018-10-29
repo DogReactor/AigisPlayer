@@ -1,16 +1,16 @@
 {
-    "pluginName":"showPoster",
-    "author":"Serializable",
-    "version":"1.0.1",
-    "description":"显示海报",
-    "entry":"index.html",
-    "enable":true,
-    "windowOption":{
-        "width":1020,
-        "height":700,
-        "title":"海报",
-        "minimizable":true,
-        "maximizable":false,
-        "resizable":true
+    "pluginName": "showPoster",
+    "author": "Serializable",
+    "version": "1.0.1",
+    "description": "显示海报",
+    "entry": "index.html",
+    "enable": true,
+    "windowOption": {
+        "width": 1020,
+        "height": 700,
+        "title": "海报",
+        "minimizable": true,
+        "maximizable": false,
+        "resizable": true
     }
 }
