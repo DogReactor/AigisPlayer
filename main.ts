@@ -17,6 +17,7 @@ app.commandLine.appendSwitch('--enable-npapi');
 app.commandLine.appendSwitch('js-flags', '--max-old-space-size=4096');
 
 autoUpdater.logger = log;
+autoUpdater.autoInstallOnAppQuit = false;
 log.transports.file.level = 'info';
 log.info('App starting...');
 
@@ -170,10 +171,12 @@ try {
     ipcMain.on('proxyStatusUpdate', (Event, arg) => {
       proxyServer.setProxy(arg.Enabled, arg.Socks5, arg.Host, arg.Port);
     });
+
     ipcMain.on('checkForUpdates', () => {
       autoUpdater.setFeedURL('http://player.aigis.me/assets/aigisplayer')
       autoUpdater.checkForUpdates();
     })
+
     ipcMain.on('installPlugin', (event, arg) => {
       const url = arg.url;
       const pluginPath = arg.pluginPath;
