@@ -93,6 +93,11 @@ export class AigisGameDataService {
                         }
                     });
                     electronService.ipcRenderer.send('fileList', reverseList);
+                    if (this.subscription.has('fileList')) {
+                        this.subscription.get('fileList').forEach((v) => {
+                            v(url, allFileList);
+                        })
+                    }
                 } else if (this.assetsRoster.has(url) || this.assetsCollector.EigenUrls.has(url)) {
                     let buffer = response;
                     if (/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/.test(buffer)) {
