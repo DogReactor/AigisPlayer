@@ -11,7 +11,8 @@ import { GameModel } from '../../../../../../../../core/game.model'
 import { Size } from '../../../../../../../../core/util'
 import { shell } from 'electron'
 import * as path from 'path'
-
+import { Subject } from 'rxjs/Rx';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 @Component({
     selector: 'app-setting-util',
     templateUrl: './util.component.html',
@@ -23,6 +24,7 @@ export class SettingUtilComponent implements OnDestroy {
     private languageList = LanguageList;
     updateReady = false;
     appVersion: string;
+    private zoom$ = new Subject<number>();
     constructor(
         private gameService: GameService,
         private globalSettingService: GlobalSettingService,
@@ -39,6 +41,14 @@ export class SettingUtilComponent implements OnDestroy {
         this.appVersion = this.electronService.APP.getVersion();
         this.globalStatusService.GlobalStatusStore.Get('NewVersionAVB').Subscribe((v) => {
             this.updateReady = v;
+        })
+        // 注册zoom的防抖
+        this.zoom$.pipe(
+            debounceTime(400),
+            distinctUntilChanged()
+        ).subscribe(v => {
+            const state = this.globalStatusService.GlobalStatusStore.Get('Zoom');
+            state.Dispatch(v);
         })
     }
     changeLanguage(value) {
