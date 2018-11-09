@@ -53,7 +53,10 @@ export class ElectronService {
   }
 
   ReSize = (size: Size) => {
-    this.currentWindow.setSize(size.Width, size.Height + 54);
+    // What the fuck;
+    this.currentWindow.setResizable(true);
+    this.currentWindow.setSize(size.Width, size.Height + 54, true);
+    this.currentWindow.setResizable(false);
   }
 
   SetProxy = (address: string) => {
