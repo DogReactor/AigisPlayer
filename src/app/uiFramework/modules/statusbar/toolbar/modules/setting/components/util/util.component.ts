@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { GameService } from '../../../../../../../../core/game.service'
 import { GlobalSettingService } from '../../../../../../../../global/globalSetting.service'
 import { GlobalStatusService } from '../../../../../../../../global/globalStatus.service'
-import { Subscription } from 'rxjs/Subscription'
+import { Subscription } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageList } from '../../../../../../../../core/languageList'
 import { ElectronService } from '../../../../../../../../core/electron.service'
@@ -11,7 +11,7 @@ import { GameModel } from '../../../../../../../../core/game.model'
 import { Size } from '../../../../../../../../core/util'
 import { shell } from 'electron'
 import * as path from 'path'
-import { Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 @Component({
     selector: 'app-setting-util',

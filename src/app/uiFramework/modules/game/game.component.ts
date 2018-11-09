@@ -4,7 +4,7 @@ import { GameService } from '../../../core/game.service';
 import { GlobalSettingService, Account } from '../../../global/globalSetting.service'
 import { GlobalStatusService } from '../../../global/globalStatus.service'
 import { ElMessageService } from 'element-angular'
-import * as Rx from 'rxjs/Rx'
+import * as Rx from 'rxjs'
 import { WebviewTag, WebContents } from 'electron';
 import { ElectronService } from '../../../core/electron.service'
 import { PluginService } from '../../../core/plugin.service'
@@ -60,7 +60,8 @@ export class GameComponent implements AfterViewInit, OnDestroy {
             this.gameView.setZoomFactor(this.zoom / 100);
             if (this.electronService.serve) {
                 // 打开开发者工具
-                // webview.openDevTools();
+                console.log('openDevTools')
+                webview.openDevTools();
             }
             // 碧蓝删去滑动条
             if (CurrentGame.Spec === 'granblue') {

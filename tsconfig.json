@@ -8,6 +8,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "module":"commonjs",
     "allowJs": false,
     "target": "es2015",
     "paths": {
@@ -23,7 +24,7 @@
       "node_modules/@types"
     ],
     "lib": [
-      "es2016",
+      "es6",
       "dom"
     ]
   },

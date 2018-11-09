@@ -1,4 +1,4 @@
-import * as Rx from 'rxjs/Rx';
+import * as Rx from 'rxjs';
 class State {
     Key: string;
     private value: any;

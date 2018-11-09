@@ -4,7 +4,7 @@ import { GameService } from '../../../../../../core/game.service';
 import { GlobalSettingService, Account } from '../../../../../../global/globalSetting.service'
 import { GlobalStatusService } from '../../../../../../global/globalStatus.service'
 import { ElMessageService } from 'element-angular'
-import * as Rx from 'rxjs/Rx'
+import * as Rx from 'rxjs'
 import { WebviewTag, WebContents } from 'electron';
 import { ElectronService } from '../../../../../../core/electron.service'
 import { PluginService, Plugin } from '../../../../../../core/plugin.service'

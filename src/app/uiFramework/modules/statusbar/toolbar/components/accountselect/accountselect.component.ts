@@ -4,7 +4,7 @@ import { GameService } from '../../../../../../core/game.service';
 import { GameModel } from '../../../../../../core/game.model'
 import { GlobalStatusService } from '../../../../../../global/globalStatus.service'
 import { AccountList, GlobalSettingService } from '../../../../../../global/globalSetting.service'
-import * as Rx from 'rxjs/Rx'
+import * as Rx from 'rxjs'
 
 @Component({
     selector: 'app-uiframe-statusbar-toolbar-accountselect',

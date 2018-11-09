@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { WebviewTag, WebContents, BrowserWindow, ipcRenderer } from 'electron'
 import { ElectronService } from './electron.service'
 import * as fs from 'fs';
-import * as Rx from 'rxjs/Rx';
+import * as Rx from 'rxjs';
 import * as path from 'path';
 import * as crypto from 'crypto'
 import { PluginHelper } from './pluginHelper'
