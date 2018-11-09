@@ -13,9 +13,6 @@ import * as request from 'request'
 import * as Config from 'electron-config'
 const config = new Config();
 
-app.commandLine.appendSwitch('--enable-npapi');
-app.commandLine.appendSwitch('js-flags', '--max-old-space-size=4096');
-
 autoUpdater.logger = log;
 autoUpdater.autoInstallOnAppQuit = false;
 log.transports.file.level = 'info';
@@ -78,13 +75,13 @@ function createWindow() {
     transparent: true,
     useContentSize: true,
     webPreferences: {
-      webSecurity: false,
-      plugins: true,
+      // webSecurity: false,
     }
   });
 
   // and load the index.html of the app.
-  win.loadURL(path.join(__dirname, '/index.html'));
+  // win.loadURL(path.join(__dirname, '/app/index.html'));
+  win.loadFile(path.join(__dirname, '/app/index.html'));
   /*win.loadURL(url.format({
     protocol: 'file:',
     pathname: path.join(__dirname, '/index.html'),

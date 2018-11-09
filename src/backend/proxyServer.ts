@@ -44,7 +44,7 @@ export class ProxyServer {
     createServer(userDataPath: string) {
         const app = express();
         app.use(function (req, res, next) {
-            // res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Origin', '*');
             res.setHeader('Cache-Control', 'max-age=6048000');
             next();
         })

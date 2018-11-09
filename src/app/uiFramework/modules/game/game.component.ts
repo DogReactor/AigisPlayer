@@ -60,8 +60,7 @@ export class GameComponent implements AfterViewInit, OnDestroy {
             this.gameView.setZoomFactor(this.zoom / 100);
             if (this.electronService.serve) {
                 // 打开开发者工具
-                console.log('openDevTools')
-                webview.openDevTools();
+                // webview.openDevTools();
             }
             // 碧蓝删去滑动条
             if (CurrentGame.Spec === 'granblue') {
@@ -79,7 +78,11 @@ export class GameComponent implements AfterViewInit, OnDestroy {
             }
 
             // 自动输入用户名密码
-            if (webview.getURL().indexOf('login') !== -1 && webview.getURL().indexOf('logout') === -1) {
+            if (
+                webview.getURL().indexOf('dmm') !== -1 &&
+                webview.getURL().indexOf('login') !== -1 &&
+                webview.getURL().indexOf('logout') === -1
+            ) {
                 // 从globalSetting中获取账号密码
                 const username = this.globalStatusService.GlobalStatusStore.Get('SelectedAccount').Value;
                 const account = this.globalSettingService.FindAccount(username);
