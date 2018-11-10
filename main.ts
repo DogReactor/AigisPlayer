@@ -81,7 +81,7 @@ function createWindow() {
 
   // and load the index.html of the app.
   // win.loadURL(path.join(__dirname, '/app/index.html'));
-  win.loadFile(path.join(__dirname, '/app/index.html'));
+  win.loadURL(path.join(__dirname, '/app/index.html'));
   /*win.loadURL(url.format({
     protocol: 'file:',
     pathname: path.join(__dirname, '/index.html'),

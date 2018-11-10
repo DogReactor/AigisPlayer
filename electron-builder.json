@@ -1,33 +1,15 @@
 {
   "productName": "AigisPlayer",
   "directories": {
+    "app": "dist",
     "output": "app-builds"
   },
-  "files": [
-    "**/*",
-    "!**/*.ts",
-    "!*.code-workspace",
-    "!LICENSE.md",
-    "!package.json",
-    "!package-lock.json",
-    "!src/",
-    "!e2e/",
-    "!hooks/",
-    "!angular.json",
-    "!_config.yml",
-    "!karma.conf.js",
-    "!tsconfig.json",
-    "!tslint.json",
-    "!.vs/",
-    "!.git/",
-    "!app-builds/"
-  ],
   "publish": [{
     "provider": "generic",
     "url": "http://player.aigis.me/assets/aigisplayer"
   }],
   "win": {
-    "icon": "dist/favicon",
+    "icon": "dist/app/favicon",
     "target": [{
       "target": "nsis",
       "arch": [
@@ -37,13 +19,13 @@
     }]
   },
   "mac": {
-    "icon": "dist/favicon",
+    "icon": "dist/app/favicon",
     "target": [
       "dmg"
     ]
   },
   "linux": {
-    "icon": "dist",
+    "icon": "dist/app/favicon",
     "target": [
       "AppImage"
     ]
