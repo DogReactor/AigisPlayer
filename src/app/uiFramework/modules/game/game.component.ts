@@ -4,7 +4,7 @@ import { GameService } from '../../../core/game.service';
 import { GlobalSettingService, Account } from '../../../global/globalSetting.service'
 import { GlobalStatusService } from '../../../global/globalStatus.service'
 import { ElMessageService } from 'element-angular'
-import * as Rx from 'rxjs/Rx'
+import * as Rx from 'rxjs'
 import { WebviewTag, WebContents } from 'electron';
 import { ElectronService } from '../../../core/electron.service'
 import { PluginService } from '../../../core/plugin.service'
@@ -58,6 +58,7 @@ export class GameComponent implements AfterViewInit, OnDestroy {
             }
 
             this.gameView.setZoomFactor(this.zoom / 100);
+
             if (this.electronService.serve) {
                 // 打开开发者工具
                 // webview.openDevTools();
@@ -78,7 +79,11 @@ export class GameComponent implements AfterViewInit, OnDestroy {
             }
 
             // 自动输入用户名密码
-            if (webview.getURL().indexOf('login') !== -1 && webview.getURL().indexOf('logout') === -1) {
+            if (
+                webview.getURL().indexOf('dmm') !== -1 &&
+                webview.getURL().indexOf('login') !== -1 &&
+                webview.getURL().indexOf('logout') === -1
+            ) {
                 // 从globalSetting中获取账号密码
                 const username = this.globalStatusService.GlobalStatusStore.Get('SelectedAccount').Value;
                 const account = this.globalSettingService.FindAccount(username);

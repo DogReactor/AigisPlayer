@@ -4,32 +4,28 @@
     "app": "dist",
     "output": "app-builds"
   },
-  "publish": [
-    {
-      "provider": "generic",
-      "url": "http://player.aigis.me/assets/aigisplayer"
-    }
-  ],
+  "publish": [{
+    "provider": "generic",
+    "url": "http://player.aigis.me/assets/aigisplayer"
+  }],
   "win": {
-    "icon": "dist/favicon",
-    "target": [
-      {
-        "target": "nsis",
-        "arch": [
-          "x64",
-          "ia32"
-        ]
-      }
-    ]
+    "icon": "dist/app/favicon",
+    "target": [{
+      "target": "nsis",
+      "arch": [
+        "x64",
+        "ia32"
+      ]
+    }]
   },
   "mac": {
-    "icon": "dist/favicon",
+    "icon": "dist/app/favicon",
     "target": [
       "dmg"
     ]
   },
   "linux": {
-    "icon": "dist",
+    "icon": "dist/app/favicon",
     "target": [
       "AppImage"
     ]

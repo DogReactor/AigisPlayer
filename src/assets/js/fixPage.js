@@ -23,7 +23,6 @@ ipcrender.on('catch', (event, message) => {
     gameFrame.style.position = 'fixed';
     document.body.style.overflow = "hidden";
     if (message === "kamihime") {
-      global.ArrayBuffer = Buffer;
       gameFrame.style.top = '-28px';
       gameFrame.style.left = '-150px';
       gameFrame.style.zIndex = '25';
