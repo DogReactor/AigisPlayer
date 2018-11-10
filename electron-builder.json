@@ -1,15 +1,18 @@
 {
+  "appId": "com.dogreactor.aigisplayer",
   "productName": "AigisPlayer",
   "directories": {
     "app": "dist",
-    "output": "app-builds"
+    "output": "app-builds",
+    "buildResources": "build"
   },
   "publish": [{
     "provider": "generic",
     "url": "http://player.aigis.me/assets/aigisplayer"
+  }, {
+    "provider": "github"
   }],
   "win": {
-    "icon": "dist/app/favicon",
     "target": [{
       "target": "nsis",
       "arch": [
@@ -19,14 +22,14 @@
     }]
   },
   "mac": {
-    "icon": "dist/app/favicon",
     "target": [
       "dmg"
     ]
   },
   "linux": {
-    "icon": "dist/app/favicon",
+    "category": "Game",
     "target": [
+      "deb",
       "AppImage"
     ]
   }
