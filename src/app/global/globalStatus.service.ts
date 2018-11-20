@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as Rx from 'rxjs/Rx'
+import * as Rx from 'rxjs'
 import { ElectronService } from '../core/electron.service'
 import { GameService } from '../core/game.service'
 import { GameModel } from '../core/game.model'

@@ -27,7 +27,7 @@ import {
     ]
 })
 export class UIFrameStatusBarToolBarSettingComponent {
-    private index: String = 'util';
+    index: String = 'util';
     constructor(private gameService: GameService, private globalSettingService: GlobalSettingService) {
 
     }

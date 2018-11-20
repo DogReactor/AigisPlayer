@@ -13,10 +13,8 @@ import * as request from 'request'
 import * as Config from 'electron-config'
 const config = new Config();
 
-app.commandLine.appendSwitch('--enable-npapi');
-app.commandLine.appendSwitch('js-flags', '--max-old-space-size=4096');
-
 autoUpdater.logger = log;
+autoUpdater.autoInstallOnAppQuit = false;
 log.transports.file.level = 'info';
 log.info('App starting...');
 
@@ -77,13 +75,12 @@ function createWindow() {
     transparent: true,
     useContentSize: true,
     webPreferences: {
-      webSecurity: false,
-      plugins: true,
+      // webSecurity: false,
     }
   });
 
   // and load the index.html of the app.
-  win.loadURL(path.join(__dirname, '/index.html'));
+  win.loadFile(path.join(__dirname, '/app/index.html'));
   /*win.loadURL(url.format({
     protocol: 'file:',
     pathname: path.join(__dirname, '/index.html'),
@@ -170,10 +167,12 @@ try {
     ipcMain.on('proxyStatusUpdate', (Event, arg) => {
       proxyServer.setProxy(arg.Enabled, arg.Socks5, arg.Host, arg.Port);
     });
+
     ipcMain.on('checkForUpdates', () => {
       autoUpdater.setFeedURL('http://player.aigis.me/assets/aigisplayer')
       autoUpdater.checkForUpdates();
     })
+
     ipcMain.on('installPlugin', (event, arg) => {
       const url = arg.url;
       const pluginPath = arg.pluginPath;

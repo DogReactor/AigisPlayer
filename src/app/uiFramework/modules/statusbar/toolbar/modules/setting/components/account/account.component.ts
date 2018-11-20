@@ -5,7 +5,7 @@ import { GlobalSettingService, AccountList, Account } from '../../../../../../..
 import { GlobalStatusService } from '../../../../../../../../global/globalStatus.service'
 import { TranslateService } from '@ngx-translate/core';
 import { ElMessageService } from 'element-angular'
-import * as Rx from 'rxjs/Rx'
+import * as Rx from 'rxjs'
 
 @Component({
     selector: 'app-setting-account',
