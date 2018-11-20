@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { GameService } from '../../../../../../../../core/game.service'
+import { GameService, gameInfo } from '../../../../../../../../core/game.service'
 import { GlobalSettingService } from '../../../../../../../../global/globalSetting.service'
 import { GlobalStatusService } from '../../../../../../../../global/globalStatus.service'
 import { Subscription } from 'rxjs/Subscription'
@@ -21,6 +21,8 @@ export class SettingUtilComponent implements OnDestroy {
     utilForm: FormGroup;
     private subscriptions: Subscription[] = [];
     private languageList = LanguageList;
+    DataCollectPermit = true;
+    DefaultGame: GameModel;
     updateReady = false;
     appVersion: string;
     constructor(
@@ -36,6 +38,8 @@ export class SettingUtilComponent implements OnDestroy {
         this.regProp('Lock');
         this.regProp('Zoom');
         this.regProp('Opacity');
+        this.DataCollectPermit = this.globalSettingService.GlobalSetting.DataCollectPermit;
+        this.DefaultGame = this.globalSettingService.GlobalSetting.DefaultGame;
         this.appVersion = this.electronService.APP.getVersion();
         this.globalStatusService.GlobalStatusStore.Get('NewVersionAVB').Subscribe((v) => {
             this.updateReady = v;
@@ -46,11 +50,10 @@ export class SettingUtilComponent implements OnDestroy {
         this.translateService.use(value);
     }
     changeDefaultGame(value) {
-        if (value === 'None') {
-            this.globalSettingService.GlobalSetting.CurrentGame = new GameModel('None', new Size(640, 960), 'about:blank');
-        } else {
-            this.globalSettingService.GlobalSetting.CurrentGame = this.gameService.GameInfo.find((game) => { return game.Name === value });
-        }
+        this.globalSettingService.GlobalSetting.DefaultGame = value;
+    }
+    switchPermit(value) {
+        this.globalSettingService.GlobalSetting.DataCollectPermit = value;
     }
     selectSwitch(key) {
         const state = this.globalStatusService.GlobalStatusStore.Get(key);

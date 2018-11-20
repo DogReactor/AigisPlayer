@@ -1,6 +1,7 @@
 import 'zone.js/dist/zone-mix';
 import 'reflect-metadata';
-import 'polyfills';
+import 'core-js/es6/reflect';
+import 'core-js/es7/reflect';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Routes, RouterModule } from '@angular/router';

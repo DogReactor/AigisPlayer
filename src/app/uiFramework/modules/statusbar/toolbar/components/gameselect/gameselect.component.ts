@@ -16,7 +16,7 @@ export class UIFrameStatusBarToolBarGameSelectComponent {
         private gameService: GameService,
         private globalStatusService: GlobalStatusService
     ) {
-        this.gameList = gameService.GameInfo;
+        this.gameList = gameService.GameInfo.filter(g => g.Name !== 'None');
     }
     selectGame(index) {
         this.onSelected.emit();

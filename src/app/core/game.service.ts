@@ -12,7 +12,12 @@ import { GlobalSettingService } from '../global/globalSetting.service';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const gameInfo = [
+export const gameInfo = [
+    new GameModel(
+        'None',
+        new Size(640, 960),
+        'about:blank'
+    ),
     new GameModel(
         '艦これ',
         new Size(720, 1200),
@@ -105,17 +110,17 @@ export class GameService {
         private globalStatus: GlobalStatusService,
         private globalSetting: GlobalSettingService,
     ) {
-        this.CurrentGame = new GameModel('None', new Size(640, 960), 'about:blank');
-        globalStatus.GlobalStatusStore.Get('SelectedAccount').Subscribe((v) => {
+        this.CurrentGame = this.globalStatus.GlobalStatusStore.Get('CurrentGame').Value
+        this.globalStatus.GlobalStatusStore.Get('SelectedAccount').Subscribe((v) => {
             this.ReloadGame()
         })
-        globalStatus.GlobalStatusStore.Get('Mute').Subscribe((v) => {
+        this.globalStatus.GlobalStatusStore.Get('Mute').Subscribe((v) => {
             this.setAudioMuted(v);
         })
-        globalStatus.GlobalStatusStore.Get('Zoom').Subscribe((v) => {
+        this.globalStatus.GlobalStatusStore.Get('Zoom').Subscribe((v) => {
             this.SetZoom(v);
         })
-        globalStatus.GlobalStatusStore.Get('CurrentGame').Subscribe((v) => {
+        this.globalStatus.GlobalStatusStore.Get('CurrentGame').Subscribe((v) => {
             this.LoadGame(v);
         })
     }
