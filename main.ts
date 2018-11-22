@@ -13,6 +13,9 @@ import * as request from 'request'
 import * as Config from 'electron-config'
 const config = new Config();
 
+app.commandLine.appendSwitch('--enable-npapi');
+app.commandLine.appendSwitch('js-flags', '--max-old-space-size=4096');
+
 autoUpdater.logger = log;
 autoUpdater.autoInstallOnAppQuit = false;
 log.transports.file.level = 'info';
@@ -75,7 +78,8 @@ function createWindow() {
     transparent: true,
     useContentSize: true,
     webPreferences: {
-      // webSecurity: false,
+      webSecurity: false,
+      plugins: true,
     }
   });
 
