@@ -14,7 +14,3 @@ build_script:
   - npm run electron:publish
 
 test: off
-
-branches:
-  only:
-    - master
