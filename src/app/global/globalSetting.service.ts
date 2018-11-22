@@ -37,7 +37,7 @@ export class GlobalSetting {
     public Opacity = 100;
     public Mute = false;
     public Lock = false;
-    public CurrentGame = new GameModel('None', new Size(640, 960), 'about:blank');
+    public DefaultGame = new GameModel('None', new Size(640, 960), 'about:blank');
     public DataCollectPermit = true;
 }
 
@@ -61,6 +61,7 @@ export class GlobalSettingService {
                     const key = needDispatch[i];
                     this.globalStatusService.GlobalStatusStore.Get(key).Dispatch(this.GlobalSetting[key]);
                 }
+                this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Dispatch(this.GlobalSetting.DefaultGame);
             } catch { }
         }
         if (window.localStorage.getItem('accountList')) {
