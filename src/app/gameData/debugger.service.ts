@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { WebContents } from 'electron';
+import { WebContents, webContents } from 'electron';
 import { ElectronService } from '../core/electron.service';
 
 class Rule {
@@ -29,6 +29,7 @@ class Rule {
 export class DebuggerService {
     private reqMaps: Map<string, { url: string, rule: Rule, request?: any }> = null;
     private subscription: Array<Rule> = [];
+    private webContents: webContents;
     constructor(
         private electronService: ElectronService
     ) {
@@ -40,6 +41,8 @@ export class DebuggerService {
         this.subscription.push(new Rule(options, callback));
     }
     Attach = (webContents: WebContents) => {
+        if (this.webContents) { return; }
+        this.webContents = webContents;
         try {
             webContents.debugger.attach('1.1');
             webContents.debugger.on('detach', (event, reason) => {
@@ -51,6 +54,7 @@ export class DebuggerService {
             webContents.debugger.on('message', (event, method, params) => {
                 switch (method) {
                     case 'Network.requestWillBeSent':
+                        console.log(params.request.url);
                         const rule = this.subscription.find((value) => {
                             return value.match(params.request.url, params.request.method);
                         })
@@ -89,6 +93,7 @@ export class DebuggerService {
 
     Detach = (webContents: WebContents) => {
         webContents.debugger.detach();
+        this.webContents = null;
         this.reqMaps = null;
     }
 }
