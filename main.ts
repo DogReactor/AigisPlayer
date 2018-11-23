@@ -13,8 +13,12 @@ import * as request from 'request'
 import * as Config from 'electron-config'
 const config = new Config();
 
-app.commandLine.appendSwitch('--enable-npapi');
+// app.commandLine.appendSwitch('--enable-npapi');
 app.commandLine.appendSwitch('js-flags', '--max-old-space-size=4096');
+app.commandLine.appendSwitch('disable-renderer-backgrounding');
+app.commandLine.appendSwitch('--disable-2d-canvas-aa');
+app.commandLine.appendSwitch('--disable-accelerated-2d-canvas');
+
 
 autoUpdater.logger = log;
 autoUpdater.autoInstallOnAppQuit = false;
