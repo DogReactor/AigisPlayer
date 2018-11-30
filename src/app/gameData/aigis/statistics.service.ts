@@ -28,7 +28,7 @@ export class AigisStatisticsService {
     async sendRecord(record) {
         if (this.subscription.has(record.type)) {
             this.subscription.get(record.type).forEach(func => {
-                func(record.record);
+                func(record);
             })
         }
         const url = `http://${GlobalConfig.Host}/statistics/aigis`;

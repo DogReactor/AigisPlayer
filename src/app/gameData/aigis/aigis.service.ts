@@ -66,7 +66,10 @@ export class AigisGameDataService {
                     Promise.all([this.parseData(res), this.parseData(req)])
                         .then(
                             ([response, request]) => this.subscription.get(channel).forEach(v => v(url, response, request)),
-                            (err) => { throw err })
+                            (err) => {
+                                console.log('err in ', channel, res, req);
+                                throw err;
+                            })
                 }
             }
         );
@@ -80,7 +83,6 @@ export class AigisGameDataService {
             (url, response) => {
                 if (url.indexOf('/2iofz514jeks1y44k7al2ostm43xj085') !== -1 || url.indexOf('/1fp32igvpoxnb521p9dqypak5cal0xv0') !== -1) {
                     const allFileList = Decoder.DecodeList(response);
-                    console.log(url);
                     const reverseList = {};
                     allFileList.forEach((v, k) => {
                         // fileList里似乎有个无名key

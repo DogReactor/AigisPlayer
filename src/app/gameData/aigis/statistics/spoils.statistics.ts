@@ -1,5 +1,7 @@
 import { AigisGameDataService } from '../aigis.service';
 import { AigisStatisticsService } from '../statistics.service';
+import { QuestNameList } from './parseQuestName';
+
 class ReferenceData {
     public QuestList = null;
     public UnitsList = null;
@@ -219,6 +221,7 @@ class DropInfo {
     }
 }
 export class SpoilsStatistics {
+    public DisplayQuestName: QuestNameList = new QuestNameList();
     private reference: ReferenceData = new ReferenceData();
     private buffCalculator: BuffCalculator = new BuffCalculator();
     constructor(private mailBox: AigisStatisticsService) {
@@ -297,7 +300,11 @@ export class SpoilsStatistics {
                 }, rej => { throw rej })
                 .then(record => {
                     if (record.DropInfos.length > 0) {
-                        this.mailBox.sendRecord({ type: 'spoils', record: record });
+                        this.mailBox.sendRecord({
+                            type: 'spoils',
+                            record: record,
+                            name: this.DisplayQuestName.getQuestName(record.QuestID),
+                        });
                     }
                 }).catch(err => { throw err })
         }, true)
@@ -327,7 +334,11 @@ export class SpoilsStatistics {
                     }
                     return drop
                 });
-                this.mailBox.sendRecord({ type: 'spoils', record: { QuestID: questId, DropInfos: dropInfos } });
+                this.mailBox.sendRecord({
+                    type: 'spoils',
+                    record: { QuestID: questId, DropInfos: dropInfos },
+                    name: this.DisplayQuestName.getQuestName(questId),
+                });
             } catch (err) { }
         }, true);
 
@@ -355,6 +366,12 @@ export class SpoilsStatistics {
         });
         gameDataService.subscribe('DailyMissionQuestList.atb', (url, data: any) => {
             this.fillReference('DailyQuestList', data.Contents.map(e => e.QuestID));
+        });
+        gameDataService.subscribe(file => file.includes('MissionQuestList'), (url, data: any) => {
+            this.DisplayQuestName.loadMissionQuestDict(data.Contents);
+        });
+        gameDataService.subscribe(file => file.includes('QuestNameText'), (url, data: any) => {
+            this.DisplayQuestName.loadQuestNames(data.Head, data.Contents);
         });
         gameDataService.subscribe('GloryConditionConfig.atb', (url, data: any) => {
             const weeklyMissions = data.Contents.filter(e => e.PeriodType === 3);
