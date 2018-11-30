@@ -11,7 +11,7 @@
 </div>
 <div class="bottom-box"></div>
 
-<el-dialog [title]="'数据收集通知'" [(visible)]="DataCollectNote" [center]="true" [show-close]="false" [top]="'8%'" [width]="'75%'" [close-on-click-modal]="false" [close-on-press-escape]="false">
+<el-dialog [title]="'数据收集通知'" *ngIf="DataCollectNote" [center]="true" [show-close]="false" [top]="'8%'" [width]="'75%'" [close-on-click-modal]="false" [close-on-press-escape]="false">
   <p>为补充游戏攻略、便利玩家游戏，从AigisPlayer Ver2.1.10起我们增加了数据收集功能。将向AigisPlayer的发布服务器发送玩家在部分游戏活动中产生的匿名、一次性、不可追踪的游玩记录。</p>
   <br/>
   <p>AigisPlayer保证采集的数据和分析数据得到的结果是公开、非盈利的，在收集数据的过程中不主动向游戏服务器发送任何非玩家操作引起的请求，收集到的数据也不会发往除AigisPlayer发布服务器以外的地方。如果您不同意AigisPlayer采集数据的行为或内容，可以到设置菜单里关闭后重启程序。</p>
