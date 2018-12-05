@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import * as compareVersions from 'compare-versions';
 import { PluginService, Plugin } from '../../../../../../../../../core/plugin.service'
 import { ElectronService } from '../../../../../../../../../core/electron.service';
 
@@ -28,8 +29,8 @@ export class PluginsPluginComponent implements OnInit {
             })
             if (pluginInstalled) {
                 this.isInstalled = true;
-                this.needUpdate = pluginInstalled.version === this.plugin.version ? false : true;
-                if (this.needUpdate && !pluginInstalled.developmode) {
+                this.needUpdate = this.needUpdate = compareVersions(pluginInstalled.version, this.plugin.version) === -1 ? true : false;
+                if (this.needUpdate) {
                     this.isInstalling = true;
                     this.pluginService.updatePlugin(this.plugin)
                 }

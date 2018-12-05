@@ -351,6 +351,7 @@ export class SpoilsStatistics {
         });
         gameDataService.subscribe('all-quest-info', (url, data: any) => {
             this.fillReference('QuestList', data);
+            this.DisplayQuestName.loadQuestTitle(data.QuestID, data.QuestTitle);
         });
         gameDataService.subscribe('AbilityConfig.atb', (url, data: any) => {
             this.fillReference('AbilityConfig', data.Contents);
@@ -368,10 +369,10 @@ export class SpoilsStatistics {
             this.fillReference('DailyQuestList', data.Contents.map(e => e.QuestID));
         });
         gameDataService.subscribe(file => file.includes('MissionQuestList'), (url, data: any) => {
-            this.DisplayQuestName.loadMissionQuestDict(data.Contents);
+            this.DisplayQuestName.loadMissionQuestDict(data.Data.Contents);
         });
-        gameDataService.subscribe(file => file.includes('QuestNameText'), (url, data: any) => {
-            this.DisplayQuestName.loadQuestNames(data.Head, data.Contents);
+        gameDataService.subscribe(file => /QuestNameText(\d+)\.atb/.test(file), (url, data: any) => {
+            this.DisplayQuestName.loadQuestNames(data.Label, data.Data.Contents);
         });
         gameDataService.subscribe('GloryConditionConfig.atb', (url, data: any) => {
             const weeklyMissions = data.Contents.filter(e => e.PeriodType === 3);
