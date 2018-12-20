@@ -155,7 +155,7 @@ try {
         callback({ cancel: false });
         return;
       }
-      url = 'http://127.0.0.1:19980' + urlpath;
+      url = `http://127.0.0.1:${proxyServer.Port}${urlpath}`;
       callback({ cancel: false, redirectURL: url });
     });
     ipcMain.on('fileList', (event, arg) => {

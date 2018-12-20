@@ -41,6 +41,7 @@ export class ProxyServer {
     ProxyPort = 1080;
     ProxyEnable = false;
     ProxyIsSocks5 = false;
+    Port = 0;
     createServer(userDataPath: string) {
         const app = express();
         app.use(function (req, res, next) {
@@ -121,8 +122,9 @@ export class ProxyServer {
         server.on('error', (e) => {
             console.log(e);
         });
-        server.listen('19980', function () {
-            console.log('listen at 19980');
+        server.listen('0', () => {
+            this.Port = server.address()['port']
+            console.log('listen at ' + this.Port);
         });
     }
     setFileList(fileList) {
