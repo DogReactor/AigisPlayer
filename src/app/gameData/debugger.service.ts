@@ -54,7 +54,6 @@ export class DebuggerService {
             webContents.debugger.on('message', (event, method, params) => {
                 switch (method) {
                     case 'Network.requestWillBeSent':
-                        console.log(params.request.url);
                         const rule = this.subscription.find((value) => {
                             return value.match(params.request.url, params.request.method);
                         })
