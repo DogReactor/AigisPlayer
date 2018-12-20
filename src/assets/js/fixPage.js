@@ -46,6 +46,12 @@ ipcrender.on('catch', (event, message) => {
       gameFrame.style.left = '0';
       gameFrame.style.zIndex = '5000';
     }
+    if(message === 'necro') {
+      global.ArrayBuffer = Buffer;
+      gameFrame.style.top = '-35px';
+      gameFrame.style.left = '-22px';
+      gameFrame.style.zIndex = '5000';
+    }
   }
 });
 

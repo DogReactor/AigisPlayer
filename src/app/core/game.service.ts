@@ -46,6 +46,13 @@ export const gameInfo = [
         DVxcSV8PQUwEXVQMWx9WERULBxZXC00LBF4FUxFeXwtcAQ__`,
         'kankore'
     ),
+    new GameModel(
+        '凍京Necro',
+        new Size(640, 1136),
+        `https://www.dmm.co.jp/my/-/login/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWRhaSUtdBxZWD15KW
+        VUGE19mFUMIUVEBVGdeXxVECApYaUIWDVcRFlYKXlpaSQQRQARXEA9dTAxXUVBXEl4OCwsH`,
+        'necro'
+    ),
     // new GameModel(
     //     '神姫プロジェクト',
     //     new Size(640, 960),
