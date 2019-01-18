@@ -1,22 +1,26 @@
 <div el-container>
-    <div el-main>
-        <el-form [formGroup]="proxyForm" label-width="150px" size="small" label-position="left">
-            <el-form-item [label]="'SETTING.PROXY.HOST' | translate">
-                <el-input formControlName="Host"></el-input>
-            </el-form-item>
-            <el-form-item [label]="'SETTING.PROXY.PORT' | translate">
-                <el-input formControlName="Port"></el-input>
-            </el-form-item>
-            <el-form-item [label]="'SETTING.PROXY.SOCKS5' | translate">
-                <div class="checkbox">
-                    <el-switch formControlName="Socks5"></el-switch>
-                </div>
-            </el-form-item>
-            <el-form-item [label]="'SETTING.PROXY.ENABLE' | translate">
-                <div class="checkbox">
-                    <el-switch formControlName="Enabled"></el-switch>
-                </div>
-            </el-form-item>
-        </el-form>
-    </div>
+  <div el-main>
+    <el-form [formGroup]="proxyForm" label-width="150px" size="small" label-position="left">
+      <el-form-item [label]="'SETTING.PROXY.TYPE' | translate">
+        <div class="checkbox">
+          <el-select formControlName="Type">
+            <el-option *ngFor="let rule of rules" [label]="translations['SETTING.PROXY.TYPES.' + rule.toUpperCase()]" [value]="rule"></el-option>
+          </el-select>
+        </div>
+      </el-form-item>
+      <ng-container *ngIf="proxyForm.controls.Type.value === 'custom'">
+        <el-form-item [label]="'SETTING.PROXY.HOST' | translate">
+          <el-input formControlName="Host"></el-input>
+        </el-form-item>
+        <el-form-item [label]="'SETTING.PROXY.PORT' | translate">
+          <el-input formControlName="Port"></el-input>
+        </el-form-item>
+        <el-form-item [label]="'SETTING.PROXY.SOCKS5' | translate">
+          <div class="checkbox">
+            <el-switch formControlName="Socks5"></el-switch>
+          </div>
+        </el-form-item>
+      </ng-container>
+    </el-form>
+  </div>
 </div>

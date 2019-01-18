@@ -5,7 +5,15 @@
       "HOST": "主机",
       "PORT": "端口",
       "SOCKS5": "是否为Socks5协议",
-      "ENABLE": "启用"
+      "ENABLE": "启用",
+      "TYPE": "代理规则",
+      "TYPES": {
+        "OFF": "关闭",
+        "SHIMAKAZEGO": "岛风GO",
+        "ACGP": "ACGPower",
+        "SHADOWSOCKS": "ShadowSocks(R)",
+        "CUSTOM": "自定义"
+      }
     },
     "UTIL": {
       "VER": "版本",
