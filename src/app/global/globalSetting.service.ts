@@ -8,11 +8,20 @@ import { TranslateService } from '@ngx-translate/core';
 import { GameModel } from '../core/game.model';
 import { Size } from '../core/util';
 
+export const ProxyRule = {
+    off: 'direct://',
+    shimakazego: '127.0.0.1:8099',
+    acgp: '127.0.0.1:8123',
+    shadowsocks: 'socks5://127.0.0.1:1080',
+    custom: '',
+}
+
 export class Proxy {
-    Host: String = '';
-    Port: String = '';
-    Socks5: Boolean = false;
-    Enabled: Boolean = false;
+    Type = 'off';
+    Host = '';
+    Port = '';
+    Socks5 = false;
+    Enabled = false;
 }
 export class Account {
     Name = '新账户';
@@ -56,6 +65,7 @@ export class GlobalSettingService {
             try {
                 // 读取全局设置信息
                 this.GlobalSetting = Object.assign(this.GlobalSetting, JSON.parse(window.localStorage.getItem('globalSetting')));
+
                 // 装载一些数据给Service
                 for (let i = 0; i < needDispatch.length; i++) {
                     const key = needDispatch[i];
@@ -151,9 +161,20 @@ export class GlobalSettingService {
 
     }
     setProxy(proxy: Proxy) {
+        if (proxy.Type === undefined) {
+            proxy.Type = proxy.Enabled ? 'custom' : 'off';
+        }
         this.GlobalSetting.Proxy = proxy;
-        const proxyAddress = proxy.Enabled ? ((proxy.Socks5 ? 'socks5://' : '') + `${proxy.Host}:${proxy.Port}`) : 'direct://'
-        this.electronService.SetProxy(proxyAddress);
+        // 读取规则
+        let proxyRule = ProxyRule[proxy.Type];
+        if (proxyRule === '') {
+            proxyRule =
+                (proxy.Socks5 ? 'socks5://' : '') + `${proxy.Host}:${proxy.Port}`;
+        }
+        if (proxyRule === undefined) {
+            proxyRule = 'direct://';
+        }
+        this.electronService.SetProxy(proxyRule);
         this.electronService.ipcRenderer.send('proxyStatusUpdate', proxy)
     }
     FindAccount(username) {
