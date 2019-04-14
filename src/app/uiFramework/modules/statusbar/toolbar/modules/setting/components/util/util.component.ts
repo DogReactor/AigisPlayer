@@ -22,6 +22,7 @@ export class SettingUtilComponent implements OnDestroy {
     utilForm: FormGroup;
     private subscriptions: Subscription[] = [];
     private languageList = LanguageList;
+    disableHardwareAcceleration = false;
     DataCollectPermit = true;
     DefaultGame: GameModel;
     updateReady = false;
@@ -41,6 +42,7 @@ export class SettingUtilComponent implements OnDestroy {
         this.regProp('Zoom');
         this.regProp('Opacity');
         this.DataCollectPermit = this.globalSettingService.GlobalSetting.DataCollectPermit;
+        this.disableHardwareAcceleration = this.globalSettingService.GlobalSetting.DisableHardwareAcceleration;
         this.DefaultGame = this.globalSettingService.GlobalSetting.DefaultGame;
         this.appVersion = this.electronService.APP.getVersion();
         this.globalStatusService.GlobalStatusStore.Get('NewVersionAVB').Subscribe((v) => {
@@ -54,6 +56,9 @@ export class SettingUtilComponent implements OnDestroy {
             const state = this.globalStatusService.GlobalStatusStore.Get('Zoom');
             state.Dispatch(v);
         })
+    }
+    switchDisableHardwareAcceleration(value) {
+        this.globalSettingService.revertDisableHardwareAcceleration();
     }
     changeLanguage(value) {
         this.globalSettingService.GlobalSetting.Language = value;

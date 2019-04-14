@@ -53,6 +53,11 @@
           <el-switch [model]="DataCollectPermit" (modelChange)="switchPermit($event)"></el-switch>
         </div>
       </el-form-item>
+      <el-form-item [label]="'SETTING.UTIL.ACCELERATION' | translate">
+        <div class="checkbox">
+          <el-switch [model]="disableHardwareAcceleration" (modelChange)="switchDisableHardwareAcceleration($event)"></el-switch>
+        </div>
+      </el-form-item>
     </el-form>
   </div>
 </div>
