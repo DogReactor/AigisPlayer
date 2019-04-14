@@ -7,6 +7,8 @@ import { ElMessageService } from 'element-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { GameModel } from '../core/game.model';
 import { Size } from '../core/util';
+import * as Config from 'electron-config'
+const config = new Config();
 
 export const ProxyRule = {
     off: 'direct://',
@@ -48,6 +50,7 @@ export class GlobalSetting {
     public Lock = false;
     public DefaultGame = new GameModel('None', new Size(640, 960), 'about:blank');
     public DataCollectPermit = true;
+    public DisableHardwareAcceleration = false;
 }
 
 const needDispatch = ['Zoom', 'Mute', 'Lock', 'Opacity'];
@@ -74,6 +77,7 @@ export class GlobalSettingService {
                 this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Dispatch(this.GlobalSetting.DefaultGame);
             } catch { }
         }
+        this.GlobalSetting.DisableHardwareAcceleration = config.get('disable-hardware-acceleration') || false;
         if (window.localStorage.getItem('accountList')) {
             try {
                 // 读取账户列表
@@ -119,6 +123,10 @@ export class GlobalSettingService {
         })
     }
 
+    public revertDisableHardwareAcceleration() {
+        this.GlobalSetting.DisableHardwareAcceleration = !this.GlobalSetting.DisableHardwareAcceleration;
+        config.set('disable-hardware-acceleration', this.GlobalSetting.DisableHardwareAcceleration);
+    }
     private saveConfigure() {
         window.localStorage.setItem('globalSetting', JSON.stringify(this.GlobalSetting));
     }

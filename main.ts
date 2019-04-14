@@ -15,14 +15,11 @@ const config = new Config();
 
 // app.commandLine.appendSwitch('--enable-npapi');
 app.commandLine.appendSwitch('js-flags', '--max-old-space-size=4096');
-// app.commandLine.appendSwitch('disable-renderer-backgrounding');
-app.commandLine.appendSwitch('disable-2d-canvas-aa');
-app.commandLine.appendSwitch('disable-accelerated-2d-canvas');
 app.commandLine.appendSwitch('ignore-certificate-errors');
-app.disableHardwareAcceleration()
-app.disableDomainBlockingFor3DAPIs()
-app.commandLine.appendArgument('--disable-2d-canvas-aa')
-app.commandLine.appendArgument('--disable-accelerated-2d-canvas')
+if (config.get('disable-hardware-acceleration')) {
+  app.disableHardwareAcceleration()
+}
+
 
 
 autoUpdater.logger = log;
@@ -84,7 +81,7 @@ function createWindow() {
     height: 694,
     frame: false,
     resizable: false,
-    transparent: true,
+    // transparent: true,
     useContentSize: true,
     webPreferences: {
       webSecurity: false,

@@ -26,7 +26,8 @@
       "DEFAULTGAME": "默认游戏",
       "CACHE": "清理缓存",
       "OPEN-SCREENSHOT-DIR": "打开截图文件夹",
-      "DATACOLLECT": "数据收集"
+      "DATACOLLECT": "数据收集",
+      "ACCELERATION":"关闭硬件加速（需重启）"
     },
     "ACCOUNT": {
       "ACCOUNT": "账户管理",
