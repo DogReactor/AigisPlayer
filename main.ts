@@ -14,8 +14,8 @@ import * as Config from 'electron-config'
 const config = new Config();
 
 // app.commandLine.appendSwitch('--enable-npapi');
-app.commandLine.appendSwitch('js-flags', '--max-old-space-size=4096');
-app.commandLine.appendSwitch('ignore-certificate-errors');
+app.commandLine.appendSwitch('js-flags', '--max-old-space-size=8192');
+// app.commandLine.appendSwitch('ignore-certificate-errors');
 if (config.get('disable-hardware-acceleration')) {
   app.disableHardwareAcceleration()
 }
@@ -86,6 +86,9 @@ function createWindow() {
     webPreferences: {
       webSecurity: false,
       plugins: true,
+      nodeIntegration: true,
+      nodeIntegrationInSubFrames: true,
+      webviewTag: true,
     }
   });
 
