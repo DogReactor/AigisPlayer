@@ -105,7 +105,7 @@ export const gameInfo = [
 
 @Injectable()
 export class GameService {
-    private webView = null;
+    private webView: WebviewTag | null = null;
     public GameInfo = gameInfo;
     public CurrentGame: GameModel;
     private zoom = 100;
@@ -172,7 +172,7 @@ export class GameService {
     }
     submitClickEvent(x: number, y: number) {
         if (this.webView) {
-            const webContents = this.webView.getWebContents();
+            const webContents = this.webView.getWebContents() as any;
             if (webContents) {
                 setTimeout(() => {
                     webContents.sendInputEvent({
@@ -208,7 +208,7 @@ export class GameService {
                 r.pageHeight = window.innerHeight; \
                 r.pageWidth = window.innerWidth; \
                 r;`;
-            this.webView.executeJavaScript(code, false, (r) => {
+            this.webView.executeJavaScript(code, false, async (r) => {
                 const webviewMeta = {
                     captureHeight: 0,
                     captureWidth: 0
@@ -219,24 +219,24 @@ export class GameService {
                     x: 0,
                     y: 0,
                     width: Math.floor(webviewMeta.captureWidth *
-                        this.electronService.electron.screen.getPrimaryDisplay().scaleFactor *
+                        this.electronService.electron.remote.screen.getPrimaryDisplay().scaleFactor *
                         (this.zoom / 100)),
                     height: Math.floor(webviewMeta.captureHeight *
-                        this.electronService.electron.screen.getPrimaryDisplay().scaleFactor *
+                        this.electronService.electron.remote.screen.getPrimaryDisplay().scaleFactor *
                         (this.zoom / 100))
                 };
-                this.webView.capturePage(captureRect, (image: NativeImage) => {
-                    if (save) {
-                        const p = path.join(this.electronService.APP.getPath('userData'), 'screenshots');
-                        if (!fs.existsSync(p)) {
-                            fs.mkdirSync(p);
-                        }
-                        const fileName = path.join(p, `${(new Date).getTime()}.png`);
-                        fs.writeFile(fileName, image.toPNG(), () => { });
-                    } else {
-                        this.electronService.clipboard.writeImage(image);
+                // Fuck Electron
+                const image = await this.webView.getWebContents().capturePage(captureRect) as unknown as NativeImage;
+                if (save) {
+                    const p = path.join(this.electronService.APP.getPath('userData'), 'screenshots');
+                    if (!fs.existsSync(p)) {
+                        fs.mkdirSync(p);
                     }
-                });
+                    const fileName = path.join(p, `${(new Date).getTime()}.png`);
+                    fs.writeFile(fileName, image.toPNG(), () => { });
+                } else {
+                    this.electronService.clipboard.writeImage(image);
+                }
             });
             if (save) {
                 this.translateService.get('MESSAGE.SCREENSHOT-SAVE-SUCCESS').subscribe(res => {
