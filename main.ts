@@ -87,7 +87,6 @@ function createWindow() {
       webSecurity: false,
       plugins: true,
       nodeIntegration: true,
-      nodeIntegrationInSubFrames: true,
       webviewTag: true,
     }
   });
@@ -163,6 +162,7 @@ try {
       url = `http://127.0.0.1:${proxyServer.Port}${urlpath}`;
       callback({ cancel: false, redirectURL: url });
     });
+
     ipcMain.on('fileList', (event, arg) => {
       fileList = arg;
       proxyServer.setFileList(fileList);

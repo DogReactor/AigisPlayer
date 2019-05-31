@@ -226,17 +226,18 @@ export class GameService {
                         (this.zoom / 100))
                 };
                 // Fuck Electron
-                const image = await this.webView.getWebContents().capturePage(captureRect) as unknown as NativeImage;
-                if (save) {
-                    const p = path.join(this.electronService.APP.getPath('userData'), 'screenshots');
-                    if (!fs.existsSync(p)) {
-                        fs.mkdirSync(p);
+                this.webView.getWebContents().capturePage(captureRect, (image) => {
+                    if (save) {
+                        const p = path.join(this.electronService.APP.getPath('userData'), 'screenshots');
+                        if (!fs.existsSync(p)) {
+                            fs.mkdirSync(p);
+                        }
+                        const fileName = path.join(p, `${(new Date).getTime()}.png`);
+                        fs.writeFile(fileName, image.toPNG(), () => { });
+                    } else {
+                        this.electronService.clipboard.writeImage(image);
                     }
-                    const fileName = path.join(p, `${(new Date).getTime()}.png`);
-                    fs.writeFile(fileName, image.toPNG(), () => { });
-                } else {
-                    this.electronService.clipboard.writeImage(image);
-                }
+                })
             });
             if (save) {
                 this.translateService.get('MESSAGE.SCREENSHOT-SAVE-SUCCESS').subscribe(res => {

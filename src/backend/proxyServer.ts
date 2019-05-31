@@ -46,7 +46,7 @@ export class ProxyServer {
         const app = express();
         app.use(function (req, res, next) {
             res.setHeader('Access-Control-Allow-Origin', '*');
-            res.setHeader('Cache-Control', 'max-age=6048000');
+            res.setHeader('Cache-Control', 'immutable');
             next();
         })
         app.use((req, res) => {
@@ -85,6 +85,7 @@ export class ProxyServer {
                         modifyFileName = requestFileName;
                 }
             }
+            console.log(modifyFileName);
             // 文件热封装
             const protoablePath = process.env.PORTABLE_EXECUTABLE_DIR;
             const modPath = protoablePath ? protoablePath + '/mods' : path.join(userDataPath, 'mods');
@@ -122,7 +123,7 @@ export class ProxyServer {
         server.on('error', (e) => {
             console.log(e);
         });
-        server.listen('0', () => {
+        server.listen('19980', () => {
             this.Port = server.address()['port']
             console.log('listen at ' + this.Port);
         });
