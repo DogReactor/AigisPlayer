@@ -287,6 +287,8 @@ export class PluginService {
         });
         if (!plugin.windowOption['webPreferences']) { plugin.windowOption['webPreferences'] = {} }
         plugin.windowOption['webPreferences']['preload'] = path.join(__dirname, './assets/js/pluginWindowPreload.js');
+        plugin.windowOption['webPreferences']['nodeIntegration'] = true;
+        plugin.windowOption['webPreferences']['webviewTag'] = true;
         plugin.activedWindow.BrowserWindow = this.electronService.CreateBrowserWindow(url, plugin.windowOption);
         plugin.activedWindow.WebContent = plugin.activedWindow.BrowserWindow.webContents;
         plugin.activedWindow.WebContent.on('dom-ready', (event) => {
