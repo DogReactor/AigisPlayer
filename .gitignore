@@ -19,3 +19,4 @@ extensions
 /mods
 yarn.lock
 test/
+npm-debug.log
