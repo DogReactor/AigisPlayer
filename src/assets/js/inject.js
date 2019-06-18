@@ -1,6 +1,9 @@
-const remote = require("electron").remote;
+window.nodeRequire = require;
+delete window.require;
+delete window.exports;
+delete window.module;
+const remote = require('electron').remote;
 remote.app.commandLine.appendSwitch("js-flags", "--max-old-space-size=8192");
-ArrayBuffer = Buffer;
 
 global.ipcrender = require('electron').ipcRenderer;
 global.consoleLog = console.log;

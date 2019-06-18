@@ -20,3 +20,5 @@ extensions
 yarn.lock
 test/
 npm-debug.log
+filelist.json
+updateInfo.json
