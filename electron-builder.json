@@ -1,6 +1,6 @@
 {
   "appId": "com.dogreactor.aigisplayer",
-  "productName": "AigisPlayer",
+  "productName": "BraveGirlRavensPlayer",
   "directories": {
     "app": "dist",
     "output": "app-builds",
@@ -16,8 +16,7 @@
     "target": [{
       "target": "nsis",
       "arch": [
-        "x64",
-        "ia32"
+        "x64"
       ]
     }]
   },
