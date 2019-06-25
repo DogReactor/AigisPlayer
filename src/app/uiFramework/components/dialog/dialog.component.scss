@@ -1,6 +1,10 @@
 .container {
     height: 24px;
     background: white;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-content: center;
     -webkit-app-region: drag;
 }
 
@@ -9,7 +13,12 @@
     font-size: 12px;
     line-height: 24px;
     padding-left: 7px; // font-family: Verdana, Geneva, Tahoma, sans-serif;
-    float: left;
+}
+
+.controller {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
 }
 
 .btn {
@@ -19,7 +28,6 @@
     padding-bottom: 3px;
     -webkit-app-region: no-drag;
     transition: all 0.2s;
-    float: right;
 }
 
 .btn:hover {
