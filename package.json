@@ -18,7 +18,7 @@
     "postinstall:electron": "node postinstall",
     "ng": "ng",
     "start": "npm run postinstall:electron && npm-run-all --parallel build:ng:debug electron:serve",
-    "build:electron:main": "tsc scripts/main.ts --outDir dist --target es6 --module commonjs && tsc scripts/proxyServer.ts --outDir dist --target es6 --module commonjs",
+    "build:electron:main": "cp package.json dist &&tsc scripts/main.ts --outDir dist --target es6 --module commonjs && tsc scripts/proxyServer.ts --outDir dist --target es6 --module commonjs",
     "build:ng:debug": "ng build --watch",
     "build:ng:prod": "ng build",
     "build": "npm run postinstall:electron && npm run build:ng:prod && npm run build:electron:main",
