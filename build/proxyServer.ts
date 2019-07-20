@@ -3,7 +3,6 @@ import * as request from 'request';
 import * as express from 'express';
 import * as Agent from 'socks5-http-client/lib/Agent';
 import * as fs from 'fs';
-import * as zlib from 'zlib';
 import { parseAL, AL } from 'aigis-fuel';
 import * as path from 'path';
 import * as log from 'electron-log';
@@ -14,23 +13,6 @@ let mainFontPath = '';
 function parse(buffer) {
   const result = parseAL(buffer);
   return result;
-}
-
-function mkdir(dirArray, max) {
-  if (max === undefined) {
-    max = dirArray.length;
-  }
-  if (typeof dirArray === 'string') {
-    fs.mkdirSync(dirArray);
-  } else {
-    let nowDir = '.';
-    for (let i = 0; i < max; i++) {
-      nowDir += '/' + dirArray[i];
-      if (!fs.existsSync(nowDir)) {
-        fs.mkdirSync(nowDir);
-      }
-    }
-  }
 }
 
 export class ProxyServer {
@@ -54,13 +36,13 @@ export class ProxyServer {
       const options: any = {
         url: 'http://assets.millennium-war.net' + req.path,
         headers: headers,
-        encoding: null
+        encoding: null,
       };
       if (this.ProxyEnable === true && this.ProxyIsSocks5 === true) {
         options.agentClass = Agent;
         options.agentOptions = {
           socksHost: this.ProxyHost,
-          socksPort: this.ProxyPort
+          socksPort: this.ProxyPort,
         };
       }
       if (this.ProxyEnable === true && this.ProxyIsSocks5 === false) {
@@ -86,7 +68,9 @@ export class ProxyServer {
       console.log(modifyFileName);
       // 文件热封装
       const protoablePath = process.env.PORTABLE_EXECUTABLE_DIR;
-      const modPath = protoablePath ? protoablePath + '/mods' : path.join(userDataPath, 'mods');
+      const modPath = protoablePath
+        ? protoablePath + '/mods'
+        : path.join(userDataPath, 'mods');
       if (!fs.existsSync(modPath)) {
         fs.mkdirSync(modPath);
       }
@@ -94,7 +78,10 @@ export class ProxyServer {
       if (modifyFileName !== '' && fs.existsSync(modifyFilePath)) {
         log.info(requestFileName, 'modify by Server');
         // AFT和PNG文件直接回传
-        if (modifyFileName === 'MainFont.aft' || path.extname(modifyFileName) === 'png') {
+        if (
+          modifyFileName === 'MainFont.aft' ||
+          path.extname(modifyFileName) === 'png'
+        ) {
           fs.createReadStream(modifyFilePath).pipe(res);
           return;
         }
@@ -118,7 +105,7 @@ export class ProxyServer {
       }
     });
     const server = http.createServer(app);
-    server.on('error', e => {
+    server.on('error', (e) => {
       console.log(e);
     });
     server.listen('19980', () => {
