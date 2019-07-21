@@ -24,7 +24,6 @@
     "build": "npm run postinstall:electron && npm run build:ng:prod && npm run build:electron:main",
     "build:prod": "cross-env NODE_ENV=production npm run build",
     "electron:serve": "npm run build:electron:main && electron ./dist/main.js --serve",
-    "e": "electron ./dist/main.js --serve",
     "electron:linux": "npm run build:prod && npx electron-builder build --linux",
     "electron:windows": "npm run build:prod && npx electron-builder build --windows",
     "electron:mac": "npm run build:prod && npx electron-builder build --mac",
