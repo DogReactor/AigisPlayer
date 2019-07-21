@@ -1,10 +1,7 @@
 import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { GameService } from '../../../core/game.service';
-import {
-  GlobalSettingService,
-  Account,
-} from '../../../global/globalSetting.service';
+import { GlobalSettingService, Account } from '../../../global/globalSetting.service';
 import { GlobalStatusService } from '../../../global/globalStatus.service';
 import { ElMessageService } from 'element-angular';
 import * as Rx from 'rxjs';
@@ -17,7 +14,7 @@ import { DebuggerService } from '../../../gameData/debugger.service';
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss'],
+  styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements AfterViewInit, OnDestroy {
   private gameView: WebviewTag = null;
@@ -31,10 +28,10 @@ export class GameComponent implements AfterViewInit, OnDestroy {
     private translateService: TranslateService,
     private electronService: ElectronService,
     private debuggerService: DebuggerService,
-    private pluginService: PluginService,
+    private pluginService: PluginService
   ) {
     this.subscriptionList.push(
-      this.globalStatusService.GlobalStatusStore.Get('Zoom').Subscribe((v) => {
+      this.globalStatusService.GlobalStatusStore.Get('Zoom').Subscribe(v => {
         this.zoom = v;
         if (this.gameView) {
           if (this.gameView.setZoomFactor === undefined) {
@@ -42,7 +39,7 @@ export class GameComponent implements AfterViewInit, OnDestroy {
           }
           this.gameView.setZoomFactor(this.zoom / 100);
         }
-      }),
+      })
     );
   }
   ngAfterViewInit() {
@@ -55,7 +52,7 @@ export class GameComponent implements AfterViewInit, OnDestroy {
     //   const { webFrame } = require('electron');
     //   webFrame.findFrameByRoutingId((event as any).frameRoutingId);
     // });
-    webview.addEventListener('did-frame-navigate', (event) => {
+    webview.addEventListener('did-frame-navigate', event => {
       const url = (event as any).url as string;
       if (
         url.indexOf('.mimolette.co.jp/ps01/game_webgl_player.html') !== -1 ||
@@ -72,9 +69,7 @@ export class GameComponent implements AfterViewInit, OnDestroy {
       webContent = webview.getWebContents();
       const mute = this.globalStatusService.GlobalStatusStore.Get('Mute').Value;
       webview.setAudioMuted(mute);
-      const CurrentGame = <GameModel>(
-        this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Value
-      );
+      const CurrentGame = <GameModel>this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Value;
       // 第一次打开时启动默认游戏
       if (!this.gameView.canGoBack()) {
         this.gameService.LoadGame(CurrentGame);
@@ -108,14 +103,12 @@ export class GameComponent implements AfterViewInit, OnDestroy {
         webview.getURL().indexOf('logout') === -1
       ) {
         // 从globalSetting中获取账号密码
-        const username = this.globalStatusService.GlobalStatusStore.Get(
-          'SelectedAccount',
-        ).Value;
+        const username = this.globalStatusService.GlobalStatusStore.Get('SelectedAccount').Value;
         const account = this.globalSettingService.FindAccount(username);
         if (account) {
           webview.send('login', {
             username: account.Username,
-            password: account.Password,
+            password: account.Password
           });
         }
       }
@@ -123,19 +116,13 @@ export class GameComponent implements AfterViewInit, OnDestroy {
     webview.addEventListener('did-finish-load', () => {
       this.gameView.setZoomFactor(this.zoom / 100);
     });
-    webview.addEventListener('did-fail-load', (event) => {
-      if (
-        event.errorDescription === '' ||
-        event.errorDescription === '' ||
-        event.isMainFrame === false
-      ) {
+    webview.addEventListener('did-fail-load', event => {
+      if (event.errorDescription === '' || event.errorDescription === '' || event.isMainFrame === false) {
         return;
       }
-      this.translateService
-        .get('MESSAGE.PAGE-DIDNOT-LOAD')
-        .subscribe((res) => this.message['warning'](res));
+      this.translateService.get('MESSAGE.PAGE-DIDNOT-LOAD').subscribe(res => this.message['warning'](res));
     });
-    webview.addEventListener('new-window', (e) => {
+    webview.addEventListener('new-window', e => {
       const option = e.options;
       option['height'] = 640;
       option['width'] = 1100;

@@ -4,10 +4,8 @@ import { WebviewDirective } from './webview.directive';
 import { SharedModule } from '../../../../../../shared.module';
 
 @NgModule({
-    declarations: [UIFrameStatusBarToolBarPluginComponent, WebviewDirective],
-    imports: [SharedModule],
-    exports: [UIFrameStatusBarToolBarPluginComponent]
+  declarations: [UIFrameStatusBarToolBarPluginComponent, WebviewDirective],
+  imports: [SharedModule],
+  exports: [UIFrameStatusBarToolBarPluginComponent]
 })
-export class UIFrameStatusBarToolBarPluginModule {
-
-}
+export class UIFrameStatusBarToolBarPluginModule {}

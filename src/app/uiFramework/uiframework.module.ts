@@ -11,14 +11,8 @@ import { WebviewDirective } from './webview.directive';
 import { DialogComponent } from './components/dialog/dialog.component';
 
 @NgModule({
-  declarations: [
-    UIFrameComponent,
-    UIFrameMainComponent,
-    UIFrameNavbarComponent,
-    WebviewDirective,
-    DialogComponent,
-  ],
+  declarations: [UIFrameComponent, UIFrameMainComponent, UIFrameNavbarComponent, WebviewDirective, DialogComponent],
   imports: [GameModule, SharedModule, UIFrameStatusBarModule],
-  exports: [UIFrameComponent],
+  exports: [UIFrameComponent]
 })
 export class UiFrameModule {}

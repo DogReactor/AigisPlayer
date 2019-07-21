@@ -3,29 +3,41 @@
     <el-form label-width="150px" size="small" label-position="left">
       <el-form-item [label]="'SETTING.MAP.SCREENSHOT' | translate">
         <div class="item">
-          <el-input [model]="globalSettingService.GlobalSetting.ScreenShotKey" (keyup)="keyup('ScreenShotKey',$event)"></el-input>
-          <el-button type="danger" (click)="clear('ScreenShotKey')">{{'UTIL.CLEAR' | translate}}</el-button>
+          <el-input
+            [model]="globalSettingService.GlobalSetting.ScreenShotKey"
+            (keyup)="keyup('ScreenShotKey', $event)"
+          ></el-input>
+          <el-button type="danger" (click)="clear('ScreenShotKey')">{{ 'UTIL.CLEAR' | translate }}</el-button>
         </div>
       </el-form-item>
       <el-form-item [label]="'SETTING.MAP.RELOAD' | translate">
         <div class="item">
-          <el-input [model]="globalSettingService.GlobalSetting.ReloadKey" (keyup)="keyup('ReloadKey',$event)"></el-input>
-          <el-button type="danger" (click)="clear('ReloadKey')">{{'UTIL.CLEAR' | translate}}</el-button>
+          <el-input
+            [model]="globalSettingService.GlobalSetting.ReloadKey"
+            (keyup)="keyup('ReloadKey', $event)"
+          ></el-input>
+          <el-button type="danger" (click)="clear('ReloadKey')">{{ 'UTIL.CLEAR' | translate }}</el-button>
         </div>
       </el-form-item>
 
-      <hr/>
+      <hr />
 
       <el-form-item [label]="'SETTING.MAP.SPEEDUP' | translate">
         <div class="item">
-          <el-input [model]="globalSettingService.GlobalSetting.SpeedUpKey" (keyup)="keyup('SpeedUpKey',$event)"></el-input>
-          <el-button type="danger" (click)="clear('SpeedUpKey')">{{'UTIL.CLEAR' | translate}}</el-button>
+          <el-input
+            [model]="globalSettingService.GlobalSetting.SpeedUpKey"
+            (keyup)="keyup('SpeedUpKey', $event)"
+          ></el-input>
+          <el-button type="danger" (click)="clear('SpeedUpKey')">{{ 'UTIL.CLEAR' | translate }}</el-button>
         </div>
       </el-form-item>
       <el-form-item [label]="'SETTING.MAP.USESKILL' | translate">
         <div class="item">
-          <el-input [model]="globalSettingService.GlobalSetting.UseSkillKey" (keyup)="keyup('UseSkillKey',$event)"></el-input>
-          <el-button type="danger" (click)="clear('UseSkillKey')">{{'UTIL.CLEAR' | translate}}</el-button>
+          <el-input
+            [model]="globalSettingService.GlobalSetting.UseSkillKey"
+            (keyup)="keyup('UseSkillKey', $event)"
+          ></el-input>
+          <el-button type="danger" (click)="clear('UseSkillKey')">{{ 'UTIL.CLEAR' | translate }}</el-button>
         </div>
       </el-form-item>
     </el-form>

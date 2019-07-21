@@ -9,7 +9,7 @@ export type ToggleCases = 'statusbar' | 'navbar';
 @Component({
   selector: 'app-uiframe',
   templateUrl: './uiframework.component.html',
-  styleUrls: ['./uiframework.component.scss'],
+  styleUrls: ['./uiframework.component.scss']
 })
 export class UIFrameComponent implements OnInit {
   dialogVisible = false;
@@ -22,7 +22,7 @@ export class UIFrameComponent implements OnInit {
     private gameService: GameService,
     private globalStatusService: GlobalStatusService,
     private electronService: ElectronService,
-    private message: ElMessageService,
+    private message: ElMessageService
   ) {}
 
   showDialog = (type: ToggleCases) => {
@@ -73,9 +73,7 @@ export class UIFrameComponent implements OnInit {
   ngOnInit() {
     this.electronService.CheckForUpdate(() => {
       this.message['success']('新版本下载成功，请在设置菜单确认安装');
-      this.globalStatusService.GlobalStatusStore.Get('NewVersionAVB').Dispatch(
-        true,
-      );
+      this.globalStatusService.GlobalStatusStore.Get('NewVersionAVB').Dispatch(true);
     });
   }
 }
