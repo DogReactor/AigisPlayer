@@ -1,34 +1,41 @@
-.container{
-    padding:10px 20px 10px 20px;
+.container {
+    padding: 10px 20px 10px 20px;
     transition: all 0.5s;
-    display:flex;
+    display: flex;
     justify-content: space-between;
 }
-.title{
-    font-size:17px;
-    font-weight:bold;
+
+.title {
+    font-size: 17px;
+    font-weight: bold;
 }
-.version{
-    font-size:10px;
-    margin-left:10px;
-    color:#8492A6;
+
+.version {
+    font-size: 10px;
+    margin-left: 10px;
+    color: #8492A6;
 }
-.description{
-    font-size:15px;
+
+.description {
+    font-size: 15px;
 }
-.author{
-    font-size:11px;
-    font-weight:bold;
-    color:#8492A6;
+
+.author {
+    font-size: 11px;
+    font-weight: bold;
+    color: #8492A6;
 }
-.btn-container{
-    display:flex;
+
+.btn-container {
+    display: flex;
     flex-direction: column;
 }
-.btn-container button{
+
+.btn-container button {
     margin-bottom: 3px;
 }
-.btn-restart{
+
+.btn-restart {
     background-color: #F7BA2A;
     border: none;
     color: white;
@@ -37,11 +44,12 @@
     text-decoration: none;
     display: inline-block;
 }
-.btn-restart:hover{
+
+.btn-restart:hover {
     background-color: rgb(245, 202, 101);
 }
 
-.btn-install{
+.btn-install {
     background-color: #13CE66;
     border: none;
     color: white;
@@ -50,10 +58,12 @@
     text-decoration: none;
     display: inline-block;
 }
-.btn-install:hover{
+
+.btn-install:hover {
     background-color: rgb(84, 209, 140);
 }
-.btn-install:disabled{
+
+.btn-install:disabled {
     background-color: #E5E9F2;
     border: none;
     color: white;
@@ -63,7 +73,7 @@
     display: inline-block;
 }
 
-.btn-update{
+.btn-update {
     background-color: #20A0FF;
     border: none;
     color: white;
@@ -72,11 +82,12 @@
     text-decoration: none;
     display: inline-block;
 }
-.btn-update:hover{
-    background-color:#58B7FF;
+
+.btn-update:hover {
+    background-color: #58B7FF;
 }
 
-.btn-update:disabled{
+.btn-update:disabled {
     background-color: #E5E9F2;
     border: none;
     color: white;
@@ -86,7 +97,7 @@
     display: inline-block;
 }
 
-.btn-remove{
+.btn-remove {
     background-color: #FF4949;
     border: none;
     color: white;
@@ -95,6 +106,7 @@
     text-decoration: none;
     display: inline-block;
 }
-.btn-remove:hover{
+
+.btn-remove:hover {
     background-color: rgb(250, 112, 112);
 }

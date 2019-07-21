@@ -4,7 +4,7 @@ import { ElectronService } from '../../../core/electron.service';
 @Component({
   selector: 'app-uiframe-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
+  styleUrls: ['./navbar.component.scss']
 })
 export class UIFrameNavbarComponent {
   @Input() dialogToggle: Function;

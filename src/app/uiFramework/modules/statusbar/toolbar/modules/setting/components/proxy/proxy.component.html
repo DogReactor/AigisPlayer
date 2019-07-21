@@ -4,7 +4,11 @@
       <el-form-item [label]="'SETTING.PROXY.TYPE' | translate">
         <div class="checkbox">
           <el-select formControlName="Type">
-            <el-option *ngFor="let rule of rules" [label]="translations['SETTING.PROXY.TYPES.' + rule.toUpperCase()]" [value]="rule"></el-option>
+            <el-option
+              *ngFor="let rule of rules"
+              [label]="translations['SETTING.PROXY.TYPES.' + rule.toUpperCase()]"
+              [value]="rule"
+            ></el-option>
           </el-select>
         </div>
       </el-form-item>

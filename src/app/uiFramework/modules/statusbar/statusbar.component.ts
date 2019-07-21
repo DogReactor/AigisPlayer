@@ -4,7 +4,7 @@ import { GameService } from '../../../core/game.service';
 @Component({
   selector: 'app-uiframe-statusbar',
   templateUrl: './statusbar.component.html',
-  styleUrls: ['./statusbar.component.scss'],
+  styleUrls: ['./statusbar.component.scss']
 })
 export class UIFrameStatusBarComponent {
   @Input() dialogToggle: Function;

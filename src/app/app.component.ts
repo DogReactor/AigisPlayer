@@ -3,9 +3,9 @@ import { ElectronService } from './core/electron.service';
 import { TranslateService } from '@ngx-translate/core';
 import { GlobalStatusService } from './global/globalStatus.service';
 import { GlobalSettingService } from './global/globalSetting.service';
-import { GameService } from './core/game.service'
-import { Langs } from './core/languageList'
-import { HotkeyService } from './core/hotkey.service'
+import { GameService } from './core/game.service';
+import { Langs } from './core/languageList';
+import { HotkeyService } from './core/hotkey.service';
 
 @Component({
   selector: 'app-root',
@@ -13,13 +13,14 @@ import { HotkeyService } from './core/hotkey.service'
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(public electronService: ElectronService,
+  constructor(
+    public electronService: ElectronService,
     private translate: TranslateService,
     private globalStatusService: GlobalStatusService,
     private globalSettingService: GlobalSettingService,
     private gameService: GameService,
-    private hotkeyService: HotkeyService) {
-
+    private hotkeyService: HotkeyService
+  ) {
     // translation
     translate.addLangs(Langs);
     translate.setDefaultLang('cn');

@@ -1,3 +1,8 @@
-<div class="selection" *ngFor="let game of gameList;let i = index" [ngClass]="{'selected':game.Name===gameService.CurrentGame.Name}" (click)="selectGame(i)">
-    {{game.Name}}
+<div
+  class="selection"
+  *ngFor="let game of gameList; let i = index"
+  [ngClass]="{ selected: game.Name === gameService.CurrentGame.Name }"
+  (click)="selectGame(i)"
+>
+  {{ game.Name }}
 </div>

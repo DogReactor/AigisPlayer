@@ -1,15 +1,18 @@
-.checkbox{
-    float:right;
+.checkbox {
+    float: right;
 }
-:host{
-    display:flex;
+
+:host {
+    display: flex;
 }
-hr{
-    height:1px;
-    border:none;
-    border-top:1px dashed #D3DCE6;
+
+hr {
+    height: 1px;
+    border: none;
+    border-top: 1px dashed #D3DCE6;
 }
-.item{
-    display:flex;
+
+.item {
+    display: flex;
     justify-content: space-between;
 }

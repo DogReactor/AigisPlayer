@@ -4,12 +4,8 @@ import { DebuggerService } from './debugger.service';
 import { AigisGameDataService } from './aigis/aigis.service';
 import { AigisStatisticsService } from './aigis/statistics.service';
 
-
-
 @NgModule({
-    imports: [CommonModule],
-    providers: [DebuggerService, AigisGameDataService, AigisStatisticsService]
+  imports: [CommonModule],
+  providers: [DebuggerService, AigisGameDataService, AigisStatisticsService]
 })
-export class GameDataModule {
-
-}
+export class GameDataModule {}

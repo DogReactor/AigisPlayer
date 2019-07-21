@@ -4,10 +4,8 @@ import { WebviewDirective } from './webview.directive';
 import { SharedModule } from '../../../shared.module';
 
 @NgModule({
-    declarations: [GameComponent, WebviewDirective],
-    imports: [SharedModule],
-    exports: [GameComponent]
+  declarations: [GameComponent, WebviewDirective],
+  imports: [SharedModule],
+  exports: [GameComponent]
 })
-export class GameModule {
-
-}
+export class GameModule {}

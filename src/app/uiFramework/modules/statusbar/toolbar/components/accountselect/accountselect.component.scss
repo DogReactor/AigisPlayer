@@ -1,38 +1,38 @@
 :host {
-  width: 200px;
-  display: flex;
-  height: 200px;
-  flex-direction: column;
-  color: black;
-  background: #FFFFFF;
-  overflow: scroll;
+    width: 200px;
+    display: flex;
+    height: 200px;
+    flex-direction: column;
+    color: black;
+    background: #FFFFFF;
+    overflow: scroll;
 }
 
 .selection {
-  padding: 10px 10px 10px 20px;
-  height: 30px;
-  line-height: 30px;
-  transition: all 0.5s;
+    padding: 10px 10px 10px 20px;
+    height: 30px;
+    line-height: 30px;
+    transition: all 0.5s;
 }
 
 .selection:hover {
-  background: #58B7FF;
-  color: white;
+    background: #58B7FF;
+    color: white;
 }
 
 .selected {
-  background: #20A0FF;
-  color: white;
+    background: #20A0FF;
+    color: white;
 }
 
 .password-container {
-  text-align: center;
+    text-align: center;
 }
 
 .password-error {
-  color: #FF4949
+    color: #FF4949
 }
 
 .password-clear {
-  margin: 10px;
+    margin: 10px;
 }
