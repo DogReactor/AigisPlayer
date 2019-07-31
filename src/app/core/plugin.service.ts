@@ -308,7 +308,7 @@ export class PluginService {
     plugin.windowOption['webPreferences']['webviewTag'] = true;
     plugin.activedWindow.BrowserWindow = this.electronService.CreateBrowserWindow(url, plugin.windowOption);
     plugin.activedWindow.WebContent = plugin.activedWindow.BrowserWindow.webContents;
-    plugin.activedWindow.WebContent.on('dom-ready', event => {
+    plugin.activedWindow.WebContent.on('dom-ready', (event: any) => {
       event.sender.send('plugin-info', plugin);
     });
     plugin.activedWindow.BrowserWindow.on('close', () => {
