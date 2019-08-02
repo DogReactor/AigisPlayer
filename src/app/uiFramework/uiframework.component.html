@@ -1,5 +1,13 @@
 <div class="container">
-  <app-uiframe-navbar></app-uiframe-navbar>
+  <app-uiframe-navbar [dialogToggle]="showDialog"></app-uiframe-navbar>
   <app-uiframe-main></app-uiframe-main>
-  <app-uiframe-statusbar></app-uiframe-statusbar>
+  <app-uiframe-statusbar [dialogToggle]="showDialog"></app-uiframe-statusbar>
 </div>
+<app-uiframe-dialog
+  [title]="title"
+  [visible]="dialogVisible"
+  [okText]="okText"
+  [cancelText]="cancelText"
+  [onOk]="handleOnOk"
+  [onCancel]="handleOnCancel"
+></app-uiframe-dialog>

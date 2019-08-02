@@ -1,35 +1,35 @@
 .box {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
 }
 
 .game-main {
-  display: block;
-  flex: 1;
+    display: block;
+    flex: 1;
 }
 
 .top-box {
-  display: flex;
-  width: 100%;
+    display: flex;
+    width: 100%;
 }
 
 .bottom-plugin {
-  background: grey;
-  flex: 1;
+    background: grey;
+    flex: 1;
 }
 
 :host {
-  flex: 1 1 auto;
-  flex-wrap: nowrap;
-  display: flex;
-  background: white;
+    flex: 1 1 auto;
+    flex-wrap: nowrap;
+    display: flex;
+    background: white;
 }
 
 .obs {
-  background: black;
+    background: black;
 }
 
 webview {
-  height: 100%;
+    height: 100%;
 }

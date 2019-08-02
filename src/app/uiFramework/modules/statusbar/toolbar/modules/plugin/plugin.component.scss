@@ -1,31 +1,37 @@
-:host{
-    width:300px;
-    max-height:500px;
-    background:white;
-    overflow:scroll;
+:host {
+    width: 300px;
+    max-height: 500px;
+    background: white;
+    overflow: scroll;
 }
-.container{
-    padding:10px 10px 10px 20px;
+
+.container {
+    padding: 10px 10px 10px 20px;
     transition: all 0.5s;
 }
-.container:hover{
+
+.container:hover {
     background: #58B7FF;
-    color:white;
+    color: white;
 }
-.title{
-    font-size:17px;
-    font-weight:bold;
+
+.title {
+    font-size: 17px;
+    font-weight: bold;
 }
-.version{
-    font-size:10px;
-    margin-left:10px;
-    color:#8492A6;
+
+.version {
+    font-size: 10px;
+    margin-left: 10px;
+    color: #8492A6;
 }
-.description{
-    font-size:15px;
+
+.description {
+    font-size: 15px;
 }
-.author{
-    font-size:11px;
-    font-weight:bold;
-    color:#8492A6;
+
+.author {
+    font-size: 11px;
+    font-weight: bold;
+    color: #8492A6;
 }

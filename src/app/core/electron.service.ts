@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Size } from './util'
+import { Size } from './util';
 import { ElMessageService } from 'element-angular';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -12,7 +12,6 @@ import * as childProcess from 'child_process';
 
 @Injectable()
 export class ElectronService {
-
   ipcRenderer: typeof ipcRenderer;
   childProcess: typeof childProcess;
   currentWindow: BrowserWindow;
@@ -25,10 +24,7 @@ export class ElectronService {
   Tray: typeof Tray;
   ipcMain: typeof Electron.ipcMain;
   require;
-  constructor(
-    private message: ElMessageService,
-    private translateService: TranslateService
-  ) {
+  constructor(private message: ElMessageService, private translateService: TranslateService) {
     // Conditional imports
     if (this.isElectron()) {
       this.electron = window.require('electron');
@@ -50,28 +46,31 @@ export class ElectronService {
 
   isElectron = () => {
     return window && window.process && window.process.type;
-  }
+  };
 
   ReSize = (size: Size) => {
     // What the fuck;
     this.currentWindow.setResizable(true);
     this.currentWindow.setSize(size.Width, size.Height + 54, true);
     this.currentWindow.setResizable(false);
-  }
+  };
 
   SetProxy = (address: string) => {
-    this.Session.setProxy({
-      proxyRules: address,
-      proxyBypassRules: '127.0.0.1, player.aigis.me',
-      pacScript: ''
-    }, () => {
-      // console.log('success');
-    })
-  }
+    this.Session.setProxy(
+      {
+        proxyRules: address,
+        proxyBypassRules: '127.0.0.1, player.aigis.me',
+        pacScript: ''
+      },
+      () => {
+        // console.log('success');
+      }
+    );
+  };
   ClearCache() {
     this.Session.clearCache(() => {
       this.translateService.get('MESSAGE.CLEARCACHE-SUCCESS').subscribe(res => {
-        this.message['success'](res)
+        this.message['success'](res);
       });
     });
   }
@@ -79,7 +78,7 @@ export class ElectronService {
     const win = new this.electron.remote.BrowserWindow(option);
     win.loadURL(url);
     return win;
-  }
+  };
   Restart() {
     this.APP.relaunch();
     this.APP.exit(0);
@@ -102,14 +101,13 @@ export class ElectronService {
         case 'UPDATE.PROGRESS':
           break;
         case 'UPDATE.DOWNLOADED':
-          callback(true)
+          callback(true);
           break;
       }
-    })
+    });
     ipcRenderer.send('checkForUpdates');
   }
   UpdateNow() {
     ipcRenderer.send('updateNow');
   }
 }
-

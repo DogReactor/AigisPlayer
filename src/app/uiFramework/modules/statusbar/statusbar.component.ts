@@ -1,28 +1,27 @@
-import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { GameService } from '../../../core/game.service'
-import { ElMessageService } from 'element-angular'
+import { Component, Input } from '@angular/core';
+import { GameService } from '../../../core/game.service';
 
 @Component({
-    selector: 'app-uiframe-statusbar',
-    templateUrl: './statusbar.component.html',
-    styleUrls: ['./statusbar.component.scss']
+  selector: 'app-uiframe-statusbar',
+  templateUrl: './statusbar.component.html',
+  styleUrls: ['./statusbar.component.scss']
 })
 export class UIFrameStatusBarComponent {
-    constructor(
-        private gameService: GameService,
-        private translateService: TranslateService,
-        private message: ElMessageService) {
-    }
-    reload() {
-        this.gameService.Reload();
-    }
-    screenshot(event) {
-        if (event.button === 0) {
-            this.gameService.ScreenShot();
-        } else {
-            this.gameService.ScreenShot(true);
-        }
+  @Input() dialogToggle: Function;
 
+  constructor(private gameService: GameService) {}
+
+  screenshot(event) {
+    if (event.button === 0) {
+      this.gameService.ScreenShot();
+    } else {
+      this.gameService.ScreenShot(true);
     }
+  }
+
+  toggle() {
+    if (this.dialogToggle) {
+      this.dialogToggle('statusbar');
+    }
+  }
 }

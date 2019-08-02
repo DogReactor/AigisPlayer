@@ -1,0 +1,8 @@
+<div class="controller">
+  <el-dialog [title]="title" [(visible)]="visible" [center]="true" [show-close]="false">
+    <div class="btn-container">
+      <el-button type="primary" (click)="onCancel()">{{ cancelText }}</el-button>
+      <el-button type="danger" (click)="onOk()">{{ okText }}</el-button>
+    </div>
+  </el-dialog>
+</div>

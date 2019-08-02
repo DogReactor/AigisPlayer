@@ -1,30 +1,35 @@
-:host{
-    width:800px;
+:host {
+    width: 800px;
     max-width: 100%;
-    display:flex;
-    height:500px;
+    display: flex;
+    height: 500px;
     flex-direction: column;
-    color:black;
-    background:#F9FAFC;
+    color: black;
+    background: #F9FAFC;
 }
+
 @media screen and (max-width: 500px) {
     :host {
-        width:400px;
+        width: 400px;
     }
 }
-.container{
-    height:100%;
+
+.container {
+    height: 100%;
 }
-.content{
-    height:100%;
-    background:#fff;
-    overflow-x:hidden;
+
+.content {
+    height: 100%;
+    background: #fff;
+    overflow-x: hidden;
 }
-.menu{
-    overflow-x:hidden;
-    overflow-y:overlay;
-    height:100%;
+
+.menu {
+    overflow-x: hidden;
+    overflow-y: overlay;
+    height: 100%;
 }
-.content-item{
+
+.content-item {
     opacity: 100;
 }

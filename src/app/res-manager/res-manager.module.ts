@@ -1,8 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 
 @NgModule({
-    providers: []
+  providers: []
 })
-export class GlobalModule {
-
-}
+export class GlobalModule {}

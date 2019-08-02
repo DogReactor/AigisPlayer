@@ -14,88 +14,83 @@ import * as path from 'path';
 
 export const gameInfo = [
   new GameModel('None', new Size(640, 960), 'about:blank'),
-  new GameModel(
-    'ブレイヴガールＲ',
-    new Size(576, 1024),
-    `http://bg-r.mimolette.co.jp/selectsvr.html`,
-    'bravegirl',
-  ),
+  new GameModel('ブレイヴガールＲ', new Size(576, 1024), `http://bg-r.mimolette.co.jp/selectsvr.html`, 'bravegirl'),
   new GameModel(
     '千年戦争アイギス',
     new Size(640, 960),
     `https://www.dmm.com/my/-/login/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRl
         pZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1cAVlUFAR9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
-    'aigis',
+    'aigis'
   ),
   new GameModel(
     '千年戦争アイギス R',
     new Size(640, 960),
     `https://www.dmm.co.jp/my/-/login/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAA
         VRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1cCV1EABB9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
-    'aigis',
+    'aigis'
   ),
   new GameModel(
     'FLOWER KNIGHT GIRL',
     new Size(640, 1136),
     `https://www.dmm.com/my/-/login/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWVsfXQF
     NAwtbSVQJWEcAEx9QCEUVU1QJDlVKVxZHXFQQWF9NDV8LAVYSWwpZDVQ_`,
-    'fkg',
+    'fkg'
   ),
   new GameModel(
     'FLOWER KNIGHT GIRL ~X指定~',
     new Size(640, 1136),
     `https://www.dmm.co.jp/my/-/login/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWRhaS
     UtdBxZWD15KUVwKFlVLS05OW1YWRVlfWllaGARGRg0IQlcNFl4AWwZWRAwOXgRX`,
-    'fkg',
+    'fkg'
   ),
   new GameModel(
     '御城プロジェクト:RE',
     new Size(720, 1275),
     `https://www.dmm.com/my/-/login/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAA
         VRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1EAVlQGAB9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
-    'oshiro',
+    'oshiro'
   ),
   new GameModel(
     '艦これ',
     new Size(720, 1200),
     `https://www.dmm.com/my/-/login/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWVsfXQFNAwtbSVkEWVMK
         DVxcSV8PQUwEXVQMWx9WERULBxZXC00LBF4FUxFeXwtcAQ__`,
-    'kankore',
+    'kankore'
   ),
   new GameModel(
     '凍京Necro',
     new Size(640, 1136),
     `https://www.dmm.co.jp/my/-/login/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWRhaSUtdBxZWD15KW
         VUGE19mFUMIUVEBVGdeXxVECApYaUIWDVcRFlYKXlpaSQQRQARXEA9dTAxXUVBXEl4OCwsH`,
-    'necro',
+    'necro'
   ),
   new GameModel(
     '神姫プロジェクト',
     new Size(640, 960),
     `https://www.dmm.com/my/-/login/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGA
         AVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1ECUlcGBx9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
-    'kamihime',
+    'kamihime'
   ),
   new GameModel(
     '神姫プロジェクト R',
     new Size(640, 960),
     `https://www.dmm.co.jp/my/-/login/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGA
         AVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1QDU1AOAh9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
-    'kamihime',
+    'kamihime'
   ),
   new GameModel(
     '神姬計劃',
     new Size(640, 960),
     `https://www.dmm.com/my/-/login/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGA
         AVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1AAVVIHBR9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
-    'kamihime',
+    'kamihime'
   ),
   new GameModel(
     '神姬計劃 X',
     new Size(640, 960),
     `https://www.dmm.co.jp/my/-/login/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGA
         AVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1AEU1AEAB9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
-    'kamihime',
+    'kamihime'
   ),
   // new GameModel(
   //     'グランブルーファンタジー',
@@ -108,8 +103,8 @@ export const gameInfo = [
     new Size(640, 1136),
     `https://www.dmm.co.jp/my/-/login/logout/=/path=
         DRVESVwZTlVZCFRLHVILWk8GWRhaSUtdBxZWD15KQl4MFVlYHhkIXEsRUFRfCQtOABVGCwEfClYWC1EPUQRDWQoPDQg_`,
-    'unitia',
-  ),
+    'unitia'
+  )
 ];
 
 @Injectable()
@@ -124,23 +119,19 @@ export class GameService {
     private translateService: TranslateService,
     private message: ElMessageService,
     private globalStatus: GlobalStatusService,
-    private globalSetting: GlobalSettingService,
+    private globalSetting: GlobalSettingService
   ) {
-    this.CurrentGame = this.globalStatus.GlobalStatusStore.Get(
-      'CurrentGame',
-    ).Value;
-    this.globalStatus.GlobalStatusStore.Get('SelectedAccount').Subscribe(
-      (v) => {
-        this.ReloadGame();
-      },
-    );
-    this.globalStatus.GlobalStatusStore.Get('Mute').Subscribe((v) => {
+    this.CurrentGame = this.globalStatus.GlobalStatusStore.Get('CurrentGame').Value;
+    this.globalStatus.GlobalStatusStore.Get('SelectedAccount').Subscribe(v => {
+      this.ReloadGame();
+    });
+    this.globalStatus.GlobalStatusStore.Get('Mute').Subscribe(v => {
       this.setAudioMuted(v);
     });
-    this.globalStatus.GlobalStatusStore.Get('Zoom').Subscribe((v) => {
+    this.globalStatus.GlobalStatusStore.Get('Zoom').Subscribe(v => {
       this.SetZoom(v);
     });
-    this.globalStatus.GlobalStatusStore.Get('CurrentGame').Subscribe((v) => {
+    this.globalStatus.GlobalStatusStore.Get('CurrentGame').Subscribe(v => {
       this.LoadGame(v);
     });
   }
@@ -174,10 +165,7 @@ export class GameService {
       this.webView.loadURL(game.URL);
       // 修改Electron的窗口大小
       this.electronService.ReSize(
-        new Size(
-          Math.floor(game.Size.Height * (this.zoom / 100)),
-          Math.floor(game.Size.Width * (this.zoom / 100)),
-        ),
+        new Size(Math.floor(game.Size.Height * (this.zoom / 100)), Math.floor(game.Size.Width * (this.zoom / 100)))
       );
       this.pluginService.DeactiveEmbedPlugin('left');
       this.pluginService.DeactiveEmbedPlugin('right');
@@ -196,7 +184,7 @@ export class GameService {
             x: x,
             y: y,
             button: 'left',
-            clickCount: 1,
+            clickCount: 1
           });
           setTimeout(() => {
             webContents.sendInputEvent({
@@ -204,7 +192,7 @@ export class GameService {
               x: x,
               y: y,
               button: 'left',
-              clickCount: 1,
+              clickCount: 1
             });
           }, 50 + (Math.random() > 0.5 ? -1 : 1) * Math.random() * 10);
         }, 1);
@@ -212,18 +200,12 @@ export class GameService {
     }
   }
   KeyMapperTrigger(keyName) {
-    const keyMapper = KeyMapperList.find((v) => v.Name === keyName);
+    const keyMapper = KeyMapperList.find(v => v.Name === keyName);
     if (!keyMapper) {
       return;
     }
-    const x = Math.floor(
-      keyMapper.X +
-        (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Width,
-    );
-    const y = Math.floor(
-      keyMapper.Y +
-        (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Height,
-    );
+    const x = Math.floor(keyMapper.X + (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Width);
+    const y = Math.floor(keyMapper.Y + (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Height);
     this.submitClickEvent(x, y);
   }
   ScreenShot(save = false) {
@@ -232,10 +214,10 @@ export class GameService {
                 r.pageHeight = window.innerHeight; \
                 r.pageWidth = window.innerWidth; \
                 r;`;
-      this.webView.executeJavaScript(code, false, async (r) => {
+      this.webView.executeJavaScript(code, false, async r => {
         const webviewMeta = {
           captureHeight: 0,
-          captureWidth: 0,
+          captureWidth: 0
         };
         webviewMeta.captureHeight = r.pageHeight;
         webviewMeta.captureWidth = r.pageWidth;
@@ -244,24 +226,19 @@ export class GameService {
           y: 0,
           width: Math.floor(
             webviewMeta.captureWidth *
-              this.electronService.electron.remote.screen.getPrimaryDisplay()
-                .scaleFactor *
-              (this.zoom / 100),
+              this.electronService.electron.remote.screen.getPrimaryDisplay().scaleFactor *
+              (this.zoom / 100)
           ),
           height: Math.floor(
             webviewMeta.captureHeight *
-              this.electronService.electron.remote.screen.getPrimaryDisplay()
-                .scaleFactor *
-              (this.zoom / 100),
-          ),
+              this.electronService.electron.remote.screen.getPrimaryDisplay().scaleFactor *
+              (this.zoom / 100)
+          )
         };
         // Fuck Electron
-        this.webView.getWebContents().capturePage(captureRect, (image) => {
+        this.webView.getWebContents().capturePage(captureRect, image => {
           if (save) {
-            const p = path.join(
-              this.electronService.APP.getPath('userData'),
-              'screenshots',
-            );
+            const p = path.join(this.electronService.APP.getPath('userData'), 'screenshots');
             if (!fs.existsSync(p)) {
               fs.mkdirSync(p);
             }
@@ -273,17 +250,13 @@ export class GameService {
         });
       });
       if (save) {
-        this.translateService
-          .get('MESSAGE.SCREENSHOT-SAVE-SUCCESS')
-          .subscribe((res) => {
-            this.message['success'](res);
-          });
+        this.translateService.get('MESSAGE.SCREENSHOT-SAVE-SUCCESS').subscribe(res => {
+          this.message['success'](res);
+        });
       } else {
-        this.translateService
-          .get('MESSAGE.SCREENSHOT-SUCCESS')
-          .subscribe((res) => {
-            this.message['success'](res);
-          });
+        this.translateService.get('MESSAGE.SCREENSHOT-SUCCESS').subscribe(res => {
+          this.message['success'](res);
+        });
       }
     }
   }

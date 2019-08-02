@@ -2,15 +2,15 @@ import 'zone.js/dist/zone-mix';
 import 'reflect-metadata';
 import '../polyfills';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CoreModule } from './core/core.module';
-import { UiFrameModule } from './uiFramework/uiframework.module'
-import { UIFrameComponent } from './uiFramework/uiframework.component'
-import { GlobalModule } from './global/global.module'
-import { AppRoutingModule } from './app-routing.module'
+import { UiFrameModule } from './uiFramework/uiframework.module';
+import { UIFrameComponent } from './uiFramework/uiframework.component';
+import { GlobalModule } from './global/global.module';
+import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
@@ -30,10 +30,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    WebviewDirective
-  ],
+  declarations: [AppComponent, WebviewDirective],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -44,7 +41,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (HttpLoaderFactory),
+        useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
     }),
@@ -56,4 +53,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   bootstrap: [AppComponent],
   exports: [WebviewDirective]
 })
-export class AppModule { }
+export class AppModule {}

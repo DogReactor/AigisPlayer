@@ -1,14 +1,5 @@
 <div class="container">
-  <p class="title">BraveGirlRavensPlayer</p>
-  <div class="controller">
-    <el-icon name="minus" class="btn" (click)='minimize()'></el-icon>
-    <el-icon name="close" class="btn close" (click)='toggle = true'></el-icon>
-    <el-dialog [title]="'你确定要退出咩'" [(visible)]="toggle" [center]="true" [show-close]="false">
-      <div class="btn-container">
-        <el-button type="danger" (click)="close()">退出</el-button>
-        <el-button type="primary" (click)="toggle = false">手滑</el-button>
-      </div>
-
-    </el-dialog>
-  </div>
+  <p class="title">FlowerKnightGirlPlayer</p>
+  <el-icon name="close" class="btn close" (click)="toggle()"></el-icon>
+  <el-icon name="minus" class="btn" (click)="minimize()"></el-icon>
 </div>

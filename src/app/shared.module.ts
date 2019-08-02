@@ -5,6 +5,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-    exports: [ElModule, CommonModule, FormsModule, TranslateModule]
+  exports: [ElModule, CommonModule, FormsModule, TranslateModule]
 })
-export class SharedModule { }
+export class SharedModule {}

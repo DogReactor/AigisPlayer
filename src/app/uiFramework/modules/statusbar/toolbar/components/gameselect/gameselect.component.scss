@@ -1,23 +1,26 @@
-:host{
-    width:300px;
-    display:flex;
-    height:400px;
+:host {
+    width: 300px;
+    display: flex;
+    height: 400px;
     flex-direction: column;
-    color:black;
-    background:#FFFFFF;
-    overflow:scroll;
+    color: black;
+    background: #FFFFFF;
+    overflow: scroll;
 }
-.selection{
-    padding:10px 10px 10px 20px;
-    height:30px;
+
+.selection {
+    padding: 10px 10px 10px 20px;
+    height: 30px;
     line-height: 30px;
     transition: all 0.5s;
 }
-.selection:hover{
+
+.selection:hover {
     background: #58B7FF;
-    color:white;
+    color: white;
 }
-.selected{
-    background:#20A0FF;
-    color:white;
+
+.selected {
+    background: #20A0FF;
+    color: white;
 }
