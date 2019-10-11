@@ -93,10 +93,7 @@ export class DebuggerService {
         }
       });
       this.reqMaps = new Map();
-      webContents.debugger.sendCommand('Network.enable', {
-        maxResourceBufferSize: 1024 * 1204 * 100,
-        maxTotalBufferSize: 1024 * 1204 * 800
-      });
+      webContents.debugger.sendCommand('Network.enable');
     } catch (err) {
       console.log('Debugger attach failed : ', err);
     }

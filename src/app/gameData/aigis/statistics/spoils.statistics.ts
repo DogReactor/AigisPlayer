@@ -292,7 +292,7 @@ export class SpoilsStatistics {
 
         // deal with normal combat
         gameDataService.subscribe('quest-start', (url, response: any, request: any) => {
-            console.log('quest-response', response, request)
+            // console.log('quest-response', response, request)
             const firstEncounter = request.RT.ATTR.map(e => e === 0);
             Promise.all([this.parseSpoils(response, firstEncounter), this.buffCalculator.modTeamBuff(request.BL, this.reference)])
                 .then(([dropInfos, sucMsg]) => {

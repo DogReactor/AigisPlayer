@@ -3,7 +3,7 @@ import * as path from 'path';
 import { ProxyServer } from './proxyServer';
 let win: BrowserWindow, serve;
 const args = process.argv.slice(1);
-serve = args.some(val => val === '--serve');
+serve = args.some((val) => val === '--serve');
 import * as log from 'electron-log';
 import * as unzip from 'unzipper';
 import * as request from 'request';
@@ -12,7 +12,6 @@ const config = new Config();
 
 // app.commandLine.appendSwitch('--enable-npapi');
 app.commandLine.appendSwitch('js-flags', '--max-old-space-size=8192');
-app.commandLine.appendSwitch('disable-site-isolation-trials');
 // app.commandLine.appendSwitch('ignore-certificate-errors');
 if (config.get('disable-hardware-acceleration')) {
   app.disableHardwareAcceleration();
@@ -29,7 +28,7 @@ function sendStatusToWindow(text, obj?) {
 let fileList = {};
 if (serve) {
   require('electron-reload')(path.join(process.cwd(), 'src'), {
-    electron: require(`${process.cwd()}/node_modules/electron`)
+    electron: require(`${process.cwd()}/node_modules/electron`),
   });
 }
 const proxyServer = new ProxyServer();
@@ -49,8 +48,7 @@ function createWindow() {
       plugins: true,
       nodeIntegration: true,
       webviewTag: true,
-      nodeIntegrationInSubFrames: true
-    }
+    },
   });
 
   // and load the index.html of the app.
@@ -92,34 +90,37 @@ try {
               { role: 'paste' },
               { role: 'pasteandmatchstyle' },
               { role: 'delete' },
-              { role: 'selectall' }
-            ]
-          }
-        ])
+              { role: 'selectall' },
+            ],
+          },
+        ]),
       );
     }
     const filter = {
-      urls: ['http://assets.millennium-war.net/*']
+      urls: ['http://assets.millennium-war.net/*'],
     };
-    session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
-      let url = details.url;
-      const urlpath = url.replace('http://assets.millennium-war.net', '');
-      let fileName = fileList[urlpath];
-      if (urlpath.indexOf(config.get('fontPath')) !== -1) {
-        fileName = 'MainFont.aft';
-      }
-      if (fileName === undefined) {
-        callback({ cancel: false });
-        return;
-      }
-      url = `http://127.0.0.1:${proxyServer.Port}${urlpath}`;
-      callback({ cancel: false, redirectURL: url });
-    });
+    session.defaultSession.webRequest.onBeforeRequest(
+      filter,
+      (details, callback) => {
+        let url = details.url;
+        const urlpath = url.replace('http://assets.millennium-war.net', '');
+        let fileName = fileList[urlpath];
+        if (urlpath.indexOf(config.get('fontPath')) !== -1) {
+          fileName = 'MainFont.aft';
+        }
+        if (fileName === undefined) {
+          callback({ cancel: false });
+          return;
+        }
+        url = `http://127.0.0.1:${proxyServer.Port}${urlpath}`;
+        callback({ cancel: false, redirectURL: url });
+      },
+    );
 
     ipcMain.on('fileList', (_, arg) => {
       fileList = arg;
       proxyServer.setFileList(fileList);
-      let fontPath = Object.keys(fileList).find(v => {
+      let fontPath = Object.keys(fileList).find((v) => {
         return fileList[v] === 'MainFont.aft';
       });
       if (!fontPath) {
@@ -142,14 +143,14 @@ try {
       const salt = arg.salt;
       request
         .get(url)
-        .on('error', e => {
+        .on('error', (e) => {
           win.webContents.send(`plugin-install-error-${salt}`, e);
         })
         .pipe(unzip.Extract({ path: pluginPath }))
         .on('close', () => {
           win.webContents.send(`plugin-install-success-${salt}`);
         })
-        .on('error', e => {
+        .on('error', (e) => {
           win.webContents.send(`plugin-install-error-${salt}`, e);
         });
     });
