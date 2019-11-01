@@ -1,6 +1,6 @@
 {
   "name": "aigisplayer",
-  "version": "2.1.25",
+  "version": "2.1.26",
   "description": "Toolkit for Aigis",
   "productName": "AigisPlayer",
   "homepage": "https://github.com/DogReactor/AigisPlayer",
@@ -18,8 +18,8 @@
     "postinstall:electron": "node postinstall",
     "ng": "ng",
     "start": "npm run postinstall:electron && npm-run-all --parallel build:ng:debug electron:serve",
-    "pre:install": "rimraf dist && mkdir dist && cp package.json dist && cd dist && npm install --prod && cd ..",
-    "build:electron:main": "tsc -p build && cp package.json dist",
+    "pre:install": "rimraf dist && mkdir dist && copyfiles package.json dist && cd dist && npm install --prod && cd ..",
+    "build:electron:main": "tsc -p build && copyfiles package.json dist",
     "build:ng:debug": "ng build --watch",
     "build:ng:prod": "ng build",
     "build": "npm-run-all postinstall:electron build:ng:prod build:electron:main",

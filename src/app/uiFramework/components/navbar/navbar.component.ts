@@ -8,8 +8,10 @@ import { ElectronService } from '../../../core/electron.service';
 })
 export class UIFrameNavbarComponent {
   @Input() dialogToggle: Function;
-
-  constructor(private electronService: ElectronService) {}
+  appVersion: string;
+  constructor(private electronService: ElectronService) {
+    this.appVersion = this.electronService.APP.getVersion();
+  }
 
   minimize() {
     this.electronService.currentWindow.minimize();
