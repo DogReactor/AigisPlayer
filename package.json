@@ -85,7 +85,7 @@
     "css-loader": "1.0.1",
     "cssnano": "4.1.7",
     "cz-conventional-changelog": "^2.1.0",
-    "electron": "^4.2.2",
+    "electron": "^7.0.1",
     "electron-builder": "^20.43.0",
     "electron-forge": "^5.2.4",
     "electron-packager": "^13.1.1",

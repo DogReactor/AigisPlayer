@@ -183,8 +183,9 @@ export class GlobalSettingService {
     if (proxyRule === undefined) {
       proxyRule = 'direct://';
     }
-    this.electronService.SetProxy(proxyRule);
-    this.electronService.ipcRenderer.send('proxyStatusUpdate', proxy);
+    // 不再在Renderer中设置Proxy
+    // this.electronService.SetProxy(proxyRule);
+    this.electronService.ipcRenderer.send('proxyStatusUpdate', proxyRule);
   }
   FindAccount(username) {
     return this.AccountList.List.find(v => v.Username === username);

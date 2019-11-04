@@ -208,47 +208,47 @@ export class GameService {
     const y = Math.floor(keyMapper.Y + (Math.random() > 0.5 ? -1 : 1) * Math.random() * keyMapper.Height);
     this.submitClickEvent(x, y);
   }
-  ScreenShot(save = false) {
+  async ScreenShot(save = false) {
     if (this.webView) {
       const code = `var r = {}; \
                 r.pageHeight = window.innerHeight; \
                 r.pageWidth = window.innerWidth; \
                 r;`;
-      this.webView.executeJavaScript(code, false, async r => {
-        const webviewMeta = {
-          captureHeight: 0,
-          captureWidth: 0
-        };
-        webviewMeta.captureHeight = r.pageHeight;
-        webviewMeta.captureWidth = r.pageWidth;
-        const captureRect = {
-          x: 0,
-          y: 0,
-          width: Math.floor(
-            webviewMeta.captureWidth *
-              this.electronService.electron.remote.screen.getPrimaryDisplay().scaleFactor *
-              (this.zoom / 100)
-          ),
-          height: Math.floor(
-            webviewMeta.captureHeight *
-              this.electronService.electron.remote.screen.getPrimaryDisplay().scaleFactor *
-              (this.zoom / 100)
-          )
-        };
-        // Fuck Electron
-        this.webView.getWebContents().capturePage(captureRect, image => {
-          if (save) {
-            const p = path.join(this.electronService.APP.getPath('userData'), 'screenshots');
-            if (!fs.existsSync(p)) {
-              fs.mkdirSync(p);
-            }
-            const fileName = path.join(p, `${new Date().getTime()}.png`);
-            fs.writeFile(fileName, image.toPNG(), () => {});
-          } else {
-            this.electronService.clipboard.writeImage(image);
-          }
-        });
-      });
+      const r = await this.webView.executeJavaScript(code, false);
+
+      const webviewMeta = {
+        captureHeight: 0,
+        captureWidth: 0
+      };
+      webviewMeta.captureHeight = r.pageHeight;
+      webviewMeta.captureWidth = r.pageWidth;
+      const captureRect = {
+        x: 0,
+        y: 0,
+        width: Math.floor(
+          webviewMeta.captureWidth *
+            this.electronService.electron.remote.screen.getPrimaryDisplay().scaleFactor *
+            (this.zoom / 100)
+        ),
+        height: Math.floor(
+          webviewMeta.captureHeight *
+            this.electronService.electron.remote.screen.getPrimaryDisplay().scaleFactor *
+            (this.zoom / 100)
+        )
+      };
+      // Fuck Electron
+      const image = await this.webView.getWebContents().capturePage(captureRect);
+      if (save) {
+        const p = path.join(this.electronService.APP.getPath('userData'), 'screenshots');
+        if (!fs.existsSync(p)) {
+          fs.mkdirSync(p);
+        }
+        const fileName = path.join(p, `${new Date().getTime()}.png`);
+        fs.writeFile(fileName, image.toPNG(), () => {});
+      } else {
+        this.electronService.clipboard.writeImage(image);
+      }
+
       if (save) {
         this.translateService.get('MESSAGE.SCREENSHOT-SAVE-SUCCESS').subscribe(res => {
           this.message['success'](res);

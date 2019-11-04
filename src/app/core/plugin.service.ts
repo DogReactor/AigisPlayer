@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WebviewTag, WebContents, BrowserWindow, ipcRenderer } from 'electron';
+import { WebviewTag, WebContents, BrowserWindow, ipcRenderer, BrowserWindowConstructorOptions } from 'electron';
 import { ElectronService } from './electron.service';
 import * as fs from 'fs';
 import * as Rx from 'rxjs';
@@ -26,7 +26,7 @@ export class Plugin {
   public background = '';
   public inject = '';
   public embed = false;
-  public windowOption = {};
+  public windowOption: BrowserWindowConstructorOptions = {};
   public id = '';
   public activedWindow: ActivePlugin = null;
   public backgroundObject = null;
@@ -300,15 +300,17 @@ export class PluginService {
       slashes: true,
       pathname: path.join(this.pluginsPath, plugin.path, plugin.entry)
     });
-    if (!plugin.windowOption['webPreferences']) {
-      plugin.windowOption['webPreferences'] = {};
+    if (!plugin.windowOption.webPreferences) {
+      plugin.windowOption.webPreferences = {
+        partition: 'plugin'
+      };
     }
-    plugin.windowOption['webPreferences']['preload'] = path.join(__dirname, './assets/js/pluginWindowPreload.js');
-    plugin.windowOption['webPreferences']['nodeIntegration'] = true;
-    plugin.windowOption['webPreferences']['webviewTag'] = true;
+    plugin.windowOption.webPreferences.preload = path.join(__dirname, './assets/js/pluginWindowPreload.js');
+    plugin.windowOption.webPreferences.nodeIntegration = true;
+    plugin.windowOption.webPreferences.webviewTag = true;
     plugin.activedWindow.BrowserWindow = this.electronService.CreateBrowserWindow(url, plugin.windowOption);
     plugin.activedWindow.WebContent = plugin.activedWindow.BrowserWindow.webContents;
-    plugin.activedWindow.WebContent.on('dom-ready', event => {
+    plugin.activedWindow.WebContent.on('dom-ready', (event: any) => {
       event.sender.send('plugin-info', plugin);
     });
     plugin.activedWindow.BrowserWindow.on('close', () => {

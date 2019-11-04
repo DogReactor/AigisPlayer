@@ -9,7 +9,6 @@ import { WebviewTag, WebContents } from 'electron';
 import { ElectronService } from '../../../core/electron.service';
 import { PluginService } from '../../../core/plugin.service';
 import { GameModel } from '../../../core/game.model';
-import { DebuggerService } from '../../../gameData/debugger.service';
 
 @Component({
   selector: 'app-game',
@@ -27,7 +26,6 @@ export class GameComponent implements AfterViewInit, OnDestroy {
     private message: ElMessageService,
     private translateService: TranslateService,
     private electronService: ElectronService,
-    private debuggerService: DebuggerService,
     private pluginService: PluginService
   ) {
     this.subscriptionList.push(
@@ -65,7 +63,6 @@ export class GameComponent implements AfterViewInit, OnDestroy {
       }
     });
     webview.addEventListener('dom-ready', () => {
-      // this.debuggerService.Detach(webview.getWebContents());
       webContent = webview.getWebContents();
       const mute = this.globalStatusService.GlobalStatusStore.Get('Mute').Value;
       webview.setAudioMuted(mute);
@@ -93,7 +90,6 @@ export class GameComponent implements AfterViewInit, OnDestroy {
         webview.getURL().indexOf('game_dmm.php') !== -1
       ) {
         webview.send('catch', CurrentGame.Spec);
-        this.debuggerService.Attach(webview.getWebContents()); // 注入debuger
       }
 
       // 自动输入用户名密码

@@ -23,7 +23,7 @@ export class ElectronService {
   clipboard: Clipboard;
   Tray: typeof Tray;
   ipcMain: typeof Electron.ipcMain;
-  require;
+  require: typeof Electron.remote.require;
   constructor(private message: ElMessageService, private translateService: TranslateService) {
     // Conditional imports
     if (this.isElectron()) {
@@ -54,24 +54,17 @@ export class ElectronService {
     this.currentWindow.setSize(size.Width, size.Height + 54, true);
     this.currentWindow.setResizable(false);
   };
-
   SetProxy = (address: string) => {
-    this.Session.setProxy(
-      {
-        proxyRules: address,
-        proxyBypassRules: '127.0.0.1, player.aigis.me',
-        pacScript: ''
-      },
-      () => {
-        // console.log('success');
-      }
-    );
+    this.Session.setProxy({
+      proxyRules: address,
+      proxyBypassRules: '127.0.0.1, player.aigis.me',
+      pacScript: ''
+    });
   };
-  ClearCache() {
-    this.Session.clearCache(() => {
-      this.translateService.get('MESSAGE.CLEARCACHE-SUCCESS').subscribe(res => {
-        this.message['success'](res);
-      });
+  async ClearCache() {
+    await this.Session.clearCache();
+    this.translateService.get('MESSAGE.CLEARCACHE-SUCCESS').subscribe(res => {
+      this.message['success'](res);
     });
   }
   CreateBrowserWindow = (url, option) => {
