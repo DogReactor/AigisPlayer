@@ -44,10 +44,11 @@ function createWindow() {
       webSecurity: false,
       plugins: true,
       nodeIntegration: true,
-      webviewTag: true
+      webviewTag: true,
+      partition: 'persist:main'
     }
   });
-
+  RequestHandler.setWin(win);
   // and load the index.html of the app.
   win.loadFile(path.join(__dirname, '/app/index.html'));
   // Open the DevTools.
@@ -71,8 +72,9 @@ try {
   // Some APIs can only be used after this event occurs.
   app.on('ready', () => {
     app['RequestHandler'] = RequestHandler;
-    session.defaultSession.protocol.interceptStreamProtocol('http', RequestHandler.handleData);
-    session.defaultSession.protocol.interceptStreamProtocol('https', RequestHandler.handleData);
+    const gameSession = session.fromPartition('persist:game');
+    gameSession.protocol.interceptStreamProtocol('http', RequestHandler.handleData);
+    gameSession.protocol.interceptStreamProtocol('https', RequestHandler.handleData);
     createWindow();
     // menu
     if (process.platform === 'darwin') {
@@ -87,7 +89,7 @@ try {
     }
     ipcMain.on('fileList', (_, arg) => {
       fileList = arg;
-      // proxyServer.setFileList(fileList);
+      RequestHandler.setFileList(fileList);
       let fontPath = Object.keys(fileList).find(v => {
         return fileList[v] === 'MainFont.aft';
       });
@@ -97,7 +99,7 @@ try {
       fontPath = fontPath.split('/')[2];
       if (config.get('fontPath') !== fontPath) {
         config.set('fontPath', fontPath);
-        // proxyServer.setFontPath(fontPath);
+        RequestHandler.setFontPath(fontPath);
         console.log('get new FontPath', fontPath);
       }
     });

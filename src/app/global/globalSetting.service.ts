@@ -86,7 +86,6 @@ export class GlobalSettingService {
       try {
         // 读取账户列表
         this.AccountList = Object.assign(this.AccountList, JSON.parse(window.localStorage.getItem('accountList')));
-        // TODO:这里记得要加上默认账户的选择
         if (!this.AccountList.Encrypted) {
           this.globalStatusService.GlobalStatusStore.Get('AccountList').Dispatch(
             this.AccountList.List.map(v => {

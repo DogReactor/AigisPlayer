@@ -2,4 +2,12 @@
   <i class="fa fa-refresh btn" (click)="toggle()"></i>
   <i class="fa fa-camera btn" (mouseup)="screenshot($event)"></i>
 </div>
+<div class="log" *ngIf="logService.Url && logService.Url !== 'about:blank'">
+  <div class="url">{{ logService.Url }}</div>
+  <div class="count">
+    (
+    <span class="success">{{ logService.ResponseCount }}</span
+    >/ <span class="error">{{ logService.ErrorCount }}</span> )
+  </div>
+</div>
 <app-uiframe-statusbar-toolbar></app-uiframe-statusbar-toolbar>

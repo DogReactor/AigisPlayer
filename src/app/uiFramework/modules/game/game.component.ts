@@ -9,6 +9,7 @@ import { WebviewTag, WebContents } from 'electron';
 import { ElectronService } from '../../../core/electron.service';
 import { PluginService } from '../../../core/plugin.service';
 import { GameModel } from '../../../core/game.model';
+import { LogService } from '../../../core/log.service';
 
 @Component({
   selector: 'app-game',
@@ -26,6 +27,7 @@ export class GameComponent implements AfterViewInit, OnDestroy {
     private message: ElMessageService,
     private translateService: TranslateService,
     private electronService: ElectronService,
+    private logService: LogService,
     private pluginService: PluginService
   ) {
     this.subscriptionList.push(
@@ -50,6 +52,9 @@ export class GameComponent implements AfterViewInit, OnDestroy {
     //   const { webFrame } = require('electron');
     //   webFrame.findFrameByRoutingId((event as any).frameRoutingId);
     // });
+    webview.addEventListener('did-navigate', event => {
+      this.logService.Url = event.url;
+    });
     webview.addEventListener('did-frame-navigate', event => {
       const url = (event as any).url as string;
       if (
@@ -75,7 +80,7 @@ export class GameComponent implements AfterViewInit, OnDestroy {
 
       if (this.electronService.serve) {
         // 打开开发者工具
-        // webview.openDevTools();
+        webview.openDevTools();
       }
       // 碧蓝删去滑动条
       if (CurrentGame.Spec === 'granblue') {
