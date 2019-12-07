@@ -5,7 +5,7 @@ import { GlobalSettingService, Account } from '../../../global/globalSetting.ser
 import { GlobalStatusService } from '../../../global/globalStatus.service';
 import { ElMessageService } from 'element-angular';
 import * as Rx from 'rxjs';
-import { WebviewTag, WebContents } from 'electron';
+import { WebviewTag, WebContents, webContents } from 'electron';
 import { ElectronService } from '../../../core/electron.service';
 import { PluginService } from '../../../core/plugin.service';
 import { GameModel } from '../../../core/game.model';
@@ -53,12 +53,10 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
     let webContent: WebContents = null;
     const webview = this.gameView;
 
-    // webview.addEventListener('did-frame-finish-load', (event) => {
-    //   const { webFrame } = require('electron');
-    //   webFrame.findFrameByRoutingId((event as any).frameRoutingId);
-    // });
-    webview.addEventListener('did-navigate', event => {
-      this.logService.Url = event.url;
+    webview.addEventListener('load-commit', event => {
+      if (event.isMainFrame) {
+        this.logService.Url = event.url;
+      }
     });
     webview.addEventListener('did-frame-navigate', event => {
       const url = (event as any).url as string;
@@ -85,7 +83,7 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 
       if (this.electronService.serve) {
         // 打开开发者工具
-        webview.openDevTools();
+        // webview.openDevTools();
       }
       // 碧蓝删去滑动条
       if (CurrentGame.Spec === 'granblue') {

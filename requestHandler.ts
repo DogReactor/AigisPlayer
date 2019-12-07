@@ -59,6 +59,10 @@ export class RequestHandler {
     subscription.push(new Rule(options, callback));
   }
   static async handleData(req, cb) {
+    // 把hack/hacks改成http/https
+    const urlObj = url.parse(req.url);
+    urlObj.protocol = urlObj.protocol === 'hack:' ? 'http:' : 'https:';
+    req.url = url.format(urlObj);
     const requestSession = session.fromPartition('persist:request');
     if (browserWindow) {
       browserWindow.webContents.send('request-incoming');
@@ -133,8 +137,8 @@ export class RequestHandler {
     const request = net.request({
       method: req.method,
       url: req.url,
-      session: requestSession,
-      redirect: 'manual'
+      session: requestSession
+      // redirect: 'manual'
     });
     // 允许分片
     // request.chunkedEncoding = true;
@@ -155,6 +159,7 @@ export class RequestHandler {
     }
     // 处理301 302
     request.on('redirect', (statusCode, method, redirectUrl, responseHeaders) => {
+      // if (false) {
       if (responseHeaders['content-type'] && responseHeaders['content-type'][0].indexOf('text/html') !== -1) {
         cb({
           statusCode: 200,

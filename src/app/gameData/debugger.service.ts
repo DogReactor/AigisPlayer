@@ -7,7 +7,7 @@ import { RequestHandler } from '../../../requestHandler';
 export class DebuggerService {
   requestHandler: typeof RequestHandler;
   constructor(private electronService: ElectronService) {
-    this.requestHandler = this.electronService.APP['RequestHandler'] as (typeof RequestHandler);
+    this.requestHandler = this.electronService.APP['RequestHandler'] as typeof RequestHandler;
     this.requestHandler.Clear();
   }
   Subscribe(

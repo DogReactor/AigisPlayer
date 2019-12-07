@@ -9,3 +9,7 @@ require('./pluginHelper');
 require('./fixPage');
 require('./autoLogin');
 require('./loadModule');
+
+window.require = undefined;
+window.exports = undefined;
+window.module = undefined;

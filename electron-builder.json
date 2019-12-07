@@ -27,6 +27,7 @@
   },
   "linux": {
     "category": "Game",
+    "icon": "./build/icon.png",
     "target": [
       "deb",
       "AppImage"

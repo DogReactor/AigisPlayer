@@ -16,7 +16,7 @@ export class ElectronService {
   childProcess: typeof childProcess;
   currentWindow: BrowserWindow;
   APP: typeof app;
-  Session: Session;
+  Session: typeof Session;
   fs: typeof fs;
   serve: boolean;
   electron: typeof Electron;
@@ -33,7 +33,7 @@ export class ElectronService {
       this.childProcess = window.require('child_process');
       this.currentWindow = this.electron.remote.getCurrentWindow();
       this.APP = this.electron.remote.app;
-      this.Session = this.electron.remote.require('electron').session.defaultSession;
+      this.Session = this.electron.remote.require('electron').session;
       this.fs = window.require('fs');
       this.serve = this.electron.remote.process.argv.slice(1).some(val => val === '--serve');
       this.clipboard = this.electron.remote.clipboard;
@@ -54,15 +54,9 @@ export class ElectronService {
     this.currentWindow.setSize(size.Width, size.Height + 54, true);
     this.currentWindow.setResizable(false);
   };
-  SetProxy = (address: string) => {
-    this.Session.setProxy({
-      proxyRules: address,
-      proxyBypassRules: '127.0.0.1, player.aigis.me',
-      pacScript: ''
-    });
-  };
   async ClearCache() {
-    await this.Session.clearCache();
+    await this.Session.fromPartition('persist:request').clearCache();
+    await this.Session.fromPartition('persist:game').clearCache()
     this.translateService.get('MESSAGE.CLEARCACHE-SUCCESS').subscribe(res => {
       this.message['success'](res);
     });

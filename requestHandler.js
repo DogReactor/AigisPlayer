@@ -103,10 +103,13 @@ var RequestHandler = /** @class */ (function () {
     };
     RequestHandler.handleData = function (req, cb) {
         return __awaiter(this, void 0, void 0, function () {
-            var requestSession, rule, readable, gameSession, cookies, ModifyFilePath, modifyFileName, reqPath, requestFileName, protoablePath, userDataPath, modPath, modifyFilePath, fileStream, request;
+            var urlObj, requestSession, rule, readable, gameSession, cookies, ModifyFilePath, modifyFileName, reqPath, requestFileName, protoablePath, userDataPath, modPath, modifyFilePath, fileStream, request;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        urlObj = url.parse(req.url);
+                        urlObj.protocol = urlObj.protocol === 'hack:' ? 'http:' : 'https:';
+                        req.url = url.format(urlObj);
                         requestSession = electron_1.session.fromPartition('persist:request');
                         if (browserWindow) {
                             browserWindow.webContents.send('request-incoming');
@@ -178,8 +181,8 @@ var RequestHandler = /** @class */ (function () {
                         request = electron_1.net.request({
                             method: req.method,
                             url: req.url,
-                            session: requestSession,
-                            redirect: 'manual'
+                            session: requestSession
+                            // redirect: 'manual'
                         });
                         // 允许分片
                         // request.chunkedEncoding = true;
@@ -200,6 +203,7 @@ var RequestHandler = /** @class */ (function () {
                         }
                         // 处理301 302
                         request.on('redirect', function (statusCode, method, redirectUrl, responseHeaders) {
+                            // if (false) {
                             if (responseHeaders['content-type'] && responseHeaders['content-type'][0].indexOf('text/html') !== -1) {
                                 cb({
                                     statusCode: 200,
@@ -231,6 +235,7 @@ var RequestHandler = /** @class */ (function () {
                                     console.log(req.url, 'Time out');
                                 }
                             }, 1000);
+                            console.log(response.headers);
                             cb({
                                 statusCode: response.statusCode,
                                 headers: response.headers,

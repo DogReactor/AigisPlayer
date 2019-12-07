@@ -12,6 +12,7 @@ import * as url from 'url';
 const config = new Config();
 
 // app.commandLine.appendSwitch('--enable-npapi');
+app.commandLine.appendSwitch('disable-site-isolation-trials');
 app.commandLine.appendSwitch('js-flags', '--max-old-space-size=8192');
 // app.commandLine.appendSwitch('ignore-certificate-errors');
 if (config.get('disable-hardware-acceleration')) {
@@ -52,11 +53,13 @@ function createWindow() {
     });
     win.loadURL('http://localhost:4200');
   } else {
-    win.loadURL(url.format({
-      pathname: path.join(__dirname, 'ng/index.html'),
-      protocol: 'file:',
-      slashes: true
-    }));
+    win.loadURL(
+      url.format({
+        pathname: path.join(__dirname, 'ng/index.html'),
+        protocol: 'file:',
+        slashes: true
+      })
+    );
   }
   // Open the DevTools.
   // win.webContents.openDevTools();
@@ -80,9 +83,46 @@ try {
   app.on('ready', () => {
     app['RequestHandler'] = RequestHandler;
     app['dirname'] = __dirname;
+    const filterData = ['https://millennium-war.net/*', 'https://all.millennium-war.net/*'];
+    const filterAssets = ['http://assets.millennium-war.net/*'];
+    app['RequestFilter'] = filterData;
     const gameSession = session.fromPartition('persist:game');
-    gameSession.protocol.interceptStreamProtocol('http', RequestHandler.handleData);
-    gameSession.protocol.interceptStreamProtocol('https', RequestHandler.handleData);
+    // 统计
+    gameSession.webRequest.onCompleted({ urls: ['http://*/*', 'https://*/*'] }, () => {
+      win.webContents.send('response-incoming');
+    });
+    // TODO: 筛掉Aborted的请求
+    gameSession.webRequest.onErrorOccurred(({ url, error }) => {
+      win.webContents.send('error-incoming', url, error);
+    });
+    // 游戏数据的拦截
+    gameSession.webRequest.onBeforeRequest({ urls: filterData }, ({ url: u }, callback) => {
+      const urlObj = url.parse(u);
+      if (urlObj.protocol === 'http:' || urlObj.protocol === 'https:') {
+        urlObj.protocol = urlObj.protocol === 'http:' ? 'hack:' : 'hacks:';
+        callback({ redirectURL: url.format(urlObj) });
+        return;
+      }
+      callback({ cancel: false });
+    });
+
+    // 游戏资源的拦截
+    // TODO: 等electron开放3rd-party cookies
+    let count = 0;
+    gameSession.webRequest.onBeforeRequest({ urls: filterAssets }, ({ url: u }, callback) => {
+      const urlObj = url.parse(u);
+      count++;
+      if (count <= 2) {
+        callback({ cancel: false });
+      } else {
+        urlObj.protocol = urlObj.protocol === 'http:' ? 'hack:' : 'hacks:';
+        callback({ redirectURL: url.format(urlObj) });
+      }
+    });
+
+    // 自定义协议的注册
+    gameSession.protocol.registerStreamProtocol('hack', RequestHandler.handleData);
+    gameSession.protocol.registerStreamProtocol('hacks', RequestHandler.handleData);
     createWindow();
     // menu
     if (process.platform === 'darwin') {
@@ -113,11 +153,14 @@ try {
     });
     ipcMain.on('proxyStatusUpdate', (_, proxyRule: string) => {
       const requestSession = session.fromPartition('persist:request');
-      requestSession.setProxy({
+      const gameSession = session.fromPartition('persist:game');
+      const rule = {
         proxyRules: proxyRule,
         proxyBypassRules: '127.0.0.1 player.aigis.me',
         pacScript: ''
-      });
+      };
+      gameSession.setProxy(rule);
+      requestSession.setProxy(rule);
       // proxyServer.setProxy(arg.Enabled, arg.Socks5, arg.Host, arg.Port);
     });
 
