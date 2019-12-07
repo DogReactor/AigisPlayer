@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { WebContents, webContents } from 'electron';
 import { ElectronService } from '../core/electron.service';
-import { RequestHandler } from '../../../build/requestHandler';
+import { RequestHandler } from '../../../requestHandler';
 
 @Injectable()
 export class DebuggerService {

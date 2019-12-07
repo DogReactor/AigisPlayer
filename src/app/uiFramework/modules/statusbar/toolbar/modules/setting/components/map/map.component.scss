@@ -1,18 +1,21 @@
 .checkbox {
-    float: right;
+  float: right;
 }
 
 :host {
-    display: flex;
+  display: flex;
 }
 
 hr {
-    height: 1px;
-    border: none;
-    border-top: 1px dashed #D3DCE6;
+  height: 1px;
+  border: none;
+  border-top: 1px dashed #d3dce6;
 }
 
 .item {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+}
+.container {
+  width: 100%;
 }

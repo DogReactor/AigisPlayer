@@ -8,6 +8,7 @@ import * as log from 'electron-log';
 import * as unzip from 'unzipper';
 import * as request from 'request';
 import * as Config from 'electron-config';
+import * as url from 'url';
 const config = new Config();
 
 // app.commandLine.appendSwitch('--enable-npapi');
@@ -26,11 +27,6 @@ function sendStatusToWindow(text, obj?) {
 }
 
 let fileList = {};
-if (serve) {
-  require('electron-reload')(path.join(process.cwd(), 'src'), {
-    electron: require(`${process.cwd()}/node_modules/electron`)
-  });
-}
 
 function createWindow() {
   win = new BrowserWindow({
@@ -50,7 +46,18 @@ function createWindow() {
   });
   RequestHandler.setWin(win);
   // and load the index.html of the app.
-  win.loadFile(path.join(__dirname, '/app/index.html'));
+  if (serve) {
+    require('electron-reload')(__dirname, {
+      electron: require(`${__dirname}/node_modules/electron`)
+    });
+    win.loadURL('http://localhost:4200');
+  } else {
+    win.loadURL(url.format({
+      pathname: path.join(__dirname, 'ng/index.html'),
+      protocol: 'file:',
+      slashes: true
+    }));
+  }
   // Open the DevTools.
   // win.webContents.openDevTools();
   if (serve) {
@@ -72,6 +79,7 @@ try {
   // Some APIs can only be used after this event occurs.
   app.on('ready', () => {
     app['RequestHandler'] = RequestHandler;
+    app['dirname'] = __dirname;
     const gameSession = session.fromPartition('persist:game');
     gameSession.protocol.interceptStreamProtocol('http', RequestHandler.handleData);
     gameSession.protocol.interceptStreamProtocol('https', RequestHandler.handleData);

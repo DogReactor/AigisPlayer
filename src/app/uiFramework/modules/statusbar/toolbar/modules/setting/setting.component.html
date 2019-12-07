@@ -9,8 +9,8 @@
     </el-menu>
   </div>
   <div el-col span="16" class="content" [ngSwitch]="index">
-    <app-setting-proxy class="content-item" [@fadeInOut]="selectedMenu" *ngSwitchCase="'proxy'"></app-setting-proxy>
     <app-setting-util class="content-item" [@fadeInOut]="selectedMenu" *ngSwitchCase="'util'"></app-setting-util>
+    <app-setting-proxy class="content-item" [@fadeInOut]="selectedMenu" *ngSwitchCase="'proxy'"></app-setting-proxy>
     <app-setting-account
       class="content-item"
       [@fadeInOut]="selectedMenu"

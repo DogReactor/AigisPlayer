@@ -14,7 +14,7 @@ import { SettingPluginsModule } from './modules/plugins/plugins.modules';
     SettingProxyComponent,
     SettingUtilComponent,
     SettingAccountComponent,
-    SettingMapComponent
+    SettingMapComponent,
   ],
   imports: [SharedModule, ReactiveFormsModule, SettingPluginsModule],
   exports: [UIFrameStatusBarToolBarSettingComponent]

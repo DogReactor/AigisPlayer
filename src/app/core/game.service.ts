@@ -167,8 +167,8 @@ export class GameService {
       this.electronService.ReSize(
         new Size(Math.floor(game.Size.Height * (this.zoom / 100)), Math.floor(game.Size.Width * (this.zoom / 100)))
       );
-      this.pluginService.DeactiveEmbedPlugin('left');
-      this.pluginService.DeactiveEmbedPlugin('right');
+      // this.pluginService.DeactiveEmbedPlugin('left');
+      // this.pluginService.DeactiveEmbedPlugin('right');
       this.CurrentGame = game;
       this.pluginService.emitEvent('load-game', game);
       document.title = <string>game.Name;

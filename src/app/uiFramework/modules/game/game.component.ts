@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { GameService } from '../../../core/game.service';
 import { GlobalSettingService, Account } from '../../../global/globalSetting.service';
@@ -16,10 +16,11 @@ import { LogService } from '../../../core/log.service';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements AfterViewInit, OnDestroy {
+export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
   private gameView: WebviewTag = null;
   private zoom = 100;
   private subscriptionList: Rx.Subscription[] = [];
+  private dirname = '';
   constructor(
     private gameService: GameService,
     private globalSettingService: GlobalSettingService,
@@ -42,8 +43,12 @@ export class GameComponent implements AfterViewInit, OnDestroy {
       })
     );
   }
+  ngOnInit() {
+    this.dirname = this.electronService.APP['dirname'];
+  }
   ngAfterViewInit() {
     this.gameView = <WebviewTag>document.getElementById('gameView');
+    this.gameView.setAttribute('preload', `file://${this.dirname}/assets/js/inject.js`);
     this.gameService.WebView = this.gameView;
     let webContent: WebContents = null;
     const webview = this.gameView;

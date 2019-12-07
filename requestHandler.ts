@@ -155,7 +155,6 @@ export class RequestHandler {
     }
     // 处理301 302
     request.on('redirect', (statusCode, method, redirectUrl, responseHeaders) => {
-      log.info('redirect from', req.url, 'to', redirectUrl);
       if (responseHeaders['content-type'] && responseHeaders['content-type'][0].indexOf('text/html') !== -1) {
         cb({
           statusCode: 200,
@@ -184,14 +183,6 @@ export class RequestHandler {
     });
     // 处理回复
     request.on('response', response => {
-      if (
-        response.headers['content-type'] &&
-        response.headers['content-type'].indexOf('text/html') !== -1 &&
-        req.url.indexOf('dmm') !== -1
-      ) {
-        log.info('response', req.url);
-      }
-
       const raws: Array<Buffer> = [];
       let length = 0;
       let time = 10;
