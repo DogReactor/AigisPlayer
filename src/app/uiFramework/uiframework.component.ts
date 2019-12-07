@@ -29,12 +29,12 @@ export class UIFrameComponent implements OnInit {
     switch (type) {
       // 上方导航栏，控制最小化及关闭
       case 'navbar':
-        this.title = '你确定要退出咩a';
+        this.title = '你确定要退出咩';
         this.okText = '退出';
         break;
       // 下方导航栏，控制刷新及截屏
       case 'statusbar':
-        this.title = '你确定要刷新咩a';
+        this.title = '你确定要刷新咩';
         this.okText = '刷';
         break;
 

@@ -6,9 +6,6 @@
     "output": "app-builds",
     "buildResources": "build"
   },
-  "files": [
-    "assets/"
-  ],
   "publish": [{
     "provider": "generic",
     "url": "http://player.aigis.me/assets/aigisplayer"
