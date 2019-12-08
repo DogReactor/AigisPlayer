@@ -1,4 +1,4 @@
-import { app, BrowserWindow, session, ipcMain, Menu } from 'electron';
+import { app, BrowserWindow, session, ipcMain, Menu, protocol } from 'electron';
 import * as path from 'path';
 import { RequestHandler } from './requestHandler';
 let win: BrowserWindow, serve;
@@ -76,48 +76,79 @@ function createWindow() {
   });
 }
 
+// 注册schema
+protocol.registerSchemesAsPrivileged([
+  {
+    scheme: 'hack',
+    privileges: {
+      standard: true,
+      secure: true,
+      bypassCSP: true,
+      allowServiceWorkers: true,
+      supportFetchAPI: true,
+      corsEnabled: true
+    }
+  },
+  {
+    scheme: 'hacks',
+    privileges: {
+      standard: true,
+      secure: true,
+      bypassCSP: true,
+      allowServiceWorkers: true,
+      supportFetchAPI: true,
+      corsEnabled: true
+    }
+  }
+]);
 try {
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
   app.on('ready', () => {
+    const gameSession = session.fromPartition('persist:game');
     app['RequestHandler'] = RequestHandler;
     app['dirname'] = __dirname;
-    const filterData = ['https://millennium-war.net/*', 'https://all.millennium-war.net/*'];
-    const filterAssets = ['http://assets.millennium-war.net/*'];
-    app['RequestFilter'] = filterData;
-    const gameSession = session.fromPartition('persist:game');
+    const filterData = [
+      'https://millennium-war.net/*',
+      'https://all.millennium-war.net/*',
+      'http://assets.millennium-war.net/*'
+    ];
     // 统计
     gameSession.webRequest.onCompleted({ urls: ['http://*/*', 'https://*/*'] }, () => {
-      win.webContents.send('response-incoming');
+      if (win) {
+        win.webContents.send('response-incoming');
+      }
     });
     // TODO: 筛掉Aborted的请求
     gameSession.webRequest.onErrorOccurred(({ url, error }) => {
-      win.webContents.send('error-incoming', url, error);
+      if (win) {
+        win.webContents.send('error-incoming', url, error);
+      }
     });
     // 游戏数据的拦截
+    let count = 0;
     gameSession.webRequest.onBeforeRequest({ urls: filterData }, ({ url: u }, callback) => {
       const urlObj = url.parse(u);
-      if (urlObj.protocol === 'http:' || urlObj.protocol === 'https:') {
-        urlObj.protocol = urlObj.protocol === 'http:' ? 'hack:' : 'hacks:';
-        callback({ redirectURL: url.format(urlObj) });
-        return;
+      // 游戏资源的拦截
+      if (u.indexOf('http://assets.millennium-war.net/') !== -1) {
+        count++;
+        // 如果是音频文件，跳过拦截
+        // audio标签好像不支持自定义schema
+        const path = urlObj.path;
+        const filename = fileList[path];
+        if (filename && (filename.indexOf('ogg') !== -1 || filename.indexOf('mp3') !== -1)) {
+          callback({ cancel: false });
+          return;
+        }
+        // 宿主页不是http协议的话，会比较麻烦。
+        if (count <= 2) {
+          callback({ cancel: false });
+          return;
+        }
       }
-      callback({ cancel: false });
-    });
-
-    // 游戏资源的拦截
-    // TODO: 等electron开放3rd-party cookies
-    let count = 0;
-    gameSession.webRequest.onBeforeRequest({ urls: filterAssets }, ({ url: u }, callback) => {
-      const urlObj = url.parse(u);
-      count++;
-      if (count <= 2) {
-        callback({ cancel: false });
-      } else {
-        urlObj.protocol = urlObj.protocol === 'http:' ? 'hack:' : 'hacks:';
-        callback({ redirectURL: url.format(urlObj) });
-      }
+      urlObj.protocol = urlObj.protocol === 'http:' ? 'hack:' : 'hacks:';
+      callback({ redirectURL: url.format(urlObj) });
     });
 
     // 自定义协议的注册
@@ -187,6 +218,7 @@ try {
   app.on('window-all-closed', () => {
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
+    win = null;
     if (process.platform !== 'darwin') {
       app.quit();
     }

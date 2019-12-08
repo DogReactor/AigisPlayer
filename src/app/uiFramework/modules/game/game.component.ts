@@ -83,7 +83,7 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
 
       if (this.electronService.serve) {
         // 打开开发者工具
-        // webview.openDevTools();
+        webview.openDevTools();
       }
       // 碧蓝删去滑动条
       if (CurrentGame.Spec === 'granblue') {

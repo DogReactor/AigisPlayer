@@ -50,9 +50,9 @@ export class ElectronService {
 
   ReSize = (size: Size) => {
     // What the fuck;
-    this.currentWindow.setResizable(true);
+    this.currentWindow.resizable = true;
     this.currentWindow.setSize(size.Width, size.Height + 54, true);
-    this.currentWindow.setResizable(false);
+    this.currentWindow.resizable = false;
   };
   async ClearCache() {
     await this.Session.fromPartition('persist:request').clearCache();

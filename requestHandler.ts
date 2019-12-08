@@ -63,6 +63,14 @@ export class RequestHandler {
     const urlObj = url.parse(req.url);
     urlObj.protocol = urlObj.protocol === 'hack:' ? 'http:' : 'https:';
     req.url = url.format(urlObj);
+    // 把header里的Origin中的hack/hacks改成http/https
+    if (req.referrer) {
+      req.referrer = req.referrer.replace('hack', 'http');
+    }
+    if (req.headers['Origin']) {
+      req.headers['Origin'] = req.headers['Origin'].replace('hack', 'http');
+    }
+    // 获取发起请求用session，禁止套娃
     const requestSession = session.fromPartition('persist:request');
     if (browserWindow) {
       browserWindow.webContents.send('request-incoming');
@@ -159,8 +167,8 @@ export class RequestHandler {
     }
     // 处理301 302
     request.on('redirect', (statusCode, method, redirectUrl, responseHeaders) => {
-      // if (false) {
-      if (responseHeaders['content-type'] && responseHeaders['content-type'][0].indexOf('text/html') !== -1) {
+      if (false) {
+        // if (responseHeaders['content-type'] && responseHeaders['content-type'][0].indexOf('text/html') !== -1) {
         cb({
           statusCode: 200,
           headers: responseHeaders,
@@ -178,10 +186,14 @@ export class RequestHandler {
           browserWindow.webContents.send('response-incoming');
         }
       } else {
+        console.log('from', req.url, 'to', redirectUrl, statusCode);
         cb({
-          statusCode: statusCode,
-          headers: responseHeaders
+          statusCode: 200,
+          headers: responseHeaders,
+          data: readable
         });
+        readable.push('fuckyou');
+        readable.push(null);
       }
 
       // request.abort();
