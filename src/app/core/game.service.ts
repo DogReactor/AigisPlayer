@@ -176,7 +176,7 @@ export class GameService {
   }
   submitClickEvent(x: number, y: number) {
     if (this.webView) {
-      const webContents = this.webView.getWebContents() as any;
+      const webContents = this.webView.getWebContents();
       if (webContents) {
         setTimeout(() => {
           webContents.sendInputEvent({
@@ -184,7 +184,8 @@ export class GameService {
             x: x,
             y: y,
             button: 'left',
-            clickCount: 1
+            clickCount: 1,
+            modifiers: []
           });
           setTimeout(() => {
             webContents.sendInputEvent({
@@ -192,7 +193,8 @@ export class GameService {
               x: x,
               y: y,
               button: 'left',
-              clickCount: 1
+              clickCount: 1,
+              modifiers: []
             });
           }, 50 + (Math.random() > 0.5 ? -1 : 1) * Math.random() * 10);
         }, 1);

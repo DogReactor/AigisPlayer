@@ -1,3 +1,3 @@
 export class GlobalConfig {
-  static Host = 'player.aigis.me';
+  static Host = 'player.pigtv.moe';
 }

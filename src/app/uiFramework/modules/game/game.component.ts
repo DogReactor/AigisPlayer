@@ -10,6 +10,7 @@ import { ElectronService } from '../../../core/electron.service';
 import { PluginService } from '../../../core/plugin.service';
 import { GameModel } from '../../../core/game.model';
 import { LogService } from '../../../core/log.service';
+import { HotkeyService } from '../../../core/hotkey.service';
 
 @Component({
   selector: 'app-game',
@@ -29,6 +30,7 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
     private translateService: TranslateService,
     private electronService: ElectronService,
     private logService: LogService,
+    private hotkeyService: HotkeyService,
     private pluginService: PluginService
   ) {
     this.subscriptionList.push(
@@ -71,7 +73,18 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
       }
     });
     webview.addEventListener('dom-ready', () => {
-      webContent = webview.getWebContents();
+      if (!webContent) {
+        webContent = webview.getWebContents();
+        webContent.on('before-input-event', (event, input) => {
+          if (input.type !== 'keyUp') {
+            return;
+          }
+          if (input.key !== '' && input.code === '') {
+            return;
+          }
+          this.hotkeyService.triggerHotKey(input.code);
+        });
+      }
       const mute = this.globalStatusService.GlobalStatusStore.Get('Mute').Value;
       webview.setAudioMuted(mute);
       const CurrentGame = <GameModel>this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Value;

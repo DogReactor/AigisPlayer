@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ElectronService } from './core/electron.service';
 import { TranslateService } from '@ngx-translate/core';
 import { GlobalStatusService } from './global/globalStatus.service';
@@ -37,8 +37,5 @@ export class AppComponent {
     } else {
       console.log('Mode web');
     }
-  }
-  keyup(event: KeyboardEvent) {
-    this.hotkeyService.triggerHotKey(event);
   }
 }

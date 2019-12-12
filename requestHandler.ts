@@ -118,7 +118,8 @@ export class RequestHandler {
       if (modifyFileName !== '' && fs.existsSync(modifyFilePath)) {
         log.info(requestFileName, 'modify by Server');
         // AFT和PNG文件直接回传
-        if (modifyFileName === 'MainFont.aft' || path.extname(modifyFileName) === 'png') {
+        // 同名文件直接回传
+        if (fs.existsSync(path.join(modPath, requestFileName))) {
           const fileStream = fs.createReadStream(modifyFilePath);
           cb({
             statusCode: 200,
