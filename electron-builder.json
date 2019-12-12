@@ -1,6 +1,6 @@
 {
   "appId": "com.dogreactor.aigisplayer",
-  "productName": "BraveGirlRavensPlayer",
+  "productName": "AigisPlayer",
   "directories": {
     "app": "dist",
     "output": "app-builds",
