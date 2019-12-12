@@ -5,9 +5,10 @@ import { ElectronService } from './electron.service';
 import { GameService } from './game.service';
 import { PluginService } from './plugin.service';
 import { HotkeyService } from './hotkey.service';
+import { LogService } from './log.service';
 
 @NgModule({
   imports: [CommonModule],
-  providers: [ElectronService, GameService, PluginService, HotkeyService]
+  providers: [ElectronService, GameService, PluginService, HotkeyService, LogService]
 })
 export class CoreModule {}

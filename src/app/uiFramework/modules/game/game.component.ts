@@ -1,25 +1,27 @@
-import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { GameService } from '../../../core/game.service';
 import { GlobalSettingService, Account } from '../../../global/globalSetting.service';
 import { GlobalStatusService } from '../../../global/globalStatus.service';
 import { ElMessageService } from 'element-angular';
 import * as Rx from 'rxjs';
-import { WebviewTag, WebContents } from 'electron';
+import { WebviewTag, WebContents, webContents } from 'electron';
 import { ElectronService } from '../../../core/electron.service';
 import { PluginService } from '../../../core/plugin.service';
 import { GameModel } from '../../../core/game.model';
-import { DebuggerService } from '../../../gameData/debugger.service';
+import { LogService } from '../../../core/log.service';
+import { HotkeyService } from '../../../core/hotkey.service';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements AfterViewInit, OnDestroy {
+export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
   private gameView: WebviewTag = null;
   private zoom = 100;
   private subscriptionList: Rx.Subscription[] = [];
+  private dirname = '';
   constructor(
     private gameService: GameService,
     private globalSettingService: GlobalSettingService,
@@ -27,7 +29,8 @@ export class GameComponent implements AfterViewInit, OnDestroy {
     private message: ElMessageService,
     private translateService: TranslateService,
     private electronService: ElectronService,
-    private debuggerService: DebuggerService,
+    private logService: LogService,
+    private hotkeyService: HotkeyService,
     private pluginService: PluginService
   ) {
     this.subscriptionList.push(
@@ -42,16 +45,21 @@ export class GameComponent implements AfterViewInit, OnDestroy {
       })
     );
   }
+  ngOnInit() {
+    this.dirname = this.electronService.APP['dirname'];
+  }
   ngAfterViewInit() {
     this.gameView = <WebviewTag>document.getElementById('gameView');
+    this.gameView.setAttribute('preload', `file://${this.dirname}/assets/js/inject.js`);
     this.gameService.WebView = this.gameView;
     let webContent: WebContents = null;
     const webview = this.gameView;
 
-    // webview.addEventListener('did-frame-finish-load', (event) => {
-    //   const { webFrame } = require('electron');
-    //   webFrame.findFrameByRoutingId((event as any).frameRoutingId);
-    // });
+    webview.addEventListener('load-commit', event => {
+      if (event.isMainFrame) {
+        this.logService.Url = event.url;
+      }
+    });
     webview.addEventListener('did-frame-navigate', event => {
       const url = (event as any).url as string;
       if (
@@ -65,8 +73,18 @@ export class GameComponent implements AfterViewInit, OnDestroy {
       }
     });
     webview.addEventListener('dom-ready', () => {
-      // this.debuggerService.Detach(webview.getWebContents());
-      webContent = webview.getWebContents();
+      if (!webContent) {
+        webContent = webview.getWebContents();
+        webContent.on('before-input-event', (event, input) => {
+          if (input.type !== 'keyUp') {
+            return;
+          }
+          if (input.key !== '' && input.code === '') {
+            return;
+          }
+          this.hotkeyService.triggerHotKey(input.code);
+        });
+      }
       const mute = this.globalStatusService.GlobalStatusStore.Get('Mute').Value;
       webview.setAudioMuted(mute);
       const CurrentGame = <GameModel>this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Value;
@@ -93,7 +111,6 @@ export class GameComponent implements AfterViewInit, OnDestroy {
         webview.getURL().indexOf('game_dmm.php') !== -1
       ) {
         webview.send('catch', CurrentGame.Spec);
-        this.debuggerService.Attach(webview.getWebContents()); // 注入debuger
       }
 
       // 自动输入用户名密码

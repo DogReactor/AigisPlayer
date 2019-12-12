@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { GameService } from './game.service';
 import { GlobalSettingService } from '../global/globalSetting.service';
+import { ElectronService } from './electron.service';
 
 @Injectable()
 export class HotkeyService {
-  constructor(private gameService: GameService, private globalSettingService: GlobalSettingService) {}
+  constructor(
+    private gameService: GameService,
+    private globalSettingService: GlobalSettingService,
+    private electronService: ElectronService
+  ) {}
 
-  triggerHotKey(event: KeyboardEvent) {
-    const code = event.code;
-    if (event.key !== '' && event.code === '') {
-      return;
-    }
+  triggerHotKey(code: string) {
     if (this.globalSettingService.GlobalSetting.SpeedUpKey === code) {
       this.gameService.KeyMapperTrigger('SpeedUpKey');
     }

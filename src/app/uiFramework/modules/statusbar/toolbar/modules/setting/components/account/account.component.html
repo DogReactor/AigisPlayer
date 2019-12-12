@@ -1,5 +1,5 @@
-<div el-container>
-  <div el-main *ngIf="accountList.Encrypted === true" class="password-container">
+<div class="container">
+  <div el-main style="min-height: 100%;" *ngIf="accountList.Encrypted === true" class="password-container">
     <el-input
       [(model)]="accountListPassword"
       #input

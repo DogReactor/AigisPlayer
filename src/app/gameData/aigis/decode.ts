@@ -9,12 +9,8 @@ const decode = (buffer, key) => {
 };
 
 export class Decoder {
-  static DecodeList = buffer => {
+  static DecodeList = (buffer: Buffer) => {
     const aigisAssetsBegin = 'http://assets.millennium-war.net/';
-    if (/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/.test(buffer)) {
-      buffer = Base64.Decode(buffer);
-    }
-
     const b = [];
     const d = decode(buffer, 0xea ^ 0x30);
     for (let i = 0; i < d.byteLength; i++) {
@@ -38,11 +34,7 @@ export class Decoder {
     return datas;
   };
 
-  static DecodeXml = buffer => {
-    if (/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/.test(buffer)) {
-      buffer = Base64.Decode(buffer);
-    }
-
+  static DecodeXml = (buffer: Buffer) => {
     const head = '<DA>';
     const startByte = head.charCodeAt(0);
     for (let i = 0; i < Math.min(100, buffer.byteLength); i++) {

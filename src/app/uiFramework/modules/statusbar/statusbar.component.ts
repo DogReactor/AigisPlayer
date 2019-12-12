@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { GameService } from '../../../core/game.service';
+import { LogService } from '../../../core/log.service';
 
 @Component({
   selector: 'app-uiframe-statusbar',
@@ -9,7 +10,7 @@ import { GameService } from '../../../core/game.service';
 export class UIFrameStatusBarComponent {
   @Input() dialogToggle: Function;
 
-  constructor(private gameService: GameService) {}
+  constructor(private gameService: GameService, private logService: LogService) {}
 
   screenshot(event) {
     if (event.button === 0) {

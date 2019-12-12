@@ -77,7 +77,7 @@ export class AigisGameDataService {
         method: 'GET',
         request: false
       },
-      (url, response) => {
+      (url: string, response: Buffer) => {
         if (
           url.indexOf('/2iofz514jeks1y44k7al2ostm43xj085') !== -1 ||
           url.indexOf('/1fp32igvpoxnb521p9dqypak5cal0xv0') !== -1
@@ -101,10 +101,7 @@ export class AigisGameDataService {
             });
           }
         } else if (this.assetsRoster.has(url) || this.assetsCollector.EigenUrls.has(url)) {
-          let buffer = response;
-          if (/^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$/.test(buffer)) {
-            buffer = Base64.Decode(buffer);
-          }
+          const buffer = response;
           const data = parseAL(buffer) || buffer;
           if (this.assetsRoster.has(url)) {
             const channel = this.assetsRoster.get(url);
@@ -132,13 +129,8 @@ export class AigisGameDataService {
     }
   }
 
-  async parseData(raw: any) {
+  async parseData(buffer: Buffer) {
     try {
-      const arr = [];
-      for (let i = 0; i < raw.length; i++) {
-        arr.push(raw.charCodeAt(i));
-      }
-      const buffer = Buffer.from(arr);
       let decoded = Decoder.DecodeXml(buffer);
       let data;
       if (decoded) {
@@ -150,7 +142,7 @@ export class AigisGameDataService {
         }
         data = body_str.join('');
       } else {
-        data = raw;
+        data = buffer.toString();
       }
       data = Xml2json(data);
       data = data['DA'] || data;

@@ -31,8 +31,8 @@ export class UIFrameMainComponent implements AfterViewInit {
     this.DataCollectNote = !this.aigisStatisticsService.DataCollectNoted;
   }
   ngAfterViewInit() {
-    const left = <WebviewTag>document.getElementById('leftView');
-    const right = <WebviewTag>document.getElementById('rightView');
+    // const left = <WebviewTag>document.getElementById('leftView');
+    // const right = <WebviewTag>document.getElementById('rightView');
     this.globalStatusService.GlobalStatusStore.Get('LeftPluginWidth').Subscribe(v => {
       this.leftWidth = v | 0;
       this.changeDetectorRef.detectChanges();
@@ -41,8 +41,8 @@ export class UIFrameMainComponent implements AfterViewInit {
       this.rightWidth = v | 0;
       this.changeDetectorRef.detectChanges();
     });
-    this.pluginService.regEmbedWebview('left', left);
-    this.pluginService.regEmbedWebview('right', right);
+    // this.pluginService.regEmbedWebview('left', left);
+    // this.pluginService.regEmbedWebview('right', right);
   }
   confirmDataPermit() {
     this.DataCollectNote = false;

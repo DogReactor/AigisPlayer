@@ -111,7 +111,7 @@ export class PluginHelper {
     option.parent = currentWindow;
     const win = new BrowserWindow(option);
     win.loadURL(url);
-    win.webContents.on('dom-ready', event => {
+    win.webContents.on('dom-ready', (event: any) => {
       event.sender.send('plugin-info', this.plugin);
     });
     return win;
