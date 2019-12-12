@@ -25,7 +25,7 @@
     "ng:serve:web": "ng serve -c web -o",
     "electron:serve-tsc": "tsc -p tsconfig-serve.json",
     "electron:build-tsc": "tsc -p tsconfig-build.json && copyfiles assets/**/*.* dist",
-    "electron:build": "copyfiles package.json dist && npm run pinstall",
+    "electron:build": "copyfiles package.json dist && cd dist && npm install",
     "electron:serve": "wait-on http-get://localhost:4200/ && npm run electron:serve-tsc && electron . --serve",
     "electron:local": "npm run build:prod && cd dist && electron .",
     "electron:linux": "npm run build:prod && electron-builder build --linux",
