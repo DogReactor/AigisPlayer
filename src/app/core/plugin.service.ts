@@ -305,7 +305,10 @@ export class PluginService {
         partition: 'plugin'
       };
     }
-    plugin.windowOption.webPreferences.preload = path.join(__dirname, './assets/js/pluginWindowPreload.js');
+    plugin.windowOption.webPreferences.preload = path.join(
+      this.electronService.APP.getAppPath(),
+      './assets/js/pluginWindowPreload.js'
+    );
     plugin.windowOption.webPreferences.nodeIntegration = true;
     plugin.windowOption.webPreferences.webviewTag = true;
     plugin.activedWindow.BrowserWindow = this.electronService.CreateBrowserWindow(url, plugin.windowOption);

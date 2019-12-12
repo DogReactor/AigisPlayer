@@ -11,6 +11,9 @@ requestHandler.js
 src/**/*.js
 !src/karma.conf.js
 *.js.map
+/plugins
+filelist.json
+updateInfo.json
 
 # dependencies
 /node_modules
