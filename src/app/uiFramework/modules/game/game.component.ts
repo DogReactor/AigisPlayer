@@ -62,14 +62,17 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
     });
     webview.addEventListener('did-frame-navigate', event => {
       const url = (event as any).url as string;
+      const routingID = (event as any).frameRoutingId;
       if (
         url.indexOf('.mimolette.co.jp/ps01/game_webgl_player.html') !== -1 ||
         url.indexOf('.funyours.co.jp/ps01/game_webgl_player.html') !== -1
       ) {
-        const routingID = (event as any).frameRoutingId;
-        const { webFrame } = require('electron');
         webview.getWebContents().send('frame', routingID);
         // frame.executeJavaScript('console.log("FuckYouuuuuuuuuuu")');
+      }
+      if (url.indexOf('assets.millennium-war.net') !== -1) {
+        webview.getWebContents().send('aigis-frame', routingID);
+        console.log(routingID);
       }
     });
     webview.addEventListener('dom-ready', () => {

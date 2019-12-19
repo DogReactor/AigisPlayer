@@ -8,11 +8,12 @@
   },
   "publish": [{
     "provider": "generic",
-    "url": "http://player.aigis.me/assets/aigisplayer"
+    "url": "http://player.pigtv.moe/assets/aigisplayer"
   }, {
     "provider": "github"
   }],
   "win": {
+    "icon": "./build/icon.png",
     "target": [{
       "target": "nsis",
       "arch": [
@@ -21,6 +22,7 @@
     }]
   },
   "mac": {
+    "icon": "./build/icon.png",
     "target": [
       "dmg"
     ]

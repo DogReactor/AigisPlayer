@@ -9,6 +9,7 @@ import * as unzip from 'unzipper';
 import * as request from 'request';
 import * as Config from 'electron-config';
 import * as url from 'url';
+import { autoUpdater } from 'electron-updater';
 const config = new Config();
 
 // app.commandLine.appendSwitch('--enable-npapi');
@@ -19,6 +20,8 @@ if (config.get('disable-hardware-acceleration')) {
   app.disableHardwareAcceleration();
 }
 
+autoUpdater.logger = log;
+autoUpdater.autoInstallOnAppQuit = false;
 log.transports.file.level = 'info';
 log.info('App starting...');
 
@@ -26,6 +29,28 @@ function sendStatusToWindow(text, obj?) {
   log.info(text);
   win.webContents.send('update-message', text, obj);
 }
+
+autoUpdater.on('checking-for-update', () => {
+  sendStatusToWindow('UPDATE.CHECK');
+});
+autoUpdater.on('update-available', (ev, info) => {
+  sendStatusToWindow('UPDATE.AVB');
+});
+autoUpdater.on('update-not-available', (ev, info) => {
+  sendStatusToWindow('UPDATE.NOTAVB');
+});
+autoUpdater.on('error', (ev, err) => {
+  sendStatusToWindow('UPDATE.ERROR');
+});
+autoUpdater.on('download-progress', (ev, progressObj) => {
+  sendStatusToWindow('UPDATE.PROGRESS', progressObj);
+});
+autoUpdater.on('update-downloaded', (ev, info) => {
+  sendStatusToWindow('UPDATE.DOWNLOADED');
+  ipcMain.once('updateNow', (e, arg) => {
+    autoUpdater.quitAndInstall();
+  });
+});
 
 let fileList = {};
 
@@ -41,6 +66,7 @@ function createWindow() {
       webSecurity: false,
       plugins: true,
       nodeIntegration: true,
+      nodeIntegrationInSubFrames: true,
       webviewTag: true,
       partition: 'persist:main'
     }
@@ -48,9 +74,9 @@ function createWindow() {
   RequestHandler.setWin(win);
   // and load the index.html of the app.
   if (serve) {
-    require('electron-reload')(__dirname, {
-      electron: require(`${__dirname}/node_modules/electron`)
-    });
+    // require('electron-reload')(__dirname, {
+    //   electron: require(`${__dirname}/node_modules/electron`)
+    // });
     win.loadURL('http://localhost:4200');
   } else {
     win.loadURL(
@@ -187,12 +213,17 @@ try {
       const gameSession = session.fromPartition('persist:game');
       const rule = {
         proxyRules: proxyRule,
-        proxyBypassRules: '127.0.0.1 player.aigis.me',
+        proxyBypassRules: '127.0.0.1 player.pigtv.moe',
         pacScript: ''
       };
       gameSession.setProxy(rule);
       requestSession.setProxy(rule);
       // proxyServer.setProxy(arg.Enabled, arg.Socks5, arg.Host, arg.Port);
+    });
+
+    ipcMain.on('checkForUpdates', () => {
+      autoUpdater.setFeedURL('http://player.pigtv.moe/assets/aigisplayer');
+      autoUpdater.checkForUpdates();
     });
 
     ipcMain.on('installPlugin', (_, arg) => {
@@ -211,6 +242,63 @@ try {
         .on('error', e => {
           win.webContents.send(`plugin-install-error-${salt}`, e);
         });
+    });
+
+    ipcMain.on('prompt', (event, message, text) => {
+      let promptResponse = null;
+      let promptWindow = new BrowserWindow({
+        width: 350,
+        height: 120,
+        show: false,
+        resizable: false,
+        movable: false,
+        alwaysOnTop: true,
+        frame: false,
+        webPreferences: {
+          nodeIntegration: true,
+          nodeIntegrationInSubFrames: true,
+          webviewTag: true
+        }
+      });
+      const html = `
+      <html>
+        <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+        </head>
+        <body>
+          <div>${message}</div>
+          <input type="text" id="inputbox" value="${text}" style="width:100%"/>
+          <div style="margin-top: 10px;">
+            <button style="float:right" onclick="ok()">OK</button>
+            <button style="float:right;margin-right: 10px;" onclick="cancel()">Cancel</button>
+          </div>
+          <script>
+          const ipcRenderer = require('electron').ipcRenderer;
+          const inputbox = document.getElementById('inputbox');
+          function cancel(){
+            ipcRenderer.send('prompt-response','',true);
+            window.close();
+          }
+          function ok(){
+            ipcRenderer.send('prompt-response',inputbox.value,false);
+            window.close();
+          }
+        </script>
+        </body>
+      </html>
+      `;
+      promptWindow.loadURL('data:text/html,' + html);
+      promptWindow.show();
+      ipcMain.on('prompt-response', function(event, value, cancel) {
+        if (cancel) {
+          value = null;
+        }
+        promptResponse = value;
+      });
+      promptWindow.on('close', () => {
+        promptWindow = null;
+        event.returnValue = promptResponse;
+      });
     });
   });
 
