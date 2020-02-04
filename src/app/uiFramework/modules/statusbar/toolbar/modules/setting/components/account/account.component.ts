@@ -13,7 +13,7 @@ import * as Rx from 'rxjs';
   styleUrls: ['./account.component.scss']
 })
 export class SettingAccountComponent implements OnDestroy {
-  private accountList: AccountList;
+  public accountList: AccountList;
   private selectedAccount: Account = null;
   private accountListPassword = '';
   private accountListPasswordError = false;

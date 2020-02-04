@@ -138,7 +138,9 @@ try {
     const filterData = [
       'https://millennium-war.net/*',
       'https://all.millennium-war.net/*',
-      'http://assets.millennium-war.net/*'
+      'http://assets.millennium-war.net/*',
+      'http://millennium-war.net/*',
+      'http://all.millennium-war.net/*'
     ];
     // 统计
     gameSession.webRequest.onCompleted({ urls: ['http://*/*', 'https://*/*'] }, () => {
@@ -154,6 +156,7 @@ try {
     });
     // 游戏数据的拦截
     let count = 0;
+    let hitUrls = [];
     gameSession.webRequest.onBeforeRequest({ urls: filterData }, ({ url: u }, callback) => {
       const urlObj = url.parse(u);
       // 游戏资源的拦截
@@ -169,6 +172,11 @@ try {
         }
         // 宿主页不是http协议的话，会比较麻烦。
         if (count <= 2) {
+          hitUrls.push(u);
+          callback({ cancel: false });
+          return;
+        }
+        if (hitUrls.indexOf(u) !== -1) {
           callback({ cancel: false });
           return;
         }

@@ -68,11 +68,9 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
         url.indexOf('.funyours.co.jp/ps01/game_webgl_player.html') !== -1
       ) {
         webview.getWebContents().send('frame', routingID);
-        // frame.executeJavaScript('console.log("FuckYouuuuuuuuuuu")');
       }
-      if (url.indexOf('assets.millennium-war.net') !== -1) {
+      if (url.indexOf('//assets.millennium-war.net') !== -1) {
         webview.getWebContents().send('aigis-frame', routingID);
-        console.log(routingID);
       }
     });
     webview.addEventListener('dom-ready', () => {

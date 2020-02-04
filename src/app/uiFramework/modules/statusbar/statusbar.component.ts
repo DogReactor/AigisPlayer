@@ -10,7 +10,7 @@ import { LogService } from '../../../core/log.service';
 export class UIFrameStatusBarComponent {
   @Input() dialogToggle: Function;
 
-  constructor(private gameService: GameService, private logService: LogService) {}
+  constructor(private gameService: GameService, public logService: LogService) {}
 
   screenshot(event) {
     if (event.button === 0) {

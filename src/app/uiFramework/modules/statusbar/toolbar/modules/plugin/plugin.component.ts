@@ -16,7 +16,7 @@ import { PluginService, Plugin } from '../../../../../../core/plugin.service';
 })
 export class UIFrameStatusBarToolBarPluginComponent implements AfterViewInit, OnDestroy {
   private subscriptionList: Rx.Subscription[] = [];
-  private list: Plugin[] = [];
+  public list: Plugin[] = [];
   @Output() onSelected = new EventEmitter(); // closeMenu
   constructor(
     private gameService: GameService,
