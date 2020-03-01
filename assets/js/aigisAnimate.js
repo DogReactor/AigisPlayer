@@ -15,6 +15,7 @@ var electron = require('electron');
 var urlLib = require('url');
 var pathLib = require('path');
 var fs = require('fs');
+require('./gifuct-js');
 var basePath = pathLib.join(electron.remote.app.getPath('userData'), 'mods');
 electron.remote.ipcMain.on('fileList', (_, arg) => {
   fileList = arg;
@@ -23,17 +24,31 @@ electron.remote.ipcMain.on('fileList', (_, arg) => {
 var frameCount = 0;
 var frameList = [];
 var meta;
+var jump = false;
 draw = () => {
-  if (frameCount >= frameList.length) {
-    frameCount = 0;
+  if (!jump) {
+    jump = true;
+  } else {
+    jump = false;
+    id = requestAnimationFrame(draw);
+    return;
   }
-  var frame = frameList[frameCount];
-  var img = new Image();
-  img.src = frame;
   ctx.clearRect(0, 0, meta.height, meta.width);
-  ctx.drawImage(img, meta.x, meta.y);
-  id = requestAnimationFrame(draw);
+
+  frameCount = frameCount % frameList.length;
+  var frame = frameList[frameCount];
+  if (meta.type === 'gif') {
+    var frameImageData = ctx.createImageData(frame.dims.width, frame.dims.height);
+    frameImageData.data.set(frame.patch);
+    ctx.putImageData(frameImageData, meta.x, meta.y);
+  } else {
+    var img = new Image();
+    img.src = frame;
+    ctx.drawImage(img, meta.x, meta.y);
+  }
+
   frameCount++;
+  id = requestAnimationFrame(draw);
 };
 
 loadAnimate = url => {
@@ -49,18 +64,25 @@ loadAnimate = url => {
   var metaPath = pathLib.join(filePath, 'meta.json');
   var framesPath = pathLib.join(filePath, 'frames');
   if (!fs.existsSync(filePath) && !fs.existsSync(metaPath) && !fs.existsSync(framesPath)) {
-    console.log('no such files');
+    console.log('no such files', fileName);
     return null;
   }
   try {
     var metaJSON = fs.readFileSync(metaPath, { encoding: 'utf8' });
-    frameList = fs.readdirSync(framesPath).map(v => {
-      var framePath = pathLib.join(framesPath, v);
-      var frameBase64 = fs.readFileSync(framePath).toString('base64');
-      var frameURI = 'data:image/png;base64,' + frameBase64;
-      return frameURI;
-    });
     meta = JSON.parse(metaJSON);
+    if (meta.type === 'gif') {
+      framesPath = pathLib.join(filePath, 'ani.gif');
+      var gifBuffer = fs.readFileSync(framesPath);
+      var gif = new GIF(gifBuffer);
+      frameList = gif.decompressFrames(true);
+    } else {
+      frameList = fs.readdirSync(framesPath).map(v => {
+        var framePath = pathLib.join(framesPath, v);
+        var frameBase64 = fs.readFileSync(framePath).toString('base64');
+        var frameURI = 'data:image/png;base64,' + frameBase64;
+        return frameURI;
+      });
+    }
     // 停止没有停止的动画
     if (id != -1) {
       cancelAnimationFrame(id);
@@ -81,5 +103,6 @@ loadAnimate = url => {
 stopAnimate = () => {
   console.log('stopeed');
   cancelAnimationFrame(id);
+  frameList = [];
   id = -1;
 };

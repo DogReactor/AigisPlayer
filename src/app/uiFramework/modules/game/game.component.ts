@@ -69,7 +69,12 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
       ) {
         webview.getWebContents().send('frame', routingID);
       }
-      if (url.indexOf('//assets.millennium-war.net') !== -1) {
+      if (
+        url.indexOf('//assets.millennium-war.net') !== -1 ||
+        url.indexOf('//assets.shiropro-re.net/html/Oshiro.html') !== -1
+      ) {
+        this.gameService.frameID = routingID;
+        webview.getWebContents().sendToFrame(routingID, 'aigis-tick', this.gameService.SlowTick);
         webview.getWebContents().send('aigis-frame', routingID);
       }
     });

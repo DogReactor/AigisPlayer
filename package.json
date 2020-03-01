@@ -1,6 +1,6 @@
 {
   "name": "aigisplayer",
-  "version": "2.2.0-beta4",
+  "version": "2.2.0-beta6",
   "description": "Toolkit for Aigis",
   "productName": "AigisPlayer",
   "homepage": "https://github.com/DogReactor/AigisPlayer",
@@ -44,6 +44,7 @@
     "electron-log": "^2.2.17",
     "electron-updater": "^4.2.0",
     "element-angular": "^0.7.6",
+    "gifuct-js": "^1.0.0",
     "unzipper": "^0.9.4"
   },
   "devDependencies": {

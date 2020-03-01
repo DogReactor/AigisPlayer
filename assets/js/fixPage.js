@@ -67,48 +67,100 @@ ipcrender.on('frame', (event, message) => {
   frame.executeJavaScript('Module.TOTAL_MEMORY = 2000000000');
 });
 
-if (location.hostname === 'assets.millennium-war.net') {
-  // 暂时屏蔽全年龄版
-  if (parent.parent.location.pathname.indexOf('aigisc') !== -1) {
-    // 全年龄
+// TODO: 这俩抽到别的文件里去
+// 减速
+var slow = false;
+var skip = 4;
+// 劫持reqeustAnimationFrame
+window['oldRequestAnimationFrame'] = window.requestAnimationFrame;
+function genSkipFrame(func) {
+  return () => {
+    window['oldRequestAnimationFrame'](func);
+  };
+}
+function tick(draw) {
+  if (slow) {
+    var func = draw;
+    for (let i = 0; i < skip; i++) {
+      func = genSkipFrame(func);
+    }
+    func();
   } else {
-    // R18
-    window.onload = () => {
-      /////////////////////////////
-      /// 魔改Live2D或者别的一些什么东西
-      /////////////////////////////
-      require('./aigisAnimate');
-      var oldHIb = HIb;
-      var newHIb = function(d, c, b) {
-        var e;
-        e = 0 < tTb.length ? tTb.pop() : new Image();
-        e.src = A8(b);
-        // 在这里通过e.src来处理testCanvas的相应显示
-        var result = loadAnimate(e.src);
-        // G8[d] = e;
-        G8[d] = result || e;
-        sTb[c] = e;
-      };
-      HIb = newHIb;
-
-      var old$Ib = $Ib;
-      var new$Ib = function(d) {
-        // 在这里处理终止targetCanvas动画的相应工作
-        img = sTb[d];
-        img.src = '';
-        img.width = 0;
-        img.height = 0;
-        delete sTb[d];
-      };
-      $Ib = new$Ib;
-
-      var olduTb = uTb;
-      uTb = uTb = function(d) {
-        if (G8[d].isCustomedCanvas) {
-          stopAnimate();
-        }
-        delete G8[d];
-      };
-    };
+    window['oldRequestAnimationFrame'](draw);
   }
 }
+window.requestAnimationFrame = tick;
+
+// 暂停
+var pauseElement = document.createElement('div');
+pauseElement.style.position = 'fixed';
+pauseElement.style.top = '0';
+pauseElement.style.left = '0';
+pauseElement.style.zIndex = '10000';
+pauseElement.style.height = '100%';
+pauseElement.style.width = '100%';
+pauseElement.style.backgroundColor = 'black';
+pauseElement.style.opacity = '0.5';
+var pause = false;
+ipcrender.on('aigis-pause', (event, message) => {
+  if (Module) {
+    if (!pause) {
+      Module.pauseMainLoop();
+      document.body.appendChild(pauseElement);
+      pause = true;
+    } else {
+      Module.resumeMainLoop();
+      document.body.removeChild(pauseElement);
+      pause = false;
+    }
+  }
+});
+ipcrender.on('aigis-tick', (event, message) => {
+  slow = message;
+});
+
+var r18Meta = {
+  create: 'gKb',
+  remove: 'zKb',
+  delete: 'TUb'
+};
+var allMeta = {};
+// if (location.hostname === 'assets.millennium-war.net') {
+//   // 暂时屏蔽全年龄版
+//   if (parent.parent.location.pathname.indexOf('aigisc') !== -1) {
+//     // 全年龄
+//   } else {
+//     // R18
+//     window.onload = () => {
+//       /////////////////////////////
+//       /// 魔改Live2D或者别的一些什么东西
+//       /////////////////////////////
+//       require('./aigisAnimate');
+//       window[r18Meta.create] = function(d, c, b) {
+//         var e;
+//         e = 0 < tTb.length ? tTb.pop() : new Image();
+//         e.src = A8(b);
+//         // 在这里通过e.src来处理testCanvas的相应显示
+//         var result = loadAnimate(e.src);
+//         // G8[d] = e;
+//         G8[d] = result || e;
+//         sTb[c] = e;
+//       };
+//       window[r18Meta.remove] = function(d) {
+//         // 在这里处理终止targetCanvas动画的相应工作
+//         img = sTb[d];
+//         img.src = '';
+//         img.width = 0;
+//         img.height = 0;
+//         delete sTb[d];
+//       };
+
+//       window[r18Meta.delete] = function(d) {
+//         if (G8[d].isCustomedCanvas) {
+//           stopAnimate();
+//         }
+//         delete G8[d];
+//       };
+//     };
+//   }
+// }
