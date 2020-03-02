@@ -114,6 +114,8 @@ export class GameService {
   public CurrentGame: GameModel;
   private zoom = 100;
   private pluginService: PluginService;
+  private slowTick = false;
+  public frameID = -1;
   constructor(
     private electronService: ElectronService,
     private translateService: TranslateService,
@@ -140,6 +142,19 @@ export class GameService {
   }
   get WebView() {
     return this.webView;
+  }
+  set SlowTick(value: boolean) {
+    this.slowTick = value;
+    this.emitEvent('aigis-tick', [value]);
+  }
+  get SlowTick() {
+    return this.slowTick;
+  }
+  emitEvent(channel: string, args?: Array<any>) {
+    if (!this.webView || this.frameID === -1) {
+      return;
+    }
+    this.webView.getWebContents().sendToFrame(this.frameID, channel, ...args);
   }
   Reload() {
     if (this.webView) {

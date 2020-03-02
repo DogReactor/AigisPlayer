@@ -11,7 +11,7 @@ import { GlobalStatusService } from '../../../../../../../../global/globalStatus
 export class SettingMapComponent {
   constructor(
     private gameService: GameService,
-    private globalSettingService: GlobalSettingService,
+    public globalSettingService: GlobalSettingService,
     private globalStatusService: GlobalStatusService
   ) {}
   keyup(target, event: KeyboardEvent) {

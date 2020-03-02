@@ -27,13 +27,17 @@ export class SettingUtilComponent implements OnDestroy {
   DefaultGame: GameModel;
   updateReady = false;
   appVersion: string;
-  private zoom$ = new Subject<number>();
+  Mute: boolean;
+  Lock: Boolean;
+  Zoom: Number;
+  Opacity: Number;
+  zoom$ = new Subject<number>();
   constructor(
-    private gameService: GameService,
+    public gameService: GameService,
     private globalSettingService: GlobalSettingService,
     private fb: FormBuilder,
     private globalStatusService: GlobalStatusService,
-    private translateService: TranslateService,
+    public translateService: TranslateService,
     private electronService: ElectronService
   ) {
     // 在这里注册切换按钮

@@ -1,6 +1,10 @@
-<div>
+<div class="btns-container">
   <i class="fa fa-refresh btn" (click)="toggle()"></i>
   <i class="fa fa-camera btn" (mouseup)="screenshot($event)"></i>
+  <i class="fa fa-pause btn" *ngIf="isAigisOrShirore()" (click)="pause()"></i>
+  <span class="text btn" *ngIf="isAigisOrShirore()" (click)="slowTick()">{{
+    gameService.slowTick ? '0.25×' : '1×'
+  }}</span>
 </div>
 <div class="log" *ngIf="logService.Url && logService.Url !== 'about:blank'">
   <div class="url">{{ logService.Url }}</div>

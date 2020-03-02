@@ -12,6 +12,6 @@ require('./autoLogin');
 require('./loadModule');
 require('./prompt');
 
-window.require = undefined;
+// window.require = undefined;
 window.exports = undefined;
 window.module = undefined;

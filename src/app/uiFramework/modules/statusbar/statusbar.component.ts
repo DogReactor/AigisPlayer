@@ -10,7 +10,7 @@ import { LogService } from '../../../core/log.service';
 export class UIFrameStatusBarComponent {
   @Input() dialogToggle: Function;
 
-  constructor(private gameService: GameService, private logService: LogService) {}
+  constructor(public gameService: GameService, public logService: LogService) {}
 
   screenshot(event) {
     if (event.button === 0) {
@@ -24,5 +24,16 @@ export class UIFrameStatusBarComponent {
     if (this.dialogToggle) {
       this.dialogToggle('statusbar');
     }
+  }
+
+  pause() {
+    this.gameService.emitEvent('aigis-pause');
+  }
+  slowTick() {
+    this.gameService.SlowTick = !this.gameService.SlowTick;
+  }
+
+  isAigisOrShirore() {
+    return this.gameService.CurrentGame.Spec === 'aigis' || this.gameService.CurrentGame.Spec === 'oshiro';
   }
 }
