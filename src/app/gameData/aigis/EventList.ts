@@ -1,4 +1,5 @@
 export const Event = {
+  // fileList 文件列表
   EeLcL7hN: 'quest-success', // statusUpdate
   uD69xeaG: 'quest-start', // statusUpdate
   shxnpXtj: 'login-status', // statusUpdate
