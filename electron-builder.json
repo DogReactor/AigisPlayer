@@ -15,6 +15,9 @@
       "provider": "github"
     }
   ],
+  "nsis": {
+    "artifactName": "${productName}-Setup-${version}.${ext}"
+  },
   "win": {
     "icon": "./build/icon.png",
     "target": [
@@ -23,7 +26,8 @@
         "arch": [
           "x64"
         ]
-      }
+      },
+      "zip"
     ]
   },
   "mac": {
