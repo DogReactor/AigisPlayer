@@ -6,20 +6,25 @@
     "output": "app-builds",
     "buildResources": "build"
   },
-  "publish": [{
-    "provider": "generic",
-    "url": "http://player.pigtv.moe/assets/aigisplayer"
-  }, {
-    "provider": "github"
-  }],
+  "publish": [
+    {
+      "provider": "generic",
+      "url": "http://player.pigtv.moe/assets/aigisplayer"
+    },
+    {
+      "provider": "github"
+    }
+  ],
   "win": {
     "icon": "./build/icon.png",
-    "target": [{
-      "target": "nsis",
-      "arch": [
-        "x64"
-      ]
-    }]
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      }
+    ]
   },
   "mac": {
     "icon": "./build/icon.png",

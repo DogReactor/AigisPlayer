@@ -125,6 +125,10 @@ var r18Meta = {
   delete: 'TUb'
 };
 var allMeta = {};
+if (location.hostname === 'r.kamihimeproject.net') {
+  window.require = undefined;
+  window.process = undefined;
+}
 // if (location.hostname === 'assets.millennium-war.net') {
 //   // 暂时屏蔽全年龄版
 //   if (parent.parent.location.pathname.indexOf('aigisc') !== -1) {
