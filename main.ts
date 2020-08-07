@@ -26,7 +26,7 @@ log.transports.file.level = 'info';
 log.info('App starting...');
 
 function sendStatusToWindow(text, obj?) {
-  log.info(text);
+  log.info(text, obj);
   win.webContents.send('update-message', text, obj);
 }
 
