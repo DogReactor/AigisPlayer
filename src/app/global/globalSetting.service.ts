@@ -10,7 +10,7 @@ import { Size } from '../core/util';
 import * as Config from 'electron-config';
 const config = new Config();
 
-export const ProxyRule = {
+export const ProxyRule: { [key: string]: string } = {
   off: 'direct://',
   shimakazego: '127.0.0.1:8099',
   acgp: '127.0.0.1:8123',

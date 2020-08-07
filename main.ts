@@ -26,7 +26,7 @@ log.transports.file.level = 'info';
 log.info('App starting...');
 
 function sendStatusToWindow(text, obj?) {
-  log.info(text);
+  log.info(text, obj);
   win.webContents.send('update-message', text, obj);
 }
 
@@ -155,39 +155,39 @@ try {
       }
     });
     // 游戏数据的拦截
-    let count = 0;
-    let hitUrls = [];
-    gameSession.webRequest.onBeforeRequest({ urls: filterData }, ({ url: u }, callback) => {
-      const urlObj = url.parse(u);
-      // 游戏资源的拦截
-      if (u.indexOf('http://assets.millennium-war.net/') !== -1) {
-        count++;
-        // 如果是音频文件，跳过拦截
-        // audio标签好像不支持自定义schema
-        const path = urlObj.path;
-        const filename = fileList[path];
-        if (filename && (filename.indexOf('ogg') !== -1 || filename.indexOf('mp3') !== -1)) {
-          callback({ cancel: false });
-          return;
-        }
-        // 宿主页不是http协议的话，会比较麻烦。
-        if (count <= 2) {
-          hitUrls.push(u);
-          callback({ cancel: false });
-          return;
-        }
-        if (hitUrls.indexOf(u) !== -1) {
-          callback({ cancel: false });
-          return;
-        }
-      }
-      urlObj.protocol = urlObj.protocol === 'http:' ? 'hack:' : 'hacks:';
-      callback({ redirectURL: url.format(urlObj) });
-    });
+    // let count = 0;
+    // let hitUrls = [];
+    // gameSession.webRequest.onBeforeRequest({ urls: filterData }, ({ url: u }, callback) => {
+    //   const urlObj = url.parse(u);
+    //   // 游戏资源的拦截
+    //   if (u.indexOf('http://assets.millennium-war.net/') !== -1) {
+    //     count++;
+    //     // 如果是音频文件，跳过拦截
+    //     // audio标签好像不支持自定义schema
+    //     const path = urlObj.path;
+    //     const filename = fileList[path];
+    //     if (filename && (filename.indexOf('ogg') !== -1 || filename.indexOf('mp3') !== -1)) {
+    //       callback({ cancel: false });
+    //       return;
+    //     }
+    //     // 宿主页不是http协议的话，会比较麻烦。
+    //     if (count <= 2) {
+    //       hitUrls.push(u);
+    //       callback({ cancel: false });
+    //       return;
+    //     }
+    //     if (hitUrls.indexOf(u) !== -1) {
+    //       callback({ cancel: false });
+    //       return;
+    //     }
+    //   }
+    //   urlObj.protocol = urlObj.protocol === 'http:' ? 'hack:' : 'hacks:';
+    //   callback({ redirectURL: url.format(urlObj) });
+    // });
 
     // 自定义协议的注册
-    gameSession.protocol.registerStreamProtocol('hack', RequestHandler.handleData);
-    gameSession.protocol.registerStreamProtocol('hacks', RequestHandler.handleData);
+    gameSession.protocol.registerStreamProtocol('http', RequestHandler.handleData);
+    gameSession.protocol.registerStreamProtocol('https', RequestHandler.handleData);
     createWindow();
     // menu
     if (process.platform === 'darwin') {

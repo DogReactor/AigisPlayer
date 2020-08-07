@@ -10,7 +10,7 @@ require('./pluginHelper');
 require('./fixPage');
 require('./autoLogin');
 require('./loadModule');
-require('./prompt');
+// require('./prompt');
 
 // window.require = undefined;
 window.exports = undefined;

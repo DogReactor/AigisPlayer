@@ -102,7 +102,7 @@ export class SettingUtilComponent implements OnDestroy {
     this.subscriptions.push(state.Subscribe(v => (this[k] = v)));
   }
   openScreenShotDir() {
-    shell.openItem(path.join(this.electronService.APP.getPath('userData'), 'screenshots'));
+    shell.openPath(path.join(this.electronService.APP.getPath('userData'), 'screenshots'));
   }
   updateAP() {
     this.electronService.UpdateNow();

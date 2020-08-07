@@ -64,7 +64,7 @@ ipcrender.on('frame', (event, message) => {
   console.log(message);
   const { webFrame } = require('electron');
   const frame = webFrame.findFrameByRoutingId(message);
-  frame.executeJavaScript('Module.TOTAL_MEMORY = 2000000000');
+  frame.executeJavaScript('Module.TOTAL_MEMORY = 2000000000;0');
 });
 
 // TODO: 这俩抽到别的文件里去
@@ -125,6 +125,10 @@ var r18Meta = {
   delete: 'TUb'
 };
 var allMeta = {};
+if (location.hostname === 'r.kamihimeproject.net') {
+  window.require = undefined;
+  window.process = undefined;
+}
 // if (location.hostname === 'assets.millennium-war.net') {
 //   // 暂时屏蔽全年龄版
 //   if (parent.parent.location.pathname.indexOf('aigisc') !== -1) {

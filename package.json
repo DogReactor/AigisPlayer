@@ -1,6 +1,6 @@
 {
   "name": "aigisplayer",
-  "version": "2.2.0-beta6",
+  "version": "2.2.0",
   "description": "Toolkit for Aigis",
   "productName": "AigisPlayer",
   "homepage": "https://github.com/DogReactor/AigisPlayer",
@@ -81,7 +81,7 @@
     "copyfiles": "^2.1.1",
     "core-js": "3.1.4",
     "cz-conventional-changelog": "^2.1.0",
-    "electron": "7.1.1",
+    "electron": "9.1.2",
     "electron-builder": "21.2.0",
     "electron-reload": "1.5.0",
     "eslint": "6.6.0",
