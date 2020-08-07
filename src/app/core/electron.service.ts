@@ -24,6 +24,7 @@ export class ElectronService {
   Tray: typeof Tray;
   ipcMain: typeof Electron.ipcMain;
   require: typeof Electron.remote.require;
+  remote: typeof Electron.remote;
   constructor(private message: ElMessageService, private translateService: TranslateService) {
     // Conditional imports
     if (this.isElectron()) {
@@ -41,6 +42,7 @@ export class ElectronService {
       this.ipcMain = this.electron.remote.ipcMain;
       global['currentWindow'] = this.currentWindow;
       this.ipcRenderer.send('Hello', 'Hello');
+      this.remote = this.electron.remote;
     }
   }
 
@@ -54,9 +56,19 @@ export class ElectronService {
     this.currentWindow.setSize(size.Width, size.Height + 54, true);
     this.currentWindow.resizable = false;
   };
+
+  FlashFrame() {
+    if (!this.currentWindow.isFocused()) {
+      this.currentWindow.once('focus', () => {
+        this.currentWindow.flashFrame(false);
+      });
+      this.currentWindow.flashFrame(true);
+    }
+  }
+
   async ClearCache() {
     await this.Session.fromPartition('persist:request').clearCache();
-    await this.Session.fromPartition('persist:game').clearCache()
+    await this.Session.fromPartition('persist:game').clearCache();
     this.translateService.get('MESSAGE.CLEARCACHE-SUCCESS').subscribe(res => {
       this.message['success'](res);
     });
