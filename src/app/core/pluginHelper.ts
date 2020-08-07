@@ -79,7 +79,7 @@ export class PluginHelper {
       }
     }
     if (this.gameService.WebView) {
-      this.gameService.WebView.send(channel, obj);
+      // this.gameService.WebView.send(channel, obj);
     }
   }
   insertCssFileToGame(path, dirname?) {
