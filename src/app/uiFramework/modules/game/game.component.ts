@@ -52,7 +52,6 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
     this.gameView = <WebviewTag>document.getElementById('gameView');
     this.gameView.setAttribute('preload', `file://${this.dirname}/assets/js/inject.js`);
     this.gameService.WebView = this.gameView;
-    let webContent: WebContents = null;
     const webview = this.gameView;
 
     webview.addEventListener('load-commit', event => {
@@ -61,27 +60,29 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
       }
     });
     webview.addEventListener('did-frame-navigate', event => {
-      const url = (event as any).url as string;
-      const routingID = (event as any).frameRoutingId;
-      if (
-        url.indexOf('.mimolette.co.jp/ps01/game_webgl_player.html') !== -1 ||
-        url.indexOf('.funyours.co.jp/ps01/game_webgl_player.html') !== -1
-      ) {
-        webview.getWebContents().send('frame', routingID);
-      }
-      if (
-        url.indexOf('//assets.millennium-war.net') !== -1 ||
-        url.indexOf('//assets.shiropro-re.net/html/Oshiro.html') !== -1
-      ) {
-        this.gameService.frameID = routingID;
-        webview.getWebContents().sendToFrame(routingID, 'aigis-tick', this.gameService.SlowTick);
-        webview.getWebContents().send('aigis-frame', routingID);
+      if (this.gameService.webContents) {
+        const url = (event as any).url as string;
+        const routingID = (event as any).frameRoutingId;
+        if (
+          url.indexOf('.mimolette.co.jp/ps01/game_webgl_player.html') !== -1 ||
+          url.indexOf('.funyours.co.jp/ps01/game_webgl_player.html') !== -1
+        ) {
+          this.gameService.webContents.send('frame', routingID);
+        }
+        if (
+          url.indexOf('//assets.millennium-war.net') !== -1 ||
+          url.indexOf('//assets.shiropro-re.net/html/Oshiro.html') !== -1
+        ) {
+          this.gameService.frameID = routingID;
+          this.gameService.webContents.sendToFrame(routingID, 'aigis-tick', this.gameService.SlowTick);
+          this.gameService.webContents.send('aigis-frame', routingID);
+        }
       }
     });
     webview.addEventListener('dom-ready', () => {
-      if (!webContent) {
-        webContent = webview.getWebContents();
-        webContent.on('before-input-event', (event, input) => {
+      if (!this.gameService.webContents) {
+        this.gameService.webContents = this.electronService.remote.webContents.fromId(webview.getWebContentsId());
+        this.gameService.webContents.on('before-input-event', (event, input) => {
           if (input.type !== 'keyUp') {
             return;
           }
@@ -150,7 +151,7 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
       option['height'] = 640;
       option['width'] = 1100;
       option['autoHideMenuBar'] = true;
-      option['webPreferences']['session'] = webContent.session;
+      option['webPreferences']['session'] = this.gameService.webContents.session;
       this.electronService.CreateBrowserWindow(e.url, option);
     });
   }

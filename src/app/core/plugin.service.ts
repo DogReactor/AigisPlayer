@@ -122,9 +122,9 @@ export class PluginService {
           }
           return r;
         });
-
+        // FIXME: pluginList无法clone 很迷
         event.returnValue = {
-          pluginList: pluginList,
+          pluginList: [],
           game: this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Value
         };
       });

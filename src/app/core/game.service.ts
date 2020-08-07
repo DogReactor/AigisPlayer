@@ -3,7 +3,7 @@ import { Size } from './util';
 import { GameModel } from './game.model';
 import { ElectronService } from './electron.service';
 import { KeyMapperList } from './keyMapper';
-import { Rectangle, NativeImage, WebviewTag } from 'electron';
+import { Rectangle, NativeImage, WebviewTag, WebContents } from 'electron';
 import { ElMessageService } from 'element-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { PluginService } from './plugin.service';
@@ -11,6 +11,7 @@ import { GlobalStatusService } from '../global/globalStatus.service';
 import { GlobalSettingService } from '../global/globalSetting.service';
 import * as fs from 'fs';
 import * as path from 'path';
+import { AigisGameDataService } from '../gameData/aigis/aigis.service';
 
 export const gameInfo = [
   new GameModel('None', new Size(640, 960), 'about:blank'),
@@ -116,12 +117,14 @@ export class GameService {
   private pluginService: PluginService;
   private slowTick = false;
   public frameID = -1;
+  public webContents: WebContents;
   constructor(
     private electronService: ElectronService,
     private translateService: TranslateService,
     private message: ElMessageService,
     private globalStatus: GlobalStatusService,
-    private globalSetting: GlobalSettingService
+    private globalSetting: GlobalSettingService,
+    private aigisService: AigisGameDataService
   ) {
     this.CurrentGame = this.globalStatus.GlobalStatusStore.Get('CurrentGame').Value;
     this.globalStatus.GlobalStatusStore.Get('SelectedAccount').Subscribe(v => {
@@ -136,9 +139,19 @@ export class GameService {
     this.globalStatus.GlobalStatusStore.Get('CurrentGame').Subscribe(v => {
       this.LoadGame(v);
     });
+
+    // 监听aigis事件
+    this.aigisService.subscribe('quest-start', () => {
+      this.electronService.FlashFrame();
+    });
   }
   set WebView(webView) {
     this.webView = webView;
+    const domReadyCallback = () => {
+      webView.removeEventListener('dom-ready', domReadyCallback);
+      this.webContents = this.electronService.remote.webContents.fromId(webView.getWebContentsId());
+    };
+    webView.addEventListener('dom-ready', domReadyCallback);
   }
   get WebView() {
     return this.webView;
@@ -154,7 +167,7 @@ export class GameService {
     if (!this.webView || this.frameID === -1) {
       return;
     }
-    this.webView.getWebContents().sendToFrame(this.frameID, channel, ...args);
+    this.webContents.sendToFrame(this.frameID, channel, ...args);
   }
   Reload() {
     if (this.webView) {
@@ -191,7 +204,7 @@ export class GameService {
   }
   submitClickEvent(x: number, y: number) {
     if (this.webView) {
-      const webContents = this.webView.getWebContents();
+      const webContents = this.webContents;
       if (webContents) {
         setTimeout(() => {
           webContents.sendInputEvent({
@@ -230,7 +243,9 @@ export class GameService {
       const code = `var r = {}; \
                 r.pageHeight = window.innerHeight; \
                 r.pageWidth = window.innerWidth; \
-                r;`;
+                r;
+                ;0
+                `;
       const r = await this.webView.executeJavaScript(code, false);
 
       const webviewMeta = {
@@ -254,7 +269,7 @@ export class GameService {
         )
       };
       // Fuck Electron
-      const image = await this.webView.getWebContents().capturePage(captureRect);
+      const image = await this.webContents.capturePage(captureRect);
       if (save) {
         const p = path.join(this.electronService.APP.getPath('userData'), 'screenshots');
         if (!fs.existsSync(p)) {

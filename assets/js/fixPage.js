@@ -64,7 +64,7 @@ ipcrender.on('frame', (event, message) => {
   console.log(message);
   const { webFrame } = require('electron');
   const frame = webFrame.findFrameByRoutingId(message);
-  frame.executeJavaScript('Module.TOTAL_MEMORY = 2000000000');
+  frame.executeJavaScript('Module.TOTAL_MEMORY = 2000000000;0');
 });
 
 // TODO: 这俩抽到别的文件里去
