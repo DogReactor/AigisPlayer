@@ -52,6 +52,12 @@ export const gameInfo = [
     'oshiro'
   ),
   new GameModel(
+    '巨神と誓女',
+    new Size(720, 1280),
+    `https://www.dmm.com/my/-/login/logout/=/path=DRVESVwZTkJbSEFUUk9IUAAIU0UeXQlUTAFYCx0VW1EcTltACUUJW1YRXktWXwxODg__`,
+    'kyoshin'
+  ),
+  new GameModel(
     '艦これ',
     new Size(720, 1200),
     `https://www.dmm.com/my/-/login/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWVsfXQFNAwtbSVkEWVMK

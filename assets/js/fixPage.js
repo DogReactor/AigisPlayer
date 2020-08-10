@@ -52,6 +52,11 @@ ipcrender.on('catch', (event, message) => {
       gameFrame.style.left = '-22px';
       gameFrame.style.zIndex = '5000';
     }
+    if (message === 'kyoshin') {
+      gameFrame.style.top = '-30px';
+      gameFrame.style.left = '0px';
+      gameFrame.style.zIndex = '5000';
+    }
   }
 });
 
@@ -61,7 +66,6 @@ ipcrender.on('change', (event, message) => {
 });
 
 ipcrender.on('frame', (event, message) => {
-  console.log(message);
   const { webFrame } = require('electron');
   const frame = webFrame.findFrameByRoutingId(message);
   frame.executeJavaScript('Module.TOTAL_MEMORY = 2000000000;0');

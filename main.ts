@@ -331,3 +331,6 @@ try {
   // Catch Error
   // throw e;
 }
+process.on('unhandledRejection', (reason, promise) => {
+  console.error(`Uncaught error in`, promise);
+});

@@ -74,10 +74,12 @@ export class PluginHelper {
     if (this.plugin.activedWindow) {
       try {
         this.plugin.activedWindow.WebContent.send(channel, obj);
-      } catch {}
+      } catch (err) {
+        console.log(err, message);
+      }
     }
     if (this.gameService.WebView) {
-      this.gameService.WebView.send(channel, obj);
+      // this.gameService.WebView.send(channel, obj);
     }
   }
   insertCssFileToGame(path, dirname?) {

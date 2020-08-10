@@ -108,7 +108,7 @@ class BuffCalculator {
     }
     if (AbilityId < reference.AbilityList.length) {
       const configId = reference.AbilityList[AbilityId]._ConfigID;
-      if (configId !== 0) {
+      if (configId !== 0 && reference.AbilityConfig[configId]) {
         reference.AbilityConfig[configId].forEach(c => {
           if (c._InfluenceType !== 80 && this.buffList.hasOwnProperty(c._InfluenceType)) {
             if (mode) {
@@ -393,10 +393,16 @@ export class SpoilsStatistics {
       this.fillReference('ClassInfo', data.Files[1].Content.Contents);
     });
     gameDataService.subscribe('StoryMissionQuestList.atb', (url, data: any) => {
-      this.fillReference('StoryQuestList', data.Contents.map(e => e.QuestID));
+      this.fillReference(
+        'StoryQuestList',
+        data.Contents.map(e => e.QuestID)
+      );
     });
     gameDataService.subscribe('DailyMissionQuestList.atb', (url, data: any) => {
-      this.fillReference('DailyQuestList', data.Contents.map(e => e.QuestID));
+      this.fillReference(
+        'DailyQuestList',
+        data.Contents.map(e => e.QuestID)
+      );
     });
     gameDataService.subscribe(
       file => file.includes('MissionQuestList'),
