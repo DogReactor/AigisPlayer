@@ -65,7 +65,8 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
         const routingID = (event as any).frameRoutingId;
         if (
           url.indexOf('.mimolette.co.jp/ps01/game_webgl_player.html') !== -1 ||
-          url.indexOf('.funyours.co.jp/ps01/game_webgl_player.html') !== -1
+          url.indexOf('.funyours.co.jp/ps01/game_webgl_player.html') !== -1 ||
+          url.indexOf('asset.wander.games') !== -1
         ) {
           this.gameService.webContents.send('frame', routingID);
         }
