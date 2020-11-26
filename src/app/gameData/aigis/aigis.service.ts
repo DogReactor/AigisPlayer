@@ -82,6 +82,7 @@ export class AigisGameDataService {
           url.indexOf('/2iofz514jeks1y44k7al2ostm43xj085') !== -1 ||
           url.indexOf('/1fp32igvpoxnb521p9dqypak5cal0xv0') !== -1
         ) {
+          console.debug('Get Aigis FileList');
           const allFileList = Decoder.DecodeList(response);
           const reverseList = {};
           allFileList.forEach((v, k) => {
