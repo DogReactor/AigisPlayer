@@ -90,7 +90,7 @@ export class AigisGameDataService {
               if (this.subscription.has(k)) {
                 this.assetsRoster.set(v, k);
               }
-              reverseList[v.replace('http://drc1bk94f7rq8.cloudfront.net', '')] = k;
+              reverseList[v.replace('https://drc1bk94f7rq8.cloudfront.net', '')] = k;
               this.assetsCollector.checkUrl(k, v);
             }
           });

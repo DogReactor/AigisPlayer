@@ -138,7 +138,7 @@ try {
     const filterData = [
       'https://millennium-war.net/*',
       'https://all.millennium-war.net/*',
-      'http://drc1bk94f7rq8.cloudfront.net/*',
+      'https://drc1bk94f7rq8.cloudfront.net/*',
       'http://millennium-war.net/*',
       'http://all.millennium-war.net/*'
     ];
