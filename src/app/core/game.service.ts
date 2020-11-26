@@ -156,6 +156,7 @@ export class GameService {
     const domReadyCallback = () => {
       webView.removeEventListener('dom-ready', domReadyCallback);
       this.webContents = this.electronService.remote.webContents.fromId(webView.getWebContentsId());
+      this.webContents.setBackgroundThrottling(false);
     };
     webView.addEventListener('dom-ready', domReadyCallback);
   }
