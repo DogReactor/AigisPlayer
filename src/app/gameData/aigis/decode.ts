@@ -10,7 +10,7 @@ const decode = (buffer, key) => {
 
 export class Decoder {
   static DecodeList = (buffer: Buffer) => {
-    const aigisAssetsBegin = 'http://drc1bk94f7rq8.cloudfront.net/';
+    const aigisAssetsBegin = 'https://drc1bk94f7rq8.cloudfront.net/';
     const b = [];
     const d = decode(buffer, 0xea ^ 0x30);
     for (let i = 0; i < d.byteLength; i++) {
