@@ -71,7 +71,7 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
           this.gameService.webContents.send('frame', routingID);
         }
         if (
-          url.indexOf('//assets.millennium-war.net') !== -1 ||
+          url.indexOf('//drc1bk94f7rq8.cloudfront.net') !== -1 ||
           url.indexOf('//assets.shiropro-re.net/html/Oshiro.html') !== -1
         ) {
           this.gameService.frameID = routingID;
