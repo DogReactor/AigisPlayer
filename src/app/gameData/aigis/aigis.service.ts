@@ -73,7 +73,7 @@ export class AigisGameDataService {
 
     debuggerService.Subscribe(
       {
-        url: ['://assets.millennium-war.net/'],
+        url: ['://drc1bk94f7rq8.cloudfront.net/'],
         method: 'GET',
         request: false
       },
@@ -90,7 +90,7 @@ export class AigisGameDataService {
               if (this.subscription.has(k)) {
                 this.assetsRoster.set(v, k);
               }
-              reverseList[v.replace('http://assets.millennium-war.net', '')] = k;
+              reverseList[v.replace('http://drc1bk94f7rq8.cloudfront.net', '')] = k;
               this.assetsCollector.checkUrl(k, v);
             }
           });

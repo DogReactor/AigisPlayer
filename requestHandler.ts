@@ -91,7 +91,7 @@ export class RequestHandler {
     });
     // 判断是否需要进行魔改
     let ModifyFilePath = '';
-    if (req.url.indexOf('://assets.millennium-war.net/') !== -1) {
+    if (req.url.indexOf('://drc1bk94f7rq8.cloudfront.net/') !== -1) {
       let modifyFileName = '';
       const reqPath = url.parse(req.url).path;
       let requestFileName = FileList[reqPath];
