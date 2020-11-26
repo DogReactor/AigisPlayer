@@ -1,3 +1,9 @@
+// fuck confirm
+// TODO: 只针对特定的frame有效
+window['confirm'] = () => {
+  return false;
+};
+
 ipcrender.on('catch', (event, message) => {
   console.log = consoleLog;
   // GBF
