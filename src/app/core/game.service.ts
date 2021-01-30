@@ -19,36 +19,31 @@ export const gameInfo = [
   new GameModel(
     '千年戦争アイギス',
     new Size(640, 960),
-    `https://accounts.dmm.com/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRl
-        pZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1cAVlUFAR9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
+    `https://accounts.dmm.com/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1cAVlUFAR9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'aigis'
   ),
   new GameModel(
     '千年戦争アイギス R',
     new Size(640, 960),
-    `https://accounts.dmm.co.jp/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAA
-        VRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1cCV1EABB9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
+    `https://accounts.dmm.co.jp/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1cCV1EABB9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'aigis'
   ),
   new GameModel(
     'FLOWER KNIGHT GIRL',
     new Size(640, 1136),
-    `https://accounts.dmm.com/service/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWVsfXQF
-    NAwtbSVQJWEcAEx9QCEUVU1QJDlVKVxZHXFQQWF9NDV8LAVYSWwpZDVQ_`,
+    `https://accounts.dmm.com/service/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWVsfXQFNAwtbSVQJWEcAEx9QCEUVU1QJDlVKVxZHXFQQWF9NDV8LAVYSWwpZDVQ_`,
     'fkg'
   ),
   new GameModel(
     'FLOWER KNIGHT GIRL ~X指定~',
     new Size(640, 1136),
-    `https://accounts.dmm.co.jp/service/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWRhaS
-    UtdBxZWD15KUVwKFlVLS05OW1YWRVlfWllaGARGRg0IQlcNFl4AWwZWRAwOXgRX`,
+    `https://accounts.dmm.co.jp/service/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWRhaSUtdBxZWD15KUVwKFlVLS05OW1YWRVlfWllaGARGRg0IQlcNFl4AWwZWRAwOXgRX`,
     'fkg'
   ),
   new GameModel(
     '御城プロジェクト:RE',
     new Size(720, 1275),
-    `https://accounts.dmm.com/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAA
-        VRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1EAVlQGAB9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
+    `https://accounts.dmm.com/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1EAVlQGAB9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'oshiro'
   ),
   new GameModel(
@@ -60,43 +55,37 @@ export const gameInfo = [
   new GameModel(
     '艦これ',
     new Size(720, 1200),
-    `https://accounts.dmm.com/service/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWVsfXQFNAwtbSVkEWVMK
-        DVxcSV8PQUwEXVQMWx9WERULBxZXC00LBF4FUxFeXwtcAQ__`,
+    `https://accounts.dmm.com/service/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWVsfXQFNAwtbSVkEWVMKDVxcSV8PQUwEXVQMWx9WERULBxZXC00LBF4FUxFeXwtcAQ__`,
     'kankore'
   ),
   new GameModel(
     '凍京Necro',
     new Size(640, 1136),
-    `https://accounts.dmm.co.jp/service/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWRhaSUtdBxZWD15KW
-        VUGE19mFUMIUVEBVGdeXxVECApYaUIWDVcRFlYKXlpaSQQRQARXEA9dTAxXUVBXEl4OCwsH`,
+    `https://accounts.dmm.co.jp/service/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWRhaSUtdBxZWD15KWVUGE19mFUMIUVEBVGdeXxVECApYaUIWDVcRFlYKXlpaSQQRQARXEA9dTAxXUVBXEl4OCwsH`,
     'necro'
   ),
   new GameModel(
     '神姫プロジェクト',
     new Size(640, 960),
-    `https://accounts.dmm.com/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGA
-        AVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1ECUlcGBx9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
+    `https://accounts.dmm.com/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1ECUlcGBx9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'kamihime'
   ),
   new GameModel(
     '神姫プロジェクト R',
     new Size(640, 960),
-    `https://accounts.dmm.co.jp/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGA
-        AVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1QDU1AOAh9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
+    `https://accounts.dmm.co.jp/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1QDU1AOAh9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'kamihime'
   ),
   new GameModel(
     '神姬計劃',
     new Size(640, 960),
-    `https://accounts.dmm.com/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGA
-        AVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1AAVVIHBR9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
+    `https://accounts.dmm.com/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1AAVVIHBR9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'kamihime'
   ),
   new GameModel(
     '神姬計劃 X',
     new Size(640, 960),
-    `https://accounts.dmm.co.jp/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGA
-        AVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1AEU1AEAB9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
+    `https://accounts.dmm.co.jp/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1AEU1AEAB9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'kamihime'
   ),
   // new GameModel(
@@ -108,8 +97,7 @@ export const gameInfo = [
   new GameModel(
     'UNITIA X',
     new Size(640, 1136),
-    `https://accounts.dmm.co.jp/service/logout/=/path=
-        DRVESVwZTlVZCFRLHVILWk8GWRhaSUtdBxZWD15KQl4MFVlYHhkIXEsRUFRfCQtOABVGCwEfClYWC1EPUQRDWQoPDQg_`,
+    `https://accounts.dmm.co.jp/service/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWRhaSUtdBxZWD15KQl4MFVlYHhkIXEsRUFRfCQtOABVGCwEfClYWC1EPUQRDWQoPDQg_`,
     'unitia'
   )
 ];
