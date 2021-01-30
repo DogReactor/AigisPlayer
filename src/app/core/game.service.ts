@@ -19,83 +19,83 @@ export const gameInfo = [
   new GameModel(
     '千年戦争アイギス',
     new Size(640, 960),
-    `https://www.dmm.com/my/-/login/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRl
+    `https://accounts.dmm.com/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRl
         pZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1cAVlUFAR9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'aigis'
   ),
   new GameModel(
     '千年戦争アイギス R',
     new Size(640, 960),
-    `https://www.dmm.co.jp/my/-/login/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAA
+    `https://accounts.dmm.co.jp/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAA
         VRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1cCV1EABB9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'aigis'
   ),
   new GameModel(
     'FLOWER KNIGHT GIRL',
     new Size(640, 1136),
-    `https://www.dmm.com/my/-/login/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWVsfXQF
+    `https://accounts.dmm.com/service/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWVsfXQF
     NAwtbSVQJWEcAEx9QCEUVU1QJDlVKVxZHXFQQWF9NDV8LAVYSWwpZDVQ_`,
     'fkg'
   ),
   new GameModel(
     'FLOWER KNIGHT GIRL ~X指定~',
     new Size(640, 1136),
-    `https://www.dmm.co.jp/my/-/login/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWRhaS
+    `https://accounts.dmm.co.jp/service/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWRhaS
     UtdBxZWD15KUVwKFlVLS05OW1YWRVlfWllaGARGRg0IQlcNFl4AWwZWRAwOXgRX`,
     'fkg'
   ),
   new GameModel(
     '御城プロジェクト:RE',
     new Size(720, 1275),
-    `https://www.dmm.com/my/-/login/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAA
+    `https://accounts.dmm.com/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAA
         VRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1EAVlQGAB9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'oshiro'
   ),
   new GameModel(
     '巨神と誓女',
     new Size(720, 1280),
-    `https://www.dmm.com/my/-/login/logout/=/path=DRVESVwZTkJbSEFUUk9IUAAIU0UeXQlUTAFYCx0VW1EcTltACUUJW1YRXktWXwxODg__`,
+    `https://accounts.dmm.com/service/logout/=/path=DRVESVwZTkJbSEFUUk9IUAAIU0UeXQlUTAFYCx0VW1EcTltACUUJW1YRXktWXwxODg__`,
     'kyoshin'
   ),
   new GameModel(
     '艦これ',
     new Size(720, 1200),
-    `https://www.dmm.com/my/-/login/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWVsfXQFNAwtbSVkEWVMK
+    `https://accounts.dmm.com/service/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWVsfXQFNAwtbSVkEWVMK
         DVxcSV8PQUwEXVQMWx9WERULBxZXC00LBF4FUxFeXwtcAQ__`,
     'kankore'
   ),
   new GameModel(
     '凍京Necro',
     new Size(640, 1136),
-    `https://www.dmm.co.jp/my/-/login/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWRhaSUtdBxZWD15KW
+    `https://accounts.dmm.co.jp/service/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWRhaSUtdBxZWD15KW
         VUGE19mFUMIUVEBVGdeXxVECApYaUIWDVcRFlYKXlpaSQQRQARXEA9dTAxXUVBXEl4OCwsH`,
     'necro'
   ),
   new GameModel(
     '神姫プロジェクト',
     new Size(640, 960),
-    `https://www.dmm.com/my/-/login/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGA
+    `https://accounts.dmm.com/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGA
         AVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1ECUlcGBx9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'kamihime'
   ),
   new GameModel(
     '神姫プロジェクト R',
     new Size(640, 960),
-    `https://www.dmm.co.jp/my/-/login/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGA
+    `https://accounts.dmm.co.jp/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGA
         AVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1QDU1AOAh9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'kamihime'
   ),
   new GameModel(
     '神姬計劃',
     new Size(640, 960),
-    `https://www.dmm.com/my/-/login/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGA
+    `https://accounts.dmm.com/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGA
         AVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1AAVVIHBR9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'kamihime'
   ),
   new GameModel(
     '神姬計劃 X',
     new Size(640, 960),
-    `https://www.dmm.co.jp/my/-/login/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGA
+    `https://accounts.dmm.co.jp/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGA
         AVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1AEU1AEAB9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'kamihime'
   ),
@@ -108,7 +108,7 @@ export const gameInfo = [
   new GameModel(
     'UNITIA X',
     new Size(640, 1136),
-    `https://www.dmm.co.jp/my/-/login/logout/=/path=
+    `https://accounts.dmm.co.jp/service/logout/=/path=
         DRVESVwZTlVZCFRLHVILWk8GWRhaSUtdBxZWD15KQl4MFVlYHhkIXEsRUFRfCQtOABVGCwEfClYWC1EPUQRDWQoPDQg_`,
     'unitia'
   )
