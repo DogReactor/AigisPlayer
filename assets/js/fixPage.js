@@ -80,7 +80,13 @@ ipcrender.on('frame', (event, message) => {
 // TODO: 这俩抽到别的文件里去
 // 减速
 var slow = false;
-var skip = 4;
+
+var fps = 15;
+var now;
+var then = Date.now();
+var interval = 1000 / fps;
+var delta;
+var draw;
 // 劫持reqeustAnimationFrame
 window['oldRequestAnimationFrame'] = window.requestAnimationFrame;
 function genSkipFrame(func) {
@@ -88,18 +94,31 @@ function genSkipFrame(func) {
     window['oldRequestAnimationFrame'](func);
   };
 }
-function tick(draw) {
+function tick(func) {
   if (slow) {
-    var func = draw;
-    for (let i = 0; i < skip; i++) {
-      func = genSkipFrame(func);
+    if (typeof (func) === "function") draw = func;
+    now = Date.now();
+    delta = now - then;
+    if (delta > interval) {
+      then = now - (delta % interval);
+      var temp = draw;
+      draw = null;
+      window['oldRequestAnimationFrame'](temp);
+    } else {
+      window['oldRequestAnimationFrame'](tick);
     }
-    func();
   } else {
-    window['oldRequestAnimationFrame'](draw);
+    if (draw) func = draw;
+    window['oldRequestAnimationFrame'](func);
   }
 }
 window.requestAnimationFrame = tick;
+
+// var oldFetch = window.fetch;
+// window.fetch = function () {
+//   console.log('fetch triggered!', this.location, arguments);
+//   return oldFetch.apply(this, arguments);
+// }
 
 // 暂停
 var pauseElement = document.createElement('div');
@@ -129,15 +148,10 @@ ipcrender.on('aigis-tick', (event, message) => {
   slow = message;
 });
 
-var r18Meta = {
-  create: 'gKb',
-  remove: 'zKb',
-  delete: 'TUb'
-};
 var allMeta = {};
+window.process = undefined;
 if (location.hostname === 'r.kamihimeproject.net') {
   window.require = undefined;
-  window.process = undefined;
 }
 // if (location.hostname === 'assets.millennium-war.net') {
 //   // 暂时屏蔽全年龄版
