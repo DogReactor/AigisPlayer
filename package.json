@@ -45,6 +45,7 @@
     "electron-updater": "4.2.0",
     "element-angular": "^0.7.6",
     "gifuct-js": "^1.0.0",
+    "request": "^2.88.2",
     "unzipper": "^0.9.4"
   },
   "devDependencies": {
