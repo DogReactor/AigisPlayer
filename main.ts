@@ -15,6 +15,7 @@ const config = new Config();
 // app.commandLine.appendSwitch('--enable-npapi');
 app.commandLine.appendSwitch('disable-site-isolation-trials');
 app.commandLine.appendSwitch('js-flags', '--max-old-space-size=8192');
+app.commandLine.appendSwitch('lang','ja-jp');
 // app.commandLine.appendSwitch('ignore-certificate-errors');
 if (config.get('disable-hardware-acceleration')) {
   app.disableHardwareAcceleration();
