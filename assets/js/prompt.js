@@ -1,3 +1,4 @@
+const { ipcRenderer, remote } = require('electron');
 window.prompt = (message, text) => {
-  return require('electron').ipcRenderer.sendSync('prompt', message, text);
+  return ipcRenderer.sendSync('prompt', message, text);
 };

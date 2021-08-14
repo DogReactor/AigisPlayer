@@ -7,14 +7,17 @@ serve = args.some(val => val === '--serve');
 import * as log from 'electron-log';
 import * as unzip from 'unzipper';
 import * as request from 'request';
-import * as Config from 'electron-config';
+import * as Config from 'electron-store';
 import * as url from 'url';
 import { autoUpdater } from 'electron-updater';
 const config = new Config();
 
+require('@electron/remote/main').initialize()
+
 // app.commandLine.appendSwitch('--enable-npapi');
 app.commandLine.appendSwitch('disable-site-isolation-trials');
 app.commandLine.appendSwitch('js-flags', '--max-old-space-size=8192');
+app.commandLine.appendSwitch('lang', 'ja-jp')
 // app.commandLine.appendSwitch('ignore-certificate-errors');
 if (config.get('disable-hardware-acceleration')) {
   app.disableHardwareAcceleration();
@@ -66,9 +69,11 @@ function createWindow() {
       webSecurity: false,
       plugins: true,
       nodeIntegration: true,
+      contextIsolation: false,
       nodeIntegrationInSubFrames: true,
       webviewTag: true,
-      partition: 'persist:main'
+      partition: 'persist:main',
+      enableRemoteModule: true
     }
   });
   RequestHandler.setWin(win);
@@ -103,30 +108,30 @@ function createWindow() {
 }
 
 // 注册schema
-protocol.registerSchemesAsPrivileged([
-  {
-    scheme: 'hack',
-    privileges: {
-      standard: true,
-      secure: true,
-      bypassCSP: true,
-      allowServiceWorkers: true,
-      supportFetchAPI: true,
-      corsEnabled: true
-    }
-  },
-  {
-    scheme: 'hacks',
-    privileges: {
-      standard: true,
-      secure: true,
-      bypassCSP: true,
-      allowServiceWorkers: true,
-      supportFetchAPI: true,
-      corsEnabled: true
-    }
-  }
-]);
+// protocol.registerSchemesAsPrivileged([
+//   {
+//     scheme: 'hack',
+//     privileges: {
+//       standard: true,
+//       secure: true,
+//       bypassCSP: true,
+//       allowServiceWorkers: true,
+//       supportFetchAPI: true,
+//       corsEnabled: true
+//     }
+//   },
+//   {
+//     scheme: 'hacks',
+//     privileges: {
+//       standard: true,
+//       secure: true,
+//       bypassCSP: true,
+//       allowServiceWorkers: true,
+//       supportFetchAPI: true,
+//       corsEnabled: true
+//     }
+//   }
+// ]);
 try {
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
@@ -297,7 +302,7 @@ try {
       `;
       promptWindow.loadURL('data:text/html,' + html);
       promptWindow.show();
-      ipcMain.on('prompt-response', function(event, value, cancel) {
+      ipcMain.on('prompt-response', function (event, value, cancel) {
         if (cancel) {
           value = null;
         }

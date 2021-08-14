@@ -1,4 +1,6 @@
-ipcrender.on('login', (event, message) => {
+const { ipcRenderer, remote } = require('electron');
+
+ipcRenderer.on('login', (event, message) => {
   var login_id = document.getElementById('login_id');
   var password = document.getElementById('password');
   if (login_id != undefined && password != undefined) {
@@ -13,7 +15,7 @@ ipcrender.on('login', (event, message) => {
       btn.click();
     }, 1000);
   } else {
-    ipcrender.sendToHost('loginerror');
+    ipcRenderer.sendToHost('loginerror');
   }
   //document.getElementById
 })

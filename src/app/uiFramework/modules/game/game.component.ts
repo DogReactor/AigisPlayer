@@ -74,6 +74,7 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
           url.match(/https:\/\/drc1bk94f7rq8.cloudfront.net\/[a-z0-9]+\/[a-z0-9]+$/) !== null ||
           url.indexOf('//assets.shiropro-re.net/html/Oshiro.html') !== -1
         ) {
+          console.log(routingID);
           this.gameService.frameID = routingID;
           this.gameService.webContents.sendToFrame(routingID, 'aigis-tick', this.gameService.SlowTick);
           this.gameService.webContents.send('aigis-frame', routingID);

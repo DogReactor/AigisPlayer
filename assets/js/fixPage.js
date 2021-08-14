@@ -1,11 +1,11 @@
 // fuck confirm
 // TODO: 只针对特定的frame有效
+const { ipcRenderer, remote } = require('electron');
 window['confirm'] = () => {
   return false;
 };
 
-ipcrender.on('catch', (event, message) => {
-  console.log = consoleLog;
+ipcRenderer.on('catch', (event, message) => {
   // GBF
   if (window.location.href.indexOf('game.granbluefantasy.jp') !== -1) {
     require('./gbf/fixSlideBar');
@@ -23,7 +23,7 @@ ipcrender.on('catch', (event, message) => {
     return;
   }
   var gameFrame = document.getElementById('game_frame');
-  if (gameFrame === null) ipcrender.sendToHost('url', 'error');
+  if (gameFrame === null) ipcRenderer.sendToHost('url', 'error');
   else {
     gameFrame.style.position = 'fixed';
     document.body.style.overflow = 'hidden';
@@ -66,12 +66,12 @@ ipcrender.on('catch', (event, message) => {
   }
 });
 
-ipcrender.on('change', (event, message) => {
+ipcRenderer.on('change', (event, message) => {
   document.getElementById('content').style.position = 'fixed';
-  ipcrender.sendToHost('changesuccess');
+  ipcRenderer.sendToHost('changesuccess');
 });
 
-ipcrender.on('frame', (event, message) => {
+ipcRenderer.on('frame', (event, message) => {
   const { webFrame } = require('electron');
   const frame = webFrame.findFrameByRoutingId(message);
   frame.executeJavaScript('Module.TOTAL_MEMORY = 2000000000;0');
@@ -114,12 +114,6 @@ function tick(func) {
 }
 window.requestAnimationFrame = tick;
 
-// var oldFetch = window.fetch;
-// window.fetch = function () {
-//   console.log('fetch triggered!', this.location, arguments);
-//   return oldFetch.apply(this, arguments);
-// }
-
 // 暂停
 var pauseElement = document.createElement('div');
 pauseElement.style.position = 'fixed';
@@ -131,7 +125,10 @@ pauseElement.style.width = '100%';
 pauseElement.style.backgroundColor = 'black';
 pauseElement.style.opacity = '0.5';
 var pause = false;
-ipcrender.on('aigis-pause', (event, message) => {
+ipcRenderer.on('who-am-i', (event, message) => {
+  console.log(location);
+})
+ipcRenderer.on('aigis-pause', (event, message) => {
   if (Module) {
     if (!pause) {
       Module.pauseMainLoop();
@@ -144,12 +141,13 @@ ipcrender.on('aigis-pause', (event, message) => {
     }
   }
 });
-ipcrender.on('aigis-tick', (event, message) => {
+ipcRenderer.on('aigis-tick', (event, message) => {
   slow = message;
 });
 
 var allMeta = {};
 window.process = undefined;
+window.require = undefined;
 if (location.hostname === 'r.kamihimeproject.net') {
   window.require = undefined;
 }

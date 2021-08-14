@@ -29,20 +29,20 @@ export class ElectronService {
     // Conditional imports
     if (this.isElectron()) {
       this.electron = window.require('electron');
-      this.require = this.electron.remote.require;
+      this.require = require('@electron/remote').require;
       this.ipcRenderer = this.electron.ipcRenderer;
       this.childProcess = window.require('child_process');
-      this.currentWindow = this.electron.remote.getCurrentWindow();
-      this.APP = this.electron.remote.app;
-      this.Session = this.electron.remote.require('electron').session;
+      this.currentWindow = require('@electron/remote').getCurrentWindow();
+      this.APP = require('@electron/remote').app;
+      this.Session = require('@electron/remote').require('electron').session;
       this.fs = window.require('fs');
-      this.serve = this.electron.remote.process.argv.slice(1).some(val => val === '--serve');
-      this.clipboard = this.electron.remote.clipboard;
-      this.Tray = this.electron.remote.Tray;
-      this.ipcMain = this.electron.remote.ipcMain;
+      this.serve = require('@electron/remote').process.argv.slice(1).some(val => val === '--serve');
+      this.clipboard = require('@electron/remote').clipboard;
+      this.Tray = require('@electron/remote').Tray;
+      this.ipcMain = require('@electron/remote').ipcMain;
       global['currentWindow'] = this.currentWindow;
       this.ipcRenderer.send('Hello', 'Hello');
-      this.remote = this.electron.remote;
+      this.remote = require('@electron/remote');
     }
   }
 

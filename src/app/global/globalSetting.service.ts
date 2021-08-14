@@ -7,8 +7,8 @@ import { ElMessageService } from 'element-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { GameModel } from '../core/game.model';
 import { Size } from '../core/util';
-import * as Config from 'electron-config';
-const config = new Config();
+import * as Store from 'electron-store';
+const config = new Store();
 
 export const ProxyRule: { [key: string]: string } = {
   off: 'direct://',
@@ -79,9 +79,9 @@ export class GlobalSettingService {
           this.globalStatusService.GlobalStatusStore.Get(key).Dispatch(this.GlobalSetting[key]);
         }
         this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Dispatch(this.GlobalSetting.DefaultGame);
-      } catch {}
+      } catch { }
     }
-    this.GlobalSetting.DisableHardwareAcceleration = config.get('disable-hardware-acceleration') || false;
+    this.GlobalSetting.DisableHardwareAcceleration = config.get('disable-hardware-acceleration', false) as any;
     if (window.localStorage.getItem('accountList')) {
       try {
         // 读取账户列表
@@ -97,7 +97,7 @@ export class GlobalSettingService {
             this.globalStatusService.GlobalStatusStore.Get('SelectedAccount').Dispatch(defaultAccount.Username);
           }
         }
-      } catch {}
+      } catch { }
     }
 
     // 订阅账户设置密码的变化
@@ -215,7 +215,7 @@ export class GlobalSettingService {
             this.translateService.get('MESSAGE.DECRYPT-SUCCESS').subscribe(res => {
               this.message['success'](res);
             });
-          } catch {}
+          } catch { }
         });
         decipher.on('error', () => {
           this.translateService.get('UTIL.PASSWORDERROR').subscribe(res => {

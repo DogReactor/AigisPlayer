@@ -3,7 +3,7 @@ import { session, net, app, ipcMain, BrowserWindow } from 'electron';
 import * as url from 'url';
 import * as path from 'path';
 import * as fs from 'fs';
-import * as Config from 'electron-config';
+import * as Config from 'electron-store';
 import * as log from 'electron-log';
 import { parseAL, AL } from 'aigis-fuel';
 const config = new Config();
@@ -148,7 +148,7 @@ export class RequestHandler {
     const request = net.request({
       method: req.method,
       url: req.url,
-      session: requestSession
+      session: requestSession,
       // redirect: 'manual'
     });
     // 允许分片
@@ -160,6 +160,7 @@ export class RequestHandler {
     Object.keys(req.headers).forEach(key => {
       request.setHeader(key, req.headers[key]);
     });
+    request.setHeader('If-None-Match', " ");
     // 上传数据
     if (req.uploadData) {
       req.uploadData.forEach(v => {
