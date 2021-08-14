@@ -1,6 +1,6 @@
 {
   "name": "aigisplayer",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "description": "Toolkit for Aigis",
   "productName": "AigisPlayer",
   "homepage": "https://github.com/DogReactor/AigisPlayer",
@@ -25,7 +25,7 @@
     "ng:serve:web": "ng serve -c web -o",
     "electron:serve-tsc": "tsc -p tsconfig-serve.json",
     "electron:build-tsc": "tsc -p tsconfig-build.json && copyfiles assets/**/*.* dist",
-    "electron:build": "copyfiles package.json dist && cd dist && npm install",
+    "electron:build": "copyfiles package.json dist && cd dist && npm install && npx electron-rebuild",
     "electron:serve": "wait-on http-get://localhost:4200/ && npm run electron:serve-tsc && electron . --serve",
     "electron:local": "npm run build:prod && cd dist && electron .",
     "electron:linux": "npm run build:prod && electron-builder build --linux",
@@ -46,6 +46,7 @@
     "electron-updater": "4.2.0",
     "element-angular": "^0.7.6",
     "gifuct-js": "^1.0.0",
+    "request": "^2.88.2",
     "unzipper": "^0.9.4"
   },
   "devDependencies": {
@@ -83,6 +84,7 @@
     "cz-conventional-changelog": "^2.1.0",
     "electron": "13.1.9",
     "electron-builder": "21.2.0",
+    "electron-rebuild": "^2.3.5",
     "electron-reload": "1.5.0",
     "eslint": "6.6.0",
     "eslint-plugin-import": "2.18.2",
