@@ -27,41 +27,55 @@ ipcRenderer.on('catch', (event, message) => {
   else {
     gameFrame.style.position = 'fixed';
     document.body.style.overflow = 'hidden';
+    gameFrame.style.zIndex = '5000';
     if (message === 'kamihime') {
       gameFrame.style.top = '-28px';
       gameFrame.style.left = '-150px';
-      gameFrame.style.zIndex = '25';
     }
     if (message === 'fkg') {
       gameFrame.style.top = '-6px';
       gameFrame.style.left = '-60px';
-      gameFrame.style.zIndex = '25';
     }
     if (message === 'aigis' || message === 'oshiro') {
       gameFrame.style.top = '0';
       gameFrame.style.left = '0';
-      gameFrame.style.zIndex = '25';
       gameFrame.style.marginLeft = '-5px';
     }
     if (message === 'kankore') {
       gameFrame.style.top = '-16px';
       gameFrame.style.left = '0';
-      gameFrame.style.zIndex = '1000';
     }
     if (message === 'unitia') {
       gameFrame.style.top = '-52px';
       gameFrame.style.left = '0';
-      gameFrame.style.zIndex = '5000';
     }
     if (message === 'necro') {
       gameFrame.style.top = '-35px';
       gameFrame.style.left = '-22px';
-      gameFrame.style.zIndex = '5000';
     }
     if (message === 'kyoshin') {
       gameFrame.style.top = '-30px';
       gameFrame.style.left = '0px';
-      gameFrame.style.zIndex = '5000';
+    }
+    if (message === 'clover') {
+      gameFrame.style.top = '-39px';
+      gameFrame.style.left = '-109px'
+    }
+    if (message === 'misttraingirls') {
+      gameFrame.style.top = '-15px';
+      gameFrame.style.left = '0px';
+    }
+    if (message === 'angelic') {
+      gameFrame.style.top = '-17px';
+      gameFrame.style.left = '-11px';
+    }
+    if (message === 'minashigo') {
+      gameFrame.style.top = '-16px';
+      gameFrame.style.left = '-5px';
+    }
+    if (message === 'fruful') {
+      gameFrame.style.top = '-7px';
+      gameFrame.style.left = '-5px';
     }
   }
 });

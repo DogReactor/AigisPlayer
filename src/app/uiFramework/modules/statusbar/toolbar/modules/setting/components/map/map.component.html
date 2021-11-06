@@ -31,6 +31,27 @@
           <el-button type="danger" (click)="clear('SpeedUpKey')">{{ 'UTIL.CLEAR' | translate }}</el-button>
         </div>
       </el-form-item>
+
+      <el-form-item [label]="'SETTING.MAP.PAUSE' | translate">
+        <div class="item">
+          <el-input
+            [model]="globalSettingService.GlobalSetting.PauseKey"
+            (keyup)="keyup('PauseKey', $event)"
+          ></el-input>
+          <el-button type="danger" (click)="clear('PauseKey')">{{ 'UTIL.CLEAR' | translate }}</el-button>
+        </div>
+      </el-form-item>
+
+      <el-form-item [label]="'SETTING.MAP.BULLETTIME' | translate">
+        <div class="item">
+          <el-input
+            [model]="globalSettingService.GlobalSetting.BulletTimeKey"
+            (keyup)="keyup('BulletTimeKey', $event)"
+          ></el-input>
+          <el-button type="danger" (click)="clear('BulletTimeKey')">{{ 'UTIL.CLEAR' | translate }}</el-button>
+        </div>
+      </el-form-item>
+
       <el-form-item [label]="'SETTING.MAP.USESKILL' | translate">
         <div class="item">
           <el-input

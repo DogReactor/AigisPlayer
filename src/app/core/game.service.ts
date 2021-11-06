@@ -12,6 +12,7 @@ import { GlobalSettingService } from '../global/globalSetting.service';
 import * as fs from 'fs';
 import * as path from 'path';
 import { AigisGameDataService } from '../gameData/aigis/aigis.service';
+import { HotkeyService } from './hotkey.service';
 
 export const gameInfo = [
   new GameModel('None', new Size(640, 960), 'about:blank'),
@@ -46,12 +47,32 @@ export const gameInfo = [
     `https://accounts.dmm.com/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1EAVlQGAB9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'oshiro'
   ),
+  // Start
   new GameModel(
-    '巨神と誓女',
-    new Size(720, 1280),
-    `https://accounts.dmm.com/service/logout/=/path=DRVESVwZTkJbSEFUUk9IUAAIU0UeXQlUTAFYCx0VW1EcTltACUUJW1YRXktWXwxODg__`,
-    'kyoshin'
+    'れじぇくろ！',
+    new Size(720, 1282),
+    `https://accounts.dmm.com/service/logout/=/path=DRVESRUMTh1fBFxdQBgCWgxLVVkeUxQWBgdDB1sJGFwABlVaClkZHVELQkxSWgoIDwpCX1ZQB1gWC1gID1QRXRwAQElbB0dCSgpXUV9TOUQKDEYLAQ__`,
+    'clover'
   ),
+  new GameModel(
+    'エンジェリックリンク',
+    new Size(630, 1138),
+    `https://accounts.dmm.com/service/logout/=/path=DRVESRUMTh1fBFxdQBgCWgxLVVkeUxQWBgdDB1sJGFELBlVVD1UTHVELQkxSWgoIDwpCX1ZQB1gWC1gID1QRXRwAQElbB0dCSgpXUV9TOUQKDEYLAQ__`,
+    'angelic'
+  ),
+  new GameModel(
+    'ミナシゴノシゴト',
+    new Size(720, 1280),
+    `https://accounts.dmm.com/service/logout/=/path=DRVESRUMTh1fBFxdQBgCWgxLVVkeUxQWBgdDB1sJGF0MD1FKDl8GXWcdHlFdRRJWDQkJWF9NDV8LAVYSWwpZDVRHXUAHRhEPCUNBSlxQD1sEOkVdWUlZCA__`,
+    'minashigo'
+  ),
+  new GameModel(
+    'ふるーつふるきゅーと！',
+    new Size(635, 1136),
+    `https://accounts.dmm.com/service/logout/=/path=DRVESRUMTh1fBFxdQBgCWgxLVVkeUxQWBgdDB1sJGFYXFFZMCmkTHVELQkxSWgoIDwpCX1ZQB1gWC1gID1QRXRwAQElbB0dCSgpXUV9TOUQKDEYLAQ__`,
+    'fruful'
+  ),
+  // End
   new GameModel(
     '艦これ',
     new Size(720, 1200),
@@ -75,30 +96,6 @@ export const gameInfo = [
     new Size(640, 960),
     `https://accounts.dmm.co.jp/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1QDU1AOAh9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'kamihime'
-  ),
-  new GameModel(
-    '神姬計劃',
-    new Size(640, 960),
-    `https://accounts.dmm.com/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1AAVVIHBR9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
-    'kamihime'
-  ),
-  new GameModel(
-    '神姬計劃 X',
-    new Size(640, 960),
-    `https://accounts.dmm.co.jp/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1AEU1AEAB9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
-    'kamihime'
-  ),
-  // new GameModel(
-  //     'グランブルーファンタジー',
-  //     new Size(820, 480),
-  //     'http://game.granbluefantasy.jp/undefined',
-  //     'granblue'
-  // ),
-  new GameModel(
-    'UNITIA X',
-    new Size(640, 1136),
-    `https://accounts.dmm.co.jp/service/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWRhaSUtdBxZWD15KQl4MFVlYHhkIXEsRUFRfCQtOABVGCwEfClYWC1EPUQRDWQoPDQg_`,
-    'unitia'
   )
 ];
 
@@ -145,6 +142,15 @@ export class GameService {
       webView.removeEventListener('dom-ready', domReadyCallback);
       this.webContents = this.electronService.remote.webContents.fromId(webView.getWebContentsId());
       this.webContents.setBackgroundThrottling(false);
+      this.webContents.on('before-input-event', (event, input) => {
+        if (input.type !== 'keyUp') {
+          return;
+        }
+        if (input.key !== '' && input.code === '') {
+          return;
+        }
+        this.triggerHotKey(input.code);
+      });
     };
     webView.addEventListener('dom-ready', domReadyCallback);
   }
@@ -157,6 +163,14 @@ export class GameService {
   }
   get SlowTick() {
     return this.slowTick;
+  }
+  Pause() {
+    if (this.CurrentGame.Spec === "aigis") {
+      this.emitEvent('aigis-pause');
+    }
+  }
+  BulletTime() {
+    this.SlowTick = !this.SlowTick;
   }
   emitEvent(channel: string, args?: Array<any>) {
     if (!this.webView || this.frameID === -1) {
@@ -224,6 +238,27 @@ export class GameService {
       }
     }
   }
+  triggerHotKey(code: string) {
+    if (this.globalSetting.GlobalSetting.SpeedUpKey === code) {
+      this.KeyMapperTrigger('SpeedUpKey');
+    }
+    if (this.globalSetting.GlobalSetting.UseSkillKey === code) {
+      this.KeyMapperTrigger('UseSkillKey');
+    }
+    if (this.globalSetting.GlobalSetting.ScreenShotKey === code) {
+      this.ScreenShot();
+    }
+    if (this.globalSetting.GlobalSetting.ReloadKey === code) {
+      this.Reload();
+    }
+    if (this.globalSetting.GlobalSetting.BulletTimeKey === code) {
+      this.BulletTime();
+    }
+    if (this.globalSetting.GlobalSetting.PauseKey === code) {
+      console.log("pause");
+      this.Pause();
+    }
+  }
   KeyMapperTrigger(keyName) {
     const keyMapper = KeyMapperList.find(v => v.Name === keyName);
     if (!keyMapper) {
@@ -254,13 +289,13 @@ export class GameService {
         y: 0,
         width: Math.floor(
           webviewMeta.captureWidth *
-            this.electronService.electron.remote.screen.getPrimaryDisplay().scaleFactor *
-            (this.zoom / 100)
+          this.electronService.electron.remote.screen.getPrimaryDisplay().scaleFactor *
+          (this.zoom / 100)
         ),
         height: Math.floor(
           webviewMeta.captureHeight *
-            this.electronService.electron.remote.screen.getPrimaryDisplay().scaleFactor *
-            (this.zoom / 100)
+          this.electronService.electron.remote.screen.getPrimaryDisplay().scaleFactor *
+          (this.zoom / 100)
         )
       };
       // Fuck Electron
@@ -271,7 +306,7 @@ export class GameService {
           fs.mkdirSync(p);
         }
         const fileName = path.join(p, `${new Date().getTime()}.png`);
-        fs.writeFile(fileName, image.toPNG(), () => {});
+        fs.writeFile(fileName, image.toPNG(), () => { });
       } else {
         this.electronService.clipboard.writeImage(image);
       }
