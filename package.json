@@ -82,7 +82,7 @@
     "copyfiles": "^2.1.1",
     "core-js": "3.1.4",
     "cz-conventional-changelog": "^2.1.0",
-    "electron": "13.1.9",
+    "electron": "13.6.1",
     "electron-builder": "21.2.0",
     "electron-rebuild": "^2.3.5",
     "electron-reload": "1.5.0",
