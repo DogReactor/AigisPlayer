@@ -178,7 +178,7 @@ export class PluginService {
   async installPluginFromRemote(plugin: Plugin) {
     if (plugin.needRestart !== false) {
       const zipPromise = () => {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
           const url = `http://${GlobalConfig.Host}/assets/plugins/${plugin.path}/${plugin.version}/${plugin.path}.zip`;
           const pluginPath = path.join(this.pluginsPath, plugin.path);
           const salt = crypto
@@ -223,7 +223,7 @@ export class PluginService {
         plugin.activedWindow.BrowserWindow.close();
       }
       const rimrafPromise = path => {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
           rimraf(path, () => {
             resolve();
           });
@@ -311,6 +311,8 @@ export class PluginService {
     );
     plugin.windowOption.webPreferences.nodeIntegration = true;
     plugin.windowOption.webPreferences.webviewTag = true;
+    plugin.windowOption.webPreferences.webSecurity = false;
+    plugin.windowOption.webPreferences.contextIsolation = false;
     plugin.activedWindow.BrowserWindow = this.electronService.CreateBrowserWindow(url, plugin.windowOption);
     plugin.activedWindow.WebContent = plugin.activedWindow.BrowserWindow.webContents;
     plugin.activedWindow.WebContent.on('dom-ready', (event: any) => {
