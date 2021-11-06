@@ -27,7 +27,7 @@
       "CACHE": "清理缓存",
       "OPEN-SCREENSHOT-DIR": "打开截图文件夹",
       "DATACOLLECT": "数据收集",
-      "ACCELERATION":"关闭硬件加速（需重启）"
+      "ACCELERATION": "关闭硬件加速（需重启）"
     },
     "ACCOUNT": {
       "ACCOUNT": "账户管理",
@@ -42,7 +42,9 @@
       "SPEEDUP": "二倍速",
       "USESKILL": "使用技能",
       "SCREENSHOT": "截图",
-      "RELOAD": "刷新"
+      "RELOAD": "刷新",
+      "PAUSE": "暂停",
+      "BULLETTIME": "德云时间"
     }
   },
   "UTIL": {
