@@ -43,6 +43,8 @@ export class GlobalSetting {
   public UseSkillKey = '';
   public ScreenShotKey = '';
   public ReloadKey = '';
+  public PauseKey = '';
+  public BulletTimeKey = '';
   public Language = 'cn';
   public Zoom = 100;
   public Opacity = 100;
