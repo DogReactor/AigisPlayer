@@ -71,7 +71,7 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
           this.gameService.webContents.send('frame', routingID);
         }
         if (
-          url.match(/https:\/\/drc1bk94f7rq8.cloudfront.net\/[a-z0-9]+\/[a-z0-9]+$/) !== null ||
+          url === "https://drc1bk94f7rq8.cloudfront.net/00/html/aigis.html" ||
           url.indexOf('//assets.shiropro-re.net/html/Oshiro.html') !== -1
         ) {
           console.log(routingID);
@@ -82,18 +82,6 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
       }
     });
     webview.addEventListener('dom-ready', () => {
-      if (!this.gameService.webContents) {
-        this.gameService.webContents = this.electronService.remote.webContents.fromId(webview.getWebContentsId());
-        this.gameService.webContents.on('before-input-event', (event, input) => {
-          if (input.type !== 'keyUp') {
-            return;
-          }
-          if (input.key !== '' && input.code === '') {
-            return;
-          }
-          this.hotkeyService.triggerHotKey(input.code);
-        });
-      }
       const mute = this.globalStatusService.GlobalStatusStore.Get('Mute').Value;
       webview.setAudioMuted(mute);
       const CurrentGame = <GameModel>this.globalStatusService.GlobalStatusStore.Get('CurrentGame').Value;
