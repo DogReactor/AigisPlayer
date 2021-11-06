@@ -92,6 +92,9 @@ function createWindow() {
       })
     );
   }
+  win.webContents.on('render-process-gone', (e, details) => {
+    console.log('render-process-gone', details);
+  });
   // Open the DevTools.
   // win.webContents.openDevTools();
   if (serve) {
