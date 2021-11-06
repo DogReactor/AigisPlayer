@@ -53,5 +53,6 @@ export class Decoder {
         return decode(buffer, startByte ^ _b);
       }
     }
+    return null;
   };
 }

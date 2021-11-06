@@ -1,151 +1,98 @@
-function getObj(data, tags) {
-  const arr = [];
-  const objTagsInfo = tags;
-  objTagsInfo.forEach((item, index) => {
-    // A1,A2,A3,A4
-    const childType = item.arg;
-    const childName = item.name;
-    const childData = data.slice(item.start, item.end);
-    const childTags = getAllTags(childData);
-    childTags.forEach((citem, cindex) => {
-      // A1.1 A1.2 A1.3
-      const value = childData.slice(citem.start, citem.end);
-      if (arr[cindex] === undefined) {
-        arr[cindex] = {};
+class Node {
+  public name: string;
+  public args: { [key: string]: string } = {};
+  public value: string;
+  public type: "object" | "array";
+  public obj: { [key: string]: any } | Array<any> = {};
+  public hasChild = false;
+  public constructor(tagname?: string) {
+      if (tagname) {
+          const rawArgs = tagname.split(' ');
+          this.name = rawArgs[0];
+          // 处理标签中的参数
+          if (rawArgs.length > 1) {
+              for (let i = 1; i < rawArgs.length; i++) {
+                  const arg = rawArgs[i];
+                  const sa = arg.split('=');
+                  this.args[sa[0]] = sa.length > 1 ? sa[1].replace(/"/g, '') : '';
+              }
+          }
+          if (this.args.T) {
+              this.obj = [];
+          }
       }
-      arr[cindex][childName] = applyType(value, childType);
-    });
-  });
-  if (arr.length === 1) {
-    return arr[0];
   }
-  return arr;
-}
-
-function getArray(data, type) {
-  const arr = [];
-  const arrTagsInfo = getAllTags(data);
-  arrTagsInfo.forEach((item, index) => {
-    const value = data.slice(item.start, item.end);
-    arr.push(applyType(value, type));
-  });
-  if (arr.length === 1) {
-    return arr[0];
+  public addToContent(node: Node) {
+      if (this.obj instanceof Array) {
+          this.obj.push(node.toJSObj());
+      } else {
+          this.obj[node.name] = node.toJSObj();
+      }
+      this.hasChild = true;
   }
-  return arr;
-}
-
-function applyType(value, type) {
-  switch (type) {
-    case 'S':
-      value = value.toString();
-      break;
-    case 'I':
-      value = parseInt(value, 10);
-      break;
+  public toJSObj() {
+      if (!this.hasChild) { return this.value; }
+      // 如果只有一个值，直接返回
+      if (this.obj instanceof Array && this.obj.length === 1) { return this.obj[0]; }
+      // 处理Key-Value和ID-STATUS的情况
+      else {
+          if (this.obj["KEY"] && this.obj["VALUE"] && this.obj["KEY"] instanceof Array && this.obj["VALUE"] instanceof Array && this.obj["KEY"].length === this.obj["VALUE"].length) {
+              const newObj: { [key: string]: any } = {};
+              this.obj["KEY"].forEach((key: string, index: number) => {
+                  const value = this.obj["VALUE"][index];
+                  newObj[key] = value;
+              });
+              return newObj;
+          }
+          if (this.obj["ID"] && this.obj["STATUS"] && this.obj["ID"] instanceof Array && this.obj["STATUS"] instanceof Array && this.obj["ID"].length === this.obj["STATUS"].length) {
+              return this.obj["STATUS"];
+          }
+          return this.obj;
+      }
   }
-  return value;
 }
 
-function getVs(kData, vData) {
-  const objs = {};
-  const kInfo = getAllTags(kData);
-  const vInfo = vData === '' ? [] : getAllTags(vData);
-  kInfo.forEach(function(item, index) {
-    const key = kData.slice(item.start, item.end);
-    const value = vInfo[index] === undefined ? key : vData.slice(vInfo[index].start, vInfo[index].end);
-    objs[key] = value;
-  });
-  return objs;
+class XmlReader {
+  public data: string;
+  public position: number = 0;
+  constructor(data: string) {
+      this.data = data;
+  }
+  getTag(): [string, string] {
+      // 说明是标签
+      const tagstart = this.data.indexOf('<', this.position);
+      const tagend = this.data.indexOf('>', this.position);
+      if (tagend === -1) {
+          return [null, null];
+      }
+      const tagName = this.data.slice(tagstart + 1, tagend);
+      const tagContent = tagstart !== this.position ? this.data.slice(this.position, tagstart) : null;
+      this.position = tagend + 1;
+      return [tagName, tagContent];
+  }
 }
 
-function getAllTags(data) {
-  const tags = [];
-  let lastend = 0;
+export function Xml2json(data: string) {
+  const root = new Node();
+  const nodeStack: Node[] = [];
+  let currentNode: Node = root;
+  const reader = new XmlReader(data);
   while (true) {
-    // 处理标签头
-    let tagname = '';
-    const tagstart = data.indexOf('<', lastend) + 1;
-    const tagend = data.indexOf('>', lastend);
-    // tagstart == -1说明遍历到最后，跳出循环
-    if (tagend === -1) {
-      break;
-    }
-    // 获取标签名
-    tagname = data.slice(tagstart, tagend);
-    // 判断是否是XML头
-    if (tagname[0] === '?') {
-      tags.push({
-        name: '-1',
-        start: tagstart - 1,
-        end: tagend + 1,
-        arg: null
-      });
-      break;
-    }
-    let arg = null;
-    // 处理标签中的参数
-    if (tagname.indexOf(' ') !== -1) {
-      // <xxx T="S">
-      arg = tagname.slice(tagname.indexOf(' '));
-      arg = arg.split('=')[1].replace(/"/g, '');
-      tagname = tagname.slice(0, tagname.indexOf(' '));
-    }
-    // 寻找标签尾
-    const tagtailname = '</' + tagname + '>';
-    const tagtailstart = data.indexOf(tagtailname, lastend);
-    // 这里找到的tagend+1 和 tagtailstart 就是该标签的内容部分的起止索引
-    tags.push({
-      name: tagname,
-      start: tagend + 1,
-      end: tagtailstart,
-      arg: arg
-    });
-    lastend = tagtailstart + tagtailname.length;
+      let [tagname, value] = reader.getTag();
+      if (tagname === null) break;
+      if (tagname.startsWith("?xml")) continue;
+      if (!tagname.includes("/")) {
+          // 这是一个起始标签
+          const node = new Node(tagname);
+          nodeStack.push(currentNode);
+          currentNode = node;
+      } else {
+          // 这是一个结束标签
+          currentNode.value = value;
+          const parentNode = nodeStack.pop();
+          parentNode.addToContent(currentNode);
+          currentNode = parentNode;
+      }
   }
-  return tags;
-}
-
-export function Xml2json(data) {
-  const tags = getAllTags(data);
-  // 如果tags为空，说明里面是数据，直接return
-  if (tags.length === 0) {
-    return data;
-  }
-  // 如果是带有XML头的
-  if (tags[0].name === '-1') {
-    const jsonObj = Xml2json(data.slice(tags[0].end));
-    return jsonObj;
-  }
-  // 其他情况
-  // 遍历tags，并且将每个标签里的内容交给xml2js递归处理
-  let tagObjs = {};
-  tags.every(function(item, index) {
-    const name = item.name;
-    switch (name) {
-      // KET-VALUE是键值对 ID-STATUS是数组
-      case 'KEY':
-      case 'ID':
-        const kData = data.slice(item.start, item.end);
-        const vData = tags[index + 1] !== undefined ? data.slice(tags[index + 1].start, tags[index + 1].end) : '';
-        tagObjs = getVs(kData, vData);
-        break;
-      case 'VALUE':
-      case 'STATUS':
-        break;
-      case 'A1':
-        tagObjs = getObj(data, tags);
-        return false;
-      // break;
-      default:
-        if (item.arg != null) {
-          tagObjs[name] = getArray(data.slice(item.start, item.end), item.arg);
-        } else {
-          tagObjs[name] = Xml2json(data.slice(item.start, item.end));
-        }
-        break;
-    }
-    return true;
-  });
-  return tagObjs;
+  return root.obj;
 }

@@ -17,7 +17,7 @@ class AssetsCollector {
 	private roster: Map<(file) => boolean, (url, response, request?) => void> = new Map();
 	// 一个url可能对应多个文件
 	public EigenUrls: Map<string, Array<string>> = new Map();
-	constructor() {}
+	constructor() { }
 	register(filter: (file) => boolean, callback: (url, response, request?) => void) {
 		this.roster.set(filter, callback);
 	}
@@ -61,7 +61,9 @@ export class AigisGameDataService {
 				const channel = Event[path];
 				if (channel && this.subscription.has(channel)) {
 					Promise.all([this.parseData(res), this.parseData(req)]).then(
-						([response, request]) => this.subscription.get(channel).forEach(v => v(url, response, request)),
+						([response, request]) => {
+							return this.subscription.get(channel).forEach(v => v(url, response, request))
+						},
 						err => {
 							console.log('err in ', channel, res, req);
 							throw err;
@@ -103,7 +105,6 @@ export class AigisGameDataService {
 					}
 				} else if (this.assetsRoster.has(url) || this.assetsCollector.EigenUrls.has(url)) {
 					const buffer = response;
-					console.log('Parsing AL', url);
 					const data = parseAL(buffer) || buffer;
 					if (this.assetsRoster.has(url)) {
 						const channel = this.assetsRoster.get(url);
