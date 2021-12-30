@@ -14,7 +14,7 @@ class ReferenceData {
 	public DailyQuestList = null;
 	public MapsInfo = {};
 	private dataCritical = false;
-	constructor() {}
+	constructor() { }
 	loadRawData(label: string, data: any) {
 		if (label === 'AbilityConfig') {
 			let configId = 0;
@@ -62,7 +62,7 @@ class BuffCalculator {
 	private buffList = {};
 	private staticBuffStatus: Promise<string>;
 	public IsBredWeek = false;
-	constructor() {}
+	constructor() { }
 	async RemarkProb(questId, dropInfos, reference) {
 		if (this.IsBredWeek) {
 			if (reference.DailyQuestList.indexOf(questId) !== -1 || reference.StoryQuestList.indexOf(questId) !== -1) {
@@ -242,7 +242,8 @@ export class SpoilsStatistics {
 			new SpoilsBuff(0, obj => {
 				const cl = this.reference.UnitsList.InitClassID[obj - 1];
 				if (cl && cl < 100) {
-					const clName = this.reference.ClassInfo.find(c => c.ClassID === cl).Name;
+					const cl = this.reference.ClassInfo.find(c => c.ClassID === cl);
+					const clName = cl ? cl.Name : ""
 					return clName.includes('聖霊');
 				} else {
 					return false;
@@ -297,7 +298,7 @@ export class SpoilsStatistics {
 					this.buffCalculator.calculateBuff(this.reference);
 				}
 			})
-			.catch(err => {});
+			.catch(err => { });
 	}
 	subscribData(gameDataService: AigisGameDataService) {
 		// deal with normal combat
@@ -368,7 +369,7 @@ export class SpoilsStatistics {
 						record: { QuestID: questId, DropInfos: dropInfos },
 						name: this.DisplayQuestName.getQuestName(questId)
 					});
-				} catch (err) {}
+				} catch (err) { }
 			},
 			true
 		);
@@ -378,7 +379,16 @@ export class SpoilsStatistics {
 			this.fillReference('UnitsList', data);
 		});
 		gameDataService.subscribe('allunits-info', (url, data: any) => {
-			this.fillReference('BarrackInfo', data);
+			let transformed = []
+			let keys = Object.keys(data)
+			for (let i = 0; i < data.UnitID.length; ++i) {
+				let unit = {}
+				for (let k of keys) {
+					unit[k] = data[k][i]
+				}
+				transformed.push(unit)
+			}
+			this.fillReference('BarrackInfo', transformed);
 		});
 		gameDataService.subscribe('all-quest-info', (url, data: any) => {
 			this.fillReference('QuestList', data);
@@ -391,7 +401,7 @@ export class SpoilsStatistics {
 			this.fillReference('AbilityList', data.Contents);
 		});
 		gameDataService.subscribe('PlayerUnitTable.aar', (url, data: ALAR) => {
-			this.fillReference('ClassInfo', data.Files.find(f=>f.Name === "ClassData.atb").Content.Contents);
+			this.fillReference('ClassInfo', data.Files.find(f => f.Name === "ClassData.atb").Content.Contents);
 		});
 		gameDataService.subscribe('StoryMissionQuestList.atb', (url, data: any) => {
 			this.fillReference(
