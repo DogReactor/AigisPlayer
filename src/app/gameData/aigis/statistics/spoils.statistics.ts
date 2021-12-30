@@ -64,6 +64,7 @@ class BuffCalculator {
 	public IsBredWeek = false;
 	constructor() { }
 	async RemarkProb(questId, dropInfos, reference) {
+		console.log('dropInfo: ', dropInfos);
 		if (this.IsBredWeek) {
 			if (reference.DailyQuestList.indexOf(questId) !== -1 || reference.StoryQuestList.indexOf(questId) !== -1) {
 				dropInfos.forEach(obj => {
@@ -85,7 +86,6 @@ class BuffCalculator {
 				this.buffList[key].ProbMod = 0;
 			}
 		});
-		console.log('dropInfo: ', dropInfos);
 		return Promise.resolve({ QuestID: questId, DropInfos: dropInfos });
 	}
 	registerBuff(label, hunter: SpoilsBuff) {
@@ -243,7 +243,7 @@ export class SpoilsStatistics {
 				const cl = this.reference.UnitsList.InitClassID[obj - 1];
 				if (cl && cl < 100) {
 					const cl = this.reference.ClassInfo.find(c => c.ClassID === cl);
-					const clName = cl ? cl.Name : ""
+					const clName = cl ? cl.Name : "";
 					return clName.includes('聖霊');
 				} else {
 					return false;
