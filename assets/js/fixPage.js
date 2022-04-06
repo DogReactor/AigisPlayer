@@ -4,7 +4,6 @@ const { ipcRenderer, remote } = require('electron');
 window['confirm'] = () => {
   return false;
 };
-
 ipcRenderer.on('catch', (event, message) => {
   // GBF
   if (window.location.href.indexOf('game.granbluefantasy.jp') !== -1) {
@@ -27,7 +26,7 @@ ipcRenderer.on('catch', (event, message) => {
   else {
     gameFrame.style.position = 'fixed';
     document.body.style.overflow = 'hidden';
-    gameFrame.style.zIndex = '5000';
+    gameFrame.style.zIndex = '10';
     if (message === 'kamihime') {
       gameFrame.style.top = '-28px';
       gameFrame.style.left = '-150px';

@@ -104,7 +104,7 @@ class BuffCalculator {
 		const i = unit.A1 - 1;
 		let AbilityId = reference.UnitsList.Ability[i];
 		const classObj = reference.ClassInfo.find(cl => cl.ClassID === unit.A2);
-		if (classObj.MaxLevel < 99) {
+		if (classObj && classObj.MaxLevel < 99) {
 			AbilityId = reference.UnitsList.Ability_Default[i];
 		}
 		if (AbilityId < reference.AbilityList.length) {

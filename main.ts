@@ -110,37 +110,12 @@ function createWindow() {
   });
 }
 
-// 注册schema
-// protocol.registerSchemesAsPrivileged([
-//   {
-//     scheme: 'hack',
-//     privileges: {
-//       standard: true,
-//       secure: true,
-//       bypassCSP: true,
-//       allowServiceWorkers: true,
-//       supportFetchAPI: true,
-//       corsEnabled: true
-//     }
-//   },
-//   {
-//     scheme: 'hacks',
-//     privileges: {
-//       standard: true,
-//       secure: true,
-//       bypassCSP: true,
-//       allowServiceWorkers: true,
-//       supportFetchAPI: true,
-//       corsEnabled: true
-//     }
-//   }
-// ]);
 try {
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
   app.on('ready', () => {
-    const gameSession = session.fromPartition('persist:game');
+    const gameSession = session.fromPartition('persist:game', { cache: true });
     app['RequestHandler'] = RequestHandler;
     app['dirname'] = __dirname;
     const filterData = [
@@ -163,36 +138,6 @@ try {
       }
     });
     // 游戏数据的拦截
-    // let count = 0;
-    // let hitUrls = [];
-    // gameSession.webRequest.onBeforeRequest({ urls: filterData }, ({ url: u }, callback) => {
-    //   const urlObj = url.parse(u);
-    //   // 游戏资源的拦截
-    //   if (u.indexOf('http://assets.millennium-war.net/') !== -1) {
-    //     count++;
-    //     // 如果是音频文件，跳过拦截
-    //     // audio标签好像不支持自定义schema
-    //     const path = urlObj.path;
-    //     const filename = fileList[path];
-    //     if (filename && (filename.indexOf('ogg') !== -1 || filename.indexOf('mp3') !== -1)) {
-    //       callback({ cancel: false });
-    //       return;
-    //     }
-    //     // 宿主页不是http协议的话，会比较麻烦。
-    //     if (count <= 2) {
-    //       hitUrls.push(u);
-    //       callback({ cancel: false });
-    //       return;
-    //     }
-    //     if (hitUrls.indexOf(u) !== -1) {
-    //       callback({ cancel: false });
-    //       return;
-    //     }
-    //   }
-    //   urlObj.protocol = urlObj.protocol === 'http:' ? 'hack:' : 'hacks:';
-    //   callback({ redirectURL: url.format(urlObj) });
-    // });
-
     // 自定义协议的注册
     gameSession.protocol.registerStreamProtocol('http', RequestHandler.handleData);
     gameSession.protocol.registerStreamProtocol('https', RequestHandler.handleData);
@@ -225,8 +170,8 @@ try {
       }
     });
     ipcMain.on('proxyStatusUpdate', (_, proxyRule: string) => {
-      const requestSession = session.fromPartition('persist:request');
-      const gameSession = session.fromPartition('persist:game');
+      const requestSession = session.fromPartition('persist:request', { cache: true });
+      const gameSession = session.fromPartition('persist:game', { cache: true });
       const rule = {
         proxyRules: proxyRule,
         proxyBypassRules: '127.0.0.1 player.pigtv.moe',

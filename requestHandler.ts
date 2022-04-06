@@ -59,21 +59,31 @@ export class RequestHandler {
     subscription.push(new Rule(options, callback));
   }
   static async handleData(req, cb) {
-    // Update: on electron 9, redirect will change location, so there is no more hack
+    // 处理回复用函数
+    function handleResponse(raw: Buffer, readable: stream.PassThrough, rule: Rule) {
+      if (!ModifyFilePath) {
+        // 直接回传
+        readable.pause();
+        readable.push(null);
+        readable.resume();
+      } else {
+        // 魔改文件热封装
+        const result = parseAL(raw);
+        const packaged = result.Package(ModifyFilePath);
+        readable.push(packaged);
+        readable.pause();
+        readable.push(null);
+        readable.resume();
+      }
+      if (rule) {
+        const _res = raw;
+        const _req = req.uploadData ? req.uploadData[0].bytes : null;
+        rule.Callback(req.url, _res, _req);
+      }
+    }
 
-    // // 把hack/hacks改成http/https
-    // const urlObj = url.parse(req.url);
-    // urlObj.protocol = urlObj.protocol === 'hack:' ? 'http:' : 'https:';
-    // req.url = url.format(urlObj);
-    // // 把header里的Origin中的hack/hacks改成http/https
-    // if (req.referrer) {
-    //   req.referrer = req.referrer.replace('hack', 'http');
-    // }
-    // if (req.headers['Origin']) {
-    //   req.headers['Origin'] = req.headers['Origin'].replace('hack', 'http');
-    // }
-    // 获取发起请求用session，禁止套娃
-    const requestSession = session.fromPartition('persist:request');
+    // 获取发起请求用session
+    const requestSession = session.fromPartition('persist:game', { cache: true });
     if (browserWindow) {
       browserWindow.webContents.send('request-incoming');
     }
@@ -81,14 +91,6 @@ export class RequestHandler {
     const rule = subscription.find(value => value.match(req.url, req.method));
     // 创建可读取流
     const readable = new stream.PassThrough();
-    // 同步cookies
-    const gameSession = session.fromPartition('persist:game');
-    const cookies = await gameSession.cookies.get({
-      url: req.url
-    });
-    cookies.forEach(cookie => {
-      requestSession.cookies.set({ url: req.url, ...cookie });
-    });
     // 判断是否需要进行魔改
     let ModifyFilePath = '';
     if (req.url.indexOf('://drc1bk94f7rq8.cloudfront.net/') !== -1) {
@@ -134,9 +136,6 @@ export class RequestHandler {
             readable.pause();
             readable.push(null);
             readable.resume();
-            if (browserWindow) {
-              browserWindow.webContents.send('response-incoming');
-            }
           });
           return;
         }
@@ -149,6 +148,7 @@ export class RequestHandler {
       method: req.method,
       url: req.url,
       session: requestSession,
+      useSessionCookies: true
       // redirect: 'manual'
     });
     // 允许分片
@@ -160,7 +160,7 @@ export class RequestHandler {
     Object.keys(req.headers).forEach(key => {
       request.setHeader(key, req.headers[key]);
     });
-    request.setHeader('If-None-Match', " ");
+    // request.setHeader('If-None-Match', " ");
     // 上传数据
     if (req.uploadData) {
       req.uploadData.forEach(v => {
@@ -169,40 +169,7 @@ export class RequestHandler {
         }
       });
     }
-    // // 处理301 302
-    // request.on('redirect', (statusCode, method, redirectUrl, responseHeaders) => {
-    //   if (false) {
-    //     // if (responseHeaders['content-type'] && responseHeaders['content-type'][0].indexOf('text/html') !== -1) {
-    //     cb({
-    //       statusCode: 200,
-    //       headers: responseHeaders,
-    //       data: readable
-    //     });
-    //     readable.push(`
-    //         <html>
-    //           <head>
-    //             <meta http-equiv="refresh" content="0; url=${redirectUrl}">
-    //           </head>
-    //         </html>
-    //         `);
-    //     readable.push(null);
-    //     if (browserWindow) {
-    //       browserWindow.webContents.send('response-incoming');
-    //     }
-    //   } else {
-    //     console.log('from', req.url, 'to', redirectUrl, statusCode);
-    //     cb({
-    //       statusCode: 200,
-    //       headers: responseHeaders,
-    //       data: readable
-    //     });
-    //     readable.push('fuckyou');
-    //     readable.push(null);
-    //   }
-
-    //   // request.abort();
-    // });
-    // 处理回复
+    // 处理请求
     request.on('response', response => {
       const raws: Array<Buffer> = [];
       let length = 0;
@@ -231,47 +198,23 @@ export class RequestHandler {
       response.on('end', () => {
         clearTimeout(timeout);
         const raw = raws.length !== 0 ? Buffer.concat(raws) : null;
-        if (!ModifyFilePath) {
+        if (response.statusCode !== 200) {
           // 直接回传
           readable.pause();
           readable.push(null);
           readable.resume();
-          if (browserWindow) {
-            browserWindow.webContents.send('response-incoming');
-          }
-        } else {
-          // 魔改文件热封装
-          const result = parseAL(raw);
-          const packaged = result.Package(ModifyFilePath);
-          readable.push(packaged);
-          readable.pause();
-          readable.push(null);
-          readable.resume();
-          if (browserWindow) {
-            browserWindow.webContents.send('response-incoming');
-          }
         }
-        if (rule) {
-          const _res = raw || Buffer.concat(raws);
-          const _req = req.uploadData ? req.uploadData[0].bytes : null;
-          rule.Callback(req.url, _res, _req);
-        }
+        handleResponse(raw, readable, rule);
       });
       response.on('error', err => {
         clearTimeout(timeout);
         readable.push(null);
-        if (browserWindow) {
-          browserWindow.webContents.send('error-incoming', req.url, err);
-        }
         log.error(req.url, err, response.statusCode);
       });
     });
     // 处理错误
     request.on('error', err => {
       log.error(req.url, err);
-      if (browserWindow) {
-        browserWindow.webContents.send('error-incoming', req.url, err);
-      }
     });
     request.end();
   }
