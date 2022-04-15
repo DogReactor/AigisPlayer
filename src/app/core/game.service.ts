@@ -47,6 +47,18 @@ export const gameInfo = [
     `https://accounts.dmm.com/service/logout/=/path=Sg9VTQFXDFcXFl5bWlcKGAAVRlpZWgVNCw1ZSR9KU1URAFlVSQtOU0gVblFXC1EAVlQGAB9XC00LBF4FUxFeXwtcARYLTwBCSFgAF1JVEgoIC0VCUVUIFg__`,
     'oshiro'
   ),
+  new GameModel(
+    'モンスター娘TD',
+    new Size(640, 1136),
+    'https://accounts.dmm.com/service/logout/=/path=DRVESRUMTh1fBFxdQBgCWgxLVVldFgBcFgNeCh0IWF4IFENMElJOW1YWRVlfWllZDhFfUFlaBU0LDVlbA0NaSQQRQARXEBFAVwNYVFZpFVwIFQsH',
+    'monster'
+  ),
+  new GameModel(
+    'モンスター娘TD X',
+    new Size(640, 1136),
+    'https://accounts.dmm.com/service/logout/=/path=DRVESRUMTh1fBFxdQBgCWgxLVVkeUxQWBgdDB1sJGF0KD11MFUMVVkBKWFZAQgdbDVpYWURQAlABA0MPXQsKAUMMSVgWRlwDHhVDV1VfClI*Fl1fQARV',
+    'monster'
+  ),
   // Start
   new GameModel(
     'れじぇくろ！',

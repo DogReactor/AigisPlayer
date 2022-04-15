@@ -76,6 +76,10 @@ ipcRenderer.on('catch', (event, message) => {
       gameFrame.style.top = '-7px';
       gameFrame.style.left = '-5px';
     }
+    if (message === 'monster') {
+      gameFrame.style.top = '-23px';
+      gameFrame.style.left = '-137px';
+    }
   }
 });
 
