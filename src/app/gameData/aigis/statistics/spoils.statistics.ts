@@ -264,9 +264,18 @@ export class SpoilsStatistics {
 	async parseSpoils(data, firstEncounter) {
 		try {
 			const index = this.reference.QuestList.QuestID.findIndex(q => q === data.QR.QuestID);
-			const mapLabel = 'Map' + this.reference.QuestList.MapNo[index] + '.aar';
 			const entryLabel = 'Entry' + this.reference.QuestList.EntryNo[index].toString().padStart(2, '0') + '.atb';
-			const mapInfo = this.reference.MapsInfo[mapLabel][entryLabel];
+			let regStr = `Map(?:9\\d{5}_)?${this.reference.QuestList.MapNo[index]}\\.aar`
+			let mapLabelRegex = new RegExp(regStr)
+			let mapInfo = null;
+			for (let key in this.reference.MapsInfo) {
+				if (mapLabelRegex.test(key)) {
+					mapInfo = this.reference.MapsInfo[key][entryLabel];
+				}
+			};
+			if (!mapInfo) {
+				return Promise.reject(`Unknown MapNo ${this.reference.QuestList.MapNo[index]} for quest ${index}`);
+			}
 			const dropInfos = [];
 			let enemeyCount = 0;
 			mapInfo.forEach(e => {
