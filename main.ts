@@ -63,7 +63,7 @@ function createWindow() {
     height: 694,
     frame: false,
     resizable: false,
-    // transparent: true,
+    transparent: true,
     useContentSize: true,
     webPreferences: {
       webSecurity: false,
@@ -137,6 +137,20 @@ try {
         win.webContents.send('error-incoming', url, error);
       }
     });
+
+    // gameSession.webRequest.onBeforeSendHeaders({
+    //   urls: [
+    //     'https://*.dmm.com/*',
+    //     'https://*.dmm.co.jp/*',
+    //     'http://*.dmm.com/*',
+    //     'http://*.dmm.co.jp/*'
+    //   ]
+    // }, (details, callback) => {
+    //   console.log(details.url);
+    //   details.requestHeaders['X-Forwarded-For'] = '45.14.106.61';
+    //   callback({ requestHeaders: details.requestHeaders });
+    // })
+
     // 游戏数据的拦截
     // 自定义协议的注册
     gameSession.protocol.registerStreamProtocol('http', RequestHandler.handleData);
