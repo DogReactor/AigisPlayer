@@ -295,7 +295,7 @@ export class PluginService {
     }
     plugin.activedWindow = new ActivePlugin();
     plugin.activedWindow.Embed = false;
-    const url = require('url').format({
+    const url = plugin.entry.startsWith('http://') ? plugin.entry : require('url').format({
       protocol: 'file',
       slashes: true,
       pathname: path.join(this.pluginsPath, plugin.path, plugin.entry)
