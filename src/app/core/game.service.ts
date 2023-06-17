@@ -154,6 +154,16 @@ export class GameService {
       webView.removeEventListener('dom-ready', domReadyCallback);
       this.webContents = this.electronService.remote.webContents.fromId(webView.getWebContentsId());
       this.webContents.setBackgroundThrottling(false);
+      this.webContents.setWindowOpenHandler((details) => {
+        console.log('open-window');
+        const option = {};
+        option['height'] = 640;
+        option['width'] = 1100;
+        option['autoHideMenuBar'] = true;
+        option['webPreferences']['session'] = this.webContents.session;
+        this.electronService.CreateBrowserWindow(details.url, option);
+        return { action: 'deny' }
+      })
       this.webContents.on('before-input-event', (event, input) => {
         if (input.type !== 'keyUp') {
           return;

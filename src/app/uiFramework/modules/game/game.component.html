@@ -1,4 +1,4 @@
-<div>
+<div #container>
   <webview
     id="gameView"
     src="about:blank"
@@ -9,5 +9,6 @@
     disablewebsecurity
     nodeintegration
     nodeintegrationinsubframes
+    preload="file:./assets/js/inject.js"
   ></webview>
 </div>

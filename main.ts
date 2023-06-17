@@ -7,7 +7,7 @@ serve = args.some(val => val === '--serve');
 import * as log from 'electron-log';
 import * as unzip from 'unzipper';
 import * as request from 'request';
-import * as Config from 'electron-store';
+const Config = require('electron-store');
 import * as url from 'url';
 import { autoUpdater } from 'electron-updater';
 import * as remoteMain from '@electron/remote/main';

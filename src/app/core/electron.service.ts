@@ -36,7 +36,7 @@ export class ElectronService {
       this.childProcess = window.require('child_process');
       this.currentWindow = require('@electron/remote').getCurrentWindow();
       this.APP = require('@electron/remote').app;
-      this.Session = require('@electron/remote').require('electron').electron.session;
+      this.Session = require('@electron/remote').require('electron').session;
       this.fs = window.require('fs');
       this.serve = require('@electron/remote').process.argv.slice(1).some(val => val === '--serve');
       this.clipboard = require('@electron/remote').clipboard;

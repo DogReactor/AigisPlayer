@@ -41,9 +41,9 @@ class PluginHelper {
     return this.ipcRenderer.sendSync(channel, message);
   }
   createWindow(file, option) {
-    const remote = require('electron').remote;
+    const remote = require('@electron/remote');
     const BrowserWindow = remote.BrowserWindow;
-    const currentWindow = require('electron').remote.getCurrentWindow();
+    const currentWindow = require('@electron/remote').getCurrentWindow();
     const path = require('path');
     const url = require('url').format({
       protocol: 'file',

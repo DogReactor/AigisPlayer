@@ -22,6 +22,7 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
   private zoom = 100;
   private subscriptionList: Rx.Subscription[] = [];
   private dirname = '';
+  private preloadScriptPath = '';
   constructor(
     private gameService: GameService,
     private globalSettingService: GlobalSettingService,
@@ -47,10 +48,11 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
   }
   ngOnInit() {
     this.dirname = this.electronService.APP['dirname'];
+    this.preloadScriptPath = `file://${this.dirname}/assets/js/inject.js`;
   }
   ngAfterViewInit() {
     this.gameView = <WebviewTag>document.getElementById('gameView');
-    this.gameView.setAttribute('preload', `file://${this.dirname}/assets/js/inject.js`);
+    // this.gameView.setAttribute('preload', `file://${this.dirname}/assets/js/inject.js`);
     this.gameService.WebView = this.gameView;
     const webview = this.gameView;
 
@@ -136,15 +138,6 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
       }
       this.translateService.get('MESSAGE.PAGE-DIDNOT-LOAD').subscribe(res => this.message['warning'](res));
     });
-    // this.gameService.webContents.setWindowOpenHandler((details) => {
-    //   const option = {};
-    //   option['height'] = 640;
-    //   option['width'] = 1100;
-    //   option['autoHideMenuBar'] = true;
-    //   option['webPreferences']['session'] = this.gameService.webContents.session;
-    //   this.electronService.CreateBrowserWindow(details.url, option);
-    //   return { action: 'deny' }
-    // })
     // webview.addEventListener('new-window', e => {
     //   const option = e.options;
     //   option['height'] = 640;

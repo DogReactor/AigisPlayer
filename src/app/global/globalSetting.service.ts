@@ -7,7 +7,7 @@ import { ElMessageService } from 'element-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { GameModel } from '../core/game.model';
 import { Size } from '../core/util';
-import * as Store from 'electron-store';
+const Store = require('electron-store');
 const config = new Store();
 
 export const ProxyRule: { [key: string]: string } = {

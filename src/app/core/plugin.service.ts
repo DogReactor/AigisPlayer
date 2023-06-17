@@ -72,7 +72,7 @@ export class PluginService {
   ) {
     // const fs = electronService.fs;
     this.gameService.SetPluginService(this);
-    this.protoablePath = window.require('electron').remote.process.env.PORTABLE_EXECUTABLE_DIR;
+    this.protoablePath = window.require('@electron/remote').process.env.PORTABLE_EXECUTABLE_DIR;
     this.pluginsPath = this.protoablePath
       ? this.protoablePath + '/plugins'
       : path.join(this.electronService.APP.getPath('userData'), 'plugins');

@@ -1,8 +1,9 @@
-import { Directive } from '@angular/core';
+import { Directive, Input } from '@angular/core';
 
 @Directive({
   selector: 'webview'
 })
 export class WebviewDirective {
-  constructor() {}
+  @Input() preload: string;
+  constructor() { }
 }

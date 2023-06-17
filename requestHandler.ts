@@ -3,7 +3,7 @@ import { session, net, app, ipcMain, BrowserWindow } from 'electron';
 import * as url from 'url';
 import * as path from 'path';
 import * as fs from 'fs';
-import * as Config from 'electron-store';
+const Config = require('electron-store');
 import * as log from 'electron-log';
 import { parseAL, AL } from 'aigis-fuel';
 const config = new Config();
@@ -37,7 +37,7 @@ export class Rule {
 }
 let subscription: Array<Rule> = [];
 let FileList = {};
-let mainFontPath = config.get('fontPath') as string;
+let mainFontPath = config.get('fontPath');
 let browserWindow: BrowserWindow;
 export class RequestHandler {
   static setFileList(fileList) {
@@ -83,7 +83,7 @@ export class RequestHandler {
     }
 
     // 获取发起请求用session
-    const requestSession = session.fromPartition('persist:game', { cache: true });
+    const requestSession = session.fromPartition('persist:request', { cache: true });
     if (browserWindow) {
       browserWindow.webContents.send('request-incoming');
     }
@@ -149,6 +149,7 @@ export class RequestHandler {
       url: req.url,
       session: requestSession,
       useSessionCookies: true,
+      referrerPolicy: 'unsafe-url'
       // redirect: 'manual'
     });
 
@@ -187,7 +188,7 @@ export class RequestHandler {
           console.log(req.url, 'Time out');
         }
       }, 1000);
-      console.log(response.headers);
+      // console.log(response.headers);
       cb({
         statusCode: response.statusCode,
         headers: response.headers,
@@ -223,6 +224,9 @@ export class RequestHandler {
     // 处理错误
     request.on('error', err => {
       log.error(req.url, err);
+      readable.pause();
+      readable.push(null);
+      readable.resume();
     });
     request.end();
   }
