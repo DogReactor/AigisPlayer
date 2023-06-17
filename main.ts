@@ -10,6 +10,7 @@ import * as request from 'request';
 import * as Config from 'electron-store';
 import * as url from 'url';
 import { autoUpdater } from 'electron-updater';
+import * as remoteMain from '@electron/remote/main';
 const config = new Config();
 
 require('@electron/remote/main').initialize()
@@ -73,9 +74,9 @@ function createWindow() {
       nodeIntegrationInSubFrames: true,
       webviewTag: true,
       partition: 'persist:main',
-      enableRemoteModule: true
     }
   });
+  remoteMain.enable(win.webContents);
   RequestHandler.setWin(win);
   // and load the index.html of the app.
   if (serve) {

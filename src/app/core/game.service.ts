@@ -301,12 +301,12 @@ export class GameService {
         y: 0,
         width: Math.floor(
           webviewMeta.captureWidth *
-          this.electronService.electron.remote.screen.getPrimaryDisplay().scaleFactor *
+          this.electronService.remote.screen.getPrimaryDisplay().scaleFactor *
           (this.zoom / 100)
         ),
         height: Math.floor(
           webviewMeta.captureHeight *
-          this.electronService.electron.remote.screen.getPrimaryDisplay().scaleFactor *
+          this.electronService.remote.screen.getPrimaryDisplay().scaleFactor *
           (this.zoom / 100)
         )
       };

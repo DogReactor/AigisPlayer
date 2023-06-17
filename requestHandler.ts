@@ -37,7 +37,7 @@ export class Rule {
 }
 let subscription: Array<Rule> = [];
 let FileList = {};
-let mainFontPath = config.get('fontPath');
+let mainFontPath = config.get('fontPath') as string;
 let browserWindow: BrowserWindow;
 export class RequestHandler {
   static setFileList(fileList) {
@@ -187,6 +187,7 @@ export class RequestHandler {
           console.log(req.url, 'Time out');
         }
       }, 1000);
+      console.log(response.headers);
       cb({
         statusCode: response.statusCode,
         headers: response.headers,

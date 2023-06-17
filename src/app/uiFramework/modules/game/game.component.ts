@@ -136,14 +136,23 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
       }
       this.translateService.get('MESSAGE.PAGE-DIDNOT-LOAD').subscribe(res => this.message['warning'](res));
     });
-    webview.addEventListener('new-window', e => {
-      const option = e.options;
-      option['height'] = 640;
-      option['width'] = 1100;
-      option['autoHideMenuBar'] = true;
-      option['webPreferences']['session'] = this.gameService.webContents.session;
-      this.electronService.CreateBrowserWindow(e.url, option);
-    });
+    // this.gameService.webContents.setWindowOpenHandler((details) => {
+    //   const option = {};
+    //   option['height'] = 640;
+    //   option['width'] = 1100;
+    //   option['autoHideMenuBar'] = true;
+    //   option['webPreferences']['session'] = this.gameService.webContents.session;
+    //   this.electronService.CreateBrowserWindow(details.url, option);
+    //   return { action: 'deny' }
+    // })
+    // webview.addEventListener('new-window', e => {
+    //   const option = e.options;
+    //   option['height'] = 640;
+    //   option['width'] = 1100;
+    //   option['autoHideMenuBar'] = true;
+    //   option['webPreferences']['session'] = this.gameService.webContents.session;
+    //   this.electronService.CreateBrowserWindow(e.url, option);
+    // });
   }
   ngOnDestroy() {
     for (let i = 0; i < this.subscriptionList.length; i++) {

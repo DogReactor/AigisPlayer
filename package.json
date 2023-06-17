@@ -38,15 +38,16 @@
     "lint": "ng lint"
   },
   "dependencies": {
-    "@electron/remote": "^1.0.4",
+    "@electron/remote": "^2.0.10",
     "aigis-fuel": "git+https://github.com/Yukimir/AigisFuel.git",
     "compare-versions": "^3.4.0",
     "electron-log": "^2.2.17",
-    "electron-store": "5.2.0",
+    "electron-store": "^8.1.0",
     "electron-updater": "4.2.0",
     "element-angular": "^0.7.6",
     "gifuct-js": "^1.0.0",
     "request": "^2.88.2",
+    "type-fest": "^3.12.0",
     "unzipper": "^0.9.4"
   },
   "devDependencies": {
@@ -82,7 +83,7 @@
     "copyfiles": "^2.1.1",
     "core-js": "3.1.4",
     "cz-conventional-changelog": "^2.1.0",
-    "electron": "13.6.1",
+    "electron": "25.1.1",
     "electron-builder": "21.2.0",
     "electron-rebuild": "^2.3.5",
     "electron-reload": "1.5.0",
@@ -106,7 +107,7 @@
     "spectron": "9.0.0",
     "ts-node": "8.3.0",
     "tslint": "5.11.0",
-    "typescript": "3.5.3",
+    "typescript": "^3.8.0",
     "wait-on": "3.3.0",
     "webdriver-manager": "12.1.5",
     "zone.js": "0.8.29"

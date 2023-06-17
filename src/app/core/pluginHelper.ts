@@ -19,7 +19,7 @@ export class PluginHelper {
     public aigisGameDataService: AigisGameDataService,
     public aigisStatisticsService: AigisStatisticsService,
     public pluginService: PluginService
-  ) {}
+  ) { }
   loadEmbedPage(type: string, path: string, width: number) {
     this.pluginService.activeEmbedPlugin(type, path, { width: width }, this.plugin);
   }
@@ -97,9 +97,9 @@ export class PluginHelper {
     this.gameService.WebView.insertCSS(css);
   }
   createWindow(file, option) {
-    const remote = require('electron').remote;
+    const remote = require('@electron/remote');
     const BrowserWindow = remote.BrowserWindow;
-    const currentWindow = require('electron').remote.getCurrentWindow();
+    const currentWindow = require('@electron/remote').getCurrentWindow();
     const path = require('path');
     const url = require('url').format({
       protocol: 'file',
@@ -124,5 +124,5 @@ export class PluginHelper {
 }
 
 export class PluginHelperForRender {
-  constructor() {}
+  constructor() { }
 }

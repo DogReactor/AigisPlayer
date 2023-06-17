@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { Size } from './util';
 import { ElMessageService } from 'element-angular';
 import { TranslateService } from '@ngx-translate/core';
+import * as remote from '@electron/remote';
 
 // If you import a module but never use any of the imported values other than as TypeScript types,
 // the resulting javascript file will look as if you never imported the module at all.
 import * as fs from 'fs';
-import { ipcRenderer, BrowserWindow, app, Session, Clipboard, clipboard, Tray } from 'electron';
+import { ipcRenderer, BrowserWindow, app, session, Clipboard, clipboard, Tray } from 'electron';
 import * as Electron from 'electron';
 import * as childProcess from 'child_process';
+import { BrowserWindowConstructorOptions } from 'electron/renderer';
 
 @Injectable()
 export class ElectronService {
@@ -16,15 +18,15 @@ export class ElectronService {
   childProcess: typeof childProcess;
   currentWindow: BrowserWindow;
   APP: typeof app;
-  Session: typeof Session;
+  Session: typeof session;
   fs: typeof fs;
   serve: boolean;
   electron: typeof Electron;
   clipboard: Clipboard;
   Tray: typeof Tray;
   ipcMain: typeof Electron.ipcMain;
-  require: typeof Electron.remote.require;
-  remote: typeof Electron.remote;
+  require: typeof remote.require;
+  remote: typeof remote;
   constructor(private message: ElMessageService, private translateService: TranslateService) {
     // Conditional imports
     if (this.isElectron()) {
@@ -34,7 +36,7 @@ export class ElectronService {
       this.childProcess = window.require('child_process');
       this.currentWindow = require('@electron/remote').getCurrentWindow();
       this.APP = require('@electron/remote').app;
-      this.Session = require('@electron/remote').require('electron').session;
+      this.Session = require('@electron/remote').require('electron').electron.session;
       this.fs = window.require('fs');
       this.serve = require('@electron/remote').process.argv.slice(1).some(val => val === '--serve');
       this.clipboard = require('@electron/remote').clipboard;
@@ -73,8 +75,8 @@ export class ElectronService {
       this.message['success'](res);
     });
   }
-  CreateBrowserWindow = (url, option) => {
-    const win = new this.electron.remote.BrowserWindow(option);
+  CreateBrowserWindow = (url, option: BrowserWindowConstructorOptions) => {
+    const win = new remote.BrowserWindow(option);
     win.loadURL(url);
     return win;
   };
