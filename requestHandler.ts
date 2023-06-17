@@ -148,9 +148,16 @@ export class RequestHandler {
       method: req.method,
       url: req.url,
       session: requestSession,
-      useSessionCookies: true
+      useSessionCookies: true,
       // redirect: 'manual'
     });
+
+    // 绕过DMM区域检查
+    // console.log('raw url: ', req.url);
+    // if ((req.url as string).includes('dmm.com') || (req.url as string).includes('dmm.co.jp')) {
+    //   console.log('modify url:', req.url);
+    //   request.setHeader('X-Forwarded-For', '45.14.106.61');
+    // }
     // 允许分片
     // request.chunkedEncoding = true;
     // 写Header
