@@ -58,7 +58,7 @@ export class RequestHandler {
   ) {
     subscription.push(new Rule(options, callback));
   }
-  static async handleData(req, cb) {
+  static async handleData(req, cb, gameSession) {
     // 处理回复用函数
     function handleResponse(raw: Buffer, readable: stream.PassThrough, rule: Rule) {
       if (!ModifyFilePath) {
@@ -149,7 +149,8 @@ export class RequestHandler {
       url: req.url,
       session: requestSession,
       useSessionCookies: true,
-      referrerPolicy: 'unsafe-url'
+      referrerPolicy: 'unsafe-url',
+      cache: 'force-cache',
       // redirect: 'manual'
     });
 
@@ -163,19 +164,29 @@ export class RequestHandler {
     // request.chunkedEncoding = true;
     // 写Header
     if (req.referrer) {
+
       request.setHeader('Referer', req.referrer);
     }
     Object.keys(req.headers).forEach(key => {
       request.setHeader(key, req.headers[key]);
     });
+    if (req.url.includes("authenticate_player_account")) {
+      console.log(req);
+      console.log('content-type', request.getHeader("Content-Type"));
+      console.log('Platform', request.getHeader("Platform"));
+    }
     // request.setHeader('If-None-Match', " ");
     // 上传数据
     if (req.uploadData) {
-      req.uploadData.forEach(v => {
+      for (const v of req.uploadData) {
+        if (v.type === 'blob') {
+          const b = await gameSession.getBlobData(v.blobUUID);
+          request.write(b);
+        }
         if (v.bytes) {
           request.write(v.bytes);
         }
-      });
+      }
     }
     // 处理请求
     request.on('response', response => {
