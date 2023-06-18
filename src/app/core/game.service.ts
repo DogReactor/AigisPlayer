@@ -16,7 +16,6 @@ import { HotkeyService } from './hotkey.service';
 
 export const gameInfo = [
   new GameModel('None', new Size(640, 960), 'about:blank'),
-  new GameModel('ブレイヴガールＲ', new Size(576, 1024), `http://bg-r.mimolette.co.jp/selectsvr.html`, 'bravegirl'),
   new GameModel(
     '千年戦争アイギス',
     new Size(640, 960),
@@ -90,12 +89,6 @@ export const gameInfo = [
     new Size(720, 1200),
     `https://accounts.dmm.com/service/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWVsfXQFNAwtbSVkEWVMKDVxcSV8PQUwEXVQMWx9WERULBxZXC00LBF4FUxFeXwtcAQ__`,
     'kankore'
-  ),
-  new GameModel(
-    '凍京Necro',
-    new Size(640, 1136),
-    `https://accounts.dmm.co.jp/service/logout/=/path=DRVESVwZTlVZCFRLHVILWk8GWRhaSUtdBxZWD15KWVUGE19mFUMIUVEBVGdeXxVECApYaUIWDVcRFlYKXlpaSQQRQARXEA9dTAxXUVBXEl4OCwsH`,
-    'necro'
   ),
   new GameModel(
     '神姫プロジェクト',
