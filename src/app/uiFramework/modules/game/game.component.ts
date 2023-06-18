@@ -52,7 +52,7 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
   }
   ngAfterViewInit() {
     this.gameView = <WebviewTag>document.getElementById('gameView');
-    // this.gameView.setAttribute('preload', `file://${this.dirname}/assets/js/inject.js`);
+    this.gameView.preload = `file://${this.dirname}/assets/js/inject.js`;
     this.gameService.WebView = this.gameView;
     const webview = this.gameView;
 
