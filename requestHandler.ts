@@ -170,11 +170,6 @@ export class RequestHandler {
     Object.keys(req.headers).forEach(key => {
       request.setHeader(key, req.headers[key]);
     });
-    if (req.url.includes("authenticate_player_account")) {
-      console.log(req);
-      console.log('content-type', request.getHeader("Content-Type"));
-      console.log('Platform', request.getHeader("Platform"));
-    }
     // request.setHeader('If-None-Match', " ");
     // 上传数据
     if (req.uploadData) {

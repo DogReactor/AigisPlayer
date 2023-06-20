@@ -115,6 +115,14 @@ try {
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
+  app.on('web-contents-created', (_event, contents) => {
+    contents.on('will-attach-webview', (_wawevent, webPreferences, _params) => {
+      const p = path.join(app['dirname'], 'assets/js/inject.js');
+      const f = `${p}`;
+      webPreferences.preload = f;
+    });
+  })
+
   app.on('ready', () => {
     const gameSession = session.fromPartition('persist:game', { cache: true });
     app['RequestHandler'] = RequestHandler;
