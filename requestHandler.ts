@@ -58,7 +58,7 @@ export class RequestHandler {
   ) {
     subscription.push(new Rule(options, callback));
   }
-  static async handleData(req, cb, gameSession) {
+  static async handleData(req, cb) {
     // 处理回复用函数
     function handleResponse(raw: Buffer, readable: stream.PassThrough, rule: Rule) {
       if (!ModifyFilePath) {
@@ -84,6 +84,8 @@ export class RequestHandler {
 
     // 获取发起请求用session
     const requestSession = session.fromPartition('persist:request', { cache: true });
+    // 获取游戏本体session
+    const gameSession = session.fromPartition('persist:game', { cache: true });
     if (browserWindow) {
       browserWindow.webContents.send('request-incoming');
     }
@@ -148,9 +150,9 @@ export class RequestHandler {
       method: req.method,
       url: req.url,
       session: requestSession,
-      useSessionCookies: true,
+      // useSessionCookies: true,
       referrerPolicy: 'unsafe-url',
-      cache: 'force-cache',
+      // cache: 'force-cache',
       // redirect: 'manual'
     });
 
@@ -164,12 +166,19 @@ export class RequestHandler {
     // request.chunkedEncoding = true;
     // 写Header
     if (req.referrer) {
-
       request.setHeader('Referer', req.referrer);
     }
+
     Object.keys(req.headers).forEach(key => {
       request.setHeader(key, req.headers[key]);
     });
+    // 写Cookies
+    const gameCookies = await gameSession.cookies.get({ url: req.url });
+    const cookieTexts = gameCookies.map(x => `${x.name}=${x.value}`);
+
+    if (cookieTexts.length > 0) {
+      request.setHeader('Cookie', cookieTexts.join('; '));
+    }
     // request.setHeader('If-None-Match', " ");
     // 上传数据
     if (req.uploadData) {

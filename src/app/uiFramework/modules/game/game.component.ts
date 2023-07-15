@@ -138,6 +138,7 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
       }
       this.translateService.get('MESSAGE.PAGE-DIDNOT-LOAD').subscribe(res => this.message['warning'](res));
     });
+    
     // webview.addEventListener('new-window', e => {
     //   const option = e.options;
     //   option['height'] = 640;

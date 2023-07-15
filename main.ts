@@ -162,8 +162,8 @@ try {
 
     // 游戏数据的拦截
     // 自定义协议的注册
-    gameSession.protocol.registerStreamProtocol('http', (req, cb) => RequestHandler.handleData(req, cb, gameSession));
-    gameSession.protocol.registerStreamProtocol('https', (req, cb) => RequestHandler.handleData(req, cb, gameSession));
+    gameSession.protocol.registerStreamProtocol('http', (req, cb) => RequestHandler.handleData(req, cb));
+    gameSession.protocol.registerStreamProtocol('https', (req, cb) => RequestHandler.handleData(req, cb));
     createWindow();
     // menu
     if (process.platform === 'darwin') {

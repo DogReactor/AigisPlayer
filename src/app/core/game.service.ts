@@ -148,12 +148,14 @@ export class GameService {
       this.webContents = this.electronService.remote.webContents.fromId(webView.getWebContentsId());
       this.webContents.setBackgroundThrottling(false);
       this.webContents.setWindowOpenHandler((details) => {
-        console.log('open-window');
-        const option = {};
-        option['height'] = 640;
-        option['width'] = 1100;
-        option['autoHideMenuBar'] = true;
-        option['webPreferences']['session'] = this.webContents.session;
+        const option: Electron.BrowserWindowConstructorOptions = {
+          height: 640,
+          width: 1100,
+          autoHideMenuBar: true,
+          webPreferences: {
+            session: this.webContents.session
+          }
+        };
         this.electronService.CreateBrowserWindow(details.url, option);
         return { action: 'deny' }
       })
