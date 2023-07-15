@@ -19,7 +19,7 @@
     "artifactName": "${productName}-Setup-${version}.${ext}"
   },
   "win": {
-    "icon": "./build/icon.png",
+    "icon": "./build/icons",
     "target": [
       {
         "target": "nsis",
@@ -31,14 +31,14 @@
     ]
   },
   "mac": {
-    "icon": "./build/icon.png",
+    "icon": "./build/icons",
     "target": [
       "dmg"
     ]
   },
   "linux": {
     "category": "Game",
-    "icon": "./build/icon.png",
+    "icon": "./build/icons",
     "target": [
       "deb",
       "AppImage"
