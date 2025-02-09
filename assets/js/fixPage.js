@@ -4,7 +4,26 @@ const { ipcRenderer, remote } = require('electron');
 window['confirm'] = () => {
   return false;
 };
-ipcRenderer.on('catch', (event, message) => {
+
+var delay = (time) => {
+  return new Promise((reslove, reject) => {
+    setTimeout(() => {
+      reslove();
+    }, time);
+  })
+}
+
+var getWebFrame = async () => {
+  let frame;
+  while (!frame) {
+    frame = document.getElementById('game_frame');
+    console.log(frame);
+    await delay(10);
+  }
+  return frame;
+}
+
+ipcRenderer.on('catch', async (event, message) => {
   // GBF
   if (window.location.href.indexOf('game.granbluefantasy.jp') !== -1) {
     require('./gbf/fixSlideBar');
@@ -21,8 +40,11 @@ ipcRenderer.on('catch', (event, message) => {
     }
     return;
   }
-  var gameFrame = document.getElementById('game_frame');
-  if (gameFrame === null) ipcRenderer.sendToHost('url', 'error');
+  var gameFrame = await getWebFrame();
+  if (gameFrame === null) {
+    console.error("game Frame not found");
+    ipcRenderer.sendToHost('url', 'error');
+  }
   else {
     gameFrame.style.position = 'fixed';
     document.body.style.overflow = 'hidden';
@@ -36,9 +58,9 @@ ipcRenderer.on('catch', (event, message) => {
       gameFrame.style.left = '-60px';
     }
     if (message === 'aigis' || message === 'oshiro') {
-      gameFrame.style.top = '0';
+      gameFrame.style.top = '1px';
       gameFrame.style.left = '0';
-      gameFrame.style.marginLeft = '-5px';
+      gameFrame.style.marginLeft = '-6px';
     }
     if (message === 'kankore') {
       gameFrame.style.top = '-16px';

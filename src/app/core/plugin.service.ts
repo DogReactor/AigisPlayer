@@ -315,14 +315,14 @@ export class PluginService {
     plugin.windowOption.webPreferences.contextIsolation = false;
     plugin.activedWindow.BrowserWindow = this.electronService.CreateBrowserWindow(url, plugin.windowOption);
     plugin.activedWindow.WebContent = plugin.activedWindow.BrowserWindow.webContents;
-    plugin.activedWindow.WebContent.on('dom-ready', (event: any) => {
+    plugin.activedWindow.WebContent.on('dom-ready', () => {
       const r = {};
       for (const key in plugin) {
         if (key !== 'activedWindow' && key !== 'backgroundObject') {
           r[key] = plugin[key];
         }
       }
-      event.sender.send('plugin-info', r);
+      plugin.activedWindow.WebContent.send('plugin-info', r);
     });
     plugin.activedWindow.BrowserWindow.on('close', () => {
       // 释放灵魂

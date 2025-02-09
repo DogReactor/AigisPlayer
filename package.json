@@ -1,6 +1,6 @@
 {
   "name": "aigisplayer",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "description": "Toolkit for Aigis",
   "productName": "AigisPlayer",
   "homepage": "https://github.com/DogReactor/AigisPlayer",
@@ -38,7 +38,7 @@
     "lint": "ng lint"
   },
   "dependencies": {
-    "@electron/remote": "^2.0.10",
+    "@electron/remote": "^2.1.2",
     "aigis-fuel": "git+https://github.com/Yukimir/AigisFuel.git",
     "compare-versions": "^3.4.0",
     "electron-log": "^2.2.17",
@@ -83,7 +83,7 @@
     "copyfiles": "^2.1.1",
     "core-js": "3.1.4",
     "cz-conventional-changelog": "^2.1.0",
-    "electron": "25.1.1",
+    "electron": "34.1.1",
     "electron-builder": "21.2.0",
     "electron-rebuild": "^2.3.5",
     "electron-reload": "1.5.0",
