@@ -17,7 +17,9 @@
     {
       "provider": "s3",
       "bucket": "player.pigtv.moe",
-      "path": "assets/aigisplayer"
+      "path": "assets/aigisplayer",
+      "publishAutoUpdate": true,
+      "channel": "latest"
     }
   ],
   "nsis": {
