@@ -1,3 +1,4 @@
 export class GlobalConfig {
-  static Host = 'player.pigtv.moe';
+  static Host = 'api.pigtv.moe';
+  static PluginAssets = 'player.pigtv.moe';
 }

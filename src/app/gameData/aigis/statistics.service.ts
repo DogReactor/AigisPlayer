@@ -31,7 +31,7 @@ export class AigisStatisticsService {
         func(record);
       });
     }
-    const url = `http://${GlobalConfig.Host}/statistics/aigis`;
+    const url = `https://${GlobalConfig.Host}/statistics/aigis`;
     return this.http.post(url, record).subscribe(response => {
       console.log(response, record);
     });

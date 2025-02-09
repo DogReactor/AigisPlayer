@@ -170,7 +170,7 @@ export class PluginService {
     if (this.RemotePluginList) {
       return this.RemotePluginList;
     } else {
-      const url = `http://${GlobalConfig.Host}/plugins`;
+      const url = `https://${GlobalConfig.Host}/plugins`;
       this.RemotePluginList = await this.http.get<Plugin[]>(url).toPromise();
       return this.RemotePluginList;
     }
@@ -179,7 +179,7 @@ export class PluginService {
     if (plugin.needRestart !== false) {
       const zipPromise = () => {
         return new Promise<void>((resolve, reject) => {
-          const url = `http://${GlobalConfig.Host}/assets/plugins/${plugin.path}/${plugin.version}/${plugin.path}.zip`;
+          const url = `http://${GlobalConfig.PluginAssets}/assets/plugins/${plugin.path}/${plugin.version}/${plugin.path}.zip`;
           const pluginPath = path.join(this.pluginsPath, plugin.path);
           const salt = crypto
             .createHash('md5')
