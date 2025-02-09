@@ -16,7 +16,6 @@
     },
     {
       "provider": "s3",
-      "bucket": "yukimir-bucket-aigisplayer",
       "path": "assets/aigisplayer"
     }
   ],
