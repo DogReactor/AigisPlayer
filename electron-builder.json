@@ -13,35 +13,33 @@
     },
     {
       "provider": "github"
+    },
+    {
+      "provider": "s3",
+      "bucket": "yukimir-bucket-aigisplayer",
+      "path": "assets/aigisplayer"
     }
   ],
   "nsis": {
     "artifactName": "${productName}-Setup-${version}.${ext}"
   },
   "win": {
-    "icon": "./build/icons",
+    "icon": "./build/icon-256.png",
     "target": [
       {
         "target": "nsis",
-        "arch": [
-          "x64"
-        ]
+        "arch": ["x64"]
       },
       "zip"
     ]
   },
   "mac": {
     "icon": "./build/icons",
-    "target": [
-      "dmg"
-    ]
+    "target": ["dmg"]
   },
   "linux": {
     "category": "Game",
     "icon": "./build/icons",
-    "target": [
-      "deb",
-      "AppImage"
-    ]
+    "target": ["deb", "AppImage"]
   }
 }
