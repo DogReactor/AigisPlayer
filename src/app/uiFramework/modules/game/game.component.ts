@@ -107,6 +107,7 @@ export class GameComponent implements AfterViewInit, OnDestroy, OnInit {
       if (
         webview.getURL().indexOf('app_id') !== -1 ||
         webview.getURL().indexOf('/play/') !== -1 ||
+        webview.getURL().indexOf('/game/') !== -1 ||
         webview.getURL().indexOf('game_dmm.php') !== -1
       ) {
         webview.send('catch', CurrentGame.Spec);
