@@ -7,31 +7,74 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
-
     strategy:
       matrix:
-        node-version: [16.x]
-        architecture: [x64]
+        include:
+          - os: windows-latest
+            node-version: 16.x
+            architecture: x64
+            platform: windows
+          - os: macos-latest
+            node-version: 16.x
+            architecture: x64
+            platform: mac
+          - os: ubuntu-latest
+            node-version: 16.x
+            architecture: x64
+            platform: linux
+
+    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v4
       with:
-        fetch-depth: 0  # 这一行很重要
+        fetch-depth: 0
 
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         architecture: ${{ matrix.architecture }}
 
-    - name: Cache Node.js modules
+    - name: Install system dependencies (Linux)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libarchive-tools rpm
+
+    - name: Cache Node.js modules (Windows)
+      if: runner.os == 'Windows'
       uses: actions/cache@v4
       with:
         path: |
           node_modules
-          %APPDATA%\npm-cache
-          %USERPROFILE%\.electron
+          ~\AppData\Roaming\npm-cache
+          ~\AppData\Local\electron
+          ~\AppData\Local\electron-builder
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-node-
+
+    - name: Cache Node.js modules (macOS)
+      if: runner.os == 'macOS'
+      uses: actions/cache@v4
+      with:
+        path: |
+          node_modules
+          ~/Library/Caches/electron
+          ~/Library/Caches/electron-builder
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-node-
+
+    - name: Cache Node.js modules (Linux)
+      if: runner.os == 'Linux'
+      uses: actions/cache@v4
+      with:
+        path: |
+          node_modules
+          ~/.cache/electron
+          ~/.cache/electron-builder
         key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.OS }}-node-
@@ -45,4 +88,4 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: ap-northeast-3
-      run: npm run electron:publish
+      run: npm run electron:${{ matrix.platform }} -- --publish always
